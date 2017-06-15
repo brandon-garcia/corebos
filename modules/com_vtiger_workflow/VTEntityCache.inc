@@ -110,7 +110,7 @@ class VTEntityCache{
 	}
 
 	function forId($id){
-		if(!isset($this->cache[$id]) or $this->cache[$id]==null){
+		if(!isset($this->cache[$id]) or $this->cache[$id]==null || strpos($this->cache[$id],'x')==false){
 			$deleted=!isRecordExists($id);
 			$data  = new VTWorkflowEntity($this->user, $id, $deleted);
 			$this->cache[$id] = $data;
