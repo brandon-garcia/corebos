@@ -27,4 +27,3 @@ $smarty->assign("THEME", $theme);
 $smarty->assign("IMAGEPATH",$image_path);
 $smarty->assign("CALC",get_calc($image_path));
 $smarty->display("Calculator.tpl");
-?>

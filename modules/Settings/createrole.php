@@ -66,4 +66,3 @@ if ($mode == 'edit') {
 $smarty->assign("SELPROFILELISTS",$selected_profiles);
 
 $smarty->display("RoleEditView.tpl");
-?>

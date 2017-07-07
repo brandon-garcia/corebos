@@ -80,4 +80,3 @@ $smarty->assign('RELATEDLISTS', $block);
 $check_button = Button_Check($module);
 $smarty->assign('CHECK', $check_button);
 $smarty->display('RelatedLists.tpl');
-?>

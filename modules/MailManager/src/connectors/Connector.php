@@ -381,4 +381,3 @@ class MailManager_Connector {
 		return $value;
 	}
 }
-?>

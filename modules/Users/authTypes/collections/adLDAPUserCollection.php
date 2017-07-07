@@ -43,4 +43,3 @@ class adLDAPUserCollection extends adLDAPCollection
 
     }
 }
-?>

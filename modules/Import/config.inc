@@ -18,4 +18,3 @@ $ImportConfig = array(
 );
 $ImportConfig['importBatchLimit'] = GlobalVariable::getVariable('Import_Batch_Limit','250');
 $ImportConfig['immediateImportLimit'] = GlobalVariable::getVariable('Import_Scheduled_Limit',1000);
-?>

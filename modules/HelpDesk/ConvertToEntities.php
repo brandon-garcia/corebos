@@ -40,4 +40,3 @@ for($i=0;$i<count($idlist);$i++)
 	$adb->pquery($sql, array($changevalue, $id));
 }
 header('Location: index.php?action=index&module=HelpDesk');
-?>

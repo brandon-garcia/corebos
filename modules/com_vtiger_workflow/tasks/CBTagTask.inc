@@ -54,4 +54,3 @@ class CBTagTask extends VTTask{
 		}
 	}
 }
-?>

@@ -612,4 +612,3 @@ public function setgoogleaccessparams($userid){
         return $this->View;
     }
 }
-?>

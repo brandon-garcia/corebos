@@ -126,4 +126,3 @@ if($singlepane_view == 'true' && $action == 'CallRelatedList') {
 
 	$smarty->display('RelatedLists.tpl');
 }
-?>

@@ -56,4 +56,3 @@ elseif(isset($_REQUEST['product_id']) && $_REQUEST['product_id']!='')
 		header("Location: index.php?module=$returnmodule&action=CallRelatedList&record=" . urlencode($productid));
 }
 
-?>

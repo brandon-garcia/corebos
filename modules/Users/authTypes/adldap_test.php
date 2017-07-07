@@ -35,4 +35,3 @@ echo "User:\n";
 echo $result->displayName;
 echo "Mail:\n";
 echo $result->mail;
-?>

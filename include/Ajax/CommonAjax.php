@@ -16,4 +16,3 @@ if(file_exists($moduleFilepath) == false) {
 
 checkFileAccessForInclusion($moduleFilepath);
 require_once $moduleFilepath;
-?>

@@ -43,4 +43,3 @@ if(empty($_REQUEST['ajax']) || $_REQUEST['ajax'] != true) {
 } else {
 	$smarty->display(vtlib_getModuleTemplate($currentModule,'BasicSettingsContents.tpl'));
 }
-?>

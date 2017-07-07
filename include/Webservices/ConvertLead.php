@@ -332,4 +332,3 @@ function vtws_createEntity($recordid,$originMod,$targetMod) {
 	return $return;
 }
 
-?>

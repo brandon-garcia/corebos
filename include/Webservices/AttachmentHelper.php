@@ -67,4 +67,3 @@ function SaveAttachmentFile($attachid, $filename, $filecontent) {
 		Array($attachid, $filename, $description, $mimetype, $dirname));
 }
 
-?>

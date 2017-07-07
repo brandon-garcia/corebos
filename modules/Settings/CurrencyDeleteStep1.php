@@ -66,4 +66,3 @@ $output .= '</td>
 </form></div>';
 
 echo $output;
-?>

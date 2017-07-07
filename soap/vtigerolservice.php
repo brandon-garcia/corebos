@@ -1482,4 +1482,3 @@ function SOAP_Encode($text)
 	return preg_replace($seek, $replace, $text);
 }
 
-?>

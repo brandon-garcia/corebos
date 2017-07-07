@@ -245,4 +245,3 @@ class cbMap extends CRMEntity {
 	}
 
 }
-?>

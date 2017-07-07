@@ -139,4 +139,3 @@ $log->debug("In add2db.php");
 		}
 	}
 
-?>

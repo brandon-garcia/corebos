@@ -26,4 +26,3 @@ if(isset($_REQUEST['savemode']) && $_REQUEST['savemode'] == 'file') {
 	exit();
 }
 
-?>

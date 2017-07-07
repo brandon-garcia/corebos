@@ -20,4 +20,3 @@ if (isset($purpose) and $purpose == 'webservice') {
 	$controller->Output($moduleName.'_'.$salesorder_no.'.pdf', 'D');//added file name to make it work in IE, also forces the download giving the user the option to save
 	exit();
 }
-?>

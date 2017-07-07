@@ -68,4 +68,3 @@ require_once 'include/Webservices/Revise.php';
 		VTWS_PreserveGlobal::flush();
 		return array('success'=>true);
 	}
-?>

@@ -215,4 +215,3 @@ $output .= '<div id="customfield" style="display:block;" class="layerPopup"><scr
 		<input type="hidden" name="selectedfieldtype_'.$blockid.'"id="selectedfieldtype_'.$blockid.'"value="">
 	</form></div>';
 echo $output;
-?>

@@ -1007,4 +1007,3 @@ class BURAK_Gantt {
 
 }
 
-?>

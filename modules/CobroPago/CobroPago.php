@@ -442,4 +442,3 @@ class CobroPago extends CRMEntity {
 		return $permiso;
 	}
 }
-?>

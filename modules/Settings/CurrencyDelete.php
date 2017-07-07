@@ -18,4 +18,3 @@ $sql = 'update vtiger_currency_info set deleted=1 where id =?';
 $adb->pquery($sql, array($del_id));
 
 header('Location: index.php?action=SettingsAjax&module=Settings&file=CurrencyListView&ajax=true');
-?>

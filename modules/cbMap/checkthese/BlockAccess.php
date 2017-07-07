@@ -94,4 +94,3 @@ $map_focus->retrieve_entity_info($mapid,"cbMap");
 $map_focus->column_fields['content']= $xml->saveXML();
 $map_focus->mode = "edit";
 $map_focus->save("cbMap");
-?>

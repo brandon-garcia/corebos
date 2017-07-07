@@ -41,4 +41,3 @@ function ChangeFolder($reportid,$folderid)
 	$imovereportsql = "update vtiger_report set folderid=? where reportid=?";
 	$imovereportsqlresult = $adb->pquery($imovereportsql, array($folderid, $reportid));
 }
-?>

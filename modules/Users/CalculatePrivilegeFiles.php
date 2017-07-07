@@ -22,4 +22,3 @@ if (!empty($record) and is_numeric($record)) {
 	createUserSharingPrivilegesfile($record);
 }
 header('Location: index.php?action=DetailView&module=Users&record='.urlencode($record));
-?>

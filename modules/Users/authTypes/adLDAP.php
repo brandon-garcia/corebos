@@ -948,4 +948,3 @@ class adLDAP {
 */
 class adLDAPException extends Exception {}
 
-?>

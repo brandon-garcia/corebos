@@ -51,4 +51,3 @@ if($record) {
 } else {
 	echo getTranslatedString('LBL_RECORD_NOT_FOUND');
 }
-?>

@@ -59,4 +59,3 @@ $pdf->addDescBlock($conditions, $app_strings["Terms & Conditions"], $termBlock);
 /* ************** End Terms *********************** */
 
 
-?>

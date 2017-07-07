@@ -22,4 +22,3 @@ class crmtogo_UI_DecideActivityType extends crmtogo_WS_Controller{
 		return $response;
 	}
 }
-?>

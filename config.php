@@ -14,4 +14,3 @@
  * at <http://corebos.org/documentation/doku.php?id=en:devel:vpl11>
  *************************************************************************************************/
 include('config.inc.php');
-?>

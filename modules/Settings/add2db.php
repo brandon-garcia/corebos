@@ -238,4 +238,3 @@ if ($error_flag == "") {
 } else {
 	header("Location: index.php?parenttab=Settings&module=Settings&action=EditCompanyDetails&flag=" . $error_flag);
 }
-?>

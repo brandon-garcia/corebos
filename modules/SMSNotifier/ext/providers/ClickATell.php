@@ -221,4 +221,3 @@ $params = $this->prepareParameters();
 $params['to'] = implode(',', $toNumbers);
 
 */
-?>

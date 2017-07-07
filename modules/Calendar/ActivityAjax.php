@@ -211,4 +211,3 @@ else
 	//die("type is not set");
 }
 
-?>

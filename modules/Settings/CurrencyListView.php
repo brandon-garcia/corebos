@@ -45,4 +45,3 @@ if(!empty($_REQUEST['ajax']))
 	$smarty->display("CurrencyListViewEntries.tpl");
 else
 	$smarty->display("CurrencyListView.tpl");
-?>

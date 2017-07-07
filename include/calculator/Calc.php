@@ -83,4 +83,3 @@ EOQ;
 $log->debug("Exiting get_calc method ...");
 return $the_calc;
 }
-?>

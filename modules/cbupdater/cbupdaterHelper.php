@@ -78,4 +78,3 @@ function cbupdater_dowork_finishExecution($update_count,$success_count,$failure_
 </table>
 EOT;
 }
-?>

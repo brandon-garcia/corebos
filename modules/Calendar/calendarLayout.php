@@ -2167,4 +2167,3 @@ function getCalendarViewSecurityParameter()
 		$sec_query .= ")";
 		return $sec_query;
 }
-?>

@@ -437,4 +437,3 @@ class CurrencyField {
 		return $decimals;
 	}
 }
-?>

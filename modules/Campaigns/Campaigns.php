@@ -637,4 +637,3 @@ class Campaigns extends CRMEntity {
 	}
 
 }
-?>

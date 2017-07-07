@@ -127,4 +127,3 @@ class Import_CSV_Reader extends Import_File_Reader {
 		unset($fileHandler);
 	}
 }
-?>

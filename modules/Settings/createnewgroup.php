@@ -153,4 +153,3 @@ $smarty->assign("GROUPNAME",$groupInfo[0]);
 $smarty->assign("DESCRIPTION",$groupInfo[1]);
 
 $smarty->display("GroupEditView.tpl");
-?>

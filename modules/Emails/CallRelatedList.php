@@ -57,4 +57,3 @@ $isduplicate = isset($_REQUEST['isDuplicate']) ? vtlib_purify($_REQUEST['isDupli
 	$smarty->assign("SELECTEDHEADERS", $open_related_modules);
 
 	$smarty->display('RelatedLists.tpl');
-?>

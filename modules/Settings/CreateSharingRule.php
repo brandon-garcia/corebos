@@ -277,4 +277,3 @@ $output .= '<td align="right" class="small"><img src="'. vtiger_imageurl('close.
 
 $output.='</form></div>';
 echo $output;
-?>

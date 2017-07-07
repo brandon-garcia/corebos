@@ -333,4 +333,3 @@ function getRoleBasesdPickList($fldname,$exist_val)
 			return $pick_val;
 			
 }
-?>

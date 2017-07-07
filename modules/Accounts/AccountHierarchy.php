@@ -43,4 +43,3 @@ if (!empty($accountid)) {
 }
 $smarty->assign("ACCOUNT_HIERARCHY",$hierarchy);
 $smarty->display("modules/Accounts/AccountHierarchy.tpl");
-?>

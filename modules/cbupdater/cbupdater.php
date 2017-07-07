@@ -195,4 +195,3 @@ class cbupdater extends CRMEntity {
 	 */
 	//function get_dependents_list($id, $cur_tab_id, $rel_tab_id, $actions=false) { }
 }
-?>

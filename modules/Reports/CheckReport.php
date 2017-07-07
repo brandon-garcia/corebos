@@ -41,4 +41,3 @@ else if($_REQUEST['check']== 'folderCheck')
 	}
 }
 
-?>

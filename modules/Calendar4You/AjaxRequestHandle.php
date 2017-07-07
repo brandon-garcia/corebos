@@ -135,4 +135,3 @@ switch($_REQUEST["handler"])
 }
 
 exit;
-?>

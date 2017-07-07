@@ -63,4 +63,3 @@ class crmtogo_UI_ChangeSettings extends crmtogo_WS_Controller{
 		return $response;
 	}
 }
-?>

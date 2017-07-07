@@ -930,4 +930,3 @@ class cbCalendar extends CRMEntity {
 		return $atype;
 	}
 }
-?>

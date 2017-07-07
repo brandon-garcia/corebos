@@ -153,4 +153,3 @@ class VTEntityDelta extends VTEventHandler {
 	}
 
 }
-?>

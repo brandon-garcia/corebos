@@ -302,4 +302,3 @@ class ConfigFileRow {
 		return $this->lineContent;
 	}
 }
-?>

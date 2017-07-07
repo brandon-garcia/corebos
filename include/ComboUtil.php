@@ -57,4 +57,3 @@ function getUniquePicklistID()
 	return $adb->getUniqueID('vtiger_picklistvalues');
 }
 
-?>

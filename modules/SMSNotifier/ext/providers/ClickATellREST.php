@@ -126,4 +126,3 @@ class ClickATellREST implements ISMSProvider {
 		);
 	}
 }
-?>

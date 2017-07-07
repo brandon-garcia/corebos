@@ -11,4 +11,3 @@
 $backupLimit = 14;
 $executionTimeLimit = 5000;
 $memoryLimit = '1000M';
-?>

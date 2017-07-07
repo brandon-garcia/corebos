@@ -184,4 +184,3 @@ $smarty->assign("LISTENTITY", $list_body);
 $smarty->assign("CATEGORY", $parenttab);
 
 $smarty->display("AddProductsToPriceBook.tpl");
-?>

@@ -102,4 +102,3 @@ if($singlepane_view == 'true' && $action == 'CallRelatedList') {
 	else
 		$smarty->display('RelatedLists.tpl');
 }
-?>

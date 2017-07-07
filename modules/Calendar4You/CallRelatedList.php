@@ -99,4 +99,3 @@ if ($singlepane_view == 'true' && $action == 'CallRelatedList') {
 
 	$smarty->display("modules/Calendar4You/RelatedLists.tpl");
 }
-?>

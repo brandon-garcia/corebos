@@ -1209,4 +1209,3 @@ class Accounts extends CRMEntity {
 		}
 	}
 }
-?>

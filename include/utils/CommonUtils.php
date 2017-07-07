@@ -3420,4 +3420,3 @@ function getmail_contents_portalUser($request_array,$password,$type='')
 
 }
 
-?>

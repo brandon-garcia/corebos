@@ -214,4 +214,3 @@ class colorHarmony extends colorConverter {
 
 }
 
-?>

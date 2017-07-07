@@ -54,4 +54,3 @@ $smarty->assign("APP",$app_strings);
 $data = $smarty->fetch("modules/PickList/AssignPicklistValues.tpl");
 echo $data;
 
-?>

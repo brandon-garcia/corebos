@@ -62,4 +62,3 @@ if($focus->id != '')
 }
 
 header("Location:index.php?module=Faq&action=DetailView&record=$focus->id&return_module=Faq&return_action=DetailView&return_id=$focus->id");
-?>

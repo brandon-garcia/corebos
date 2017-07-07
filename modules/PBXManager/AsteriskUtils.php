@@ -214,4 +214,3 @@ function addOutgoingcallHistory($current_user,$extension, $record ,$adb){
 
 	return $status;
 }
-?>

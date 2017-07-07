@@ -39,4 +39,3 @@ class ConfigPrefs {
 		return $defvalue;
 	}
 }
-?>

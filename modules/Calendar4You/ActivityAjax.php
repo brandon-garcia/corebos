@@ -158,4 +158,3 @@ if((isset($_REQUEST['type']) && $_REQUEST['type'] !='') || (isset($_REQUEST['n_t
 } else {
 	require_once('include/Ajax/CommonAjax.php');
 }
-?>

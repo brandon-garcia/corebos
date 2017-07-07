@@ -54,4 +54,3 @@ function vtws_changePassword($id, $oldPassword, $newPassword, $confirmPassword, 
 	}
 }
 
-?>

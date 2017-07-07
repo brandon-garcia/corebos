@@ -134,4 +134,3 @@ abstract class adLDAPCollection
         return false; 
      } 
 }
-?>

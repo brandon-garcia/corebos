@@ -138,4 +138,3 @@ function getRelatedFieldColumns($selected=""){
 	return $rel_fields;
 }
 
-?>

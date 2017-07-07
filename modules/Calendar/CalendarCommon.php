@@ -587,4 +587,3 @@ function calendarview_getUserSelectOptions($useridInUse) {
 	return $userSelectdata;
 }
 
-?>

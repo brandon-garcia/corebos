@@ -64,4 +64,3 @@ class CBAssignRelatedTask extends VTTask{
 	}
 }
 
-?>

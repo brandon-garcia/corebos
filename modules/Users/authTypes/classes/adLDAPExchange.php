@@ -387,4 +387,3 @@ class adLDAPExchange {
         return $entries;
     }
 }
-?>

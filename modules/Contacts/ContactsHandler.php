@@ -60,4 +60,3 @@ function Contacts_sendCustomerPortalLoginDetails($entityData){
 	}
 }
 
-?>

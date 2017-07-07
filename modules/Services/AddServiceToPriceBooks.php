@@ -165,4 +165,3 @@ $smarty->assign("CATEGORY", $parenttab);
 
 $smarty->display("AddProductToPriceBooks.tpl");
 
-?>

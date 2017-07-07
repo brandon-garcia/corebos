@@ -8,4 +8,3 @@
  * All Rights Reserved.
  ************************************************************************************/
 require_once('modules/Vtiger/CallRelatedList.php');
-?>

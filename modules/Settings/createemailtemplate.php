@@ -41,4 +41,3 @@ $smarty->assign('SUBJECT', '');
 $smarty->assign('BODY', '');
 $smarty->assign('EMAILFROM', '');
 $smarty->display("CreateEmailTemplate.tpl");
-?>

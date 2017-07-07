@@ -34,4 +34,3 @@ class cbLoginHistory extends CRMEntity {
 	}
 
 }
-?>

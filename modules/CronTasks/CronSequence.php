@@ -36,4 +36,3 @@ if($move == 'Down'){
 }
 $loc = "Location: index.php?action=CronTasksAjax&file=ListCronJobs&module=CronTasks&directmode=ajax";
 header($loc);
-?>

@@ -111,4 +111,3 @@ if(isset($_REQUEST['detailview']) && $_REQUEST['detailview'] != '')
 else
 	$smarty->display("CurrencyEditView.tpl");
 
-?>

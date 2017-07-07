@@ -835,4 +835,3 @@ function insertIntoRecurringTable(& $recurObj)
 		return false;
 	}
 }
-?>

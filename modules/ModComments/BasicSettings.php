@@ -68,4 +68,3 @@ if(!is_admin($current_user)) {
 		$smarty->display(vtlib_getModuleTemplate($currentModule,'BasicSettingsContents.tpl'));
 	}
 }
-?>

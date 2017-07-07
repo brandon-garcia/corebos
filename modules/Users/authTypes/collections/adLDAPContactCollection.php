@@ -43,4 +43,3 @@ class adLDAPContactCollection extends adLDAPCollection
 
     }
 }
-?>

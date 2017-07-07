@@ -11,4 +11,3 @@
 
 $audit_trail = 'false';
 
-?>

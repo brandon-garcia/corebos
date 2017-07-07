@@ -135,4 +135,3 @@ else
 	$smarty->assign('ERROR_MESSAGE', getTranslatedString('LBL_PERMISSION'));
 	$smarty->display('applicationmessage.tpl');
 }
-?>

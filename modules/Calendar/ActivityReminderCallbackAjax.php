@@ -140,4 +140,3 @@ if(isPermitted('Calendar','index') == 'yes'){
 	}
 }
 
-?>

@@ -36,4 +36,3 @@ if (isset($cvid) && $cvid != '') {
 		exit;
 	}
 }
-?>

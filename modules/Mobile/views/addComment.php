@@ -27,4 +27,3 @@ class crmtogo_UI_AddComment extends crmtogo_WS_AddComment {
 		return $response;
 	}
 }
-?>

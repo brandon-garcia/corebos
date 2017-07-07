@@ -523,4 +523,3 @@ class cbtranslation extends CRMEntity {
 	}
 
 }
-?>

@@ -119,4 +119,3 @@ abstract class MailManager_Controller {
 		}
 	}
 }
-?>

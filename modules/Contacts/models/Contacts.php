@@ -215,4 +215,3 @@ class Google_Contacts_Model extends WSAPP_SyncRecordModel {
 
 }
 
-?>

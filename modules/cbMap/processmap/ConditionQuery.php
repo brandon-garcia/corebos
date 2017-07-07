@@ -132,4 +132,3 @@ class ConditionQuery extends processcbMap {
 	}
 
 }
-?>

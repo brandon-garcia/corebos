@@ -1361,4 +1361,3 @@ function getBlocksPortal1($module, $disp_view, $mode, $col_fields = '', $info_ty
 	return $getBlockInfo;
 }
 }
-?>

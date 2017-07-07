@@ -43,4 +43,3 @@ if (!empty($contactid)) {
 }
 $smarty->assign('CONTACT_HIERARCHY',$hierarchy);
 $smarty->display('modules/Contacts/ContactHierarchy.tpl');
-?>

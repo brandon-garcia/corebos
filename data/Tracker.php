@@ -154,4 +154,3 @@ function prune_history($user_id) {
 }
 
 }
-?>

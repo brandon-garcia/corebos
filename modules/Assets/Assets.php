@@ -285,4 +285,3 @@ class Assets extends CRMEntity {
 		}
 	}
 }
-?>

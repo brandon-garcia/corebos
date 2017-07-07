@@ -89,4 +89,3 @@ class ConvertInventoryModule extends VTTask{
 		$logbg->debug('ConvertInventoryModule: Result '.print_r($invmod,true));
 	}
 }
-?>

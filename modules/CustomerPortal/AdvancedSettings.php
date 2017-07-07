@@ -37,4 +37,3 @@ $smarty->assign('MODULE_VIEWALL',cp_getContactsViewInfo());
 $smarty->assign('USERS', cp_getUsers());
 $smarty->assign('USERID',cp_getCurrentUser());
 $smarty->display(vtlib_getModuleTemplate($currentModule,'AdvancedSettings.tpl'));
-?>

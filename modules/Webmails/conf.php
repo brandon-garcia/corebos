@@ -285,4 +285,3 @@ $conf->default_charset = 'UTF-8';
 ###################     End of Configuration     ####################
 */
 
-?>

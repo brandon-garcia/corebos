@@ -44,4 +44,3 @@ $pdf = $oReportRun->getReportPDF($filterlist);
 $pdf->Output('Reports.pdf','D');
 
 exit();
-?>

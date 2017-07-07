@@ -124,4 +124,3 @@ class Webform_Capture {
 // NOTE: Take care of stripping slashes...
 $webformCapture = new Webform_Capture();
 $webformCapture->captureNow($_REQUEST,$_SERVER);
-?>

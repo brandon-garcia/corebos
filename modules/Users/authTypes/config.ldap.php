@@ -45,4 +45,3 @@ $AUTH_LDAP_CFG['ad_pass']          = NULL;
 $AUTH_LDAP_CFG['ad_realgroup']     = true; //AD does not return the primary group.  Setting this to false will fudge "Domain Users" and is much faster.  True will resolve the real primary group, but may be resource intensive.
 
 // #########################################################################
-?>

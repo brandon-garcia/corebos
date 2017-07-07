@@ -116,4 +116,3 @@ if(file_exists('config-dev.inc.php')){
 	include('config-dev.inc.php');
 }
 
-?>

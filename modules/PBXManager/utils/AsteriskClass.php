@@ -172,4 +172,3 @@ class Asterisk {
 		return array_shift($this->queue);
 	}
 }
-?>
