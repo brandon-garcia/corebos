@@ -6,7 +6,7 @@
  * @author Shane Harter
  * @since 2011-07-28
  */
-class Core_Lock_Memcached extends Core_Lock_Lock implements Core_IPlugin
+class Core_Lock_Memcached extends Core_Lock_Lock
 {
     /**
      * @var Core_Memcache
