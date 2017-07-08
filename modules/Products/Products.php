@@ -13,7 +13,7 @@ require_once('include/RelatedListView.php');
 require('user_privileges/default_module_view.php');
 
 class Products extends CRMEntity {
-	public public $db, $log; // Used in class functions of CRMEntity
+	public $db, $log; // Used in class functions of CRMEntity
 
 	public $table_name = 'vtiger_products';
 	public $table_index= 'productid';

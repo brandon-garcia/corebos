@@ -11,7 +11,7 @@ require_once('data/CRMEntity.php');
 require_once('data/Tracker.php');
 
 class cbTermConditions extends CRMEntity {
-	public public $db, $log; // Used in class functions of CRMEntity
+	public $db, $log; // Used in class functions of CRMEntity
 
 	public $table_name = 'vtiger_cbtandc';
 	public $table_index= 'cbtandcid';

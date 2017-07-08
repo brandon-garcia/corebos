@@ -18,7 +18,7 @@ require_once('include/utils/utils.php');
 require('user_privileges/default_module_view.php');
 
 class Accounts extends CRMEntity {
-	public public $db, $log; // Used in class functions of CRMEntity
+	public $db, $log; // Used in class functions of CRMEntity
 
 	public $table_name = 'vtiger_account';
 	public $table_index= 'accountid';

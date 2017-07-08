@@ -12,7 +12,7 @@ require_once('data/Tracker.php');
 require('user_privileges/default_module_view.php');
 
 class HelpDesk extends CRMEntity {
-	public public $db, $log; // Used in class functions of CRMEntity
+	public $db, $log; // Used in class functions of CRMEntity
 
 	public $table_name = 'vtiger_troubletickets';
 	public $table_index= 'ticketid';

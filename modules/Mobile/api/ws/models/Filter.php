@@ -11,7 +11,7 @@ include_once 'modules/CustomView/CustomView.php';
 
 class crmtogo_WS_FilterModel {
 	
-	public public $filterid, $moduleName;
+	public $filterid, $moduleName;
 	public $user;
 	protected $customView;
 	

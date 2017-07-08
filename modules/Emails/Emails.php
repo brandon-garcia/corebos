@@ -17,7 +17,7 @@ require_once('modules/Potentials/Potentials.php');
 require_once('modules/Users/Users.php');
 
 class Emails extends CRMEntity {
-	public public $db, $log; // Used in class functions of CRMEntity
+	public $db, $log; // Used in class functions of CRMEntity
 
 	public $table_name = 'vtiger_activity';
 	public $table_index = 'activityid';

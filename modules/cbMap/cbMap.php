@@ -12,7 +12,7 @@ require_once('data/Tracker.php');
 require_once('modules/cbMap/processmap/processMap.php');
 
 class cbMap extends CRMEntity {
-	public public $db, $log; // Used in class functions of CRMEntity
+	public $db, $log; // Used in class functions of CRMEntity
 
 	public $table_name = 'vtiger_cbmap';
 	public $table_index= 'cbmapid';

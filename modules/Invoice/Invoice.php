@@ -12,7 +12,7 @@ require_once('data/Tracker.php');
 require_once('modules/InventoryDetails/InventoryDetails.php');
 
 class Invoice extends CRMEntity {
-	public public $db, $log; // Used in class functions of CRMEntity
+	public $db, $log; // Used in class functions of CRMEntity
 
 	public $table_name = 'vtiger_invoice';
 	public $table_index= 'invoiceid';

@@ -12,7 +12,7 @@ require_once('data/Tracker.php');
 require_once('include/upload_file.php');
 
 class Documents extends CRMEntity {
-	public public $db, $log; // Used in class functions of CRMEntity
+	public $db, $log; // Used in class functions of CRMEntity
 	public $table_name = 'vtiger_notes';
 	public $table_index= 'notesid';
 	public $column_fields = Array();

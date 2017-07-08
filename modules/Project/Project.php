@@ -11,7 +11,7 @@ require_once('data/CRMEntity.php');
 require_once('data/Tracker.php');
 
 class Project extends CRMEntity {
-	public public $db, $log; // Used in class functions of CRMEntity
+	public $db, $log; // Used in class functions of CRMEntity
 
 	public $table_name = 'vtiger_project';
 	public $table_index= 'projectid';

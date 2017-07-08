@@ -15,7 +15,7 @@ require_once('modules/Leads/Leads.php');
 require('user_privileges/default_module_view.php');
 
 class Campaigns extends CRMEntity {
-	public public $db, $log; // Used in class functions of CRMEntity
+	public $db, $log; // Used in class functions of CRMEntity
 
 	public $table_name = "vtiger_campaign";
 	public $table_index= 'campaignid';

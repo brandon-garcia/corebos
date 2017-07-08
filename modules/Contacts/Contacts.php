@@ -18,7 +18,7 @@ require_once('modules/HelpDesk/HelpDesk.php');
 require('user_privileges/default_module_view.php');
 
 class Contacts extends CRMEntity {
-	public public $db, $log; // Used in class functions of CRMEntity
+	public $db, $log; // Used in class functions of CRMEntity
 
 	public $table_name = 'vtiger_contactdetails';
 	public $table_index= 'contactid';

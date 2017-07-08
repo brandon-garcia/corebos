@@ -2604,8 +2604,7 @@ function formatForSqlLike($str, $flag=0,$is_field=false) {
 	global $adb;
 	if (isset($str)) {
 		if($is_field==false){
-			$str = str_replace('%', '\%', $str);
-			$str = str_replace('_', '\_', $str);
+			$str = str_replace('_', '\_', str_replace('%', '\%', $str));
 			if ($flag == 0) {
 				$str = '%'. $str .'%';
 			} elseif ($flag == 1) {

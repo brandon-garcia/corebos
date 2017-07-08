@@ -14,7 +14,7 @@ require('user_privileges/default_module_view.php');
 require_once('modules/InventoryDetails/InventoryDetails.php');
 
 class Quotes extends CRMEntity {
-	public public $db, $log; // Used in class functions of CRMEntity
+	public $db, $log; // Used in class functions of CRMEntity
 
 	public $table_name = 'vtiger_quotes';
 	public $table_index= 'quoteid';
