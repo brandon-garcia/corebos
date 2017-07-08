@@ -1673,7 +1673,7 @@ class CRMEntity {
 							$strip = 0;
 						$temp = str_repeat("0", $strip);
 						$cur_id = $temp . ($cur_id + 1);
-						$returninfo['updatedrecords'] = $returninfo['updatedrecords'] + 1;
+						++$returninfo['updatedrecords'];
 					}
 					if ($old_cur_id != $cur_id) {
 						$adb->pquery("UPDATE vtiger_modentity_num set cur_id=? where semodule=? and active=1", Array($cur_id, $module));

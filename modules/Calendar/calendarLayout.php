@@ -1073,7 +1073,7 @@ function getdayEventLayer(& $cal,$slice,$rows)
 	$cal_log->debug("Entering getdayEventLayer() method...");
 	$eventlayer = '';
 	$arrow_img_name = '';
-	$rows = $rows + 1;
+	++$rows;
 	$last_colwidth = 100 / $rows;
 	$width = 100 / $rows ;
 	$act = $cal['calendar']->day_slice[$slice]->activities;

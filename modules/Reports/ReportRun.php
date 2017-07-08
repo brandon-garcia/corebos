@@ -1425,7 +1425,7 @@ class ReportRun extends CRMEntity {
 			if($fieldcolname != "none")
 			{
 				$this->orderbylistcolumns[] = $fieldcolname;
-				$n = $n + 1;
+				++$n;
 				$selectedfields = explode(":",$fieldcolname);
 				if($n > 1)
 				{
@@ -3288,7 +3288,7 @@ class ReportRun extends CRMEntity {
 			$headerHTML = '';
 			foreach($arr_val[0] as $key=>$value) {
 				$headerHTML .= '<td width="'.$col_width[$count].'" bgcolor="#DDDDDD"><b>'.$key.'</b></td>';
-				$count = $count + 1;
+				++$count;
 			}
 			$dataHTML = '';
 			foreach($arr_val as $key=>$array_value) {
@@ -3296,7 +3296,7 @@ class ReportRun extends CRMEntity {
 				$count = 0;
 				foreach($array_value as $hd=>$value) {
 					$valueHTML .= '<td width="'.$col_width[$count].'">'.$value.'</td>';
-					$count = $count + 1;
+					++$count;
 				}
 				$dataHTML .= '<tr>'.$valueHTML.'</tr>';
 			}
@@ -3406,12 +3406,12 @@ class ReportRun extends CRMEntity {
 				// NOTE Performance overhead: http://stackoverflow.com/questions/9965476/phpexcel-column-size-issues
 				$worksheet->getColumnDimensionByColumn($count)->setAutoSize(true);
 
-				$count = $count + 1;
+				++$count;
 				if ($FieldDataTypes[$key]=='currency') {
 					$worksheet->setCellValueExplicitByColumnAndRow($count, $rowcount, getTranslatedString('LBL_CURRENCY'), true);
 					$worksheet->getStyleByColumnAndRow($count, $rowcount)->applyFromArray($header_styles);
 					$worksheet->getColumnDimensionByColumn($count)->setAutoSize(true);
-					$count = $count + 1;
+					++$count;
 				}
 			}
 
@@ -3474,10 +3474,10 @@ class ReportRun extends CRMEntity {
 						$worksheet->getStyleByColumnAndRow($count, $rowcount)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_DATE_TIME4);
 					}
 					if ($FieldDataTypes[$hdr]=='currency') {
-						$count = $count + 1;
+						++$count;
 						$worksheet->setCellValueExplicitByColumnAndRow($count, $rowcount, $csym, PHPExcel_Cell_DataType::TYPE_STRING);
 					}
-					$count = $count + 1;
+					++$count;
 				}
 				$rowcount++;
 				$workbook->getActiveSheet()->getRowDimension($rowcount)->setRowHeight($xlsrowheight);
@@ -3491,13 +3491,13 @@ class ReportRun extends CRMEntity {
 				if (is_array($totalxls[0])) {
 					$worksheet->setCellValueExplicitByColumnAndRow($count, $rowcount, getTranslatedString('Totals','Reports'), PHPExcel_Cell_DataType::TYPE_STRING);
 					$worksheet->getStyleByColumnAndRow($count, $rowcount)->applyFromArray($header_styles);
-					$count = $count + 1;
+					++$count;
 					foreach($totalxls[0] as $key=>$value) {
 						$chdr=substr($key,-3,3);
 						$translated_str = in_array($chdr ,array_keys($mod_strings))?$mod_strings[$chdr]:$key;
 						$worksheet->setCellValueExplicitByColumnAndRow($count, $rowcount, decode_html($translated_str), PHPExcel_Cell_DataType::TYPE_STRING);
 						$worksheet->getStyleByColumnAndRow($count, $rowcount)->applyFromArray($header_styles);
-						$count = $count + 1;
+						++$count;
 					}
 				}
 				$rowcount++;
@@ -3514,13 +3514,13 @@ class ReportRun extends CRMEntity {
 							$worksheet->setCellValueExplicitByColumnAndRow($count, $rowcount, decode_html($lbl), PHPExcel_Cell_DataType::TYPE_STRING);
 							$worksheet->getStyleByColumnAndRow($count, $rowcount)->applyFromArray($header_styles);
 							$workbook->getActiveSheet()->getRowDimension($rowcount)->setRowHeight($xlsrowheight);
-							$count = $count + 1;
+							++$count;
 						}
 						$value = str_replace($current_user->currency_grouping_separator, '', $value);
 						if ($current_user->currency_decimal_separator!='.')
 							$value = str_replace($current_user->currency_decimal_separator, '.', $value);
 						$worksheet->setCellValueExplicitByColumnAndRow($count, $rowcount, $value, PHPExcel_Cell_DataType::TYPE_NUMERIC);
-						$count = $count + 1;
+						++$count;
 					}
 					$rowcount++;
 				}

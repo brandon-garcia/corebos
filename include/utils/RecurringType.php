@@ -406,7 +406,7 @@ class RecurringType {
 						if (isset($this->recur_freq))
 							$month = $month + $this->recur_freq;
 						else
-							$month = $month + 1;
+							++$month;
 						$tempdateObj = $tempdateObj->getThismonthDaysbyIndex($index, $day, $month, $year);
 					}
 					else {

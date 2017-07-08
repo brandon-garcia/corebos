@@ -319,7 +319,7 @@ class vt_DateTime {
 		$this->daysinyear = 365;
 
 		if ($is_leap == 1){
-			$this->daysinyear += 1;
+			++$this->daysinyear;
 		}
 	}
 

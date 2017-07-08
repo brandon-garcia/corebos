@@ -25,7 +25,7 @@
 		}
 		
 		public function next(){
-			$this->pos+=1;
+			++$this->pos;
 		}
 		
 		public function current(){

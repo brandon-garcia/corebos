@@ -4245,7 +4245,7 @@ function html_substr($str, $start, $length = NULL) {
 
 function counterValue() {
 	static $counter = 0;
-	$counter = $counter + 1;
+	++$counter;
 	return $counter;
 }
 

@@ -26,7 +26,7 @@ class crmtogo_UI_ChangeSettings extends crmtogo_WS_Controller{
 			$k=0;
 			foreach ($idsInOrder as $modulename) {
 				$adb->pquery($query, array($k, $current_user->id, $modulename));
-				$k=$k+1;
+				++$k;
 			}
 			$response->setResult(json_encode('OK'));
 		}

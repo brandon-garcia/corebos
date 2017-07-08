@@ -39,7 +39,7 @@ if($_REQUEST['mode'] == 'history') {
 	$trackrecord = ModTracker_Basic::getByCRMId($reqid, $atpoint);
 	// If there is no more older records, show the last record itself
 	if($trackrecord === false && $atpoint > 0) {
-		$atpoint = $atpoint - 1;
+		--$atpoint;
 		$prevAtPoint = $atpoint; // Singal no more previous
 		$trackrecord = ModTracker_Basic::getByCRMId($reqid, $atpoint);
 	}

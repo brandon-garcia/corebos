@@ -60,7 +60,7 @@ class vtigerRSS extends CRMEntity {
 			{
 				$stringConvert = function_exists('iconv') ? @iconv('UTF-8',$default_charset,$item->get_title()) : $item->get_title();
 				$rss_title= ltrim(rtrim($stringConvert));
-				$i = $i + 1;
+				++$i;
 				$shtml .= "<tr class='prvPrfHoverOff' onmouseover=\"this.className='prvPrfHoverOn'\" onmouseout=\"this.className='prvPrfHoverOff'\"><td><a href=\"javascript:display('".$item->get_permalink()."','feedlist_".$i."')\"; id='feedlist_".$i."' class=\"rssNews\">".$rss_title."</a></td><td>".$this->rss_title."</td></tr>";
 				if($i == 10)
 				{
@@ -93,7 +93,7 @@ class vtigerRSS extends CRMEntity {
 					$return_more=Array("Details"=>$return_value,"More"=>$this->rss_link);
 					return $return_more;
 				}
-				$y = $y + 1;
+				++$y;
 				$return_value[]=Array($title,$link);
 			}
 			$return_more=Array("Details"=>$return_value,"More"=>$this->rss_link);
@@ -294,7 +294,7 @@ class vtigerRSS extends CRMEntity {
 		for($i=0;$i<$recordcount;$i++)
 		{
 			$starredhtml .= $sreturnhtml[$i].$sreturnhtml[$j];
-			$j = $j + 1;
+			++$j;
 		}
 		$starredhtml = "<table class='rssTable' cellspacing='0' cellpadding='0'>
 						<tr>
@@ -340,7 +340,7 @@ class vtigerRSS extends CRMEntity {
 		for($i=0;$i<$recordcount;$i++)
 		{
 			$starredhtml .= $sreturnhtml[$i].(isset($sreturnhtml[$j]) ? $sreturnhtml[$j] : '');
-			$j = $j + 1;
+			++$j;
 		}
 		$starredhtml = "<table class='rssTable' cellspacing='0' cellpadding='0'>
 						<tr>

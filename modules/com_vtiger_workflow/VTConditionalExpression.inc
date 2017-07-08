@@ -118,7 +118,7 @@ class VTConditionalParser{
 	}
 	
 	private function nextToken(){
-		$this->pos+=1;
+		++$this->pos;
 		return $this->tokens[$this->pos - 1];
 	}
 }

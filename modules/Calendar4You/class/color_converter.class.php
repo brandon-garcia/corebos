@@ -284,10 +284,10 @@ class colorConverter {
 				}
 
 				if($H<0) {
-					$H = $H+1;
+					++$H;
 				}
 				if($H>1) {
-					$H = $H-1;
+					--$H;
 				}
 			}
 
@@ -345,10 +345,10 @@ class colorConverter {
 	public function Hue2RGB($temp1, $temp2, $temp3) { // part of HSL2RGB function
 
 		if($temp3<0) {
-			$temp3 = $temp3+1;
+			++$temp3;
 		}
 		if($temp3>1) {
-			$temp3 = $temp3-1;
+			--$temp3;
 		}
 
 		if((6*$temp3)<1) {

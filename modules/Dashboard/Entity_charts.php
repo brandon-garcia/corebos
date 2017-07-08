@@ -203,7 +203,7 @@ function module_Chart($user_id,$date_start="2000-01-01",$end_date="2017-01-01",$
 			if(!isset($mod_tot_cnt_array[$crtd_date]))
 				$mod_tot_cnt_array[$crtd_date]=0;
 
-			$mod_tot_cnt_array[$crtd_date]+=1;
+			++$mod_tot_cnt_array[$crtd_date];
 
 			if (in_array($mod_name,$mod_name_array) == false) {
 				array_push($mod_name_array,$mod_name);

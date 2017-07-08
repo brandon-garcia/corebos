@@ -942,7 +942,7 @@ class Accounts extends CRMEntity {
 		$num_rows = $adb->num_rows($res);
 
 		if ($num_rows > 0) {
-			$depth = $depth + 1;
+			++$depth;
 			for($i=0;$i<$num_rows;$i++) {
 				$child_acc_id = $adb->query_result($res, $i, 'accountid');
 				if(array_key_exists($child_acc_id,$child_accounts)) {

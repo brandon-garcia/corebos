@@ -144,7 +144,7 @@ class ListViewSession {
 				$firstPageRecordCount = $list_max_entries_per_page;
 			}else{
 				$firstPageRecordCount = $bufferRecordCount;
-				$current -=1;
+				--$current;
 			}
 
 			$searchKey = array_search($currentRecordId,$navigationRecordList);

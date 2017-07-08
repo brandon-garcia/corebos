@@ -129,7 +129,7 @@ class CustomReportUtils {
 			$condition = "";
 			$quraterNum = $month / 3;
 			if ($month % 3 == 0)
-				$quraterNum = $quraterNum - 1;
+				--$quraterNum;
 			$startingMonth = 3 * ($quraterNum);
 			$quarterMonth = $startingMonth;
 			if ($quarterMonth < 10) {

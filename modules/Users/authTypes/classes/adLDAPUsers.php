@@ -133,7 +133,7 @@ class adLDAPUsers {
         $val=0;
 
         if (is_array($options)) {
-            if (in_array("SCRIPT",$options)){ $val=$val+1; }
+            if (in_array("SCRIPT",$options)){ ++$val; }
             if (in_array("ACCOUNTDISABLE",$options)){ $val=$val+2; }
             if (in_array("HOMEDIR_REQUIRED",$options)){ $val=$val+8; }
             if (in_array("LOCKOUT",$options)){ $val=$val+16; }

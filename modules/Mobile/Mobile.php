@@ -51,7 +51,7 @@ class Mobile {
 			$supported_module = array ('Contacts','Accounts','Leads','Calendar','Potentials','HelpDesk','Vendors','Assets','Faq','Documents','Quotes','SalesOrder','Invoice','Products','Project','ProjectMilestone','ProjectTask','Events');
 			foreach ($supported_module as $mdulename) {
 				$db->pquery("INSERT INTO `berli_crmtogo_modules` (`crmtogo_user`, `crmtogo_module`, `crmtogo_active`, `order_num`) VALUES (?, ?, ?, ?)", array('1',$mdulename, '1', $seq));
-				$seq = $seq + 1;
+				++$seq;
 			}
 			$log->fatal('crmtogo admin module settings are created');
 		} 
@@ -101,7 +101,7 @@ class Mobile {
 				$supported_module = array ('Contacts','Accounts','Leads','Calendar','Potentials','HelpDesk','Vendors','Assets','Faq','Documents','Quotes','SalesOrder','Invoice','Products','Project','ProjectMilestone','ProjectTask','Events');
 				foreach ($supported_module as $mdulename) {
 					$db->pquery("INSERT INTO `berli_crmtogo_modules` (`crmtogo_user`, `crmtogo_module`, `crmtogo_active`, `order_num`) VALUES (?, ?, ?, ?)", array('1',$mdulename, '1', $seq));
-					$seq = $seq + 1;
+					++$seq;
 				}
 				$log->fatal('crmtogo admin module settings are created');
 			}
