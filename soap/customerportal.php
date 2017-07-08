@@ -497,8 +497,8 @@ function get_combo_values($input_array)
 											(SELECT contactid FROM vtiger_contactdetails WHERE accountid =
 													(SELECT accountid FROM vtiger_contactdetails WHERE contactid=?))
 							';
-			array_push($params, $id);
-			array_push($params, $id);
+			$params[] = $id;
+			$params[] = $id;
 		}
 		$serviceResult = $adb->pquery($servicequery,$params);
 
@@ -688,7 +688,7 @@ function get_tickets_list($input_array) {
 	$entity_ids_list = array();
 	if($only_mine == 'true' || $show_all == 'false')
 	{
-		array_push($entity_ids_list,$id);
+		$entity_ids_list[] = $id;
 	}
 	else
 	{
@@ -1590,7 +1590,7 @@ function get_list_values($id,$module,$sessionid,$only_mine='true')
 	$show_all=show_all($module);
 	if($only_mine == 'true' || $show_all == 'false')
 	{
-		array_push($entity_ids_list,$id);
+		$entity_ids_list[] = $id;
 	}
 	else
 	{
@@ -2123,7 +2123,7 @@ function get_product_list_values($id,$modulename,$sessionid,$only_mine='true')
 
 	if($only_mine == 'true' || $show_all == 'false')
 	{
-		array_push($entity_ids_list,$id);
+		$entity_ids_list[] = $id;
 	}
 	else
 	{
@@ -3046,7 +3046,7 @@ function get_service_list_values($id,$modulename,$sessionid,$only_mine='true')
 
 	if($only_mine == 'true' || $show_all == 'false')
 	{
-		array_push($entity_ids_list,$id);
+		$entity_ids_list[] = $id;
 	}
 	else
 	{

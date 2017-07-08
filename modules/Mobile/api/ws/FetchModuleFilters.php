@@ -52,7 +52,7 @@ class crmtogo_WS_FetchModuleFilters extends crmtogo_WS_Controller {
 			(SELECT vtiger_user2role.userid FROM vtiger_user2role INNER JOIN vtiger_users on vtiger_users.id=vtiger_user2role.userid 
 			INNER JOIN vtiger_role on vtiger_role.roleid=vtiger_user2role.roleid WHERE vtiger_role.parentrole LIKE '".$current_user_parent_role_seq."::%'))";
 			
-			array_push($parameters, $current_user->id);
+			$parameters[] = $current_user->id;
 		}
 		
 		$result = $adb->pquery($sql, $parameters);

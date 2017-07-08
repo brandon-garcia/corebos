@@ -256,7 +256,7 @@ class adLDAPContacts {
             } elseif ($includeDescription){
                 $usersArray[$entries[$i]["distinguishedname"][0]] = $entries[$i]["distinguishedname"][0];
             } else {
-                array_push($usersArray, $entries[$i]["distinguishedname"][0]);
+                $usersArray[] = $entries[$i]["distinguishedname"][0];
             }
         }
         if ($sorted) { 

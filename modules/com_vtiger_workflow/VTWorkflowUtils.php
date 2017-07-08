@@ -43,7 +43,7 @@ class VTWorkflowUtils {
 		if (empty(self::$userStack) || count(self::$userStack) == 0) {
 			self::$loggedInUser = $current_user;
 		}
-		array_push(self::$userStack, $current_user);
+		self::$userStack[] = $current_user;
 		$current_user = $user;
 		return $user;
 	}
@@ -55,7 +55,7 @@ class VTWorkflowUtils {
 	public function loggedInUser() {
 		$user = self::$loggedInUser;
 		global $current_user;
-		array_push(self::$userStack, $current_user);
+		self::$userStack[] = $current_user;
 		$current_user = $user;
 		return $user;
 	}

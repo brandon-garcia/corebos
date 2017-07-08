@@ -548,7 +548,7 @@ class adLDAPUsers {
             } elseif ($includeDescription){
                 $usersArray[$entries[$i]["samaccountname"][0]] = $entries[$i]["samaccountname"][0];
             } else {
-                array_push($usersArray, $entries[$i]["samaccountname"][0]);
+                $usersArray[] = $entries[$i]["samaccountname"][0];
             }
         }
         if ($sorted) { 
@@ -611,7 +611,7 @@ class adLDAPUsers {
                 $usersArray[$entries[$i]["samaccountname"][0]] = $entries[$i]["samaccountname"][0];
             }
             else {
-                array_push($usersArray, $entries[$i]["samaccountname"][0]);
+                $usersArray[] = $entries[$i]["samaccountname"][0];
             }
         }
         if ($sorted){ 

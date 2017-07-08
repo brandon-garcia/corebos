@@ -1795,7 +1795,7 @@ function deleteRoleRelatedSharingRules($roleId)
 		$params = array($roleId);
 		if(sizeof($colNameArr) >1) {
 			$query .=" or ".$colNameArr[1]."=?";
-			array_push($params, $roleId);
+			$params[] = $roleId;
 		}
 		$result=$adb->pquery($query, $params);
 		$num_rows=$adb->num_rows($result);
@@ -1826,7 +1826,7 @@ function deleteGroupRelatedSharingRules($grpId)
 		$params = array($grpId);
 		if(sizeof($colNameArr) >1) {
 			$query .=" or ".$colNameArr[1]."=?";
-			array_push($params, $grpId);
+			$params[] = $grpId;
 		}
 		$result=$adb->pquery($query, $params);
 		$num_rows=$adb->num_rows($result);
@@ -3079,12 +3079,12 @@ function getCurrentUserProfileList()
 		$profilename = $adb->query_result($resprofile, 0, 'profilename');
 		if(strpos($profilename, 'Mobile::') !== false){
 			if(defined('COREBOS_INSIDE_MOBILE')){
-				array_push($profList, $profid);
+				$profList[] = $profid;
 			}
 		}else{
-			array_push($profListTypeNoMobile, $profid);
+			$profListTypeNoMobile[] = $profid;
 			if(!defined('COREBOS_INSIDE_MOBILE')){
-				array_push($profList, $profid);
+				$profList[] = $profid;
 			}
 		}
 	}
@@ -3105,7 +3105,7 @@ function getCurrentUserGroupList()
 	if(sizeof($current_user_groups) > 0)
 	{
 		foreach ($current_user_groups as $grpid) {
-			array_push($grpList, $grpid);
+			$grpList[] = $grpid;
 		}
 	}
 	$log->debug('Exiting getCurrentUserGroupList method ...');
@@ -3203,11 +3203,11 @@ function constructList($array,$data_type)
 		{
 			if($data_type == "INTEGER")
 			{
-				array_push($list, $value);
+				$list[] = $value;
 			}
 			elseif($data_type == "VARCHAR")
 			{
-				array_push($list, "'".$value."'");
+				$list[] = "'".$value."'";
 			}
 			$i++;
 		}
@@ -3570,14 +3570,14 @@ function get_current_user_access_groups($module)
 	elseif(count($current_user_group_list) > 0)
 	{
 		$query .= " where groupid in (". generateQuestionMarks($current_user_group_list) .")";
-		array_push($params, $current_user_group_list);
+		$params[] = $current_user_group_list;
 		$result = $adb->pquery($query, $params);
 		$noof_group_rows=$adb->num_rows($result);
 	}
 	elseif(count($sharing_write_group_list) > 0)
 	{
 		$query .= " where groupid in (". generateQuestionMarks($sharing_write_group_list) .")";
-		array_push($params, $sharing_write_group_list);
+		$params[] = $sharing_write_group_list;
 		$result = $adb->pquery($query, $params);
 		$noof_group_rows=$adb->num_rows($result);
 	}

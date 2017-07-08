@@ -630,7 +630,7 @@ function getDefaultAssigneeEmailIds($groupId) {
 					$email = '';
 				}
 			}
-			array_push($emails,$email);
+			$emails[] = $email;
 		}
 		$adb->println("Email ids are selected => '".implode(',', $emails)."'");
 		} else {

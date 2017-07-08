@@ -100,9 +100,9 @@ class DashboardCharts {
 					$aAlts[$the_id] = array();
 				}
 				if (isset($sum[$stage_key][$the_id])) {
-					array_push($aAlts[$the_id], $the_user.' - '.$count[$stage_key][$the_id]." ".$mod_strings['LBL_OPPS_IN_STAGE']." $stage_translation");
+					$aAlts[$the_id][] = $the_user.' - '.$count[$stage_key][$the_id]." ".$mod_strings['LBL_OPPS_IN_STAGE']." $stage_translation";
 				} else {
-					array_push($aAlts[$the_id], '');
+					$aAlts[$the_id][] = '';
 				}
 				if (!isset($aTargets[$dsetidx])) {
 					$aTargets[$dsetidx] = array();
@@ -240,10 +240,10 @@ class DashboardCharts {
 			$m = $mes+1;
 			if (isset($closedWon[$m]['sum'])) {
 				$dset['data'][] = $closedWon[$m]['sum'];
-				array_push($aAlts['closedWon'], $mes_translation.' - '.$closedWon[$m]['sum']);
+				$aAlts['closedWon'][] = $mes_translation.' - '.$closedWon[$m]['sum'];
 			} else {
 				$dset['data'][] = 0;
-				array_push($aAlts['closedWon'], '');
+				$aAlts['closedWon'][] = '';
 			}
 		}
 		$datay[] = $dset;
@@ -260,10 +260,10 @@ class DashboardCharts {
 			$m = $mes+1;
 			if (isset($closedLost[$m]['sum'])) {
 				$dset['data'][] = $closedLost[$m]['sum'];
-				array_push($aAlts['closedLost'], $mes_translation.' - '.$closedLost[$m]['sum']);
+				$aAlts['closedLost'][] = $mes_translation.' - '.$closedLost[$m]['sum'];
 			} else {
 				$dset['data'][] = 0;
-				array_push($aAlts['closedLost'], '');
+				$aAlts['closedLost'][] = '';
 			}
 		}
 		$datay[] = $dset;
@@ -280,10 +280,10 @@ class DashboardCharts {
 			$m = $mes+1;
 			if (isset($notClosed[$m]['sum'])) {
 				$dset['data'][] = $notClosed[$m]['sum'];
-				array_push($aAlts['notClosed'], $mes_translation.' - '.$notClosed[$m]['sum']);
+				$aAlts['notClosed'][] = $mes_translation.' - '.$notClosed[$m]['sum'];
 			} else {
 				$dset['data'][] = 0;
-				array_push($aAlts['notClosed'], '');
+				$aAlts['notClosed'][] = '';
 			}
 		}
 		$datay[] = $dset;
@@ -391,9 +391,9 @@ class DashboardCharts {
 					$aAlts[$the_id] = array();
 				}
 				if (isset($sum[$stage_key][$the_id])) {
-					array_push($aAlts[$the_id], $the_user.' - '.$count[$stage_key][$the_id]." ".$mod_strings['LBL_OPPS_OUTCOME']." $stage_translation");
+					$aAlts[$the_id][] = $the_user.' - '.$count[$stage_key][$the_id]." ".$mod_strings['LBL_OPPS_OUTCOME']." $stage_translation";
 				} else {
-					array_push($aAlts[$the_id], '');
+					$aAlts[$the_id][] = '';
 				}
 				if (!isset($aTargets[$dsetidx])) {
 					$aTargets[$dsetidx] = array();

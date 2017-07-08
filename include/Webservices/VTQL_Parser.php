@@ -1051,7 +1051,7 @@ static public $yy_action = array(
         $yytos->stateno = $yyNewState;
         $yytos->major = $yyMajor;
         $yytos->minor = $yypMinor;
-        array_push($this->yystack, $yytos);
+        $this->yystack[] = $yytos;
         if (self::$yyTraceFILE && $this->yyidx > 0) {
             fprintf(self::$yyTraceFILE, "%sShift %d\n", self::$yyTracePrompt,
                 $yyNewState);
@@ -1358,7 +1358,7 @@ $tables[] = $objectMeta->getEntityBaseTable();
 $defaultTableList = $objectMeta->getEntityDefaultTableList();
 foreach($defaultTableList as $tableName){
 if(!in_array($tableName,$tables)){
-array_push($tables,$tableName);
+$tables[] = $tableName;
 }
 }
 $firstTable = $objectMeta->getEntityBaseTable();
@@ -1556,7 +1556,7 @@ if($firstTable!=$table){
             $x->stateno = 0;
             $x->major = 0;
             $this->yystack = array();
-            array_push($this->yystack, $x);
+            $this->yystack[] = $x;
         }
         $yyendofinput = ($yymajor==0);
         

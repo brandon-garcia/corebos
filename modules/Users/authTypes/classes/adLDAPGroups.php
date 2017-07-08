@@ -443,10 +443,10 @@ class adLDAPGroups {
         $processed = array(); 
         $retGroups = array(); 
      
-        array_push($stack, $group); // Initial Group to Start with 
+        $stack[] = $group; // Initial Group to Start with
         while (count($stack) > 0) {
             $parent = array_pop($stack);
-            array_push($processed, $parent);
+            $processed[] = $parent;
             
             $info = $this->info($parent, array("memberof"));
             
@@ -457,7 +457,7 @@ class adLDAPGroups {
                     $retGroups = array_merge($retGroups, $groupNames); //final groups to return
                     foreach ($groupNames as $id => $groupName) { 
                         if (!in_array($groupName, $processed)) {
-                            array_push($stack, $groupName);
+                            $stack[] = $groupName;
                         }
                     }
                 }
@@ -498,7 +498,7 @@ class adLDAPGroups {
                 $groupsArray[$entries[$i]["samaccountname"][0]] = $entries[$i]["samaccountname"][0];
             }
             else {
-                array_push($groupsArray, $entries[$i]["samaccountname"][0]);
+                $groupsArray[] = $entries[$i]["samaccountname"][0];
             }
         }
         if ($sorted) { 

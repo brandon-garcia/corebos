@@ -122,9 +122,9 @@ if (count($Load_Event_Status) > 0) {
 		$s_sql = "SELECT eventstatus FROM vtiger_eventstatus WHERE picklist_valueid = ?";
 		$s_result = $adb->pquery($s_sql, array($sid));
 		$eventstatus = $adb->query_result($s_result,0,"eventstatus");
-		array_push($Event_Status, $eventstatus); 
+		$Event_Status[] = $eventstatus;
 		$eventstatus = html_entity_decode($eventstatus,ENT_QUOTES,$default_charset);
-		array_push($Event_Status, $eventstatus);
+		$Event_Status[] = $eventstatus;
 	}
 }
 
@@ -134,9 +134,9 @@ if (count($Load_Task_Status) > 0) {
 		$s_sql = "SELECT taskstatus FROM vtiger_taskstatus WHERE picklist_valueid = ?";
 		$s_result = $adb->pquery($s_sql, array($sid));
 		$taskstatus = $adb->query_result($s_result,0,"taskstatus");
-		array_push($Task_Status, $taskstatus);
+		$Task_Status[] = $taskstatus;
 		$taskstatus = html_entity_decode($taskstatus,ENT_QUOTES,$default_charset);
-		array_push($Task_Status, $taskstatus);
+		$Task_Status[] = $taskstatus;
 	}
 }
 $showGroupEvents = GlobalVariable::getVariable('Calendar_Show_Group_Events',1);
