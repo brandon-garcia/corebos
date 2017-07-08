@@ -201,9 +201,10 @@ class SyncServer {
 	 * Web services
 	 *****************/
 
-	/**
-	 * Register the application
-	 */
+    /**
+     * Register the application
+     * @throws \WebServiceException
+     */
 	public function register($name, $type) {
 		if (empty($name)) {
 			throw new WebServiceException('WSAPP01',"No type specified");
@@ -236,9 +237,10 @@ class SyncServer {
 		return array ($name, $key);
 	}
 
-	/**
-	 * Handles Create/Update/Delete operations on record
-	 */
+    /**
+     * Handles Create/Update/Delete operations on record
+     * @throws \WebServiceException
+     */
 	public function put($key, $element, $user) {
 		$db = PearDatabase::getInstance();
 		$appid = $this->appid_with_key($key);
@@ -350,9 +352,10 @@ class SyncServer {
 		return $response;
 	}
 
-	/**
-	 * Share the Create/Update/Delete state information
-	 */
+    /**
+     * Share the Create/Update/Delete state information
+     * @throws \WebServiceException
+     */
 	public function get($key, $module, $token, $user) {
 		global $log;
 		$db = PearDatabase::getInstance();

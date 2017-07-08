@@ -229,12 +229,13 @@ class Users extends CRMEntity {
 		}
 	}
 
-	/**
-	 * Checks the User_AuthenticationType global variavle value for login type and forks off to the proper module
-	 *
-	 * @param string $user_password - The password of the user to authenticate
-	 * @return true if the user is authenticated, false otherwise
-	 */
+    /**
+     * Checks the User_AuthenticationType global variavle value for login type and forks off to the proper module
+     *
+     * @param string $user_password - The password of the user to authenticate
+     * @return true if the user is authenticated, false otherwise
+     * @throws \Exception
+     */
 	public function doLogin($user_password) {
 		$authType = GlobalVariable::getVariable('User_AuthenticationType', 'SQL');
 		if ($this->is_admin) $authType = 'SQL'; // admin users always login locally

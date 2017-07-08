@@ -165,13 +165,14 @@ class Google_Client
     return $this->fetchAccessTokenWithAuthCode($code);
   }
 
-  /**
-   * Attempt to exchange a code for an valid authentication token.
-   * Helper wrapped around the OAuth 2.0 implementation.
-   *
-   * @param $code string code from accounts.google.com
-   * @return array access token
-   */
+    /**
+     * Attempt to exchange a code for an valid authentication token.
+     * Helper wrapped around the OAuth 2.0 implementation.
+     *
+     * @param $code string code from accounts.google.com
+     * @return array access token
+     * @throws \InvalidArgumentException
+     */
   public function fetchAccessTokenWithAuthCode($code)
   {
     if (strlen($code) == 0) {
@@ -203,11 +204,13 @@ class Google_Client
     return $this->fetchAccessTokenWithAssertion();
   }
 
-  /**
-   * Fetches a fresh access token with a given assertion token.
-   * @param $assertionCredentials optional.
-   * @return array access token
-   */
+    /**
+     * Fetches a fresh access token with a given assertion token.
+     * @param $assertionCredentials optional.
+     * @return array access token
+     * @throws \DomainException
+     * @throws \InvalidArgumentException
+     */
   public function fetchAccessTokenWithAssertion(ClientInterface $authHttp = null)
   {
     if (!$this->isUsingApplicationDefaultCredentials()) {
@@ -248,11 +251,13 @@ class Google_Client
     return $this->fetchAccessTokenWithRefreshToken($refreshToken);
   }
 
-  /**
-   * Fetches a fresh OAuth 2.0 access token with the given refresh token.
-   * @param string $refreshToken
-   * @return array access token
-   */
+    /**
+     * Fetches a fresh OAuth 2.0 access token with the given refresh token.
+     * @param string $refreshToken
+     * @return array access token
+     * @throws \LogicException
+     * @throws \InvalidArgumentException
+     */
   public function fetchAccessTokenWithRefreshToken($refreshToken = null)
   {
     if (null === $refreshToken) {
@@ -826,14 +831,16 @@ class Google_Client
     $this->setAuthConfig($file);
   }
 
-  /**
-   * Set the auth config from new or deprecated JSON config.
-   * This structure should match the file downloaded from
-   * the "Download JSON" button on in the Google Developer
-   * Console.
-   * @param string|array $json the configuration json
-   * @throws Google_Exception
-   */
+    /**
+     * Set the auth config from new or deprecated JSON config.
+     * This structure should match the file downloaded from
+     * the "Download JSON" button on in the Google Developer
+     * Console.
+     * @param string|array $json the configuration json
+     * @throws Google_Exception
+     * @throws \LogicException
+     * @throws \InvalidArgumentException
+     */
   public function setAuthConfig($config)
   {
     if (is_string($config)) {

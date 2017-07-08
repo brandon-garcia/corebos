@@ -416,10 +416,11 @@ class adLDAP {
     }
 
     /**
-    * Get the username of the account with higher priviledges
-    * 
-    * This will throw an exception for security reasons
-    */
+     * Get the username of the account with higher priviledges
+     *
+     * This will throw an exception for security reasons
+     * @throws \adLDAPException
+     */
     public function getAdminUsername()
     {
           throw new adLDAPException('For security reasons you cannot access the domain administrator account details');
@@ -437,10 +438,11 @@ class adLDAP {
     }
 
     /**
-    * Get the password of the account with higher priviledges
-    * 
-    * This will throw an exception for security reasons
-    */
+     * Get the password of the account with higher priviledges
+     *
+     * This will throw an exception for security reasons
+     * @throws \adLDAPException
+     */
     public function getAdminPassword()
     {
           throw new adLDAPException('For security reasons you cannot access the domain administrator account details');
@@ -515,14 +517,15 @@ class adLDAP {
     {
           return $this->useTLS;
     }
-    
+
     /**
-    * Set whether to use SSO
-    * Requires ldap_sasl_bind support. Be sure --with-ldap-sasl is used when configuring PHP otherwise this function will be undefined. 
-    * 
-    * @param bool $useSSO
-    * @return void
-    */
+     * Set whether to use SSO
+     * Requires ldap_sasl_bind support. Be sure --with-ldap-sasl is used when configuring PHP otherwise this function will be undefined.
+     *
+     * @param bool $useSSO
+     * @return void
+     * @throws \adLDAPException
+     */
     public function setUseSSO($useSSO)
     {
           if ($useSSO === true && !$this->ldapSaslSupported()) {
@@ -616,10 +619,11 @@ class adLDAP {
     }
 
     /**
-    * Connects and Binds to the Domain Controller
-    * 
-    * @return bool
-    */
+     * Connects and Binds to the Domain Controller
+     *
+     * @return bool
+     * @throws \adLDAPException
+     */
     public function connect() 
     {
         // Connect to the AD/LDAP server as the username/password
@@ -678,15 +682,16 @@ class adLDAP {
             @ldap_close($this->ldapConnection);
         }
     }
-    
+
     /**
-    * Validate a user's login credentials
-    * 
-    * @param string $username A user's AD username
-    * @param string $password A user's AD password
-    * @param bool optional $preventRebind
-    * @return bool
-    */
+     * Validate a user's login credentials
+     *
+     * @param string $username A user's AD username
+     * @param string $password A user's AD password
+     * @param bool optional $preventRebind
+     * @return bool
+     * @throws \adLDAPException
+     */
     public function authenticate($username, $password, $preventRebind = false) {
         // Prevent null binding
         if ($username === NULL || $password === NULL) { return false; } 

@@ -301,6 +301,7 @@ abstract class Core_Daemon
     /**
      * Run the setup() methods of installed plugins, installed workers, and the subclass, in that order. And dispatch the ON_INIT event.
      * @return void
+     * @throws \Exception
      */
     private function init()
     {
@@ -382,6 +383,7 @@ abstract class Core_Daemon
      * @param $method
      * @param $args
      * @return mixed
+     * @throws \Exception
      */
     public function __call($method, $args)
     {
@@ -1018,10 +1020,11 @@ abstract class Core_Daemon
     /**
      * Create a persistent Worker process. This is an object loader similar to Core_Daemon::plugin().
      *
-     * @param String $alias  The name of the worker -- Will be instantiated at $this->{$alias}
+     * @param String $alias The name of the worker -- Will be instantiated at $this->{$alias}
      * @param callable|Core_IWorker $worker An object of type Core_Worker OR a callable (function, callback, closure)
-     * @param Core_IWorkerVia $via  A Core_IWorkerVia object that defines the medium for IPC (In theory could be any message queue, redis, memcache, etc)
+     * @param Core_IWorkerVia $via A Core_IWorkerVia object that defines the medium for IPC (In theory could be any message queue, redis, memcache, etc)
      * @return Core_Worker_ObjectMediator Returns a Core_Worker class that can be used to interact with the Worker
+     * @throws \Exception
      * @todo Use 'callable' type hinting if/when we move to a php 5.4 requirement.
      */
     protected function worker($alias, $worker, Core_IWorkerVia $via = null)
@@ -1293,6 +1296,7 @@ abstract class Core_Daemon
      * Combination getter/setter for the $loop_interval property.
      * @param boolean $set_value
      * @return int|null
+     * @throws \Exception
      */
     protected function loop_interval($set_value = null)
     {
@@ -1326,6 +1330,7 @@ abstract class Core_Daemon
      * Combination getter/setter for the $pid property.
      * @param boolean $set_value
      * @return int
+     * @throws \Exception
      */
     protected function pid($set_value = null)
     {

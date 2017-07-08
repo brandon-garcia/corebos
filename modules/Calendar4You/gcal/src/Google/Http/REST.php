@@ -27,16 +27,18 @@ use Psr\Http\Message\ResponseInterface;
  */
 class Google_Http_REST
 {
-  /**
-   * Executes a Psr\Http\Message\RequestInterface and (if applicable) automatically retries
-   * when errors occur.
-   *
-   * @param Google_Client $client
-   * @param Psr\Http\Message\RequestInterface $req
-   * @return array decoded result
-   * @throws Google_Service_Exception on server side error (ie: not authenticated,
-   *  invalid or malformed post body, invalid url)
-   */
+    /**
+     * Executes a Psr\Http\Message\RequestInterface and (if applicable) automatically retries
+     * when errors occur.
+     *
+     * @param Google_Client $client
+     * @param Psr\Http\Message\RequestInterface $req
+     * @return array decoded result
+     * @throws \Google_Task_Exception
+     * @throws \Google_Task_Retryable
+     * @throws Google_Service_Exception on server side error (ie: not authenticated,
+     *  invalid or malformed post body, invalid url)
+     */
   public static function execute(
       ClientInterface $client,
       RequestInterface $request,

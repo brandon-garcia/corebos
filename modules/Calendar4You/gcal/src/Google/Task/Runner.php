@@ -168,12 +168,13 @@ class Google_Task_Runner
     return $this->attempts < $this->maxAttempts;
   }
 
-  /**
-   * Runs the task and (if applicable) automatically retries when errors occur.
-   *
-   * @return mixed
-   * @throws Google_Task_Retryable on failure when no retries are available.
-   */
+    /**
+     * Runs the task and (if applicable) automatically retries when errors occur.
+     *
+     * @return mixed
+     * @throws \Google_Service_Exception
+     * @throws Google_Task_Retryable on failure when no retries are available.
+     */
   public function run()
   {
     while ($this->attempt()) {

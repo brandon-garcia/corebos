@@ -292,6 +292,7 @@ abstract class Core_Worker_Mediator implements Core_ITask
      * for the desired commands, prompts, etc.
      *
      * @return void
+     * @throws \Exception
      */
     public function debug() {
 
@@ -485,9 +486,10 @@ abstract class Core_Worker_Mediator implements Core_ITask
      * If the daemon is in debug-mode, you can set breakpoints in your worker code. If "continue" commands were passed
      * in the debug shell, breakpoint will return true, otherwise false. It's up to you to handle that behavior in your app.
      * Note: If the daemon is not in debug mode, it will always just return true.
-     * @param string $prompt    The prompt to display
-     * @param integer $indent   The indentation level to use for the prompt, useful for grouping like-prompts together
+     * @param string $prompt The prompt to display
+     * @param integer $indent The indentation level to use for the prompt, useful for grouping like-prompts together
      * @return bool
+     * @throws \Exception
      */
     public function breakpoint($prompt = '', $indent = 0) {
         if (!Core_Daemon::get('debug_workers'))
@@ -959,6 +961,7 @@ abstract class Core_Worker_Mediator implements Core_ITask
     /**
      * If your worker object implements an execute() method, it can be called in the daemon using $this->MyAlias()
      * @return bool
+     * @throws \Exception
      */
     public function __invoke() {
         return $this->__call('execute', func_get_args());
@@ -1141,7 +1144,6 @@ abstract class Core_Worker_Mediator implements Core_ITask
     }
 
 
-
     /**
      * Re-run a previous call by passing in the call's struct.
      * Note: When calls are re-run a retry=1 property is added, and that is incremented for each re-call. You should check
@@ -1153,6 +1155,7 @@ abstract class Core_Worker_Mediator implements Core_ITask
      * stdClass object. You can re-run it by passing the object here.
      * @param stdClass $call
      * @return bool
+     * @throws \Exception
      */
     public function retry(Core_Worker_Call $call) {
         if (empty($call->method))

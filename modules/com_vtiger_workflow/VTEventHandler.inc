@@ -30,10 +30,11 @@ require_once('VTWorkflowUtils.php');
  */
 class VTWorkflowEventHandler extends VTEventHandler {
 
-	/**
-	 * Push tasks to the task queue if the conditions are true
-	 * @param $entityData A VTEntityData object representing the entity.
-	 */
+    /**
+     * Push tasks to the task queue if the conditions are true
+     * @param $entityData A VTEntityData object representing the entity.
+     * @throws \Exception
+     */
 	public function handleEvent($eventName, $entityData) {
 		$util = new VTWorkflowUtils();
 		$user = $util->adminUser();

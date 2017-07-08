@@ -65,15 +65,16 @@ class Google_AccessToken_Verify
     $this->jwt = $this->getJwtService();
   }
 
-  /**
-   * Verifies an id token and returns the authenticated apiLoginTicket.
-   * Throws an exception if the id token is not valid.
-   * The audience parameter can be used to control which id tokens are
-   * accepted.  By default, the id token must have been issued to this OAuth2 client.
-   *
-   * @param $audience
-   * @return array the token payload, if successful
-   */
+    /**
+     * Verifies an id token and returns the authenticated apiLoginTicket.
+     * Throws an exception if the id token is not valid.
+     * The audience parameter can be used to control which id tokens are
+     * accepted.  By default, the id token must have been issued to this OAuth2 client.
+     *
+     * @param $audience
+     * @return array the token payload, if successful
+     * @throws \LogicException
+     */
   public function verifyIdToken($idToken, $audience = null)
   {
     if (empty($idToken)) {

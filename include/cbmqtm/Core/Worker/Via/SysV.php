@@ -62,9 +62,10 @@ class Core_Worker_Via_SysV implements Core_IWorkerVia, Core_IPlugin {
     }
 
     /**
-    * Called on Construct or Init
-    * @return void
-    */
+     * Called on Construct or Init
+     * @return void
+     * @throws \Exception
+     */
     public function setup() {
         $this->setup_ipc();
         if (Core_Daemon::is('parent'))
@@ -220,10 +221,11 @@ class Core_Worker_Via_SysV implements Core_IWorkerVia, Core_IPlugin {
     }
 
     /**
-    * Retrieves a message from the queue
-    * @param $desired_type
-    * @return Core_Worker_Call
-    */
+     * Retrieves a message from the queue
+     * @param $desired_type
+     * @return Core_Worker_Call
+     * @throws \Exception
+     */
     public function get($desired_type, $blocking = false) {
         $blocking = $blocking ? 0 : MSG_IPC_NOWAIT;
         $message_type = $message = $message_error = null;

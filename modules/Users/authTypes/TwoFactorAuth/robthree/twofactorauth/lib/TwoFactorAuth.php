@@ -46,6 +46,7 @@ class TwoFactorAuth
 
     /**
      * Create a new secret
+     * @throws \RobThree\Auth\TwoFactorAuthException
      */
     public function createSecret($bits = 80, $requirecryptosecure = true)
     {
@@ -111,6 +112,7 @@ class TwoFactorAuth
 
     /**
      * Get data-uri of QRCode
+     * @throws \RobThree\Auth\TwoFactorAuthException
      */
     public function getQRCodeImageAsDataUri($label, $secret, $size = 200)
     {
@@ -126,6 +128,7 @@ class TwoFactorAuth
 
     /**
      * Compare default timeprovider with specified timeproviders and ensure the time is within the specified number of seconds (leniency)
+     * @throws \RobThree\Auth\TwoFactorAuthException
      */
     public function ensureCorrectTime(array $timeproviders = null, $leniency = 5)
     {

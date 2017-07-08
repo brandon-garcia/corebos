@@ -126,6 +126,7 @@ class Core_Lib_DebugShell
      * @param $method
      * @param $args
      * @return bool|mixed|null|void
+     * @throws \Exception
      */
     public function __call($method, $args) {
         $o = $this->object;
@@ -178,6 +179,7 @@ class Core_Lib_DebugShell
     /**
      * Setup the debug shell: Attach any shared resources and register any prompts or parsers.
      * @return void
+     * @throws \Exception
      */
     public function setup_shell() {
         ini_set('display_errors', 0); // Displayed errors won't break the debug console but it will make it more difficult to use. Tail a log file in another shell instead.

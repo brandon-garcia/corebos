@@ -222,12 +222,13 @@ class ModTracker {
 		return false;
 	}
 
-	/**
-	 * Get the list of changed record after $mtime
-	 * @param <type> $mtime
-	 * @param <type> $user
-	 * @param <type> $limit
-	 */
+    /**
+     * Get the list of changed record after $mtime
+     * @param <type> $mtime
+     * @param <type> $user
+     * @param <type> $limit
+     * @throws \Exception
+     */
 	public function getChangedRecords($uniqueId, $mtime, $limit = 100) {
 		global $current_user, $adb;
 		$datetime = date('Y-m-d H:i:s', $mtime);

@@ -149,15 +149,17 @@ class Google_Http_MediaFileUpload
     return $this->httpResultCode;
   }
 
-  /**
-  * Sends a PUT-Request to google drive and parses the response,
-  * setting the appropiate variables from the response()
-  *
-  * @param Google_Http_Request $httpRequest the Reuqest which will be send
-  *
-  * @return false|mixed false when the upload is unfinished or the decoded http response
-  *
-  */
+    /**
+     * Sends a PUT-Request to google drive and parses the response,
+     * setting the appropiate variables from the response()
+     *
+     * @param Google_Http_Request $httpRequest the Reuqest which will be send
+     *
+     * @return false|mixed false when the upload is unfinished or the decoded http response
+     * @throws \Google_Exception
+     * @throws \Google_Service_Exception
+     *
+     */
   private function makePutRequest(RequestInterface $request)
   {
     $response = $this->client->execute($request);

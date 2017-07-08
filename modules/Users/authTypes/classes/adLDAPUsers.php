@@ -63,15 +63,16 @@ class adLDAPUsers {
     public function authenticate($username, $password, $preventRebind = false) {
         return $this->adldap->authenticate($username, $password, $preventRebind);
     }
-    
+
     /**
-    * Create a user
-    * 
-    * If you specify a password here, this can only be performed over SSL
-    * 
-    * @param array $attributes The attributes to set to the user account
-    * @return bool
-    */
+     * Create a user
+     *
+     * If you specify a password here, this can only be performed over SSL
+     *
+     * @param array $attributes The attributes to set to the user account
+     * @return bool
+     * @throws \adLDAPException
+     */
     public function create($attributes)
     {
         // Check for compulsory fields
@@ -301,15 +302,16 @@ class adLDAPUsers {
 
         return false;
     }
-    
+
     /**
-    * Determine a user's password expiry date
-    * 
-    * @param string $username The username to query
-    * @param book $isGUID Is the username passed a GUID or a samAccountName
-    * @requires bcmath http://www.php.net/manual/en/book.bc.php
-    * @return array
-    */
+     * Determine a user's password expiry date
+     *
+     * @param string $username The username to query
+     * @param book $isGUID Is the username passed a GUID or a samAccountName
+     * @requires bcmath http://www.php.net/manual/en/book.bc.php
+     * @return array
+     * @throws \adLDAPException
+     */
     public function passwordExpiry($username, $isGUID = false) 
     {
         if ($username === NULL) { return "Missing compulsory field [username]"; }
@@ -373,15 +375,16 @@ class adLDAPUsers {
         
         return $status;
     }
-    
+
     /**
-    * Modify a user
-    * 
-    * @param string $username The username to query
-    * @param array $attributes The attributes to modify.  Note if you set the enabled attribute you must not specify any other attributes
-    * @param bool $isGUID Is the username passed a GUID or a samAccountName
-    * @return bool
-    */
+     * Modify a user
+     *
+     * @param string $username The username to query
+     * @param array $attributes The attributes to modify.  Note if you set the enabled attribute you must not specify any other attributes
+     * @param bool $isGUID Is the username passed a GUID or a samAccountName
+     * @return bool
+     * @throws \adLDAPException
+     */
     public function modify($username, $attributes, $isGUID = false)
     {
         if ($username === NULL) { return "Missing compulsory field [username]"; }
@@ -448,15 +451,16 @@ class adLDAPUsers {
         $result = $this->modify($username, $attributes, $isGUID);
         return !($result == false);
     }
-    
+
     /**
-    * Set the password of a user - This must be performed over SSL
-    * 
-    * @param string $username The username to modify
-    * @param string $password The new password
-    * @param bool $isGUID Is the username passed a GUID or a samAccountName
-    * @return bool
-    */
+     * Set the password of a user - This must be performed over SSL
+     *
+     * @param string $username The username to modify
+     * @param string $password The new password
+     * @param bool $isGUID Is the username passed a GUID or a samAccountName
+     * @return bool
+     * @throws \adLDAPException
+     */
     public function password($username, $password, $isGUID = false)
     {
         if ($username === NULL) { return false; }

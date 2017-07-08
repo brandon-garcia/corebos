@@ -35,6 +35,7 @@ class Core_Plugin_Ini implements Core_IPlugin, ArrayAccess
     /**
      * Called on Construct or Init
      * @return void
+     * @throws \Exception
      */
     public function setup()
     {

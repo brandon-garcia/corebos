@@ -46,6 +46,7 @@ class Core_Plugin_ProcessManager implements Core_IPlugin
     /**
      * Called on Construct or Init
      * @return void
+     * @throws \Exception
      */
     public function setup() {
         $this->daemon->on(Core_Daemon::ON_IDLE, array($this, 'reap'), 30);

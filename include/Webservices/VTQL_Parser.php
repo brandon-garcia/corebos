@@ -1031,6 +1031,7 @@ static public $yy_action = array(
      * @param int The new state to shift in
      * @param int The major token to shift in
      * @param mixed the minor token to shift in
+     * @throws \WebServiceException
      */
     public function yy_shift($yyNewState, $yyMajor, $yypMinor)
     {
@@ -1470,8 +1471,9 @@ if($firstTable!=$table){
 
     /**
      * The following code executes when the parse fails
-     * 
+     *
      * Code from %parse_fail is inserted here
+     * @throws \WebServiceException
      */
     public function yy_parse_failed()
     {
@@ -1493,10 +1495,11 @@ if($firstTable!=$table){
 
     /**
      * The following code executes when a syntax error first occurs.
-     * 
+     *
      * %syntax_error code is inserted here
      * @param int The major type of the error token
      * @param mixed The minor type of the error token
+     * @throws \WebServiceException
      */
     public function yy_syntax_error($yymajor, $TOKEN)
     {

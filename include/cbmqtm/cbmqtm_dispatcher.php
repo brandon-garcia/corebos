@@ -23,9 +23,10 @@ class coreBOS_MQTMDispatcher extends \Core_Daemon {
 	protected $cb_db = null;
 	protected $cb_mq = null;
 
-	/**
-	 * The only plugin we're using is a simple file-based lock to prevent 2 instances from running
-	 */
+    /**
+     * The only plugin we're using is a simple file-based lock to prevent 2 instances from running
+     * @throws \Exception
+     */
 	protected function setup_plugins() {
 		$this->plugin('Lock_File');
 	}
@@ -41,12 +42,13 @@ class coreBOS_MQTMDispatcher extends \Core_Daemon {
 		$this->loop_interval = GlobalVariable::getVariable('MQTM_Loop_Interval', 5, '', Users::getActiveAdminId());
 	}
 
-	/**
-	 * This is where you implement the tasks you want your daemon to perform.
-	 * This method is called at the frequency defined by loop_interval.
-	 *
-	 * @return void
-	 */
+    /**
+     * This is where you implement the tasks you want your daemon to perform.
+     * This method is called at the frequency defined by loop_interval.
+     *
+     * @return void
+     * @throws \Exception
+     */
 	protected function execute() {
 		if (empty($this->cb_db) or $this->cb_db->database->_connectionID->errno>0) {
 			global $adb;

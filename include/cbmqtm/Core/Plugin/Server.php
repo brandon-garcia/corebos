@@ -96,6 +96,7 @@ class Core_Plugin_Server implements Core_IPlugin
     /**
      * Called on Construct or Init
      * @return void
+     * @throws \Exception
      */
     public function setup() {
         $this->socket = socket_create(AF_INET, SOCK_STREAM, 0);
