@@ -35,13 +35,15 @@ $filename = preg_replace('/[\\/:\*\?"<>\|;]/', '_', str_replace('&#32;', ' ', $f
 $isIE = $isIE6 = 0;
 // Set correct http headers.
 // Thanks to Squirrelmail folks :-)
-if (strstr($HTTP_USER_AGENT, 'compatible; MSIE ') !== false &&
-  strstr($HTTP_USER_AGENT, 'Opera') === false) {
+if (false !== strpos($HTTP_USER_AGENT, 'compatible; MSIE ') &&
+    false === strpos($HTTP_USER_AGENT, 'Opera')
+) {
     $isIE = 1;
 }
 
-if (strstr($HTTP_USER_AGENT, 'compatible; MSIE 6') !== false &&
-  strstr($HTTP_USER_AGENT, 'Opera') === false) {
+if (false !== strpos($HTTP_USER_AGENT, 'compatible; MSIE 6') &&
+    false === strpos($HTTP_USER_AGENT, 'Opera')
+) {
     $isIE6 = 1;
 }
 

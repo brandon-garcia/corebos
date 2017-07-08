@@ -186,7 +186,7 @@ class ListViewController {
 				$this->setupAccessiblePicklistValueList($fieldName);
 			}
 			$idList=array();
-			if ($fieldName!='assigned_user_id' && strstr($fieldName,".assigned_user_id")) {
+			if ($fieldName!='assigned_user_id' && false !== strpos($fieldName, ".assigned_user_id")) {
 				$modrel=getTabModuleName($field->getTabId());
 				$fldcolname = 'smowner'.strtolower($modrel);
 				$j=$rowCount*$k;
@@ -237,7 +237,7 @@ class ListViewController {
 					if (null === $field) continue;
 				}
 				$uitype = $field->getUIType();
-				if($fieldName!='assigned_user_id' && strstr($fieldName,".assigned_user_id")) {
+				if($fieldName!='assigned_user_id' && false !== strpos($fieldName, ".assigned_user_id")) {
 					$modrel=getTabModuleName($field->getTabId());
 					$rawValue = $this->db->query_result($result, $i, "smowner".strtolower($modrel));
 				} else if(getTabid($currentModule)!=$field->getTabId()){
@@ -568,7 +568,7 @@ class ListViewController {
 						$value = '--';
 					}
 				} elseif($field->getFieldDataType() == 'owner') {
-					if($fieldName!='assigned_user_id' && strstr($fieldName,".assigned_user_id")) {
+					if($fieldName!='assigned_user_id' && false !== strpos($fieldName, ".assigned_user_id")) {
 						$value = textlength_check($this->ownerNameListrel[$fieldName][$value]);
 					} else {
 						$value = textlength_check($this->ownerNameList[$fieldName][$value]);

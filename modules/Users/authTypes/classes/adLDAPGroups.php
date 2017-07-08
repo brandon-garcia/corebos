@@ -394,7 +394,7 @@ class adLDAPGroups {
         if ($groupName === NULL) { return false; }
         if (!$this->adldap->getLdapBind()) { return false; }
         
-        if (stristr($groupName, '+')) {
+        if (false !== stripos($groupName, '+')) {
             $groupName = stripslashes($groupName);   
         }
         

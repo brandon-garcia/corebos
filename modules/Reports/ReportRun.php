@@ -1339,7 +1339,7 @@ class ReportRun extends CRMEntity {
 				$selectedfields = explode(":",$fieldcolname);
 				if($selectedfields[0] == "vtiger_crmentity".$this->primarymodule)
 					$selectedfields[0] = "vtiger_crmentity";
-				if(stripos($selectedfields[1],'cf_')==0 && stristr($selectedfields[1],'cf_')==true){
+				if(stripos($selectedfields[1],'cf_')==0 && false === stripos($selectedfields[1], 'cf_')){
 					$sqlvalue = "`".$adb->sql_escape_string(decode_html($selectedfields[2]))."` ".$sortorder;
 				} else {
 					$sqlvalue = "`".self::replaceSpecialChar($selectedfields[2])."` ".$sortorder;
@@ -1880,7 +1880,7 @@ class ReportRun extends CRMEntity {
 		if($advfiltersql != "") {
 			if($type == 'COLUMNSTOTOTAL')
 			{
-				if (strstr($advfiltersql,'vtiger_products'.$this->primarymodule) || strstr($advfiltersql,'vtiger_service'.$this->primarymodule))
+				if (false !== strpos($advfiltersql, 'vtiger_products' . $this->primarymodule) || false !== strpos($advfiltersql, 'vtiger_service' . $this->primarymodule))
 					$where_condition='add';
 			}
 			$wheresql .= " and ".$advfiltersql;

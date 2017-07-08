@@ -215,7 +215,7 @@ class adLDAPUsers {
             $username = $this->adldap->utilities()->strGuidToHex($username);
             $filter = "objectguid=" . $username;
         }
-        else if (strstr($username, "@")) {
+        else if (false !== strpos($username, "@")) {
              $filter = "userPrincipalName=" . $username;
         }
         else {

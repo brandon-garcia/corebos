@@ -28,7 +28,7 @@ function check_db_utf8_support($conn) {
 		// If we have all the required information break the loop.
 		if($db_character_set != null && $db_collation_type != null) break;
 	}
-	return (stristr($db_character_set, 'utf8') && stristr($db_collation_type, 'utf8'));
+	return (false !== stripos($db_character_set, 'utf8') && false !== stripos($db_collation_type, 'utf8'));
 }
 
 function get_db_charset($conn) {

@@ -211,7 +211,7 @@ else
 			// Walk through the array and replace any cf_* with the content of the name array, index is the cf_ var name
 			for ($arraywalk = 0; $arraywalk < count($fields_array); $arraywalk++) {
 				// echo "Checking: ".$fields_array[$arraywalk];
-				if (strstr($fields_array[$arraywalk], 'vtiger_cf_')) {
+				if (false !== strpos($fields_array[$arraywalk], 'vtiger_cf_')) {
 					$fields_array[$arraywalk] = $name[$fields_array[$arraywalk]];
 					// echo "Changing to: ".$fields_array[$arraywalk];
 				} else {

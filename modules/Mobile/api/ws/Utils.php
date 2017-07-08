@@ -487,7 +487,7 @@ class crmtogo_WS_Utils {
 			// END
 
 			//Before form the where condition, check whether the table for the field has been added in the listview query
-			if(strstr($listquery,$tablename)){
+			if(false !== strpos($listquery, $tablename)){
 				if($where != ''){
 					$where .= " OR ";
 				}

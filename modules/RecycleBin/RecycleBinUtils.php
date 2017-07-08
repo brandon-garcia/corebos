@@ -103,11 +103,11 @@ function basicRBsearch($module,$search_field,$search_string)
 			}
 			elseif($table_name == "vtiger_pricebook" && $column_name == "active")
 			{
-				if(stristr('yes',$search_string))
+				if(false !== stripos('yes', $search_string))
 				{
 					$where="$table_name.$column_name = 1";
 				}
-				else if(stristr('no',$search_string))
+				else if(false !== stripos('no', $search_string))
 				{
 					$where="$table_name.$column_name is NULL";
 				}

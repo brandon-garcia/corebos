@@ -22,11 +22,11 @@ if (is_writable($filename)) {
 			$buffer = fgets($readhandle, 5200);
 			list($starter, $tmp) = explode(" = ", $buffer);
 
-			if($starter == '$audit_trail' && stristr($tmp,'false'))
+			if($starter == '$audit_trail' && false !== stripos($tmp, 'false'))
 			{
 				$new_buffer .= "\$audit_trail = 'true';\n";
 			}
-			elseif($starter == '$audit_trail' && stristr($tmp,'true'))
+			elseif($starter == '$audit_trail' && false !== stripos($tmp, 'true'))
 			{
 				$new_buffer .= "\$audit_trail = 'false';\n";
 			}

@@ -62,7 +62,7 @@ class Asterisk {
 		sleep(1);	//wait for the response to come
 		$response = fread($this->sock, 4096);	//read the response
 
-		if(strstr($response,"Response") && (strstr($response,"Error") || strstr($response,"failed"))) {
+		if(false !== strpos($response, "Response") && (false !== strpos($response, "Error") || false !== strpos($response, "failed"))) {
 			print_r($response);
 			$this->log->debug($response);
 			return false;
@@ -86,7 +86,7 @@ class Asterisk {
 		}
 
 		//the caller would always be a SIP phone in our case
-		if(!strstr($from,"SIP")){
+		if(false === strpos($from, "SIP")){
 			$from = "SIP/$from";
 		}
 		if(strpos($to, ":")!==FALSE){

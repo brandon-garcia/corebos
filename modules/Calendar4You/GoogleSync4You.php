@@ -487,7 +487,7 @@ catch(Exception $e){
     
     }
     catch(Exception $e){
-      if(strstr($e,"Sync token is no longer valid, a full sync is required")){
+      if(false !== strpos($e, "Sync token is no longer valid, a full sync is required")){
       try{
       $optParams1 = array("singleEvents"=>true);
       $events = $this->gService->events->listEvents($CALENDAR_ID,$optParams1);

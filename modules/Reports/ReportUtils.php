@@ -172,7 +172,7 @@ function getReportFieldValue ($report, $picklistArray, $dbField, $valueArray, $f
 	$fieldvalue = str_replace(">", "&gt;", $fieldvalue);
 	$fieldvalue = decode_html($fieldvalue);
 
-	if (stristr($fieldvalue, "|##|") && empty($fieldType)) {
+	if (false !== stripos($fieldvalue, "|##|") && empty($fieldType)) {
 		$fieldvalue = str_ireplace(' |##| ', ', ', $fieldvalue);
 	} elseif ($fld_type == "date" && empty($fieldType)) {
 		$fieldvalue = DateTimeField::convertToUserFormat($fieldvalue);

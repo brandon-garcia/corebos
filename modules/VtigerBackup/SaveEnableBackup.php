@@ -24,11 +24,11 @@ if(isset($_REQUEST['enable_ftp_backup']) && vtlib_purify($_REQUEST['enable_ftp_b
 			$buffer = fgets($readhandle, 5200);
 			list($starter, $tmp) = explode(" = ", $buffer);
 
-			if($starter == '$enable_ftp_backup' && stristr($tmp,'false'))
+			if($starter == '$enable_ftp_backup' && false !== stripos($tmp, 'false'))
 			{
 				$new_buffer .= "\$enable_ftp_backup = 'true';\n";
 			}
-			elseif($starter == '$enable_ftp_backup' && stristr($tmp,'true'))
+			elseif($starter == '$enable_ftp_backup' && false !== stripos($tmp, 'true'))
 			{
 				$new_buffer .= "\$enable_ftp_backup = 'false';\n";
 			}
@@ -59,11 +59,11 @@ elseif(isset($_REQUEST['enable_local_backup']) && vtlib_purify($_REQUEST['enable
 			$buffer = fgets($readhandle, 5200);
 			list($starter, $tmp) = explode(" = ", $buffer);
 
-			if($starter == '$enable_local_backup' && stristr($tmp,'false'))
+			if($starter == '$enable_local_backup' && false !== stripos($tmp, 'false'))
 			{
 				$new_buffer .= "\$enable_local_backup = 'true';\n";
 			}
-			elseif($starter == '$enable_local_backup' && stristr($tmp,'true'))
+			elseif($starter == '$enable_local_backup' && false !== stripos($tmp, 'true'))
 			{
 				$new_buffer .= "\$enable_local_backup = 'false';\n";
 			}
