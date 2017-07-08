@@ -10,8 +10,8 @@
 
 include('include/adodb/adodb.inc.php');
 
-if(version_compare(phpversion(), '5.0') < 0) {
-	$serverPhpVersion = phpversion();
+if(version_compare(PHP_VERSION, '5.0') < 0) {
+	$serverPhpVersion = PHP_VERSION;
 	require_once('phpversionfail.php');
 	die();
 }
