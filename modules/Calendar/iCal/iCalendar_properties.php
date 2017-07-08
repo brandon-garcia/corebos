@@ -447,7 +447,7 @@ class iCalendar_property_percent_complete extends iCalendar_property {
         if(!parent::is_valid_value($value)) {
             return false;
         }
-        $value = intval($value);
+        $value = (int)$value;
         return ($value >= 0 && $value <= 100);
     }
 
@@ -1098,7 +1098,7 @@ class iCalendar_property_sequence extends iCalendar_property {
         if(!parent::is_valid_value($value)) {
             return false;
         }
-        $value = intval($value);
+        $value = (int)$value;
         return ($value >= 0);
     }
 }

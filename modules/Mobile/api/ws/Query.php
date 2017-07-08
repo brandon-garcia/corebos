@@ -35,7 +35,7 @@ print_r("</PRE>");
 			// Implicit limit and paging
 			$query = rtrim($query, ";");
 
-			$currentPage = intval($request->get('page', 0));
+			$currentPage = (int)$request->get('page', 0);
 			$FETCH_LIMIT = crmtogo::config('API_RECORD_FETCH_LIMIT'); 
 			$startLimit = $currentPage * $FETCH_LIMIT;
 			

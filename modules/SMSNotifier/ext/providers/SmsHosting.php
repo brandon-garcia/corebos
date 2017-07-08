@@ -87,7 +87,7 @@ class SmsHosting implements ISMSProvider {
 		# format prefix
 		if ( $params [ 'prefix' ] ) {
 			$params [ 'prefix' ] = preg_replace ( '/[^0-9]/', '', $params [ 'prefix' ] );		// prefix has to be numeric (not alphanumeric)...
-			$params [ 'prefix' ] = intval ( $params [ 'prefix' ] );		//... and integer (without initial 0)
+			$params [ 'prefix' ] = (int)$params [ 'prefix' ];		//... and integer (without initial 0)
 		}
 
 		# add prefix to recipient numbers
