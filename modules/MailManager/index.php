@@ -41,9 +41,8 @@ class MailManager_IndexController extends MailManager_Controller {
 		$response = $controller->process($request);
 		if ($response) $response->emit();
 
-		unset($request);
-		unset($response);
-	}
+        unset($request, $response);
+    }
 
 	public function processRoot(MailManager_Request $request) {
 		global $currentModule;

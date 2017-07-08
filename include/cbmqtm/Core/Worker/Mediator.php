@@ -265,8 +265,7 @@ abstract class Core_Worker_Mediator implements Core_ITask
                 $this->via->release();
         }
 
-        unset($this->via);
-        unset($this->daemon);
+        unset($this->via, $this->daemon);
     }
 
     /**

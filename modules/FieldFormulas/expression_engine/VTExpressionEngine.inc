@@ -63,9 +63,8 @@ class VTExpressionEngine{
 	}
 
 	public function removeExpression($fieldName){
-		unset($this->unparsedExpressions[$fieldName]);
-		unset($this->expressions[$fieldName]);
-		$this->regenerate();
+        unset($this->unparsedExpressions[$fieldName], $this->expressions[$fieldName]);
+        $this->regenerate();
 	}
 
 	private function regenerate(){

@@ -2324,9 +2324,8 @@ class ReportRun extends CRMEntity {
 					$fullsSQL = $this->sGetSQLforReport($this->reportid,$filtersql, 'HTML');
 					$fullresult = $adb->query($fullsSQL);
 					$noofrows = $adb->num_rows($fullresult);
-					unset($fullsSQL);
-					unset($fullresult);
-				} else {
+                    unset($fullsSQL, $fullresult);
+                } else {
 					$noofrows = $adb->num_rows($result);
 				}
 				$this->number_of_rows = $noofrows;
