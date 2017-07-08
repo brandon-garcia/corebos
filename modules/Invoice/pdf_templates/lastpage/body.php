@@ -41,8 +41,8 @@ $imageBlock=array("185","95","8","8");
 $pdf->addImage( "sale.jpeg", $imageBlock);
 
 // descriptions that change sizes!
-$descc=count(explode("\n",$description));
-$condc=count(explode("\n",$conditions));
+$descc= substr_count($description, "\n") + 1;
+$condc= substr_count($conditions, "\n") + 1;
 if( (strlen($description) > 256) || (strlen($conditions) > 256) || $condc >6 || $descc > 6 )
         $num=255;
 else

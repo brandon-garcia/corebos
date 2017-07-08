@@ -125,7 +125,7 @@ class Vtiger_Role {
 			}
 			$currentParentRoleSequence = $roleInfo[1];
 			$currentParentRoleSequence = str_replace($parentRoleSequence,$targetParentRoleSequence,$currentParentRoleSequence);
-			$subDepth = count(explode('::', $currentParentRoleSequence))-1;
+			$subDepth = substr_count($currentParentRoleSequence, '::') + 1 -1;
 			$query="update vtiger_role set parentrole=?,depth=? where roleid=?";
 			$db->pquery($query, array($currentParentRoleSequence, $subDepth, $roleId));
 		}
