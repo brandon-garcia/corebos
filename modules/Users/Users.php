@@ -245,11 +245,7 @@ class Users extends CRMEntity {
 				$this->log->debug("Using LDAP authentication");
 				require_once ('modules/Users/authTypes/LDAP.php');
 				$result = ldapAuthenticate($this->column_fields["user_name"], $user_password);
-				if ($result == NULL) {
-					return false;
-				}
-
-                return true;
+                return !($result == NULL);
                 break;
 
 			case 'AD' :

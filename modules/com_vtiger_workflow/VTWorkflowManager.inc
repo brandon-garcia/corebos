@@ -395,11 +395,7 @@
 							WHERE workflow_id=? AND entity_id=?",
 							array($this->id,$recordId));
 
-			if($adb->num_rows($result)===0 && $adb->num_rows($result2)===0) { // Workflow not done for specified record
-				return false;
-			}
-
-            return true;
+            return !($adb->num_rows($result) === 0 && $adb->num_rows($result2) === 0);
         }
 
 		public function markAsCompletedForRecord($recordId) {

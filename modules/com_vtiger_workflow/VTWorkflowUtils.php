@@ -128,11 +128,7 @@ class VTWorkflowUtils {
 		$query = "SELECT name FROM vtiger_tab WHERE name not in (" . generateQuestionMarks($modules_not_supported) . ") AND isentitytype=1 AND presence = 0 AND tabid = ?";
 		$result = $adb->pquery($query, array($modules_not_supported, $tabid));
 		$rows = $adb->num_rows($result);
-		if ($rows > 0) {
-			return true;
-		}
-
-        return false;
+        return $rows > 0;
     }
 
 	public function vtGetModules($adb) {

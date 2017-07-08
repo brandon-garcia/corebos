@@ -59,11 +59,7 @@ class CustomReportUtils {
 	public static function IsDateField($reportColDetails) {
 		if ($reportColDetails=='none') return false;
 		list($tablename, $colname, $module_field, $fieldname, $typeOfData) = explode(":", $reportColDetails);
-		if ($typeOfData == "D") {
-			return true;
-		}
-
-        return false;
+        return $typeOfData == "D";
     }
 
 	public static function getAdvanceSearchCondition($fieldDetails, $criteria, $fieldvalue) {
