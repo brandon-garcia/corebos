@@ -33,7 +33,7 @@ abstract class WSAPP_BaseConnector {
 		return false;
 	}
 
-	public abstract function getName();
+	abstract public function getName();
 
 	public function getSyncState(){
 		return new WSAPP_SyncStateModel();

@@ -28,10 +28,10 @@ abstract class WSAPP_SynchronizeController {
 	
 	public $user;
 
-	public abstract function getTargetConnector();
-	public abstract function getSourceType();
+	abstract public function getTargetConnector();
+	abstract public function getSourceType();
 
-	public abstract function getSyncType();
+	abstract public function getSyncType();
 
 	public function __construct($user) {
 		$this->user = $user;

@@ -24,7 +24,7 @@ abstract class MailManager_Controller {
     /**
      * Abstract function which process request
      */
-	public abstract function process(MailManager_Request $request);
+	abstract public function process(MailManager_Request $request);
 
     /**
      * Function which gets the template handler
