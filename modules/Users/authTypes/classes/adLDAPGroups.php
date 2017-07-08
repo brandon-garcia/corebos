@@ -79,10 +79,7 @@ class adLDAPGroups {
         $add["member"] = $childDn;
         
         $result = @ldap_mod_add($this->adldap->getLdapConnection(), $parentDn, $add);
-        if ($result == false) { 
-            return false; 
-        }
-        return true;
+        return !($result == false);
     }
     
     /**
@@ -115,10 +112,7 @@ class adLDAPGroups {
         $add["member"] = $userDn;
         
         $result = @ldap_mod_add($this->adldap->getLdapConnection(), $groupDn, $add);
-        if ($result == false) { 
-            return false; 
-        }
-        return true;
+        return !($result == false);
     }
     
     /**
@@ -144,10 +138,7 @@ class adLDAPGroups {
         $add["member"] = $contactDn;
         
         $result = @ldap_mod_add($this->adldap->getLdapConnection(), $groupDn, $add);
-        if ($result == false) { 
-            return false; 
-        }
-        return true;
+        return !($result == false);
     }
 
     /**
@@ -178,10 +169,7 @@ class adLDAPGroups {
 
         $container = "OU=" . implode(",OU=", $attributes["container"]);
         $result = ldap_add($this->adldap->getLdapConnection(), "CN=" . $add["cn"] . ", " . $container . "," . $this->adldap->getBaseDn(), $add);
-        if ($result != true) { 
-            return false; 
-        }
-        return true;
+        return !($result != true);
     }
     
     /**
@@ -197,10 +185,8 @@ class adLDAPGroups {
         
         $groupInfo = $this->info($group, array("*"));
         $dn = $groupInfo[0]['distinguishedname'][0]; 
-        $result = $this->adldap->folder()->delete($dn); 
-        if ($result !== true) { 
-            return false; 
-        } return true;   
+        $result = $this->adldap->folder()->delete($dn);
+        return !($result !== true);
     }
 
     /**
@@ -231,10 +217,7 @@ class adLDAPGroups {
         $del["member"] = $childDn;
         
         $result = @ldap_mod_del($this->adldap->getLdapConnection(), $parentDn, $del);
-        if ($result == false) { 
-            return false; 
-        }
-        return true;
+        return !($result == false);
     }
     
     /**
@@ -265,10 +248,7 @@ class adLDAPGroups {
         $del["member"] = $userDn;
         
         $result = @ldap_mod_del($this->adldap->getLdapConnection(), $groupDn, $del);
-        if ($result == false) {
-            return false; 
-        }
-        return true;
+        return !($result == false);
     }
     
     /**
@@ -292,10 +272,7 @@ class adLDAPGroups {
         $del["member"] = $contactDn;
         
         $result = @ldap_mod_del($this->adldap->getLdapConnection(), $groupDn, $del);
-        if ($result == false) { 
-            return false; 
-        }
-        return true;
+        return !($result == false);
     }
     
     /**

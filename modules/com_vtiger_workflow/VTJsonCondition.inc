@@ -308,72 +308,48 @@ class VTJsonCondition {
 				}
 				$values = explode(',', $value);
 				$values = array_map('getValidDBInsertDateValue',$values);
-				if($fieldValue > $values[0] && $fieldValue < $values[1]) {
-					return true;
-				}
-				return false;
+                return $fieldValue > $values[0] && $fieldValue < $values[1];
 			case 'is today':
 				$today = date('Y-m-d');
-				if($fieldValue == $today) {
-					return true;
-				}
-				return false;
+                return $fieldValue == $today;
 			case 'less than days ago':
 				if(empty($fieldValue) || !isset($value)) {
 					return false;
 				}
 				$today = date('Y-m-d');
 				$olderDate = date('Y-m-d', strtotime('-'.$value.' days'));
-				if($olderDate <= $fieldValue && $fieldValue <= $today) {
-					return true;
-				}
-				return false;
+                return $olderDate <= $fieldValue && $fieldValue <= $today;
 			case 'more than days ago':
 				if(empty($fieldValue) || !isset($value)) {
 					return false;
 				}
 				$olderDate = date('Y-m-d', strtotime('-'.$value.' days'));
-				if($fieldValue <= $olderDate) {
-					return true;
-				}
-				return false;
+                return $fieldValue <= $olderDate;
 			case 'in less than':
 				if(empty($fieldValue) || !isset($value)) {
 					return false;
 				}
 				$today = date('Y-m-d');
 				$futureDate = date('Y-m-d', strtotime('+'.$value.' days'));
-				if($today <= $fieldValue && $fieldValue <= $futureDate) {
-					return true;
-				}
-				return false;
+                return $today <= $fieldValue && $fieldValue <= $futureDate;
 			case 'in more than':
 				if(empty($fieldValue) || !isset($value)) {
 					return false;
 				}
 				$futureDate = date('Y-m-d', strtotime('+'.$value.' days'));
-				if($fieldValue >= $futureDate) {
-					return true;
-				}
-				return false;
+                return $fieldValue >= $futureDate;
 			case 'days ago':
 				if(empty($fieldValue) || !isset($value)) {
 					return false;
 				}
 				$olderDate = date('Y-m-d', strtotime('-'.$value.' days'));
-				if($fieldValue == $olderDate) {
-					return true;
-				}
-				return false;
+                return $fieldValue == $olderDate;
 			case 'days later':
 				if(empty($fieldValue) || !isset($value)) {
 					return false;
 				}
 				$futureDate = date('Y-m-d', strtotime('+'.$value.' days'));
-				if($fieldValue == $futureDate) {
-					return true;
-				}
-				return false;
+                return $fieldValue == $futureDate;
 
 			case 'less than hours before':
 				if(empty($fieldValue) || !isset($value)) {
@@ -381,10 +357,7 @@ class VTJsonCondition {
 				}
 				$currentTime = date('Y-m-d H:i:s');
 				$olderDateTime = date('Y-m-d H:i:s', strtotime('-'.$value.' hours'));
-				if($olderDateTime <= $fieldValue && $fieldValue <= $currentTime) {
-					return true;
-				}
-				return false;
+                return $olderDateTime <= $fieldValue && $fieldValue <= $currentTime;
 
 			case 'less than hours later':
 				if(empty($fieldValue) || !isset($value)) {
@@ -392,29 +365,20 @@ class VTJsonCondition {
 				}
 				$currentTime = date('Y-m-d H:i:s');
 				$futureDateTime = date('Y-m-d H:i:s', strtotime('+'.$value.' hours'));
-				if($currentTime <= $fieldValue && $fieldValue <= $futureDateTime) {
-					return true;
-				}
-				return false;
+                return $currentTime <= $fieldValue && $fieldValue <= $futureDateTime;
 
 			case 'more than hours before':
 				if(empty($fieldValue) || !isset($value)) {
 					return false;
 				}
 				$olderDateTime = date('Y-m-d H:i:s', strtotime('-'.$value.' hours'));
-				if($fieldValue <= $olderDateTime) {
-					return true;
-				}
-				return false;
+                return $fieldValue <= $olderDateTime;
 			case 'more than hours later':
 				if(empty($fieldValue) || !isset($value)) {
 					return false;
 				}
 				$futureDateTime = date('Y-m-d H:i:s', strtotime('+'.$value.' hours'));
-				if($fieldValue >= $futureDateTime) {
-					return true;
-				}
-				return false;
+                return $fieldValue >= $futureDateTime;
 			default:
 				//Unexpected condition
 				throw new Exception("Found an unexpected condition: " . $condition);

@@ -558,10 +558,7 @@ class Users extends CRMEntity {
 		$this->log->debug("select old password query: $query");
 		$this->log->debug("return result of $row");
 		$encryptedPassword = $this->encrypt_password($password, $row['crypt_type']);
-		if ($encryptedPassword != $row['user_password']) {
-			return false;
-		}
-		return true;
+        return !($encryptedPassword != $row['user_password']);
 	}
 
 	public function is_authenticated() {

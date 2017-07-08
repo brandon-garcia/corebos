@@ -4475,26 +4475,17 @@ function getBlockName($blockid) {
 
 function validateAlphaNumericInput($string){
 	preg_match('/^[\w \-\/]+$/', $string, $matches);
-	if(count($matches) == 0) {
-		return false;
-	}
-	return true;
+    return !(count($matches) == 0);
 }
 
 function validateServerName($string){
 	preg_match('/^[\w\-\.\\/:]+$/', $string, $matches);
-	if(count($matches) == 0) {
-		return false;
-	}
-	return true;
+    return !(count($matches) == 0);
 }
 
 function validateEmailId($string){
 	preg_match('/^[a-zA-Z0-9]+([\_\-\.]*[a-zA-Z0-9]+[\_\-]?)*@[a-zA-Z0-9]+([\_\-]?[a-zA-Z0-9]+)*\.+([\-\_]?[a-zA-Z0-9])+(\.?[a-zA-Z0-9]+)*$/', $string, $matches);
-	if(count($matches) == 0) {
-		return false;
-	}
-	return true;
+    return !(count($matches) == 0);
 }
 
 function str_rsplit($string, $splitLength) {
@@ -4559,10 +4550,7 @@ function isLeadConverted($leadId) {
 
 	$result = $adb->pquery($query, $params);
 
-	if($result && $adb->num_rows($result) > 0) {
-		return true;
-	}
-	return false;
+    return $result && $adb->num_rows($result) > 0;
 }
 
 function getSelectedRecords($input,$module,$idstring,$excludedRecords) {

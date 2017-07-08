@@ -96,10 +96,7 @@ class MailManager {
 
 	public static function checkModuleWriteAccessForCurrentUser($module) {
 		global $current_user;
-		if (isPermitted($module, 'EditView') == "yes" && vtlib_isModuleActive($module)) {
-			return true;
-		}
-		return false;
+        return isPermitted($module, 'EditView') == "yes" && vtlib_isModuleActive($module);
 	}
 
 	/**
@@ -110,10 +107,7 @@ class MailManager {
 	 */
 	public static function checkModuleReadAccessForCurrentUser($module) {
 		global $current_user;
-		if (isPermitted($module, 'DetailView') == "yes" && vtlib_isModuleActive($module)) {
-            return true;
-		}
-		return false;
+        return isPermitted($module, 'DetailView') == "yes" && vtlib_isModuleActive($module);
 	}
         
 	/**

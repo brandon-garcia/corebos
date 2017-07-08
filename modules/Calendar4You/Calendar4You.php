@@ -446,10 +446,7 @@ public function setgoogleaccessparams($userid){
 
     	$query = "select * from vtiger_invitees where activityid =? and inviteeid=?";
         $result=$adb->pquery($query, array($recordId, $current_user->id));
-    	if($adb->num_rows($result) >0) {
-    		return true;
-    	}
-    	return false;
+        return $adb->num_rows($result) >0;
     }
     
     public function getActStatusFieldValues($fieldname, $tablename) {

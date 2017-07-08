@@ -924,11 +924,8 @@ class adLDAP {
     */ 
     protected function pingController($host) {
         $port = $this->adPort; 
-        fsockopen($host, $port, $errno, $errstr, 10); 
-        if ($errno > 0) {
-            return false;
-        }
-        return true;
+        fsockopen($host, $port, $errno, $errstr, 10);
+        return !($errno > 0);
     }
 
 }

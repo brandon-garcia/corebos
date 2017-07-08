@@ -115,11 +115,7 @@ class adLDAPUsers {
 
         // Add the entry
         $result = @ldap_add($this->adldap->getLdapConnection(), "CN=" . $add["cn"][0] . ", " . $container . "," . $this->adldap->getBaseDn(), $add);
-        if ($result != true) { 
-            return false; 
-        }
-        
-        return true;
+        return !($result != true);
     }
     
     /**
@@ -171,10 +167,7 @@ class adLDAPUsers {
         $userinfo = $this->info($username, array("*"), $isGUID);
         $dn = $userinfo[0]['distinguishedname'][0];
         $result = $this->adldap->folder()->delete($dn);
-        if ($result != true) { 
-            return false;
-        }        
-        return true;
+        return !($result != true);
     }
     
     /**
@@ -423,11 +416,7 @@ class adLDAPUsers {
 
         // Do the update
         $result = @ldap_modify($this->adldap->getLdapConnection(), $userDn, $mod);
-        if ($result == false) { 
-            return false; 
-        }
-        
-        return true;
+        return !($result == false);
     }
     
     /**
@@ -442,9 +431,7 @@ class adLDAPUsers {
         if ($username === NULL) { return "Missing compulsory field [username]"; }
         $attributes = array("enabled" => 0);
         $result = $this->modify($username, $attributes, $isGUID);
-        if ($result == false) { return false; }
-        
-        return true;
+        return !($result == false);
     }
     
     /**
@@ -459,9 +446,7 @@ class adLDAPUsers {
         if ($username === NULL) { return "Missing compulsory field [username]"; }
         $attributes = array("enabled" => 1);
         $result = $this->modify($username, $attributes, $isGUID);
-        if ($result == false) { return false; }
-        
-        return true;
+        return !($result == false);
     }
     
     /**
@@ -658,10 +643,7 @@ class adLDAPUsers {
         $newContainer = "ou=" . implode(",ou=",$container);
         $newBaseDn = strtolower($newContainer) . "," . $this->adldap->getBaseDn();
         $result = @ldap_rename($this->adldap->getLdapConnection(), $dn, $newRDn, $newBaseDn, true);
-        if ($result !== true) {
-            return false;
-        }
-        return true;
+        return !($result !== true);
     }
     
     /**

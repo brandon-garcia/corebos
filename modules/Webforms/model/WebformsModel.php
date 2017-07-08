@@ -263,10 +263,7 @@ class Webforms_Model {
 	}
 
 	public static function isCustomField($fieldname) {
-		if (substr($fieldname, 0, 3) === "cf_") {
-			return true;
-		}
-		return false;
+        return substr($fieldname, 0, 3) === "cf_";
 	}
 
 	public static function isRequired($webformid, $fieldname) {
@@ -305,10 +302,7 @@ class Webforms_Model {
 		global $adb;
 		$checkSQL = "SELECT 1 FROM vtiger_webforms WHERE name=?";
 		$check = $adb->pquery($checkSQL, array($name));
-		if ($adb->num_rows($check) > 0) {
-			return true;
-		}
-		return false;
+        return $adb->num_rows($check) > 0;
 	}
 
 	public static function isActive($field, $mod) {

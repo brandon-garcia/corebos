@@ -198,13 +198,9 @@ class Vtiger_DependencyPicklist {
 		$result = $adb->pquery('SELECT 1 FROM vtiger_picklist_dependency
 									WHERE tabid = ? AND targetfield = ? AND sourcefield != ?',
 				array(getTabid($module), $targetField, $sourceField));
-		if($adb->num_rows($result) > 0) {
-			return true;
-		}
+        //TODO - Add required check for cyclic dependency
 
-		//TODO - Add required check for cyclic dependency
-
-		return false;
+		return $adb->num_rows($result) > 0;
 	}
 
 	public static function getDependentPickListModules() {
