@@ -107,7 +107,7 @@ if(isset($_REQUEST['parent_id']) && $focus->mode != 'edit') {
 $dbQuery="select filename from vtiger_notes where notesid = ?";
 $result=$adb->pquery($dbQuery,array($focus->id));
 $filename=$adb->query_result($result,0,'filename');
-if(is_null($filename) || $filename == '') {
+if(null === $filename || $filename == '') {
 	$smarty->assign('FILE_EXIST','no');
 } else {
 	$smarty->assign('FILE_NAME',$filename);
@@ -115,13 +115,13 @@ if(is_null($filename) || $filename == '') {
 }
 
 //needed when creating a new case with default values passed in
-if (isset($_REQUEST['contact_name']) && is_null($focus->contact_name)) {
+if (isset($_REQUEST['contact_name']) && null === $focus->contact_name) {
 	$focus->contact_name = vtlib_purify($_REQUEST['contact_name']);
 }
 if (isset($_REQUEST['contact_id']) /* && is_null($focus->contact_id) */ ) {
 	$focus->contact_id = vtlib_purify($_REQUEST['contact_id']);
 }
-if (isset($_REQUEST['parent_name']) && is_null($focus->parent_name)) {
+if (isset($_REQUEST['parent_name']) && null === $focus->parent_name) {
 	$focus->parent_name = vtlib_purify($_REQUEST['parent_name']);
 }
 if (isset($_REQUEST['parent_id']) /* && is_null($focus->parent_id) */ ) {

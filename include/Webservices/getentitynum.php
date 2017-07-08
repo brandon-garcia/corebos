@@ -30,7 +30,7 @@ function vtws_get_entitynum() {
 	{
 		$module = $adb->query_result($enumres,$i,'semodule');
 		$prefix = $adb->query_result($enumres,$i,'prefix');
-		if(is_null($entitynum[$module])){
+		if(null === $entitynum[$module]){
 			$entitynum[$module] = array($prefix);
 		}else{
 			$entitynum[$module][] = $prefix;

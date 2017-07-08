@@ -152,7 +152,7 @@ class Vtiger_MailRecord {
 	 * MIME decode function to parse IMAP header or mail information
 	 */
 	public static function __mime_decode($input, &$words=null, $targetEncoding='UTF-8') {
-		if(is_null($words)) $words = array();
+		if(null === $words) $words = array();
 		$returnvalue = $input;
 
 		if(preg_match_all('/=\?([^\?]+)\?([^\?]+)\?([^\?]+)\?=/', $input, $matches)) {

@@ -110,7 +110,7 @@ class crxml implements arrayAccess, iterator
 	{
 		$this->root=$root;
 		$this->nodeMode= null;
-		if(is_null($parent)) {
+		if(null === $parent) {
 			$this->version = $version;
 			$this->encoding = $encoding;
 			$this->node=new DOMDocument($this->version, $this->encoding);
@@ -165,7 +165,7 @@ class crxml implements arrayAccess, iterator
     }
 	public function __set($name,$value)
 	{
-		if(is_null($this->node)) {
+		if(null === $this->node) {
 			$this->node=$this->connectToParent();
 		}
 		if($this->offset==0) {
@@ -246,7 +246,7 @@ class crxml implements arrayAccess, iterator
 	}
 	public function connectToParent()
 	{
-		if(is_null($this->parent) || !is_null($this->_getNode())) {
+		if(null === $this->parent || null !== $this->_getNode()) {
 			if($this->offset>0) {
 				if($this->parent) {
 					return $this->_getChildrenForNode($this->parent->_getNode(),$this->nodeName)->item($this->offset);
@@ -326,7 +326,7 @@ class crxml implements arrayAccess, iterator
 	public function offsetSet($offset,$value)
 	{
 		if(!is_object($value)) $value=str_replace('&','&amp;',$value);
-		if(is_null($this->_getNode())) {
+		if(null === $this->_getNode()) {
 			$this->node=$this->connectToParent();
 		}
 		if(is_string($offset)) {
@@ -437,7 +437,7 @@ class crxml implements arrayAccess, iterator
 	}
 	public function count($name='')
 	{
-		if(!is_null($this->node)) {
+		if(null !== $this->node) {
 			if($name) {
 				return $this->_getChildrenForNode($this->_getNode(),$name)->length;
 			}
@@ -447,7 +447,7 @@ class crxml implements arrayAccess, iterator
 	}
 	public function addNameSpaceDefNode($prefix, $nodeName, $nameSpaceURI)
 	{
-		if(is_null($this->node)) {
+		if(null === $this->node) {
 			$this->node=$this->connectToParent();
 		}
 		$element=$this->root->_getNode()->createElementNS($nameSpaceURI,"$prefix:$nodeName",'');
@@ -457,7 +457,7 @@ class crxml implements arrayAccess, iterator
 	}
 	public function addNameSpace($nameSpaces)
 	{
-		if(is_null($this->node)) {
+		if(null === $this->node) {
 			$this->node=$this->connectToParent();
 		}
 		foreach($nameSpaces as $prefix=>$nameSpaceURI) {
@@ -739,7 +739,7 @@ class crxml implements arrayAccess, iterator
 	private function findWayToTop($node,$topNode=null)
 	{
 		while($node->parentNode) {
-			if(!is_null($topNode)) {
+			if(null !== $topNode) {
 				if($topNode->isSameNode($node)) break;
 			}
 			$offset = 0;

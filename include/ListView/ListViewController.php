@@ -153,7 +153,7 @@ class ListViewController {
 					$field = $moduleFields[$fieldName];
 				} else {
 					$field = $this->queryGenerator->getReferenceField($fieldName,false);
-					if (is_null($field)) continue;
+					if (null === $field) continue;
 				}
 				$fldcolname = $field->getColumnName();
 				$idList = array();
@@ -179,7 +179,7 @@ class ListViewController {
 				$field = $moduleFields[$fieldName];
 			} else {
 				$field = $this->queryGenerator->getReferenceField($fieldName,false);
-				if (is_null($field)) continue;
+				if (null === $field) continue;
 			}
 			if(!$is_admin && ($field->getFieldDataType() == 'picklist' ||
 					$field->getFieldDataType() == 'multipicklist')) {
@@ -234,7 +234,7 @@ class ListViewController {
 					$field = $moduleFields[$fieldName];
 				} else {
 					$field = $this->queryGenerator->getReferenceField($fieldName,false);
-					if (is_null($field)) continue;
+					if (null === $field) continue;
 				}
 				$uitype = $field->getUIType();
 				if($fieldName!='assigned_user_id' && strstr($fieldName,".assigned_user_id")) {
@@ -756,7 +756,7 @@ class ListViewController {
 				$field = $moduleFields[$fieldName];
 			} else {
 				$field = $this->queryGenerator->getReferenceField($fieldName,false);
-				if (is_null($field)) continue;
+				if (null === $field) continue;
 			}
 			$fieldLabel = $field->getFieldLabelKey();
 			if(in_array($field->getColumnName(),$focus->sortby_fields)) {

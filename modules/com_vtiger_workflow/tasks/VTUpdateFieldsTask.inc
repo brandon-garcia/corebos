@@ -51,7 +51,7 @@ class VTUpdateFieldsTask extends VTTask {
 
 			$hold_user = $current_user;
 			$util->loggedInUser();
-			if (is_null($current_user)) $current_user = $hold_user;  // make sure current_user is defined
+			if (null === $current_user) $current_user = $hold_user;  // make sure current_user is defined
 			foreach ($fieldValueMapping as $fieldInfo) {
 				$fieldName = $fieldInfo['fieldname'];
 				$fieldType = '';

@@ -224,7 +224,7 @@ class cbtranslation extends CRMEntity {
 	 */
 	public static function get($key, $module='', $options='') {
 		global $adb, $current_user, $current_language, $currentModule, $installationStrings;
-		if (!is_object($adb) or is_null($adb->database)) return $key;
+		if (!is_object($adb) or null === $adb->database) return $key;
 		if (isset($installationStrings)) return $key;
 		if (empty($module)) $module = $currentModule;
 		if (is_array($options)) {
@@ -253,7 +253,7 @@ class cbtranslation extends CRMEntity {
 			$context = $count = $field =null;
 		}
 		$translatedString = null;
-		if (!empty($context) && !is_null($count)) {
+		if (!empty($context) && null !== $count) {
 			$searchKey = $key.'_'.$context;
 			$searchKey = self::getPluralizedKey($searchKey, $lang, $count);
 			$translatedString = self::getTranslation($searchKey, $module, $lang, $field);
@@ -264,7 +264,7 @@ class cbtranslation extends CRMEntity {
 			$translatedString = self::getTranslation($searchKey, $module, $lang, $field);
 			if ($translatedString == $searchKey) $translatedString = null;
 		}
-		if (!is_null($count) && $translatedString == null) {
+		if (null !== $count && $translatedString == null) {
 			$searchKey = self::getPluralizedKey($key, $lang, $count);
 			$translatedString = self::getTranslation($searchKey, $module, $lang, $field);
 			if ($translatedString == $searchKey) $translatedString = null;
@@ -282,13 +282,13 @@ class cbtranslation extends CRMEntity {
 
 	protected static function getTranslation($key, $module, $lang, $field=null) {
 		global $adb;
-		$ckey = 'cbtcache'.$key.$module.$lang.(is_null($field) ? '' : $field);
+		$ckey = 'cbtcache'.$key.$module.$lang.(null === $field ? '' : $field);
 		list($value,$found) = VTCacheUtils::lookupCachedInformation($ckey);
 		if ($found) {
 			return $value;
 		}
 		$params = array($lang,$key,$module);
-		if (is_null($field)) {
+		if (null === $field) {
 			$sql = "SELECT i18n,translation_module FROM vtiger_cbtranslation WHERE locale=? and translation_key=? and (translation_module=? or translation_module='cbtranslation')";
 		} else {
 			$sql = "SELECT i18n,translation_module FROM vtiger_cbtranslation WHERE locale=? and translation_key=? and (translation_module=? or translation_module='cbtranslation') and forfield=?";
@@ -323,7 +323,7 @@ class cbtranslation extends CRMEntity {
 
 	public static function return_module_language($lang, $module) {
 		global $adb, $current_user, $current_language, $currentModule, $installationStrings;
-		if (!is_object($adb) or is_null($adb->database)) return array();
+		if (!is_object($adb) or null === $adb->database) return array();
 		if (isset($installationStrings)) return array();
 		if (empty($module)) $module = $currentModule;
 		if (empty($lang)) $lang = $current_language;

@@ -61,7 +61,7 @@ class crmtogo_WS_Controller  {
 	public function getLanguage() {
 		//cache language
 		static $used_language = NULL;
-		if(is_null($used_language)) {
+		if(null === $used_language) {
 			//check whether language file for crmtogo exists, if not switch en_us
 			$lang = self::sessionGet('language');
 			$basedir= realpath(__DIR__ . DIRECTORY_SEPARATOR . '../../../../'); 
@@ -79,7 +79,7 @@ class crmtogo_WS_Controller  {
 	public function getConfigDefaults() {
 		//cache config information
 		static $crmtogoDefaultsConfigCache = NULL;
-		if (is_null($crmtogoDefaultsConfigCache)) {
+		if (null === $crmtogoDefaultsConfigCache) {
 			$crmtogoDefaultsConfigCache = crmtogo_WS_Utils::getConfigDefaults();
 		}
 		return $crmtogoDefaultsConfigCache;
@@ -88,7 +88,7 @@ class crmtogo_WS_Controller  {
 	public static function getUserConfigSettings() {
 		//cache config information
 		static $crmtogoConfigCache = NULL;
-		if (is_null($crmtogoConfigCache)) {
+		if (null === $crmtogoConfigCache) {
 			$crmtogoConfigCache = crmtogo_WS_Utils::getUserConfigSettings(self::sessionGet('_authenticated_user_id'));
 		}
 		return $crmtogoConfigCache;
@@ -97,7 +97,7 @@ class crmtogo_WS_Controller  {
 	public function getUserConfigModuleSettings() {
 		//cache config information
 		static $crmtogoModuleConfigCache = NULL;
-		if (is_null($crmtogoModuleConfigCache)) {
+		if (null === $crmtogoModuleConfigCache) {
 			$crmtogoModuleConfigCache = crmtogo_WS_Utils::getUserConfigModuleSettings(self::sessionGet('_authenticated_user_id'));
 		}
 		return $crmtogoModuleConfigCache;
@@ -106,7 +106,7 @@ class crmtogo_WS_Controller  {
 	public function getConfigSettingsComments() {
 		//cache config information
 		static $crmtogoCommentsConfigCache = NULL;
-		if (is_null($crmtogoCommentsConfigCache)) {
+		if (null === $crmtogoCommentsConfigCache) {
 			$crmtogoCommentsConfigCache = crmtogo_WS_Utils::getConfigComments();
 		}
 		return $crmtogoCommentsConfigCache;
@@ -138,7 +138,7 @@ class crmtogo_WS_Controller  {
 	public function getUsersLanguage() {
 		//cache config information
 		static $user_lang_strings = NULL;
-		if (is_null($user_lang_strings)) {
+		if (null === $user_lang_strings) {
 			$user_lang_strings = crmtogo_WS_Utils::getUsersLanguage(self::sessionGet('language'));
 		}
 		return $user_lang_strings;

@@ -268,8 +268,8 @@ class Vtiger_MailScanner {
 			}
 			$rel = $crmobj->get_related_list($crmobj->id,$modtab,$emptab);
 			$dep = $crmobj->get_dependents_list($crmobj->id,$modtab,$emptab);
-			$relids = (!is_null(array_keys($rel['entries'])) ? array_keys($rel['entries']) : array());
-			$depids = (!is_null(array_keys($dep['entries'])) ? array_keys($dep['entries']) : array());
+			$relids = (null !== array_keys($rel['entries']) ? array_keys($rel['entries']) : array());
+			$depids = (null !== array_keys($dep['entries']) ? array_keys($dep['entries']) : array());
 			$retemp = array_merge($retemp,$relids,$depids);
 		}
 		return $retemp;

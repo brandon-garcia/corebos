@@ -74,7 +74,7 @@ class Vtiger_InventoryPDFController {
 	}
 
 	public function Output($filename, $type) {
-		if(is_null($this->focus)) return;
+		if(null === $this->focus) return;
 
 		$pdfgenerator = $this->getPDFGenerator();
 		

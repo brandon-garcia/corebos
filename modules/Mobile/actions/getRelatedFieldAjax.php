@@ -67,7 +67,7 @@ class crmtogo_UI_getRelatedFieldAjax extends crmtogo_WS_Controller{
 				}
 			}
 		}
-		if(is_null($searchresult)){
+		if(null === $searchresult){
 			$sResult = '';
 		}else{
 			$sResult = $searchresult;

@@ -296,7 +296,7 @@ class GlobalVariable extends CRMEntity {
 	 */
 	public static function getVariable($var,$default, $module='', $gvuserid='') {
 		global $adb, $current_user, $gvvalidationinfo, $currentModule, $installationStrings;
-		if (!is_object($adb) or is_null($adb->database)) return $default;
+		if (!is_object($adb) or null === $adb->database) return $default;
 		if (isset($installationStrings)) return $default;
 		$gvvalidationinfo[] = "search for variable '$var' with default value of '$default'";
 		if (empty($gvuserid) and !empty($current_user)) $gvuserid = $current_user->id;

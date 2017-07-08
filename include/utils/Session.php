@@ -119,13 +119,13 @@ class coreBOS_Session {
 	public static function has($key, $sespos=null) {
 		$keyparts = explode('^', $key);
 		if (count($keyparts)==1) {
-			if (is_null($sespos)) {
+			if (null === $sespos) {
 				return isset($_SESSION[$key]);
 			}
 
             return isset($sespos[$keyparts[0]]);
         } else {
-			if (is_null($sespos)) {
+			if (null === $sespos) {
 				if (!isset($_SESSION[$keyparts[0]]) or !is_array($_SESSION[$keyparts[0]])) return false;
 				$sespos = $_SESSION[$keyparts[0]];
 			} else {
@@ -163,7 +163,7 @@ class coreBOS_Session {
 		$keyparts = explode('^', $key);
 		self::init();
 		if (count($keyparts)==1) {
-			if (is_null($sespos)) {
+			if (null === $sespos) {
 				$_SESSION[$key] = $value;
 			} else {
 				if (!is_array($sespos)) $sespos = array();
@@ -171,7 +171,7 @@ class coreBOS_Session {
 			}
 		} else {
 			$key = substr($key, strpos($key,'^')+1);
-			if (is_null($sespos)) {
+			if (null === $sespos) {
 				if (!isset($_SESSION[$keyparts[0]]) || !is_array($_SESSION[$keyparts[0]])) $_SESSION[$keyparts[0]] = array();
 				self::set($key, $value, $_SESSION[$keyparts[0]]);
 			} else {
@@ -205,14 +205,14 @@ class coreBOS_Session {
 		$keyparts = explode('^', $key);
 		self::init();
 		if (count($keyparts)==1) {
-			if (is_null($sespos)) {
+			if (null === $sespos) {
 				if (isset($_SESSION[$key])) unset($_SESSION[$key]);
 			} else {
 				if (isset($sespos[$key])) unset($sespos[$key]);
 			}
 		} else {
 			$key = substr($key, strpos($key,'^')+1);
-			if (is_null($sespos)) {
+			if (null === $sespos) {
 				if (!isset($_SESSION[$keyparts[0]]) or !is_array($_SESSION[$keyparts[0]])) return false; // this should be an exception
 				self::delete($key, $_SESSION[$keyparts[0]]);
 			} else {

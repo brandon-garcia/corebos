@@ -125,14 +125,14 @@ if($focus->mode == 'edit' || $isduplicate == 'true') {
 	$smarty->assign('UPDATEINFO',updateInfo($record));
 }
 //needed when creating a new opportunity with a default account/contact value passed in
-if (isset($_REQUEST['accountname']) && is_null($focus->accountname)) {
+if (isset($_REQUEST['accountname']) && null === $focus->accountname) {
 	$focus->accountname = vtlib_purify($_REQUEST['accountname']);
 }
-if (isset($_REQUEST['accountid']) && is_null($focus->related_to)) {
+if (isset($_REQUEST['accountid']) && null === $focus->related_to) {
 	$accountid = vtlib_purify($_REQUEST['account_id']);
 	$focus->related_to = $accountid;
 }
-if (isset($_REQUEST['contactid']) && is_null($focus->related_to)) {
+if (isset($_REQUEST['contactid']) && null === $focus->related_to) {
 	$contactid = vtlib_purify($_REQUEST['contact_id']);
 	$focus->related_to = $contactid;
 }

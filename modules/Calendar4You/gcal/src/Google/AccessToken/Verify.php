@@ -52,11 +52,11 @@ class Google_AccessToken_Verify
    */
   public function __construct(ClientInterface $http = null, CacheItemPoolInterface $cache = null)
   {
-    if (is_null($http)) {
+    if (null === $http) {
       $http = new Client();
     }
 
-    if (is_null($cache)) {
+    if (null === $cache) {
       $cache = new MemoryCacheItemPool;
     }
 

@@ -31,7 +31,7 @@ class MailManager_Response {
 	}
 	
 	public function hasError() {
-		return !is_null($this->error);
+		return null !== $this->error;
 	}
 	
 	public function setResult($result) {

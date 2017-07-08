@@ -70,22 +70,22 @@ if(isset($_REQUEST['isDuplicate']) && $_REQUEST['isDuplicate'] == 'true') {
 }
 
 //needed when creating a new task with default values passed in
-if (isset($_REQUEST['contactname']) && is_null($focus->contactname)) {
+if (isset($_REQUEST['contactname']) && null === $focus->contactname) {
 	$focus->contactname = $_REQUEST['contactname'];
 }
-if (isset($_REQUEST['contact_id']) && is_null($focus->contact_id)) {
+if (isset($_REQUEST['contact_id']) && null === $focus->contact_id) {
 	$focus->contact_id = $_REQUEST['contact_id'];
 }
-if (isset($_REQUEST['opportunity_name']) && is_null($focus->parent_name)) {
+if (isset($_REQUEST['opportunity_name']) && null === $focus->parent_name) {
 	$focus->parent_name = $_REQUEST['opportunity_name'];
 }
-if (isset($_REQUEST['opportunity_id']) && is_null($focus->parent_id)) {
+if (isset($_REQUEST['opportunity_id']) && null === $focus->parent_id) {
 	$focus->parent_id = $_REQUEST['opportunity_id'];
 }
-if (isset($_REQUEST['accountname']) && is_null($focus->parent_name)) {
+if (isset($_REQUEST['accountname']) && null === $focus->parent_name) {
 	$focus->parent_name = $_REQUEST['accountname'];
 }
-if (isset($_REQUEST['accountid']) && is_null($focus->parent_id)) {
+if (isset($_REQUEST['accountid']) && null === $focus->parent_id) {
 	$focus->parent_id = $_REQUEST['accountid'];
 }
 

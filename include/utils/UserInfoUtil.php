@@ -625,7 +625,7 @@ function _vtisPermitted($module,$actionname,$record_id='') {
 		}
 	}
 	//Checking for vtiger_tab permission
-	if (!is_null($tabid) and $profileTabsPermission[$tabid] != 0) {
+	if (null !== $tabid and $profileTabsPermission[$tabid] != 0) {
 		$permission = "no";
 		$log->debug("Exiting isPermitted method ...");
 		return $permission;

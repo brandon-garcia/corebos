@@ -1657,7 +1657,7 @@ function UserCount() {
 function mkdirs($dir, $mode = 0777, $recursive = true) {
 	global $log;
 	$log->debug("Entering mkdirs(" . $dir . "," . $mode . "," . $recursive . ") method ...");
-	if (is_null($dir) || $dir === "") {
+	if (null === $dir || $dir === "") {
 		$log->debug("Exiting mkdirs method ...");
 		return FALSE;
 	}
@@ -2871,7 +2871,7 @@ function perform_post_migration_activities() {
 function getEmailTemplateVariables($modules_list = null) {
 	global $adb;
 
-	if (is_null($modules_list)) {
+	if (null === $modules_list) {
 		$modules_list = array('Accounts', 'Contacts', 'Leads', 'Users', 'HelpDesk');
 	}
 
