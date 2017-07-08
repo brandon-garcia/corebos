@@ -60,7 +60,7 @@ require_once('modules/Calendar/CalendarCommon.php');
 								$hour = $i;
 							else 
 								$hour = $i - 12;
-							$hour = $hour.":00 pm";
+							$hour .= ":00 pm";
 						}
 						else
                					{

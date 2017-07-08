@@ -19,7 +19,7 @@ function getaddITSEventPopupTime($starttime,$endtime,$format) {
 		$timearr['starthour'] = twoDigit(($hr>12)?($hr-12):$hr);
 		$timearr['startmin']  = $stmin;
 
-		$edhr = $edhr+0;
+		$edhr += 0;
 		$timearr['endfmt'] = ($edhr >= 12) ? "pm" : "am";
 		if($edhr == 0) $edhr = 12;
 		$timearr['endhour'] = twoDigit(($edhr>12)?($edhr-12):$edhr);

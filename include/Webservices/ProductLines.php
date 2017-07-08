@@ -81,41 +81,41 @@ $_REQUEST['subtotal']=round($subtotal + $totalwithtax,2);
 if($taxtype == "individual") {
 	$totaldoc=$subtotal+$totalwithtax;
 	if ($element['discount_type_final']=='amount') {
-		$totaldoc=$totaldoc-$element['hdnDiscountAmount'];
+		$totaldoc -= $element['hdnDiscountAmount'];
 	} elseif ($element['discount_type_final']=='percentage') {
-		$totaldoc=$totaldoc-($totaldoc*$element['hdnDiscountPercent']/100);
+		$totaldoc -= ($totaldoc * $element['hdnDiscountPercent'] / 100);
 	}
 } else {
 	$totaldoc=$subtotal;
 	if ($element['discount_type_final']=='amount') {
-		$totaldoc=$totaldoc-$element['hdnDiscountAmount'];
+		$totaldoc -= $element['hdnDiscountAmount'];
 	} elseif ($element['discount_type_final']=='percentage') {
-		$totaldoc=$totaldoc-($totaldoc*$element['hdnDiscountPercent']/100);
+		$totaldoc -= ($totaldoc * $element['hdnDiscountPercent'] / 100);
 	}
 	$all_available_taxes = getAllTaxes('available','');
 	$tax_val = 0;
 	for($tax_count=0;$tax_count<count($all_available_taxes);$tax_count++) {
 		$tax_val += $all_available_taxes[$tax_count]['percentage'];
 	}
-	$totaldoc=$totaldoc+($totaldoc*$tax_val/100);
+	$totaldoc += ($totaldoc * $tax_val / 100);
 }
 if (!empty($element['shipping_handling_charge'])) {
 $_REQUEST['shipping_handling_charge']=$element['shipping_handling_charge'];
-	$totaldoc=$totaldoc+$element['shipping_handling_charge'];
+	$totaldoc += $element['shipping_handling_charge'];
 	$shtaxes=$adb->query('select taxname from vtiger_shippingtaxinfo where deleted=0');
 	while ($sht=$adb->fetch_array($shtaxes)) {
 		$shname=$sht['taxname'];
 		if (!empty($element[$shname])) {
 			$_REQUEST[$shname.'_sh_percent'] = $element[$shname];
-			$totaldoc=$totaldoc+($element['shipping_handling_charge']*$element[$shname]/100);
+			$totaldoc += ($element['shipping_handling_charge'] * $element[$shname] / 100);
 		}
 	}
 }
 if ($element['adjustmentType']=='add') {
-	$totaldoc=$totaldoc+$element['adjustment'];
+	$totaldoc += $element['adjustment'];
 	$_REQUEST['adjustment']=$element['adjustment'];
 } elseif ($element['adjustmentType']=='deduct') {
-	$totaldoc=$totaldoc-$element['adjustment'];
+	$totaldoc -= $element['adjustment'];
 	$_REQUEST['adjustment']=$element['adjustment'];
 }
 $_REQUEST['total']=round($totaldoc,2);

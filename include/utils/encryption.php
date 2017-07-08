@@ -90,7 +90,7 @@ class Encryption
 		{
 			for($j=0; $j<strlen($key); $j++)
 			{
-				$string[$i] = $string[$i]^$key[$j];
+				$string[$i] ^= $key[$j];
 			}
 		}
 		return $string;

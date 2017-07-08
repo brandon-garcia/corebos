@@ -175,7 +175,7 @@ function getMenuPicklist($mparent,$level) {
 	if ($menurs and $adb->num_rows($menurs)>0) {
 		while ($menu = $adb->fetch_array($menurs)) {
 			$menustructure[$menu['evvtmenuid']] = ($level ? str_repeat('>', $level) : '').' '.$menu['mlabel'];
-			$menustructure = $menustructure + getMenuPicklist($menu['evvtmenuid'],$level+1);
+			$menustructure += getMenuPicklist($menu['evvtmenuid'], $level + 1);
 		}
 	}
 	return $menustructure;

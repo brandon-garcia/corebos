@@ -906,7 +906,7 @@ function getListViewEntries($focus, $module, $list_result, $navigation_array, $r
 							if ($uitype == 71 or $uitype == 72) {
 								if (!isset($totals[$fieldname])) $totals[$fieldname]=0;
 								$field_val = $adb->query_result($list_result, $list_result_count, $colname);
-								$totals[$fieldname] = $totals[$fieldname] + $field_val;
+								$totals[$fieldname] += $field_val;
 							}
 						}
 					}
@@ -3859,8 +3859,8 @@ function getEntityId($module, $entityName, $searchonfield='') {
 	if (!(strpos($fieldsname, ',') === false)) {
 		$fieldlists = explode(',', $fieldsname);
 		$fieldsname = "trim(concat(";  // Add trim function to weed-out extra character values
-		$fieldsname = $fieldsname . implode(",' ',", $fieldlists);
-		$fieldsname = $fieldsname . "))";
+		$fieldsname .= implode(",' ',", $fieldlists);
+		$fieldsname .= "))";
 		$entityName = trim($entityName); // Trim the input to be consistent in comparison
 	}
 

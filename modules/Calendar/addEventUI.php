@@ -103,9 +103,9 @@ function getAssignedToHTML($assignedto,$toggletype)
 		foreach($arr as $sel_value=>$value)
 		{
 			if($value != '')
-				$check=$check*0;
+				$check *= 0;
 			else
-				$check=$check*1;
+				$check *= 1;
 		}
 	}
 	if($check == 0)

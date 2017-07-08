@@ -77,7 +77,7 @@ class DashboardCharts {
 			$amount = CurrencyField::convertFromMasterCurrency($row['potsum'],$current_user->conv_rate);
 			$sum[$row['sales_stage']][$row['smownerid']] = $amount;
 			$count[$row['sales_stage']][$row['smownerid']] = $row['potcnt'];
-			$total = $total + $amount;
+			$total += $amount;
 		}
 		$titlestr = $mod_strings['LBL_TOTAL_PIPELINE'].html_to_utf8($current_user->currency_symbol).$total;
 		$datay = array();
@@ -183,7 +183,7 @@ class DashboardCharts {
 			$closedWon[$row['potmonth']]['count'] = $row['potcnt'];
 			$amount = CurrencyField::convertFromMasterCurrency($row['potsum'],$current_user->conv_rate);
 			$closedWon[$row['potmonth']]['sum'] = $amount;
-			$total = $total + $amount;
+			$total += $amount;
 		}
 		$realwhere = $where." and sales_stage='Closed Lost' ";
 		$sql = 'SELECT MONTH(closingdate) as potmonth,count(*) as potcnt,sum(amount) as potsum
@@ -199,7 +199,7 @@ class DashboardCharts {
 			$closedLost[$row['potmonth']]['count'] = $row['potcnt'];
 			$amount = CurrencyField::convertFromMasterCurrency($row['potsum'],$current_user->conv_rate);
 			$closedLost[$row['potmonth']]['sum'] = $amount;
-			$total = $total + $amount;
+			$total += $amount;
 		}
 		$realwhere = $where." and sales_stage!='Closed Lost' and sales_stage!='Closed Won' ";
 		$sql = 'SELECT MONTH(closingdate) as potmonth,count(*) as potcnt,sum(amount) as potsum
@@ -217,7 +217,7 @@ class DashboardCharts {
 			$amount = CurrencyField::convertFromMasterCurrency($row['potsum'],$current_user->conv_rate);
 			$notClosed[$row['potmonth']]['sum'] = $amount;
 			$labels[$row['potmonth']-1] = $months[$row['potmonth']-1];
-			$total = $total + $amount;
+			$total += $amount;
 		}
 
 		$titlestr = $mod_strings['LBL_TOTAL_PIPELINE'].html_to_utf8($current_user->currency_symbol).$total;
@@ -368,7 +368,7 @@ class DashboardCharts {
 			$amount = CurrencyField::convertFromMasterCurrency($row['potsum'],$current_user->conv_rate);
 			$sum[$row['leadsource']][$row['smownerid']] = $amount;
 			$count[$row['leadsource']][$row['smownerid']] = $row['potcnt'];
-			$total = $total + $amount;
+			$total += $amount;
 		}
 		$titlestr = $mod_strings['LBL_TOTAL_PIPELINE'].html_to_utf8($current_user->currency_symbol).$total;
 		$datay = array();
@@ -484,7 +484,7 @@ class DashboardCharts {
 			$amount = CurrencyField::convertFromMasterCurrency($row['potsum'],$current_user->conv_rate);
 			$sum[$row['leadsource']] = $amount;
 			$count[$row['leadsource']] = $row['potcnt'];
-			$total = $total + $amount;
+			$total += $amount;
 		}
 		$titlestr = $mod_strings['LBL_TOTAL_PIPELINE'].html_to_utf8($current_user->currency_symbol).$total;
 		$aTargets = array();

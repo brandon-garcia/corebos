@@ -2457,7 +2457,7 @@ function get_details($id,$module,$customerid,$sessionid)
 			}
 			if($fieldname == 'filesize'){
 				if($filetype == 'I'){
-					$fieldvalue = $fieldvalue .' B';
+					$fieldvalue .= ' B';
 				}
 				elseif($filetype == 'E'){
 					$fieldvalue = '--';

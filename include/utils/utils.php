@@ -1446,7 +1446,7 @@ function getInventoryTotal($return_module,$id) {
 		$listprice = $unitprice;
 		if($qty =='')
 		$qty = 1;
-		$total = $total+($qty*$listprice);
+		$total += ($qty * $listprice);
 	}
 	$log->debug("Exiting getInventoryTotal method ...");
 	return $total;
@@ -2619,7 +2619,7 @@ function formatForSqlLike($str, $flag=0,$is_field=false) {
 			} elseif ($flag == 1) {
 				$str = '%'. $str;
 			} elseif ($flag == 2) {
-				$str = $str .'%';
+				$str .= '%';
 			}
 		} else {
 			if ($flag == 0) {
@@ -2864,11 +2864,11 @@ function ConvertToMinutes($time_string)
 	$interval_string = strtolower($interval[1]);
 	if($interval_string == 'hour' || $interval_string == 'hours')
 	{
-		$interval_minutes = $interval_minutes * 60;
+		$interval_minutes *= 60;
 	}
 	elseif($interval_string == 'day' || $interval_string == 'days')
 	{
-		$interval_minutes = $interval_minutes * 1440;
+		$interval_minutes *= 1440;
 	}
 	return $interval_minutes;
 }
@@ -3705,7 +3705,7 @@ function getCallerName($from) {
 		$callerModule = " (<a href='index.php?module=$module&action=index'>$module</a>)";
 		$callerID = $callerInfo['id'];
 
-		$caller =$caller."<a href='index.php?module=$module&action=DetailView&record=$callerID'>$callerName</a>$callerModule";
+		$caller .= "<a href='index.php?module=$module&action=DetailView&record=$callerID'>$callerName</a>$callerModule";
 
 	}else{
 		$caller = $caller."<br>
@@ -4382,11 +4382,11 @@ function getValidDBInsertDateTimeValue($value) {
 		$dbDateValue = getValidDBInsertDateValue($valueList[0]);
 		$dbTimeValue = $valueList[1];
 		if(!empty($dbTimeValue) && strpos($dbTimeValue, ':') === false) {
-			$dbTimeValue = $dbTimeValue.':';
+			$dbTimeValue .= ':';
 		}
 		$timeValueLength = strlen($dbTimeValue);
 		if(!empty($dbTimeValue) && strrpos($dbTimeValue, ':') == ($timeValueLength-1)) {
-			$dbTimeValue = $dbTimeValue.'00';
+			$dbTimeValue .= '00';
 		}
 		try {
 			$dateTime = new DateTimeField($dbDateValue.' '.$dbTimeValue);

@@ -154,7 +154,7 @@ if(isset($query_string) && $query_string != ''){
 				$navigation_array = VT_getSimpleNavigationValues($start, $list_max_entries_per_page, $noofrows);
 				$limitStartRecord = ($navigation_array['start'] - 1) * $list_max_entries_per_page;
 
-				$listquery = $listquery. " LIMIT $limitStartRecord, $list_max_entries_per_page";
+				$listquery .= " LIMIT $limitStartRecord, $list_max_entries_per_page";
 				$list_result = $adb->query($listquery);
 
 				$moduleRecordCount[$module]['recordListRangeMessage'] = getRecordRangeMessage($list_result, $limitStartRecord, $noofrows);
@@ -185,7 +185,7 @@ if(isset($query_string) && $query_string != ''){
 				$smarty->assign("DISPLAYHEADER", $display_header);
 				$smarty->assign("HEADERCOUNT", count($listview_header));
 				$smarty->assign("ModuleRecordCount", $moduleRecordCount);
-				$total_record_count = $total_record_count + $noofrows;
+				$total_record_count += $noofrows;
 				$smarty->assign("SEARCH_CRITERIA","( $noofrows )".$search_msg);
 				$smarty->assign("MODULES_LIST", $object_array);
 				$smarty->assign("CUSTOMVIEW_OPTION",$customviewcombo_html);

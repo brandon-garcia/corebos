@@ -128,7 +128,7 @@ function getaddEventPopupTime($starttime,$endtime,$format)
 		$timearr['starthour'] = twoDigit(($hr>12)?($hr-12):$hr);
 		$timearr['startmin']  = $stmin;
 
-		$edhr = $edhr+0;
+		$edhr += 0;
 		$timearr['endfmt'] = ($edhr >= 12) ? "pm" : "am";
 		if($edhr == 0) $edhr = 12;
 		$timearr['endhour'] = twoDigit(($edhr>12)?($edhr-12):$edhr);
@@ -158,7 +158,7 @@ function getTimeCombo($format,$bimode,$hour='',$min='',$fmt='',$todocheck=false)
 {
 	global $mod_strings;
 	$combo = '';
-	$min = $min - ($min%5);
+	$min -= ($min % 5);
 	if($bimode == 'start' && !$todocheck)
 		$jsfn = 'onChange="changeEndtime_StartTime(document.EditView.activitytype.value);"';
 	else

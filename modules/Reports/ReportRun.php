@@ -521,7 +521,7 @@ class ReportRun extends CRMEntity {
 			}
 			if($fieldtablename == "vtiger_crmentity")
 			{
-				$fieldtablename = $fieldtablename.$module;
+				$fieldtablename .= $module;
 			}
 			if($fieldname == "assigned_user_id")
 			{
@@ -833,14 +833,14 @@ class ReportRun extends CRMEntity {
 					$startDateTime = new DateTimeField($startdate.' '. date('H:i:s'));
 					$userStartDate = $startDateTime->getDisplayDate();
 					if($type == 'DT') {
-						$userStartDate = $userStartDate.' 00:00:00';
+						$userStartDate .= ' 00:00:00';
 					}
 					$startDateTime = getValidDBInsertDateTimeValue($userStartDate);
 
 					$endDateTime = new DateTimeField($enddate.' '. date('H:i:s'));
 					$userEndDate = $endDateTime->getDisplayDate();
 					if($type == 'DT') {
-						$userEndDate = $userEndDate.' 23:59:00';
+						$userEndDate .= ' 23:59:00';
 					}
 					$endDateTime = getValidDBInsertDateTimeValue($userEndDate);
 

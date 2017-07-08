@@ -185,7 +185,7 @@ public function buildSelectStmt($sqlDump){
 			}
 		}
 	}else if(in_array('count(*)', $sqlDump['column_list'])){
-		$this->query = $this->query." COUNT(*)";
+		$this->query .= " COUNT(*)";
 	}else{
 		$i=0;
 		foreach($sqlDump['column_list'] as $ind=>$field){
@@ -210,7 +210,7 @@ public function buildSelectStmt($sqlDump){
 		$sofCO = isset($sqlDump['where_condition']['column_operators']) ? sizeof($sqlDump['where_condition']['column_operators']) : 0;
 		$sofOp = isset($sqlDump['where_condition']['operators']) ? sizeof($sqlDump['where_condition']['operators']) : 0;
 		if ($sofCN == $sofCV && $sofCO == ($sofOp+1)) {
-			$this->query = $this->query.' WHERE (';
+			$this->query .= ' WHERE (';
 			$i=0;
 			$referenceFields = $meta->getReferenceFieldDetails();
 			$ownerFields = $meta->getOwnerFields();
@@ -256,14 +256,14 @@ public function buildSelectStmt($sqlDump){
 				$this->query = $this->query.$columnTable[$fieldcol[$whereField]].'.'.
 									$fieldcol[$whereField]." ".$whereOperator." ".$whereValue;
 				if($i <sizeof($sqlDump['where_condition']['column_values'])-1){
-					$this->query = $this->query.' ';
+					$this->query .= ' ';
 					$this->query = $this->query.$sqlDump['where_condition']['operators'][$i].' ';
 				}
 			}
 		}else{
 			throw new WebServiceException(WebServiceErrorCode::$QUERYSYNTAX, "columns data inappropriate");
 		}
-		$this->query = $this->query.")";
+		$this->query .= ")";
 		$nextToken = ' AND ';
 	}else{
 		if(!empty($deletedQuery)){
@@ -271,20 +271,20 @@ public function buildSelectStmt($sqlDump){
 		}
 	}
 	if(strcasecmp('calendar',$this->out['moduleName'])===0){
-		$this->query = $this->query." $nextToken activitytype='Task' AND ";
+		$this->query .= " $nextToken activitytype='Task' AND ";
 	}elseif(strcasecmp('events',$this->out['moduleName'])===0){
-		$this->query = $this->query."$nextToken activitytype!='Emails' AND activitytype!='Task' AND ";
+		$this->query .= "$nextToken activitytype!='Emails' AND activitytype!='Task' AND ";
 	}else if(strcasecmp('emails',$this->out['moduleName'])===0){
-		$this->query = $this->query."$nextToken activitytype='Emails' AND ";
+		$this->query .= "$nextToken activitytype='Emails' AND ";
 	}elseif(!empty($deletedQuery)){
-		$this->query = $this->query.$nextToken;
+		$this->query .= $nextToken;
 	}
 	
 	$this->query = $this->query.' '.$deletedQuery;
 	
 	if (!empty($sqlDump['orderby'])) {
 		$i=0;
-		$this->query = $this->query.' ORDER BY ';
+		$this->query .= ' ORDER BY ';
 		foreach($sqlDump['orderby'] as $ind=>$field){
 			if($i===0){
 				$this->query = $this->query.$columnTable[$fieldcol[$field]].".".$fieldcol[$field];
@@ -303,14 +303,14 @@ public function buildSelectStmt($sqlDump){
 		if(sizeof($sqlDump['limit'])>1){
 			$offset = true;
 		}
-		$this->query = $this->query.' LIMIT ';
+		$this->query .= ' LIMIT ';
 		foreach($sqlDump['limit'] as $ind=>$field){
 			// get rid of 100 record limit on queries with specific limit
 // 			if(!$offset){
 // 				$field = ($field>100)? 100: $field;
 // 			}
 			if($i===0){
-				$this->query = $this->query.$field;
+				$this->query .= $field;
 				$i++;
 				$offset = false;
 			}else{
@@ -318,9 +318,9 @@ public function buildSelectStmt($sqlDump){
 			}
 		}
 	}else{
-		$this->query = $this->query.' LIMIT 100';
+		$this->query .= ' LIMIT 100';
 	}
-	$this->query = $this->query.';';
+	$this->query .= ';';
 }
 public function getTables($sqlDump, $columns){
 	$meta = $sqlDump['meta'];
@@ -1364,9 +1364,9 @@ $this->out['defaultJoinConditions'] = '';
 foreach($tables as $ind=>$table){
 if($firstTable!=$table){
 	if(!isset($tabNameIndex[$table]) && $table == "vtiger_crmentity"){
-		$this->out['defaultJoinConditions'] = $this->out['defaultJoinConditions']." LEFT JOIN $table ON $firstTable.$firstIndex=$table.crmid";
+		$this->out['defaultJoinConditions'] .= " LEFT JOIN $table ON $firstTable.$firstIndex=$table.crmid";
 	}else{
-		$this->out['defaultJoinConditions'] = $this->out['defaultJoinConditions']." LEFT JOIN $table ON $firstTable.$firstIndex=$table.{$tabNameIndex[$table]}";
+		$this->out['defaultJoinConditions'] .= " LEFT JOIN $table ON $firstTable.$firstIndex=$table.{$tabNameIndex[$table]}";
 	}
 }else{
 	$this->out['tableName'] = $table;
@@ -1499,8 +1499,8 @@ if($firstTable!=$table){
 	foreach ($this->yy_get_expected_tokens($yymajor) as $token) {
 		$expect[] = self::$yyTokenName[$token];
 	}
-	$synMsg =$synMsg.('Unexpected ' . $this->tokenName($yymajor) . '(' . $TOKEN
-		. '), expected one of: ' . implode(',', $expect));
+	$synMsg .= ('Unexpected ' . $this->tokenName($yymajor) . '(' . $TOKEN
+        . '), expected one of: ' . implode(',', $expect));
 	
 	throw new WebServiceException(WebServiceErrorCode::$QUERYSYNTAX, $synMsg);
 #line 1508 "e:\workspace\nonadmin\pkg\vtiger\extensions\Webservices\VTQL_parser.php"

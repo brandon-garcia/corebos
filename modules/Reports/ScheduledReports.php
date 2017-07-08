@@ -180,7 +180,7 @@ class VTScheduledReport extends Reports {
 		if(empty($scheduledTime)) {
 			$scheduledTime = '10:00';
 		} elseif(stripos(':', $scheduledTime) === false) {
-			$scheduledTime = $scheduledTime .':00';
+			$scheduledTime .= ':00';
 		}
 
 		if($scheduleType == VTScheduledReport::$SCHEDULED_HOURLY) {

@@ -247,7 +247,7 @@ function vtws_getSearchResults($query,$search_onlyin,$restrictionids,$user) {
 		$list_result = $adb->query($listquery);
 		$focus = CRMEntity::getInstance($module);
 		$listview_entries = getSearchingListViewEntries($focus,$module,$list_result,$navigation_array,"","","","",$oCustomView,"","","",true);
-		$total_record_count = $total_record_count + $noofrows;
+		$total_record_count += $noofrows;
 		if(!empty($listview_entries)) {
 			foreach($listview_entries as $key=>$element) {
 				$res[$j]=$element;
@@ -845,7 +845,7 @@ function getReferenceAutocomplete($term, $filter, $searchinmodules, $limit, $use
 				$op='!=';
 				break;
 			case 'startswith':
-				$term=$term.'%';
+				$term .= '%';
 				$op='like';
 				break;
 			case 'endswith':
@@ -870,8 +870,8 @@ function getReferenceAutocomplete($term, $filter, $searchinmodules, $limit, $use
 		if (!(strpos($fieldsname, ',') === false)) {
 			$fieldlists = explode(',', $fieldsname);
 			$fieldsname = "concat(";
-			$fieldsname = $fieldsname . implode(",' ',", $fieldlists);
-			$fieldsname = $fieldsname . ")";
+			$fieldsname .= implode(",' ',", $fieldlists);
+			$fieldsname .= ")";
 			$wherefield = implode(" $op '$term' or ", $fieldlists)." $op '$term' ";
 		}
 		$qry = "select crmid,$fieldsname as crmname

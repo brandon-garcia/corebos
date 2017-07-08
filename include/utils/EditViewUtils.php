@@ -1752,7 +1752,7 @@ function getAssociatedProducts($module,$focus,$seid='')
 			if($taxtype == 'individual')
 			{
 				//Add the tax with product total and assign to netprice
-				$netPrice = $netPrice+$taxTotal;
+				$netPrice += $taxTotal;
 			}
 		} else {
 			$taxtype = GlobalVariable::getVariable('Inventory_Tax_Type_Default', 'individual', $currentModule);
@@ -1857,7 +1857,7 @@ function getAssociatedProducts($module,$focus,$seid='')
 		if($tax_percent == '' || $tax_percent == 'NULL')
 			$tax_percent = '0.00';
 		$taxamount = ($subTotal-$finalDiscount)*$tax_percent/100;
-		$taxtotal = $taxtotal + $taxamount;
+		$taxtotal += $taxamount;
 		$product_Detail[1]['final_details']['taxes'][$tax_count]['taxname'] = $tax_name;
 		$product_Detail[1]['final_details']['taxes'][$tax_count]['taxlabel'] = $tax_label;
 		$product_Detail[1]['final_details']['taxes'][$tax_count]['percentage'] = $tax_percent;
@@ -1887,7 +1887,7 @@ function getAssociatedProducts($module,$focus,$seid='')
 			$shtax_percent = getInventorySHTaxPercent($focus->id,$shtax_name);
 		}
 		$shtaxamount = $shCharge*$shtax_percent/100;
-		$shtaxtotal = $shtaxtotal + $shtaxamount;
+		$shtaxtotal += $shtaxamount;
 		$product_Detail[1]['final_details']['sh_taxes'][$shtax_count]['taxname'] = $shtax_name;
 		$product_Detail[1]['final_details']['sh_taxes'][$shtax_count]['taxlabel'] = $shtax_label;
 		$product_Detail[1]['final_details']['sh_taxes'][$shtax_count]['percentage'] = $shtax_percent;

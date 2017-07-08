@@ -575,7 +575,7 @@ function get_to_emailids($module) {
 				  WHERE vtiger_crmentity.deleted=0 AND vtiger_leaddetails.leadid IN ('.generateQuestionMarks($idlist).')';
 		$leadcols = $adb->getColumnNames('vtiger_leaddetails');
 		if (in_array('emailoptout', $leadcols)) {
-			$query = $query.' AND vtiger_leaddetails.emailoptout=0';
+			$query .= ' AND vtiger_leaddetails.emailoptout=0';
 		}
 	} else if ($module == 'Contacts'){
 		$query = 'SELECT firstname,lastname,'.implode(",", $emailFields).',vtiger_contactdetails.contactid as id

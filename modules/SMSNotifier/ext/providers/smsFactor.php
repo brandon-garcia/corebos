@@ -177,7 +177,7 @@ class smsFactor implements ISMSProvider
 		$serviceURL = $serviceURL . 'characterSetID='			. urlencode($characterSetID) . '&';
 		$serviceURL = $serviceURL . 'replyMethodID='			. urlencode($replyMethodID) . '&'; 
 		$serviceURL = $serviceURL . 'replyData='				. urlencode($replyData) . '&';
-		$serviceURL = $serviceURL . 'statusNotificationUrl=';
+		$serviceURL .= 'statusNotificationUrl=';
 
 		$httpClient = new Vtiger_Net_Client($serviceURL);
 		return $httpClient->doPost(array());

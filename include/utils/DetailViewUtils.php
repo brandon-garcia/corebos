@@ -1358,11 +1358,11 @@ function getDetailAssociatedProducts($module, $focus) {
 				$tax_value = getInventoryProductTaxValue($focus->id, $productid, $tax_name);
 
 				$individual_taxamount = $totalAfterDiscount * $tax_value / 100;
-				$taxtotal = $taxtotal + $individual_taxamount;
+				$taxtotal += $individual_taxamount;
 				$tax_info_message .= "$tax_label : $tax_value % = ".CurrencyField::convertToUserFormat($individual_taxamount, null, true)." \\n";
 			}
 			$tax_info_message .= "\\n " . $app_strings['LBL_TOTAL_TAX_AMOUNT'] . " = ". CurrencyField::convertToUserFormat($taxtotal, null, true);
-			$netprice = $netprice + $taxtotal;
+			$netprice += $taxtotal;
 		}
 
 		$sc_image_tag = '';
@@ -1460,7 +1460,7 @@ function getDetailAssociatedProducts($module, $focus) {
 		$output .= '<td class="crmTableRow small lineOnTop detailview_inventory_npricecell" valign="bottom" align="right">' . CurrencyField::convertToUserFormat($netprice, null, true) . '</td>';
 		$output .= '</tr>';
 
-		$netTotal = $netTotal + $netprice;
+		$netTotal += $netprice;
 	}
 
 	$output .= '</table>';
@@ -1516,7 +1516,7 @@ function getDetailAssociatedProducts($module, $focus) {
 				$tax_value = '0.00';
 
 			$taxamount = ($netTotal - $finalDiscount) * $tax_value / 100;
-			$taxtotal = $taxtotal + $taxamount;
+			$taxtotal += $taxamount;
 			$tax_info_message .= "$tax_label : $tax_value % = ". CurrencyField::convertToUserFormat($taxamount, null, true) ." \\n";
 		}
 		$tax_info_message .= "\\n " . $app_strings['LBL_TOTAL_TAX_AMOUNT'] . " = ". CurrencyField::convertToUserFormat($taxtotal, null, true);
@@ -1544,7 +1544,7 @@ function getDetailAssociatedProducts($module, $focus) {
 		$shtax_label = $shtax_details[$shtax_count]['taxlabel'];
 		$shtax_percent = getInventorySHTaxPercent($focus->id, $shtax_name);
 		$shtaxamount = $shAmount * $shtax_percent / 100;
-		$shtaxtotal = $shtaxtotal + $shtaxamount;
+		$shtaxtotal += $shtaxamount;
 		$shtax_info_message .= "$shtax_label : $shtax_percent % = ". CurrencyField::convertToUserFormat($shtaxamount, null, true) ." \\n";
 	}
 	$shtax_info_message .= "\\n " . $app_strings['LBL_TOTAL_TAX_AMOUNT'] . " = ". CurrencyField::convertToUserFormat($shtaxtotal, null, true);

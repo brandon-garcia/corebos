@@ -378,7 +378,7 @@ class crxml implements arrayAccess, iterator
 			$return='';	
 			while($n = $node->childNodes->item($count)) {
 				if($n->nodeType == 	XML_TEXT_NODE || $n->nodeType == XML_CDATA_SECTION_NODE) {
-					if(!ctype_space($n->nodeValue)) $return = $return.$n->nodeValue;	
+					if(!ctype_space($n->nodeValue)) $return .= $n->nodeValue;
 					} 
 				$count++;	
 			}

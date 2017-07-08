@@ -640,7 +640,7 @@ public function getFieldListbyBlock($module, $block, $type)
                 }
                 if($fieldtablename == "vtiger_crmentity")
                 {
-                        $fieldtablename = $fieldtablename.$module;
+                        $fieldtablename .= $module;
                 }
                 if($fieldname == "assigned_user_id")
                 {

@@ -65,7 +65,7 @@ $Calendar_Settings = $Calendar4You->getSettings();
 								$hour = $i;
 							else
 								$hour = $i - 12;
-							$hour = $hour.":00 pm";
+							$hour .= ":00 pm";
 						}
 						else
 						{

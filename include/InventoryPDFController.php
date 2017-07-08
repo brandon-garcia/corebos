@@ -206,7 +206,7 @@ class Vtiger_InventoryPDFController {
 		//Shipping & Handling taxes
 		$sh_tax_details = $final_details['sh_taxes'];
 		for($i=0;$i<count($sh_tax_details);$i++) {
-			$sh_tax_percent = $sh_tax_percent + $sh_tax_details[$i]['percentage'];
+			$sh_tax_percent += $sh_tax_details[$i]['percentage'];
 		}
 		//obtain the Currency Symbol
 		$currencySymbol = $this->buildCurrencySymbol();

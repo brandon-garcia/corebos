@@ -246,9 +246,9 @@ class colorConverter {
 
 		if($this->RGBError==0) {
 
-			$R = $R/255; 
-			$G = $G/255;
-			$B = $B/255;
+			$R /= 255;
+			$G /= 255;
+			$B /= 255;
 
 			$RGB = array($R,$G,$B);
 			sort($RGB);
@@ -291,9 +291,9 @@ class colorConverter {
 				}
 			}
 
-			$H = $H*360;
-			$S = $S*100;
-			$L = $L*100;
+			$H *= 360;
+			$S *= 100;
+			$L *= 100;
 
 			return array($H,$S,$L);
 
@@ -307,9 +307,9 @@ class colorConverter {
 
 		if($this->HSLError==0) {
 
-			$H = $H/360; 
-			$S = $S/100;
-			$L = $L/100;
+			$H /= 360;
+			$S /= 100;
+			$L /= 100;
 
 			if($S==0) {
 

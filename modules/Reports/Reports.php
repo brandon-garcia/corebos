@@ -615,7 +615,7 @@ class Reports extends CRMEntity{
 			}
 			if($fieldtablename == "vtiger_crmentity")
 			{
-				$fieldtablename = $fieldtablename.$module;
+				$fieldtablename .= $module;
 			}
 			if($fieldname == "assigned_user_id")
 			{
@@ -790,7 +790,7 @@ class Reports extends CRMEntity{
 
 			if($fieldtablename == "vtiger_crmentity")
 			{
-				$fieldtablename = $fieldtablename.$module;
+				$fieldtablename .= $module;
 			}
 			$fieldlabel1 = str_replace(" ","_",$fieldlabel);
 			$optionvalue = $fieldtablename.":".$fieldcolname.":".$module."_".$fieldlabel1;

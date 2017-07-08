@@ -846,7 +846,7 @@ function getWeekViewLayout(& $cal)
 			//To display events in WeekView
 			$weekview_layout .=getweekEventLayer($cal,$cal['calendar']->week_hour_slices[$count]);
 			$weekview_layout .= '</td>';
-			$count = $count+24;
+			$count += 24;
 		}
 		$weekview_layout .= '</tr>';
 	}

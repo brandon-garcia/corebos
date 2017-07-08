@@ -135,7 +135,7 @@ class Appointment
 			$from = strtotime($result['date_start']);
 			$to = strtotime($result['due_date']. ' '. $result["time_end"]);
 			$windowTo = strtotime($endDate->getDBInsertDateTimeValue());
-			for($j = $from; $j <= $to; $j=$j+(60*60*24))
+			for($j = $from; $j <= $to; $j += (60 * 60 * 24))
 			{
 
 				$obj = new Appointment();

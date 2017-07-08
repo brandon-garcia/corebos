@@ -54,7 +54,7 @@ function vtws_generateRandomAccessKey($length=10) {
 	$accesskey = "";
 	$maxIndex = strlen($source);
 	for ($i=0;$i<$length;++$i) {
-		$accesskey = $accesskey.substr($source,rand(null,$maxIndex),1);
+		$accesskey .= substr($source, rand(null, $maxIndex), 1);
 	}
 	return $accesskey;
 }
@@ -552,8 +552,8 @@ function vtws_getActorEntityNameById ($entityId, $idList) {
 			if (!(strpos($nameFields,',') === false)) {
 				$fieldList = explode(',',$nameFields);
 				$nameFields = "concat(";
-				$nameFields = $nameFields.implode(",' ',",$fieldList);
-				$nameFields = $nameFields.")";
+				$nameFields .= implode(",' ',", $fieldList);
+				$nameFields .= ")";
 			}
 
 			$query1 = "select $nameFields as entityname, $indexField from $tableName where $indexField in (".generateQuestionMarks($idList).")";

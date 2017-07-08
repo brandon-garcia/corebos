@@ -181,7 +181,7 @@ class Calendar
 		if(isset($current_user->end_hour) && $current_user->end_hour !='')
 		{
 			list($endhour,$endmin)=explode(":",$current_user->end_hour);
-			$endhour = $endhour+0;
+			$endhour += 0;
 			$this->day_end_hour=$endhour;
 		}
 		else

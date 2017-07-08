@@ -404,7 +404,7 @@ class RecurringType {
 						$index = $this->rptmonth_datevalue - 1;
 						$day = $this->rptmonth_datevalue;
 						if (isset($this->recur_freq))
-							$month = $month + $this->recur_freq;
+							$month += $this->recur_freq;
 						else
 							++$month;
 						$tempdateObj = $tempdateObj->getThismonthDaysbyIndex($index, $day, $month, $year);

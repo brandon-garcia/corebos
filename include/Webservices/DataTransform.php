@@ -136,7 +136,7 @@ class DataTransform{
 			if(isset($row['parent_id'])){
 				if($associatedToUser === true){
 					$_REQUEST['module'] = 'Emails';
-					$row['parent_id'] = $row['parent_id']."@-1|";
+					$row['parent_id'] .= "@-1|";
 					$_REQUEST['parent_id'] = $row['parent_id'];
 				}else{
 					$referenceHandler = vtws_getModuleHandlerFromId($parentTypeId, $meta->getUser());

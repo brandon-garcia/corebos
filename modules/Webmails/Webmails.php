@@ -461,7 +461,7 @@ public function GetPart(&$attach_tab, &$this_part, $part_no, &$display_rfc822)
                     if ($part_no != ''){
 			$len = strlen($part_no);
 			if(!strpos($part_no,'.',($len-1)))
-                     	   $part_no = $part_no . '.';
+                     	   $part_no .= '.';
 		    }
                     // if it's an alternative, we skip the text part to only keep the HTML part
                     if ($this_part->subtype == 'ALTERNATIVE')// && $read == true)

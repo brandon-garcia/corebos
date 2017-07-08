@@ -168,7 +168,7 @@ class ListViewController {
 						$this->ownerNameList[$fieldName] = getOwnerNameList($idList);
 					} else {
 						$newOwnerList = getOwnerNameList($idList);
-						$this->ownerNameList[$fieldName] = $this->ownerNameList[$fieldName] + $newOwnerList;
+						$this->ownerNameList[$fieldName] += $newOwnerList;
 					}
 				}
 			}
@@ -206,7 +206,7 @@ class ListViewController {
 					$this->ownerNameListrel[$fieldName] = getOwnerNameList($idList);
 				} else {
 					$newOwnerList = getOwnerNameList($idList);
-					$this->ownerNameListrel[$fieldName] = $this->ownerNameListrel[$fieldName] + $newOwnerList;
+					$this->ownerNameListrel[$fieldName] += $newOwnerList;
 				}
 			}
 		}
@@ -393,7 +393,7 @@ class ListViewController {
 								$currencySymbol = $currencyInfo['currency_symbol'];
 							}
 							if (!isset($totals[$fieldName])) $totals[$fieldName]=0;
-							$totals[$fieldName] = $totals[$fieldName] + $value;
+							$totals[$fieldName] += $value;
 							$currencyValue = CurrencyField::convertToUserFormat($value, null, true);
 							$value = CurrencyField::appendCurrencySymbol($currencyValue, $currencySymbol);
 						} else {

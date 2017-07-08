@@ -1907,7 +1907,7 @@ function QuickCreate($module) {
 		$custfld = getOutputHtml($uitype, $fieldname, $fieldlabel, $maxlength, $col_fields, $generatedtype, $module, '', $typeofdata);
 		$qcreate_arr[] = $custfld;
 	}
-	for ($i = 0, $j = 0; $i < count($qcreate_arr); $i = $i + 2, $j++) {
+	for ($i = 0, $j = 0; $i < count($qcreate_arr); $i += 2, $j++) {
 		$key1 = $qcreate_arr[$i];
 		if (isset($qcreate_arr[$i + 1]) and is_array($qcreate_arr[$i + 1])) {
 			$key2 = $qcreate_arr[$i + 1];
@@ -2484,7 +2484,7 @@ function makeRandomPassword() {
 	while ($i <= 7) {
 		$num = rand() % 33;
 		$tmp = substr($salt, $num, 1);
-		$pass = $pass . $tmp;
+		$pass .= $tmp;
 		$i++;
 	}
 	$log->debug("Exiting makeRandomPassword method ...");
@@ -3142,8 +3142,8 @@ function getEntityField($module) {
 		if (!(strpos($fieldsname, ',') === false)) {
 			$fieldlists = explode(',', $fieldsname);
 			$fieldsname = "concat(";
-			$fieldsname = $fieldsname . implode(",' ',", $fieldlists);
-			$fieldsname = $fieldsname . ")";
+			$fieldsname .= implode(",' ',", $fieldlists);
+			$fieldsname .= ")";
 		}
 	}
 	$data = array("tablename" => $tablename, "fieldname" => $fieldsname,"entityid"=>$entityidfield);

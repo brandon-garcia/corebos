@@ -80,7 +80,7 @@ abstract class WebserviceEntityOperation{
 				if(!is_numeric($maxUploadSize)){
 					$maxUploadSize = 0;
 				}
-				$maxUploadSize = $maxUploadSize * 1000000;
+				$maxUploadSize *= 1000000;
 				$upload_maxsize = GlobalVariable::getVariable('Application_Upload_MaxSize',3000000);
 				if($upload_maxsize > $maxUploadSize){
 					$maxUploadSize = $upload_maxsize;

@@ -37,7 +37,7 @@ class crmtogo_UI_DownLoadFile extends crmtogo_WS_Controller {
 			$savedFile = $fileDetails['attachmentsid']."_".$fileName;
 
 			$fileSize = filesize($filePath.$savedFile);
-			$fileSize = $fileSize + ($fileSize % 1024);
+			$fileSize += ($fileSize % 1024);
 
 			if (fopen($filePath.$savedFile, "r")) {
 				$fileContent = fread(fopen($filePath.$savedFile, "r"), $fileSize);

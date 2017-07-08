@@ -1009,7 +1009,7 @@ class CRMEntity {
 			}
 		}
 		if ($numRows > 0) {
-			$sql3 = $sql3 . ',';
+			$sql3 .= ',';
 		}
 		return $sql3;
 	}
@@ -1226,7 +1226,7 @@ class CRMEntity {
 			$other = CRMEntity::getInstance($related_module);
 
 			if(!empty($rel_mods[$other->table_name])) {
-				$rel_mods[$other->table_name] = $rel_mods[$other->table_name] + 1;
+				$rel_mods[$other->table_name] += 1;
 				$alias = $other->table_name.$rel_mods[$other->table_name];
 				$query_append = "as $alias";
 			} else {
