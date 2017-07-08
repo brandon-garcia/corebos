@@ -901,7 +901,7 @@ public function readInputFields() {
                      $vals.=" " .$fieldname." ".$operator. ' ("'.str_replace(';','","',$expectedvalue).' ")';
                     
                 }else
-                if(stristr($expectedvalue,';')!=''){
+                if(strstr($expectedvalue,';')!=''){
                     $array_values=explode(';',$expectedvalue);
                     $c=0;
                     foreach($array_values as $value){
@@ -913,7 +913,7 @@ public function readInputFields() {
                         else
                         if(is_string($value)){
                             
-                         if(stristr($value,'.')!='' && stristr($value,'vtiger_')!=''){
+                         if(strstr($value,'.')!='' && stristr($value,'vtiger_')!=''){
                           $expectedvalue_array=  explode('.', $value);
                           $expected_table_name=$expectedvalue_array[0];
 
@@ -940,7 +940,7 @@ public function readInputFields() {
                            $vals.=" " .$fieldname." ".$operator. " '' ";
                  else  if(is_string($expectedvalue)){
                                       // vetem ne rastin kur expected element eshte nje vtiger_module.field.
-                      if(stristr($expectedvalue,'.')!='' && stristr($expectedvalue,'vtiger_')!='' ){
+                      if(strstr($expectedvalue,'.')!='' && stristr($expectedvalue,'vtiger_')!='' ){
                           $expectedvalue_array=  explode('.', $expectedvalue);
                           $expected_table_name=$expectedvalue_array[0];
 
@@ -1010,7 +1010,7 @@ public function readInputFields() {
               }
              
               if($uniquesearch!=''){
-                   if(stristr($uniquesearch,';')==''){
+                   if(strstr($uniquesearch,';')==''){
                        $expectedvalue_array=$this->generate_sub_subquery($expectedvalue_base,$uniquesearch,$searched_module,$expected_module,$i,$j);
                   
               }else{
@@ -1077,7 +1077,7 @@ if(!empty($expectedvalue_array)){
      
      public function generate_sub_subquery($expectedvalue_base, $uniquesearch, $searched_module, $expected_module, $i, $j){
          global $adb;
-         if(stristr($uniquesearch,'=')!=''){
+         if(strstr($uniquesearch,'=')!=''){
                       $uniquesearch_array=explode('=',$uniquesearch);
                       $uniquesearch_field=$uniquesearch_array[0];
                       $uniquesearch_value=$uniquesearch_array[1];

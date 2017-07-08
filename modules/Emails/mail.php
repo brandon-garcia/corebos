@@ -416,7 +416,7 @@ function setCCAddress($mail,$cc_mod,$cc_val)
 		{
 			$addr = $ccmail[$i];
 			$cc_name = preg_replace('/([^@]+)@(.*)/', '$1', $addr); // First Part Of Email
-			if(stripos($addr, '<')) {
+			if(strpos($addr, '<')) {
 				$name_addr_pair = explode("<",$ccmail[$i]);
 				$cc_name = $name_addr_pair[0];
 				$addr = trim($name_addr_pair[1],">");

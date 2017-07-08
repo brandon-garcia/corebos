@@ -171,7 +171,7 @@ class ReportRun extends CRMEntity {
                 {
                     $columnslist[$fieldcolname] = "cast(concat(vtiger_activity.date_start,'  ',vtiger_activity.time_start) as DATETIME) as Calendar_Start_Date_and_Time";
                 }
-                elseif(stristr($selectedfields[0],"vtiger_users") && ($selectedfields[1] == 'user_name'))
+                elseif(false !== stripos($selectedfields[0], "vtiger_users") && ($selectedfields[1] == 'user_name'))
                 {
                     $temp_module_from_tablename = str_replace("vtiger_users","",$selectedfields[0]);
                     if($module!=$this->primarymodule){
@@ -185,11 +185,11 @@ class ReportRun extends CRMEntity {
                         $columnslist[$fieldcolname] = $selectedfields[0].".user_name as '".$header_label."'";
 
                 }
-                elseif(stristr($selectedfields[0],"vtiger_crmentity") && ($selectedfields[1] == 'modifiedby')) {
+                elseif(false !== stripos($selectedfields[0], "vtiger_crmentity") && ($selectedfields[1] == 'modifiedby')) {
                     $concatSql = getSqlForNameInDisplayFormat(array('last_name'=>'vtiger_lastModifiedBy'.$module.'.last_name', 'first_name'=>'vtiger_lastModifiedBy'.$module.'.first_name'), 'Users');
                     $columnslist[$fieldcolname] = "trim($concatSql) as $header_label";
                 }
-                elseif(stristr($selectedfields[0],"vtiger_crmentity") && ($selectedfields[1] == 'smcreatorid')) {
+                elseif(false !== stripos($selectedfields[0], "vtiger_crmentity") && ($selectedfields[1] == 'smcreatorid')) {
                     $concatSql = getSqlForNameInDisplayFormat(array('last_name'=>'vtiger_CreatedBy'.$module.'.last_name', 'first_name'=>'vtiger_CreatedBy'.$module.'.first_name'), 'Users');
                     $columnslist[$fieldcolname] = "trim($concatSql) as $header_label";
                 }
@@ -240,7 +240,7 @@ class ReportRun extends CRMEntity {
                         $columnslist[$fieldcolname] = $selectedfields[0].".".$selectedfields[1]." as '".$header_label."'";
                     }
                 }
-                elseif(stristr($selectedfields[1],'cf_')==true && stripos($selectedfields[1],'cf_')==0)
+                elseif(false === stripos($selectedfields[1], 'cf_') && stripos($selectedfields[1],'cf_')==0)
                 {
                     $columnslist[$fieldcolname] = $selectedfields[0].".".$selectedfields[1]." AS '".$adb->sql_escape_string(decode_html($header_label))."'";
                 }

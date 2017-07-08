@@ -235,7 +235,7 @@ $update_field_operator_node->appendChild($update_text_operator);
 $update_expectedvalue_node=$xml->createElement('expectedvalue');
 $update_field_node->appendChild($update_expectedvalue_node);
 $update_expectedvalue=$update_data[$i]->expectedvalue;
-if(stristr($update_expectedvalue,':')!=''){
+if(strstr($update_expectedvalue,':')!=''){
     $update_expectedvalue_arr=explode(':',$update_expectedvalue);
     $update_value=$update_expectedvalue_arr[0].'.'.$update_expectedvalue_arr[1];
 }else

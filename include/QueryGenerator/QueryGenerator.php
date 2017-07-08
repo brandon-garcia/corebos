@@ -214,7 +214,7 @@ class QueryGenerator {
 								return $field->getTableName().'.'.$fldname;
 							}
 
-                            if($fldname=='assigned_user_id' && strstr($field->getTableName(),"vtiger_crmentity")) {
+                            if($fldname=='assigned_user_id' && false !== strpos($field->getTableName(), "vtiger_crmentity")) {
                                 $fldname='smownerid as smowner'.strtolower(getTabModuleName($field->getTabId()));
                             } else {
                                 if ($alias) {
@@ -240,7 +240,7 @@ class QueryGenerator {
 							return $field->getTableName().'.'.$fldname;
 						}
 
-                        if($fldname=='assigned_user_id' && strstr($field->getTableName(),"vtiger_crmentity")) {
+                        if($fldname=='assigned_user_id' && false !== strpos($field->getTableName(), "vtiger_crmentity")) {
                             $fldname='smownerid as smowner'.strtolower(getTabModuleName($field->getTabId()));
                         } else {
                             if ($alias) {

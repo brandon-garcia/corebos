@@ -941,7 +941,7 @@ public function convertMailData2Html($maildata, $cutafter = 0) {
 		$body = substr($part, $endOfHead + $delLength, strlen($part));
 
 		// check whether it is a message according to rfc822
-        if (stristr($head, "Content-Type: message/rfc822")) {
+        if (false !== stripos($head, "Content-Type: message/rfc822")) {
             $part = substr($part, $endOfHead + $delLength, strlen($part));
             $returnParts[1] = $this->mail_mimesub($part);
             return $returnParts;
