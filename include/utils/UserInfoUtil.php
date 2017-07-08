@@ -3634,7 +3634,7 @@ function getFieldVisibilityPermission($fld_module, $userid, $fieldname, $accessm
 //get profile list using userid
     $profilelist = array();
     foreach ($current_user_profiles as $profid) {
-        array_push($profilelist, $profid);
+        $profilelist[] = $profid;
     }
 
     //get tabid
