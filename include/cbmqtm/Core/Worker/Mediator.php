@@ -228,7 +228,7 @@ abstract class Core_Worker_Mediator implements Core_ITask
      * @abstract
      * @param $method
      */
-    protected abstract function get_callback($method);
+    abstract protected function get_callback($method);
 
 
 

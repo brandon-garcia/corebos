@@ -162,7 +162,7 @@ class ChartUtils {
 		return $ChartDataArray;
 	}
 
-	static public function getChartHTML($labels, $values, $graph_title, $target_values, $html_imagename, $width, $height, $left, $right, $top, $bottom, $graph_type, $legend_position='right', $responsive=true) {
+	public static function getChartHTML($labels, $values, $graph_title, $target_values, $html_imagename, $width, $height, $left, $right, $top, $bottom, $graph_type, $legend_position='right', $responsive=true) {
 		$lbls = implode(',',$labels);
 		$vals = str_replace('::',',',$values);
 		$minscale = max(0,min(explode(',',$vals))-2);
@@ -247,7 +247,7 @@ EOF;
 		return $sHTML;
 	}
 
-	static public function getChartHTMLwithObject($chartObject, $targetObject, $html_imagename, $width, $height, $left, $right, $top, $bottom) {
+	public static function getChartHTMLwithObject($chartObject, $targetObject, $html_imagename, $width, $height, $left, $right, $top, $bottom) {
 		$tgtarray = json_decode($targetObject,true);
 		$tgt = reset($tgtarray);
 		if (is_array($tgt)) {
@@ -279,7 +279,7 @@ EOF;
 		return $sHTML;
 	}
 
-	static public function convertToArray($values,$translate=false,$withquotes=false) {
+	public static function convertToArray($values, $translate=false, $withquotes=false) {
 		if (strpos($values,'::')===false) $values = urldecode($values);
 		$vals = explode('::',$values);
 		if ($translate) {

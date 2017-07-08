@@ -23,7 +23,7 @@ class cbmqtm_dbdistributor extends cbmqtm_manager {
 	static protected $db = null;
 	protected $version = '1.0';
 
-	static public function getInstance() {
+	public static function getInstance() {
 		self::setDB();
 		return parent::getInstance();
 	}

@@ -20,7 +20,7 @@
 class coreBOS_MQTM {
 	static protected $instance = null;
 
-	static public function getInstance() {
+	public static function getInstance() {
 
 		if (null === static::$instance) {
 			$filename = coreBOS_Settings::getSetting('cbmqtm_classfile',null);

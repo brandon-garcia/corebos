@@ -21,7 +21,7 @@ require_once 'include/utils/ChartUtils.php';
 
 class DashboardCharts {
 
-	static public function pipeline_by_sales_stage($datax, $date_start, $date_end, $user_id, $width, $height){
+	public static function pipeline_by_sales_stage($datax, $date_start, $date_end, $user_id, $width, $height){
 		global $log, $current_user, $adb, $mod_strings;
 		$log->debug("Entering pipeline_by_sales_stage(".print_r($datax,true).",".$date_start.",".$date_end.",".print_r($user_id,true).",".$width.",".$height.") method ...");
 
@@ -142,7 +142,7 @@ class DashboardCharts {
 		return ChartUtils::getChartHTMLwithObject(json_encode($chartobject), json_encode($aTargets), 'pipeline_by_sales_stage', $width, $height, 0, 0, 0, 0);
 	}
 
-	static public function outcome_by_month($date_start, $date_end, $user_id, $width, $height){
+	public static function outcome_by_month($date_start, $date_end, $user_id, $width, $height){
 		global $log, $current_user, $adb, $current_language, $mod_strings;
 		$log->debug("Entering outcome_by_month(".$date_start.",".$date_end.",".print_r($user_id,true).",".$width.",".$height.") method ...");
 		$report_strings = return_module_language($current_language, 'Reports');
@@ -318,7 +318,7 @@ class DashboardCharts {
 		return ChartUtils::getChartHTMLwithObject(json_encode($chartobject), json_encode(array()), 'outcome_by_month', $width, $height, 0, 0, 0, 0);
 	}
 
-	static public function lead_source_by_outcome($datax, $user_id, $width, $height){
+	public static function lead_source_by_outcome($datax, $user_id, $width, $height){
 		global $log, $current_user, $adb, $mod_strings;
 		$log->debug("Entering lead_source_by_outcome(".print_r($datax,true).",".print_r($user_id,true).",".$width.",".$height.") method ...");
 
@@ -434,7 +434,7 @@ class DashboardCharts {
 	}
 
 
-	static public function pipeline_by_lead_source($datax, $date_start, $date_end, $user_id, $width, $height){
+	public static function pipeline_by_lead_source($datax, $date_start, $date_end, $user_id, $width, $height){
 		global $log, $current_user, $adb, $mod_strings;
 		$log->debug("Entering pipeline_by_lead_source(".print_r($datax,true).",".$date_start.",".$date_end.",".print_r($user_id,true).",".$width.",".$height.") method ...");
 
