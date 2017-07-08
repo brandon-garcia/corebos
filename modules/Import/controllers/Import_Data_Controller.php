@@ -120,11 +120,11 @@ class Import_Data_Controller {
 			}
 
             return true;
-        } else {
-			Import_Lock_Controller::lock($this->id, $this->module, $this->user);
-			return true;
-		}
-	}
+        }
+
+        Import_Lock_Controller::lock($this->id, $this->module, $this->user);
+        return true;
+    }
 
 	public function finishImport() {
 		Import_Lock_Controller::unLock($this->user, $this->module);

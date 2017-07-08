@@ -324,10 +324,9 @@ class Homestuff{
 
                 return array('Entries'=>"Fields not found in Selected Filter");
             }
-			else{
-				return array('Entries'=>"<font color='red'>Filter You have Selected is Not Found</font>");
-			}
-		}
+
+            return array('Entries'=>"<font color='red'>Filter You have Selected is Not Found</font>");
+        }
 		else{
 			return array('Entries'=>"<font color='red'>Permission Denied</font>");
 		}

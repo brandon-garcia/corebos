@@ -1040,9 +1040,9 @@ class PearDatabase{
 
                 if(strcmp($fldtype,'DATE') ==0 || strcmp($fldtype,'TIMESTAMP')==0) {
                     return $this->formatDate($str);
-                } else {
-                    return $str;
                 }
+
+                return $str;
             }
 		}
 		$this->println("format String Illegal field name ".$fldname);

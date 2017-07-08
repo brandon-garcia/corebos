@@ -35,10 +35,10 @@ if(isset($_REQUEST['dup_check']) && $_REQUEST['dup_check']!='') {
     if($adb->num_rows($user_result) > 0) {
         echo $mod_strings['LBL_USERNAME_EXIST'];
         die;
-    } else {
-        echo 'SUCCESS';
-        die;
     }
+
+    echo 'SUCCESS';
+    die;
 }
 
 /** returns the group members in an formatted array

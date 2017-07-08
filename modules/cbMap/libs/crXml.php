@@ -490,16 +490,16 @@ class crxml implements arrayAccess, iterator
             $element=$this->root->_getNode()->createElementNS($nameSpaceURI,"$prefix:$localName",'');
             if($value) $element->nodeValue=$value;
             return $element;
-        } else {
-            if(isset($this->parent) && $this->parentNode!=null  && $parentNode = $this->parent->_getNode()) {
-                if($parentNode->isDefaultNamespace($parentNode->namespaceURI)) {
-                    $element=$this->root->_getNode()->createElementNS($parentNode->namespaceURI,$name,'');
-                    if($value) $element->nodeValue=$value;
-                    return $element;
-                }
-            }
-            return new DOMElement($name,$value);
         }
+
+        if(isset($this->parent) && $this->parentNode!=null  && $parentNode = $this->parent->_getNode()) {
+            if($parentNode->isDefaultNamespace($parentNode->namespaceURI)) {
+                $element=$this->root->_getNode()->createElementNS($parentNode->namespaceURI,$name,'');
+                if($value) $element->nodeValue=$value;
+                return $element;
+            }
+        }
+        return new DOMElement($name,$value);
     }
 	public function _getChildrenForNode($node, $name)
 	{

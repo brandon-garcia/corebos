@@ -37,7 +37,9 @@ function handlecolumn_list($lexer, $val) {
 
             if ((strcmp ( $val, "(" ) === 0)) {
                 return VTQL_Parser::PARENOPEN;
-            } else if (strcmp ( $val, ")" ) === 0) {
+            }
+
+            if (strcmp ( $val, ")" ) === 0) {
                 return VTQL_Parser::PARENCLOSE;
             } else if ((strcasecmp ( $val, "count" ) === 0)) {
                 $count = true;
@@ -77,7 +79,9 @@ function handlewhere($lexer, $val) {
 
     if ((strcasecmp ( $val, $lexer->optional_states [$lexer->current_state] ) === 0)) {
         return VTQL_Parser::WHERE;
-    } else if ((strcmp ( $val, "<" ) === 0)) {
+    }
+
+    if ((strcmp ( $val, "<" ) === 0)) {
         return VTQL_Parser::LT;
     } else if ((strcmp ( $val, "<=" ) === 0)) {
         return VTQL_Parser::LTE;
@@ -128,7 +132,9 @@ function handleorderby($lexer, $val) {
 
     if (strcasecmp ( $val, "asc" ) === 0) {
         return VTQL_Parser::ASC;
-    } else if (strcasecmp ( $val, "desc" ) === 0) {
+    }
+
+    if (strcasecmp ( $val, "desc" ) === 0) {
         return VTQL_Parser::DESC;
     } else {
         return VTQL_Parser::COLUMNNAME;
@@ -141,7 +147,9 @@ function handlelimit($lexer, $val) {
 
     if ((strcmp ( $val, "(" ) === 0)) {
         return VTQL_Parser::PARENOPEN;
-    } else if ((strcmp ( $val, ")" ) === 0)) {
+    }
+
+    if ((strcmp ( $val, ")" ) === 0)) {
         return VTQL_Parser::PARENCLOSE;
     } else if (strcmp ( $val, "," ) === 0) {
         return VTQL_Parser::COMMA;
@@ -235,7 +243,9 @@ class VTQL_Lexer {
                     // we have changed state
                     // process this token in the new state
                     return $this->yylex ();
-                } elseif ($r === false) {
+                }
+
+                if ($r === false) {
                     $this->index += strlen ( $this->value );
                     $this->linenum += substr_count ( "\n", $this->value );
                     if ($this->index >= strlen ( $this->data )) {

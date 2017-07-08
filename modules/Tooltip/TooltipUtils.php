@@ -172,9 +172,9 @@ function ToolTipExists($fieldname,$tabid){
         }
 
 return false;
-}else{
-        return false;
-    }
+}
+
+    return false;
 }
 
 /**

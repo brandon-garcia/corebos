@@ -956,10 +956,9 @@ public function convertMailData2Html($maildata, $cutafter = 0) {
                 $i++;
             }
             return $returnParts;
-            } else
-            {
-                return $body;
             }
+
+        return $body;
     }
 
 	// get an array with the bodies all parts of an email

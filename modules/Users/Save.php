@@ -33,10 +33,10 @@ if(isset($_REQUEST['dup_check']) && $_REQUEST['dup_check'] != '')
     if($adb->num_rows($group_result) > 0) {
         echo $mod_strings['LBL_GROUPNAME_EXIST'];
         die;
-    } else {
-        echo 'SUCCESS';
-        die;
     }
+
+    echo 'SUCCESS';
+    die;
 }
 if(!empty($_REQUEST['user_role']) && !is_admin($current_user) && $_REQUEST['user_role'] != $current_user->roleid){
 	$log->fatal("SECURITY:Non-Admin user:". $current_user->id . " attempted to change user role");

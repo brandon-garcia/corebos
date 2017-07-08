@@ -137,11 +137,11 @@ class VTExpressionEvaluater{
                 }
 
 return $this->exec($params[2]);
-}else{
-                $params = array_map(array($this, 'exec'), $expr->getParams());
-                $func = $this->operations[$op->value];
-                return $func($params);
-            }
+}
+
+            $params = array_map(array($this, 'exec'), $expr->getParams());
+            $func = $this->operations[$op->value];
+            return $func($params);
         }else{
             return $expr;
         }

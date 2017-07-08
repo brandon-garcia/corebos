@@ -751,12 +751,11 @@ function _vtisPermitted($module,$actionname,$record_id='') {
             $permission = "no";
             $log->debug("Exiting isPermitted method ...");
             return $permission;
-        } else
-        {
-            $permission = "yes";
-            $log->debug("Exiting isPermitted method ...");
-            return $permission;
         }
+
+        $permission = "yes";
+        $log->debug("Exiting isPermitted method ...");
+        return $permission;
     }
 	elseif($others_permission_id == 1)
 	{
@@ -802,7 +801,9 @@ function _vtisPermitted($module,$actionname,$record_id='') {
                 if ($racbr) {
                     if ($actionid == 3 and !$racbr->hasListViewPermissionTo('retrieve')) {
                         return 'no';
-                    } elseif ($actionid == 4 and !$racbr->hasDetailViewPermissionTo('retrieve')) {
+                    }
+
+                    if ($actionid == 4 and !$racbr->hasDetailViewPermissionTo('retrieve')) {
                         return 'no';
                     }
                 }
@@ -812,7 +813,7 @@ function _vtisPermitted($module,$actionname,$record_id='') {
             return $permission;
         }
 
-        if($actionid ==0 || $actionid ==1) {
+        if ($actionid ==0 || $actionid ==1) {
             if($module == 'Calendar')
             {
                 $permission='no';
@@ -834,12 +835,12 @@ return 'no';
             }
             $log->debug("Exiting isPermitted method ...");
             return $permission;
-        } elseif($actionid ==2)
-        {
+        }
+
+        if($actionid ==2) {
                 $permission ="no";
                 return $permission;
-        }
-        else
+        } else
         {
             $permission = "yes";
             $log->debug("Exiting isPermitted method ...");

@@ -146,9 +146,9 @@ class VTExpressionParser{
                 return new VTExpressionTreeNode(array($operator, new VTExpressionTreeNode($arr), $rhs));
             }
             return new VTExpressionTreeNode($arr);
-        }else{
-            return $this->binOp();
         }
+
+        return $this->binOp();
     }
 
 	public $precedence = array(
@@ -173,10 +173,10 @@ class VTExpressionParser{
 			}
 
             return $lhs;
-        }else{
-			return $this->unaryOp();
-		}
-	}
+        }
+
+        return $this->unaryOp();
+    }
 
 	public function unaryOp(){
 		$la = $this->la();

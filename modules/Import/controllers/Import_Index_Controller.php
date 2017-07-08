@@ -281,10 +281,12 @@ class Import_Index_Controller {
             exit;
         }
 
-        if($mode == 'listview') {
+        if ($mode == 'listview') {
             Import_ListView_Controller::render($requestObject, $user);
             exit;
-        } elseif($mode == 'delete_map') {
+        }
+
+        if($mode == 'delete_map') {
             Import_Index_Controller::deleteMap($requestObject, $user);
             exit;
         } elseif($mode == 'clear_corrupted_data') {

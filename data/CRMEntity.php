@@ -1832,7 +1832,9 @@ return true;
             if ($smownerid == $modifiedby) {
                 /** Owner and Modifier as same. * */
                 return true;
-            } else if ($lastviewed && $modifiedon) {
+            }
+
+            if ($lastviewed && $modifiedon) {
                 /** Lastviewed and Modified time is available. */
                 if ($this->__timediff($modifiedon, $lastviewed) > 0)
                     return true;

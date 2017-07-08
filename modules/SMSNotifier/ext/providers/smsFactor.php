@@ -142,10 +142,8 @@ class smsFactor implements ISMSProvider
         {
             return 2;
         }
-        else
-        {
-            return 1;
-        }
+
+        return 1;
     }
 
 	private function sendMessage($clientMessageReference, $message, $tonumbers)

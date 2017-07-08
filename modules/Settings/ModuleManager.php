@@ -30,7 +30,9 @@ else{
     if(!empty($_REQUEST['module_update'])) {
         require_once('modules/Settings/ModuleManager/Update.php');
         exit;
-    } else if(isset($_REQUEST['module_import_cancel']) and $_REQUEST['module_import_cancel'] == 'true') {
+    }
+
+    if(isset($_REQUEST['module_import_cancel']) and $_REQUEST['module_import_cancel'] == 'true') {
         $uploadfile = basename(vtlib_purify($_REQUEST['module_import_file']));
         $uploadfilename = "$modulemanager_uploaddir/$uploadfile";
         checkFileAccess($uploadfilename);

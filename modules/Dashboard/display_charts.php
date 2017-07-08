@@ -110,7 +110,7 @@ require 'modules/Dashboard/graphdefinitions.php';
             return get_graph_by_type($graph_by,$graph_title,$module,$where,$query,"510","250","forhomepage");
         }
 
-        if(($is_admin || $profileTabsPermission[getTabid("Leads")] == 0) && ($type == "leadstatus")&& (getFieldVisibilityPermission('Leads',$user_id,'leadstatus') == "0")) {
+        if (($is_admin || $profileTabsPermission[getTabid("Leads")] == 0) && ($type == "leadstatus")&& (getFieldVisibilityPermission('Leads',$user_id,'leadstatus') == "0")) {
             $graph_by="leadstatus";
             $graph_title= $mod_strings['leadstatus'];
             $module="Leads";
@@ -120,10 +120,8 @@ require 'modules/Dashboard/graphdefinitions.php';
                 $query .= ' and vtiger_leaddetails.leadsource '.picklist_check($module,$graph_by);
                 return get_graph_by_type($graph_by,$graph_title,$module,$where,$query,"510","250","forhomepage");
         }
-        // To display the charts  for Lead status
-        //Charts for Lead Industry
-        elseif (($is_admin || $profileTabsPermission[getTabid("Leads")] == 0) && ($type == "leadindustry") && (getFieldVisibilityPermission('Leads',$user_id,'industry') == "0"))
-        {
+
+        if(($is_admin || $profileTabsPermission[getTabid("Leads")] == 0) && ($type == "leadindustry") && (getFieldVisibilityPermission('Leads',$user_id,'industry') == "0")) {
             $graph_by="industry";
             $graph_title=$mod_strings['leadindustry'];
             $module="Leads";
@@ -131,6 +129,8 @@ require 'modules/Dashboard/graphdefinitions.php';
             $query=getDashboardQuery($leads_query,$module);
             return get_graph_by_type($graph_by,$graph_title,$module,$where,$query,"510","250","forhomepage");
         }
+        // To display the charts  for Lead status
+        //Charts for Lead Industry
         //Sales by Lead Source
         elseif (($is_admin || $profileTabsPermission[getTabid("Potentials")] == 0) && ($type == "salesbyleadsource")&& (getFieldVisibilityPermission('Potentials',$user_id,'leadsource') == "0"))
         {

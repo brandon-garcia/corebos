@@ -103,26 +103,26 @@ class VTFieldExpressionEvaluater{
                 }
 
 return $this->exec($params[2]);
-}else{
-                $func = $this->operations[$op->value];
-                if (substr($func, 0, 28)=='__cb_getGEODistanceFromUser2' || substr($func, 0, 33)=='__cb_getGEODistanceFromAssignUser') {
-                    $relto = $expr->getParams();
-                    $params = array();
-                    foreach ($relto as $key => $value) {
-                        if(is_object($value)){
-                            array_push($params,$this->env($value,true));
-                        }else{
-                            array_push($params,$value);
-                        }
+}
+
+            $func = $this->operations[$op->value];
+            if (substr($func, 0, 28)=='__cb_getGEODistanceFromUser2' || substr($func, 0, 33)=='__cb_getGEODistanceFromAssignUser') {
+                $relto = $expr->getParams();
+                $params = array();
+                foreach ($relto as $key => $value) {
+                    if(is_object($value)){
+                        array_push($params,$this->env($value,true));
+                    }else{
+                        array_push($params,$value);
                     }
-                } else {
-                    $params = array_map(array($this, 'exec'), $expr->getParams());
                 }
-                $loginfo = print_r($params,true);
-                $logbg->debug("VTExpressionTreeNode: function $func $loginfo");
-                $this->debug[] = $loginfo;
-                return $func($params);
+            } else {
+                $params = array_map(array($this, 'exec'), $expr->getParams());
             }
+            $loginfo = print_r($params,true);
+            $logbg->debug("VTExpressionTreeNode: function $func $loginfo");
+            $this->debug[] = $loginfo;
+            return $func($params);
         }else{
             $loginfo = print_r($expr,true);
             $logbg->debug("VTExpression: $loginfo");

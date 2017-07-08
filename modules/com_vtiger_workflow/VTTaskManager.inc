@@ -295,12 +295,14 @@ class VTTaskType {
                 continue;
             }
 
-            if(!empty($includeModules)) {
+            if (!empty($includeModules)) {
                 if(in_array($moduleName, $includeModules)) {
                     $taskTypeInstances[] = $taskName;
                 }
                 continue;
-            } elseif(!empty($excludeModules)) {
+            }
+
+            if(!empty($excludeModules)) {
                 if(!(in_array($moduleName, $excludeModules))) {
                     $taskTypeInstances[] = $taskName;
                 }

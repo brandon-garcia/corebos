@@ -150,15 +150,15 @@ if (!isset($_GET['code'])) {
 if (empty($_GET['state']) || ($_GET['state'] !== $_SESSION['oauth2state'])) {
     unset($_SESSION['oauth2state']);
     exit('Invalid state');
-} else {
-    // Try to get an access token (using the authorization code grant)
-    $token = $provider->getAccessToken(
-        'authorization_code',
-        array(
-            'code' => $_GET['code']
-        )
-    );
-
-    // Use this to get a new access token if the old one expires
-    echo 'Refresh Token: ' . $token->getRefreshToken();
 }
+
+// Try to get an access token (using the authorization code grant)
+$token = $provider->getAccessToken(
+    'authorization_code',
+    array(
+        'code' => $_GET['code']
+    )
+);
+
+// Use this to get a new access token if the old one expires
+echo 'Refresh Token: ' . $token->getRefreshToken();

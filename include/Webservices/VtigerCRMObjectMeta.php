@@ -219,29 +219,31 @@ class VtigerCRMObjectMeta extends EntityMeta {
 			return false;
 		}
 		$webserviceObject = VtigerWebserviceObject::fromId($adb,$ownerTypeId);
-		if(strcasecmp($webserviceObject->getEntityName(),"Users")===0){
-			if($userId == $this->user->id){
-				return true;
-			}
-			if(!$this->assign){
-				$this->retrieveUserHierarchy();
-			}
-			if(in_array($userId,array_keys($this->assignUsers))){
-				return true;
-			}
+        if (strcasecmp($webserviceObject->getEntityName(),"Users")===0) {
+            if($userId == $this->user->id){
+                return true;
+            }
+            if(!$this->assign){
+                $this->retrieveUserHierarchy();
+            }
+            if(in_array($userId,array_keys($this->assignUsers))){
+                return true;
+            }
 
+return false;
+}
+
+        if(strcasecmp($webserviceObject->getEntityName(),"Groups") === 0) {
+            $tabId = $this->getTabId();
+            $groups = vtws_getUserAccessibleGroups($tabId, $this->user);
+            foreach ($groups as $group) {
+                if($group['id'] == $userId){
+                    return true;
+                }
+            }
             return false;
-        }elseif(strcasecmp($webserviceObject->getEntityName(),"Groups") === 0){
-			$tabId = $this->getTabId();
-			$groups = vtws_getUserAccessibleGroups($tabId, $this->user);
-			foreach ($groups as $group) {
-				if($group['id'] == $userId){
-					return true;
-				}
-			}
-			return false;
-		}
-	}
+        }
+    }
 
 	public function getUserAccessibleColumns(){
 		if(!$this->meta){

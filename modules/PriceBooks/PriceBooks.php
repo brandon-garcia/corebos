@@ -231,11 +231,12 @@ class PriceBooks extends CRMEntity {
                 return false;
             }
 
-            if($this->db->num_rows($result_pb) == 0) {
+            if ($this->db->num_rows($result_pb) == 0) {
                 $log->debug("Exiting get_pricebook_noproduct method ...");
                 return true;
-            } elseif($this->db->num_rows($result_pb) < $no_count)
-            {
+            }
+
+            if($this->db->num_rows($result_pb) < $no_count) {
                 $log->debug("Exiting get_pricebook_noproduct method ...");
                 return true;
             }

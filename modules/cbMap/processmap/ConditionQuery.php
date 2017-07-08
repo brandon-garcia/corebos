@@ -64,9 +64,9 @@ class ConditionQuery extends processcbMap {
 
         if (isset($xml->conditions)) {
             return $this->processQuery($xml,$arguments);
-        } else {
-            return false;
         }
+
+        return false;
     }
 
 	private function executeSQL($sql,$arguments,$return) {

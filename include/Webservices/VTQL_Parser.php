@@ -851,7 +851,9 @@ static public $yy_action = array(
                         // by ignoring input, this is in essence ignoring a
                         // syntax error!
                         return array_unique($expected);
-                    } elseif ($nextstate === self::YY_NO_ACTION) {
+                    }
+
+                    if ($nextstate === self::YY_NO_ACTION) {
                         $this->yyidx = $yyidx;
                         $this->yystack = $stack;
                         // input accepted, but not shifted (I guess)
@@ -931,7 +933,9 @@ static public $yy_action = array(
                         // by ignoring input, this is in essence ignoring a
                         // syntax error!
                         return false;
-                    } elseif ($nextstate === self::YY_NO_ACTION) {
+                    }
+
+                    if ($nextstate === self::YY_NO_ACTION) {
                         $this->yyidx = $yyidx;
                         $this->yystack = $stack;
                         // input accepted, but not shifted (I guess)

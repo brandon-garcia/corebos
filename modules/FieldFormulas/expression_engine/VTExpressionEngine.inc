@@ -149,9 +149,9 @@ class VTExpressionEngine{
 
         if($expr instanceof Symbol && in_array($expr->value, $this->vars)){
             return array($expr->value=>$expr);
-        }else{
-            return array();
         }
+
+        return array();
     }
 
 	private function loadExpression($var, $expr){

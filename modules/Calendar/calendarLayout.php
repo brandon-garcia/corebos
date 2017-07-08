@@ -477,14 +477,14 @@ $label .= $week_end->getmonthName()." ";
 $label .= $week_end->year;
         $cal_log->debug("Exiting display_date() method...");
         return $label;
-} elseif ($view == 'month')
-    {
+}
+
+    if ($view == 'month') {
         $label = $date_time->getmonthName()." ";
         $label .= $date_time->year;
         $cal_log->debug("Exiting display_date() method...");
         return $label;
-}
-    elseif ($view == 'year')
+} elseif ($view == 'year')
     {
         $cal_log->debug("Exiting display_date() method...");
         return $date_time->year;

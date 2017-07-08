@@ -149,9 +149,9 @@ class colorHarmony extends colorConverter {
 
         if($Hue>360) {
             return $Hue-360;
-        } else {
-            return $Hue;
         }
+
+        return $Hue;
 
     }
 
@@ -189,9 +189,9 @@ class colorHarmony extends colorConverter {
 
             if($diffC<0) {
                 return $par2-floor(0.5*$diff);
-            } else {
-                return $par2;
             }
+
+            return $par2;
         }
 		
 		if($n==3) {
@@ -201,9 +201,9 @@ class colorHarmony extends colorConverter {
 
             if($diffC<0) {
                 return $par3-floor(0.5*$diff);
-            } else {
-                return $par3;
             }
+
+            return $par3;
         }
 		
 		if($n==4) {
@@ -213,9 +213,9 @@ class colorHarmony extends colorConverter {
 
             if($diffC<0) {
                 return $par4-floor(0.25*$diff);
-            } else {
-                return $par4;
             }
+
+            return $par4;
         }
 
 	}

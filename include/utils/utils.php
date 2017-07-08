@@ -3776,9 +3776,9 @@ function get_use_asterisk($id){
 		}
 
         return 'true';
-    }else{
-		return 'false';
-	}
+    }
+
+    return 'false';
 }
 
 /**

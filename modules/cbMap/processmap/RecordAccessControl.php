@@ -192,10 +192,10 @@ class RecordAccessControl extends processcbMap {
 				}
 
                 return $map2use;
-            } else {
-				return $map2use;
-			}
-		} else {
+            }
+
+            return $map2use;
+        } else {
 			return $map2use;
 		}
 	}

@@ -862,12 +862,10 @@ function retrieve_account_id($account_name,$user_id)
         //mysql_close();
         return $row["accountid"];
     }
-    else
-    {
-        $row = $db->fetchByAssoc($result, 0);
-        //mysql_close();
-        return $row["accountid"];
-    }
+
+    $row = $db->fetchByAssoc($result, 0);
+    //mysql_close();
+    return $row["accountid"];
 
 }
 

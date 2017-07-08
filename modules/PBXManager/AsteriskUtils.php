@@ -56,9 +56,9 @@ function authorizeUser($username, $password, $asterisk){
 
         echo "Logged in successfully to asterisk server\n\n";
         return true;
-    }else{
-		return false;
-	}
+    }
+
+    return false;
 }
 
 /**
@@ -79,10 +79,10 @@ function loginUser($username, $password, $asterisk){
 		}
 
         return true;
-    }else{
-		echo "Missing username and/or password";
-		return false;
-	}
+    }
+
+    echo "Missing username and/or password";
+    return false;
 }
 
 /**

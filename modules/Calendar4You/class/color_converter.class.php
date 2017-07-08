@@ -26,41 +26,43 @@ class colorConverter {
 	public function Deci($hex) { // convert hex to dec
 
 		$HEXpar = preg_split('//','0123456789abcdef',-1,PREG_SPLIT_NO_EMPTY);
-		
-		if(strlen($hex)==1) {
 
-			if(in_array($hex,$HEXpar)) {
+        if (strlen($hex)==1) {
 
-				$dec = hexdec($hex);
+            if(in_array($hex,$HEXpar)) {
 
-				return ($dec * 16) + $dec;
+                $dec = hexdec($hex);
 
-			}
+                return ($dec * 16) + $dec;
 
+            }
+
+return false;
+
+}
+
+        if(strlen($hex)==2) {
+
+            $hex1 = substr($hex,0,1);
+            $hex2 = substr($hex,1,1);
+
+            if(in_array($hex1,$HEXpar) && in_array($hex2,$HEXpar)) {
+
+                $dec1 = hexdec($hex1);
+                $dec2 = hexdec($hex2);
+
+                return ($dec1 * 16) + $dec2;
+
+            }
+
+return false;
+
+} else {
             return false;
 
-        } elseif(strlen($hex)==2) {
+        }
 
-			$hex1 = substr($hex,0,1);
-			$hex2 = substr($hex,1,1);
-
-			if(in_array($hex1,$HEXpar) && in_array($hex2,$HEXpar)) {
-
-				$dec1 = hexdec($hex1);
-				$dec2 = hexdec($hex2);
-
-				return ($dec1 * 16) + $dec2;
-
-			}
-
-            return false;
-
-        } else {
-			return false;
-
-		}
-
-	}
+    }
 
 	public function isRGB($R, $G, $B) { // check validity of RGB color code
 
@@ -353,9 +355,11 @@ class colorConverter {
             return $temp1+($temp2-$temp1)*6*$temp3;
         }
 
-        if((2*$temp3)<1) {
+        if ((2*$temp3)<1) {
             return $temp2;
-        } elseif((3*$temp3)<2) {
+        }
+
+        if((3*$temp3)<2) {
             return $temp1+($temp2-$temp1)*((2/3)-$temp3)*6;
         } else {
             return $temp1;

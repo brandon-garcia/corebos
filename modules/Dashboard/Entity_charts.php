@@ -574,11 +574,9 @@ function get_graph_by_type($graph_by,$graph_title,$module,$where,$query,$width=9
 
         return ChartUtils::getChartHTML($labels, $values, $graph_title, $target_values,$html_imagename, $width, $height, $left, $right, $top, $bottom, $Chart_Type, $Chart_position, false);
     }
-	else
-	{
-		sleep(1);
-		echo '<h3>'.$mod_strings['LBL_NO_DATA'].'</h3>';
-	}
+
+    sleep(1);
+    echo '<h3>'.$mod_strings['LBL_NO_DATA'].'</h3>';
 }
 
 ?>

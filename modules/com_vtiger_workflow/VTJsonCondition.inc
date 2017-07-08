@@ -189,36 +189,36 @@ class VTJsonCondition {
 					}
 
                     return $fieldValue === 'off' || $fieldValue === 0 || $fieldValue === '0' || $fieldValue === '';
-                } else {
-					global $current_user,$adb;
-					$tabid = getTabid($entityData->getModuleName());
-					$sql = "select *, '0' as readonly from vtiger_field where tabid = ? and fieldname=?";
-					$result = $adb->pquery($sql, array($tabid, $cond['fieldname']));
-					$webserviceField = WebserviceField::fromQueryResult($adb,$result,0);
-					$ftype = $webserviceField->getFieldDataType();
-                    if ($ftype=='multipicklist') {
-                        $flvals = explode('|##|', $fieldValue);
-                        $flvals = array_map('trim',$flvals);
-                        return in_array($value, $flvals);
-                    }
-
-                    if ($ftype=='reference') {
-                        $isthesame = false;
-                        $rlist = $webserviceField->getReferenceList();
-                        foreach ($rlist as $modName) {
-                            $wsidrs = $adb->pquery('SELECT id FROM vtiger_ws_entity WHERE name=?',array($modName));
-                            if ($wsidrs and $adb->num_rows($wsidrs)>0) {
-                                $wsid = $adb->query_result($wsidrs, 0,0);
-                                $isthesame = ($fieldValue == $wsid.'x'.$value);
-                            }
-                            if ($isthesame) break;
-                        }
-                        return $isthesame || ($fieldValue == $value);
-                    } else {
-                        return $fieldValue == $value;
-                    }
                 }
-			case "is not":
+
+                global $current_user,$adb;
+                $tabid = getTabid($entityData->getModuleName());
+                $sql = "select *, '0' as readonly from vtiger_field where tabid = ? and fieldname=?";
+                $result = $adb->pquery($sql, array($tabid, $cond['fieldname']));
+                $webserviceField = WebserviceField::fromQueryResult($adb,$result,0);
+                $ftype = $webserviceField->getFieldDataType();
+                if ($ftype=='multipicklist') {
+                    $flvals = explode('|##|', $fieldValue);
+                    $flvals = array_map('trim',$flvals);
+                    return in_array($value, $flvals);
+                }
+
+                if ($ftype=='reference') {
+                    $isthesame = false;
+                    $rlist = $webserviceField->getReferenceList();
+                    foreach ($rlist as $modName) {
+                        $wsidrs = $adb->pquery('SELECT id FROM vtiger_ws_entity WHERE name=?',array($modName));
+                        if ($wsidrs and $adb->num_rows($wsidrs)>0) {
+                            $wsid = $adb->query_result($wsidrs, 0,0);
+                            $isthesame = ($fieldValue == $wsid.'x'.$value);
+                        }
+                        if ($isthesame) break;
+                    }
+                    return $isthesame || ($fieldValue == $value);
+                }
+
+                return $fieldValue == $value;
+            case "is not":
 				if (preg_match('/([^:]+):boolean$/', $value, $match)) {
 					$value = $match[1];
 					if ($value == 'true') {
@@ -226,36 +226,36 @@ class VTJsonCondition {
 					}
 
                     return $fieldValue === 'on' || $fieldValue === 1 || $fieldValue === '1';
-                } else {
-					global $current_user,$adb;
-					$tabid = getTabid($entityData->getModuleName());
-					$sql = "select *, '0' as readonly from vtiger_field where tabid = ? and fieldname=?";
-					$result = $adb->pquery($sql, array($tabid, $cond['fieldname']));
-					$webserviceField = WebserviceField::fromQueryResult($adb,$result,0);
-					$ftype = $webserviceField->getFieldDataType();
-                    if ($ftype=='multipicklist') {
-                        $flvals = explode('|##|', $fieldValue);
-                        $flvals = array_map('trim',$flvals);
-                        return !in_array($value, $flvals);
-                    }
-
-                    if ($ftype=='reference') {
-                        $isthesame = false;
-                        $rlist = $webserviceField->getReferenceList();
-                        foreach ($rlist as $modName) {
-                            $wsidrs = $adb->pquery('SELECT id FROM vtiger_ws_entity WHERE name=?',array($modName));
-                            if ($wsidrs and $adb->num_rows($wsidrs)>0) {
-                                $wsid = $adb->query_result($wsidrs, 0,0);
-                                $isthesame = ($fieldValue == $wsid.'x'.$value);
-                            }
-                            if ($isthesame) break;
-                        }
-                        return !$isthesame && ($fieldValue != $value);
-                    } else {
-                        return $fieldValue != $value;
-                    }
                 }
-			case "contains":
+
+                global $current_user,$adb;
+                $tabid = getTabid($entityData->getModuleName());
+                $sql = "select *, '0' as readonly from vtiger_field where tabid = ? and fieldname=?";
+                $result = $adb->pquery($sql, array($tabid, $cond['fieldname']));
+                $webserviceField = WebserviceField::fromQueryResult($adb,$result,0);
+                $ftype = $webserviceField->getFieldDataType();
+                if ($ftype=='multipicklist') {
+                    $flvals = explode('|##|', $fieldValue);
+                    $flvals = array_map('trim',$flvals);
+                    return !in_array($value, $flvals);
+                }
+
+                if ($ftype=='reference') {
+                    $isthesame = false;
+                    $rlist = $webserviceField->getReferenceList();
+                    foreach ($rlist as $modName) {
+                        $wsidrs = $adb->pquery('SELECT id FROM vtiger_ws_entity WHERE name=?',array($modName));
+                        if ($wsidrs and $adb->num_rows($wsidrs)>0) {
+                            $wsid = $adb->query_result($wsidrs, 0,0);
+                            $isthesame = ($fieldValue == $wsid.'x'.$value);
+                        }
+                        if ($isthesame) break;
+                    }
+                    return !$isthesame && ($fieldValue != $value);
+                }
+
+                return $fieldValue != $value;
+            case "contains":
 				if(is_array($value)) {
 					return in_array($fieldValue, $value);
 				}

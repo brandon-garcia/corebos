@@ -224,10 +224,10 @@ class QueryGenerator {
                                 }
                             }
                             return $field->getTableName().$fld.'.'.$fldname;
-                        } else {
-							return $field;
-						}
-					}
+                        }
+
+                        return $field;
+                    }
 				}
 			}
 		} else {  // FQN
@@ -250,10 +250,10 @@ class QueryGenerator {
                             }
                         }
                         return $field->getTableName().$fld.'.'.$fldname;
-                    } else {
-						return $field;
-					}
-				}
+                    }
+
+                    return $field;
+                }
 			}
 		}
 		return null;

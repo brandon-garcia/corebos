@@ -260,10 +260,10 @@ class Google_Oauth2_Connector {
 
         if(!empty($_REQUEST['service']) and $_REQUEST['service']) {
             echo '<script>window.close();</script>'; exit;
-        } else {
-            $this->setState();
-            $this->showConsentScreen();
         }
+
+        $this->setState();
+        $this->showConsentScreen();
     }
 
 }

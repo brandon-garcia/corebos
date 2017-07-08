@@ -3232,10 +3232,10 @@ function show_all($module){
 		}
 
         return 'false';
-    }else {
-		return 'false';
-	}
-	$log->debug("Exiting customerportal function show_all");
+    }
+
+    return 'false';
+    $log->debug("Exiting customerportal function show_all");
 }
 
 /* Function to get ServiceContracts information in the tickets module if the ticket is related to ServiceContracts

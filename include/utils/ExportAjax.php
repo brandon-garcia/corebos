@@ -21,8 +21,9 @@ if($_REQUEST['export_record'] == true)
     if (($_REQUEST['search_type'] == 'includesearch' && $_REQUEST['export_data'] == 'currentpage') && $_SESSION['export_where'] == '') {
         echo'NOT_SEARCH_WITHSEARCH_CURRENTPAGE';
         exit();
-    } elseif(($_REQUEST['search_type'] == 'includesearch' && $_REQUEST['export_data'] == 'selecteddata') && $idstring == '')
-    {
+    }
+
+    if (($_REQUEST['search_type'] == 'includesearch' && $_REQUEST['export_data'] == 'selecteddata') && $idstring == '') {
         echo'NO_DATA_SELECTED';
         exit();
     }

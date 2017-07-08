@@ -139,9 +139,9 @@ class VTParser{
                 $this->consume('CLOSE_BRACKET', new Symbol(')'));
             }
             return new VTTreeNode($arr);
-        }else{
-            return $this->binOp();
         }
+
+        return $this->binOp();
     }
 
 	public $precedence = array(
@@ -166,10 +166,10 @@ class VTParser{
 			}
 
             return $lhs;
-        }else{
-			return $this->unaryOp();
-		}
-	}
+        }
+
+        return $this->unaryOp();
+    }
 
 	public function unaryOp(){
 		$la = $this->la();
