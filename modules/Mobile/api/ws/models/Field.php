@@ -32,21 +32,22 @@ class crmtogo_UI_FieldModel {
 			}
 		    return $rawValue;
 		}
-		else if($this->data['uitype'] == '53') {
-		    $rawValue = $this->data['type']['value'];
-			if (is_array($rawValue)) {
-				return $rawValue['value'];
-			}
-		}
-		
-		else { 
-     		$rawValue = $this->data['value'];
-			if (is_array($rawValue)) {
-				return $rawValue['value'];
-			}
-			return $rawValue;
-		}	
-	}
+
+        if($this->data['uitype'] == '53') {
+            $rawValue = $this->data['type']['value'];
+            if (is_array($rawValue)) {
+                return $rawValue['value'];
+            }
+        }
+
+        else {
+             $rawValue = $this->data['value'];
+            if (is_array($rawValue)) {
+                return $rawValue['value'];
+            }
+            return $rawValue;
+        }
+    }
 	
 	public function valueLabel() {
 		$rawValue = $this->data['value'];

@@ -217,10 +217,10 @@ function getDetailViewOutputHtml($uitype, $fieldname, $fieldlabel, $col_fields, 
 						$chk_val = 'selected';
 						$pickcount++;
 						break;
-					} else {
-						$chk_val = '';
 					}
-				}
+
+                    $chk_val = '';
+                }
 				if (isset($_REQUEST['file']) && $_REQUEST['file'] == 'QuickCreate') {
 					$options[] = array(htmlentities(getTranslatedString($pickListValue), ENT_QUOTES, $default_charset), $pickListValue, $chk_val);
 				} else {

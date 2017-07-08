@@ -25,10 +25,10 @@ function is_admin($user) {
 	if ($user->is_admin == 'on') {
 		$log->debug("Exiting is_admin method ...");
 		return true;
-	} else {
-		$log->debug("Exiting is_admin method ...");
-		return false;
 	}
+
+    $log->debug("Exiting is_admin method ...");
+    return false;
 }
 
 /**
@@ -438,10 +438,10 @@ function getFieldFromBlockArray($blocks,$fldlabel) {
 					$result['block_label'] = $blklabel;
 					$result['field_key'] = $key;
 					break 2;
-				} else {
-					$found = false;
 				}
-			}
+
+                $found = false;
+            }
 		}
 	}
 	return $result;
@@ -3228,18 +3228,18 @@ function getEntityFieldNameDisplay($module, $fieldsName, $fieldValues) {
 	global $current_user;
 	if(!is_array($fieldsName)) {
 		return $fieldValues[$fieldsName];
-	} else {
-		$accessibleFieldNames = array();
-		foreach($fieldsName as $field) {
-			if($module == 'Users' || getColumnVisibilityPermission($current_user->id, $field, $module) == '0') {
-				$accessibleFieldNames[] = $fieldValues[$field];
-			}
-		}
-		if(count($accessibleFieldNames) > 0) {
-			return implode(' ', $accessibleFieldNames);
-		}
 	}
-	return '';
+
+    $accessibleFieldNames = array();
+    foreach($fieldsName as $field) {
+        if($module == 'Users' || getColumnVisibilityPermission($current_user->id, $field, $module) == '0') {
+            $accessibleFieldNames[] = $fieldValues[$field];
+        }
+    }
+    if(count($accessibleFieldNames) > 0) {
+        return implode(' ', $accessibleFieldNames);
+    }
+    return '';
 }
 
 function vt_suppressHTMLTags($string) {

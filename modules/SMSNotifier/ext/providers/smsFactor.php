@@ -137,15 +137,16 @@ class smsFactor implements ISMSProvider
 		{
 			return 4;
 		}
-		else if ($this->validEmail($originator))
-		{
-			return 2;
-		}
-		else
-		{
-			return 1;
-		}
-	}
+
+        if ($this->validEmail($originator))
+        {
+            return 2;
+        }
+        else
+        {
+            return 1;
+        }
+    }
 
 	private function sendMessage($clientMessageReference, $message, $tonumbers)
 	{

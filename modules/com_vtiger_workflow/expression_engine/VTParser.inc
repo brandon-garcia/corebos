@@ -42,10 +42,10 @@ class VTExpressionParser{
 	public function nextToken(){
 		if(sizeof($this->tokenQueue)==0){
 			return $this->tokens->nextToken();
-		}else{
-			return array_shift($this->tokenQueue);
 		}
-	}
+
+        return array_shift($this->tokenQueue);
+    }
 
 	public function la($n = 1){
 		for($i=sizeof($this->tokenQueue); $i<$n; $i++){
@@ -121,33 +121,35 @@ class VTExpressionParser{
 		$la2 = $this->la(2);
 		if($this->checkSymbol($la1, 'if')){
 			return $this->ifCondition();
-		}else if(($la1->label=='SYMBOL' || $la1->label=='REFERENCE') && $la2->label=='OPEN_BRACKET'){
-			$arr = array($this->nextToken()->value);
-			$this->nextToken();
-			if($this->la()->label != 'CLOSE_BRACKET'){
-				$arr[] = $this->expression();
-				$comma = $this->nextToken();
-				while($comma->label == 'COMMA'){
-					$arr[] = $this->expression();
-					$comma = $this->nextToken();
-				}
-				if($comma->label != 'CLOSE_BRACKET'){
-					throw new Exception("Was expecting a closing bracket");
-				}
-			}else{
-				$this->consume('CLOSE_BRACKET', new VTExpressionSymbol(')'));
-			}
-			$nsym = $this->la(1);
-			if ($nsym->label == 'OPERATOR') {
-				$operator = $this->nextToken()->value;
-				$rhs = $this->expression();
-				return new VTExpressionTreeNode(array($operator, new VTExpressionTreeNode($arr), $rhs));
-			}
-			return new VTExpressionTreeNode($arr);
-		}else{
-			return $this->binOp();
 		}
-	}
+
+        if(($la1->label=='SYMBOL' || $la1->label=='REFERENCE') && $la2->label=='OPEN_BRACKET'){
+            $arr = array($this->nextToken()->value);
+            $this->nextToken();
+            if($this->la()->label != 'CLOSE_BRACKET'){
+                $arr[] = $this->expression();
+                $comma = $this->nextToken();
+                while($comma->label == 'COMMA'){
+                    $arr[] = $this->expression();
+                    $comma = $this->nextToken();
+                }
+                if($comma->label != 'CLOSE_BRACKET'){
+                    throw new Exception("Was expecting a closing bracket");
+                }
+            }else{
+                $this->consume('CLOSE_BRACKET', new VTExpressionSymbol(')'));
+            }
+            $nsym = $this->la(1);
+            if ($nsym->label == 'OPERATOR') {
+                $operator = $this->nextToken()->value;
+                $rhs = $this->expression();
+                return new VTExpressionTreeNode(array($operator, new VTExpressionTreeNode($arr), $rhs));
+            }
+            return new VTExpressionTreeNode($arr);
+        }else{
+            return $this->binOp();
+        }
+    }
 
 	public $precedence = array(
 		array('*', '/'),
@@ -168,10 +170,10 @@ class VTExpressionParser{
 				$operator = $this->nextToken()->value;
 				$rhs = $this->expression();
 				return new VTExpressionTreeNode(array($operator, $lhs, $rhs));
-			}else{
-				return $lhs;
 			}
-		}else{
+
+            return $lhs;
+        }else{
 			return $this->unaryOp();
 		}
 	}
@@ -183,9 +185,9 @@ class VTExpressionParser{
 			$operator = $la->value;
 			$operand = $this->unaryOp();
 			return new VTExpressionTreeNode(array($operator, $operand));
-		}else{
-			return $this->atom();
 		}
-	}
+
+        return $this->atom();
+    }
 }
 ?>

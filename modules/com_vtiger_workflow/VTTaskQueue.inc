@@ -29,11 +29,11 @@ class VTTaskQueue{
 		$result = $adb->pquery("select * from com_vtiger_workflowtask_queue where task_id=? and entity_id=?", array($taskId, $entityId));
 		if($adb->num_rows($result)==1){
 			return false;
-		}else{
-			$adb->pquery("insert into com_vtiger_workflowtask_queue (task_id, entity_id, do_after) values (?,?,?)", array($taskId, $entityId, $when));
-			return true;
 		}
-	}
+
+        $adb->pquery("insert into com_vtiger_workflowtask_queue (task_id, entity_id, do_after) values (?,?,?)", array($taskId, $entityId, $when));
+        return true;
+    }
 
 	/**
 	 * Get a list of taskId/entityId pairs ready for execution.

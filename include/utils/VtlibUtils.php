@@ -387,9 +387,9 @@ function vtlib_getModuleTemplate($module, $templateName) {
 function vtlib_isWriteable($path) {
 	if(is_dir($path)) {
 		return vtlib_isDirWriteable($path);
-	} else {
-		return is_writable($path);
 	}
+
+    return is_writable($path);
 }
 
 /**
@@ -525,16 +525,18 @@ function getvtlib_open_popup_window_function($popupmodule,$fldname,$basemodule) 
 	if(file_exists('modules/'.$popupmodule.'/'.$popupmodule.'.php')){
 		include_once 'modules/'.$popupmodule.'/'.$popupmodule.'.php';
 		$mod = new $popupmodule();
-		if (method_exists($mod, 'getvtlib_open_popup_window_function')) {
-			return $mod->getvtlib_open_popup_window_function($fldname,$basemodule);
-		} elseif (file_exists('modules/'.$popupmodule.'/getvtlib_open_popup_window_function.php')) {
-			@include_once 'modules/'.$popupmodule.'/getvtlib_open_popup_window_function.php';
-			if (function_exists('__hook_getvtlib_open_popup_window_function')) {
-				$mod->registerMethod('__hook_getvtlib_open_popup_window_function');
-				return $mod->__hook_getvtlib_open_popup_window_function($fldname,$basemodule);
-			}
-		}
-	}
+        if (method_exists($mod, 'getvtlib_open_popup_window_function')) {
+            return $mod->getvtlib_open_popup_window_function($fldname,$basemodule);
+        }
+
+        if (file_exists('modules/'.$popupmodule.'/getvtlib_open_popup_window_function.php')) {
+            @include_once 'modules/'.$popupmodule.'/getvtlib_open_popup_window_function.php';
+            if (function_exists('__hook_getvtlib_open_popup_window_function')) {
+                $mod->registerMethod('__hook_getvtlib_open_popup_window_function');
+                return $mod->__hook_getvtlib_open_popup_window_function($fldname,$basemodule);
+            }
+        }
+    }
 	return 'vtlib_open_popup_window';
 }
 ?>

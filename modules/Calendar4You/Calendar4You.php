@@ -379,23 +379,27 @@ public function setgoogleaccessparams($userid){
         if (empty($this->view_all)) $this->GetDefPermission($current_user->id);
         
         if ($this->is_admin) return true;
-            
+
         if ($this->profile_Global_Permission[1] == "0" && $actionKey == "DETAIL") {
             return true;
-        } elseif ($this->profile_Global_Permission[2] == "0" && ($actionKey == "EDIT" || $actionKey == "CREATE")) {
+        }
+
+        if ($this->profile_Global_Permission[2] == "0" && ($actionKey == "EDIT" || $actionKey == "CREATE")) {
             return true;
         } else {
 
             $profileid = fetchUserProfileId($current_user->id);
-    
+
             if(isset($this->profilesActions[$actionKey])) {
                 $actionid = getActionid($this->profilesActions[$actionKey]);
                 $permissions = isPermitted('Calendar', $this->profilesActions[$actionKey]);
-    
+
                 if($permissions == 'yes') {
                     if (($this->edit_all && ($actionKey == "DETAIL" || $actionKey == "EDIT" || $actionKey == "CREATE")) || ($this->delete_all && $actionKey == "DELETE")) {
                         return true;
-                    } elseif ($record_id != "") {
+                    }
+
+                    if ($record_id != "") {
                         $recOwnType='';
                     	$recOwnId='';
                     	$recordOwnerArr=getRecordOwnerId($record_id);
@@ -403,36 +407,36 @@ public function setgoogleaccessparams($userid){
                     		$recOwnType=$type;
                     		$recOwnId=$id;
                     	}
-                    
+
                     	if($recOwnType == 'Users') {
 
                     		if($current_user->id == $recOwnId) {
-                    			return true; 
+                    			return true;
                     		}
                     		//Checking if the Record Owner is the Subordinate User
                     		foreach($this->subordinate_roles_users as $roleid=>$userids) {
                     			if(in_array($recOwnId,$userids)) {
-                    				return true; 
+                    				return true;
                     			}
                     		}
-                    
+
                             $permission = isCalendarPermittedBySharing($record_id);
-                            
+
                             if ($permission == "yes" && $actionKey == "DETAIL") return true;
                     	} elseif($recOwnType == 'Groups') {
                     		//Checking if the record owner is the current user's group
                     		if(in_array($recOwnId,$this->current_user_groups)) {
-                    			return true; 
+                    			return true;
                     		}
-                    	}   
+                    	}
 
                         if ($actionKey == "DETAIL") {
                             $ui = $this->isUserCalendarPermittedByInviti($record_id);
-                            
+
                             if ($ui) return true;
                         }
                     } else {
-                        return true; 
+                        return true;
                     }
                 }
             }

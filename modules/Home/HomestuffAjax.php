@@ -29,20 +29,20 @@ if(!empty($modval)){
 	if($adb->num_rows($result)==0){
 		echo $mod_strings['MSG_NO_FILTERS'];
 		die;
-	}else{
-		$html = '<select id=selFilterid name=selFiltername onchange=setPrimaryFld(this) class="detailedViewTextBox" onfocus="this.className=\'detailedViewTextBoxOn\'" onblur="this.className=\'detailedViewTextBox\'" style="width:60%">';
-		for($i=0;$i<$adb->num_rows($result);$i++){
-			if($adb->query_result($result,$i,"viewname")=='All'){
-				$html .= "<option value='".$adb->query_result($result,$i,'cvid')."'>".getTranslatedString('COMBO_ALL',$currentModule)."</option>";
-			} else if($adb->query_result($result,$i,'userid')==$current_user->id){
-				$html .= "<option value='".$adb->query_result($result,$i,'cvid')."'>".$adb->query_result($result,$i,"viewname")."</option>";
-			} else {
-				$html .= "<option value='".$adb->query_result($result,$i,'cvid')."'>".$adb->query_result($result,$i,"viewname")."[".$adb->query_result($result,$i,'user_name')."]</option>";
-			}
-		}
-		$html .= '</select>';
 	}
-	echo $html;
+
+    $html = '<select id=selFilterid name=selFiltername onchange=setPrimaryFld(this) class="detailedViewTextBox" onfocus="this.className=\'detailedViewTextBoxOn\'" onblur="this.className=\'detailedViewTextBox\'" style="width:60%">';
+    for($i=0; $i<$adb->num_rows($result); $i++){
+        if($adb->query_result($result,$i,"viewname")=='All'){
+            $html .= "<option value='".$adb->query_result($result,$i,'cvid')."'>".getTranslatedString('COMBO_ALL',$currentModule)."</option>";
+        } else if($adb->query_result($result,$i,'userid')==$current_user->id){
+            $html .= "<option value='".$adb->query_result($result,$i,'cvid')."'>".$adb->query_result($result,$i,"viewname")."</option>";
+        } else {
+            $html .= "<option value='".$adb->query_result($result,$i,'cvid')."'>".$adb->query_result($result,$i,"viewname")."[".$adb->query_result($result,$i,'user_name')."]</option>";
+        }
+    }
+    $html .= '</select>';
+    echo $html;
 }
 
 if(!empty($dash)){
@@ -98,31 +98,31 @@ if(!empty($_REQUEST['primecvid'])){
 	if($adb->num_rows($result)==0){
 		echo $mod_strings['MSG_NO_FIELDS'];
 		die;
-	}else{
-		$html = '<select id=selPrimeFldid name=PrimeFld multiple class="detailedViewTextBox" onfocus="this.className=\'detailedViewTextBoxOn\'" onblur="this.className=\'detailedViewTextBox\'" style="width:60%">';
-		for($i=0;$i<$adb->num_rows($result);$i++){
-			$columnname=$adb->query_result($result,$i,"columnname");
-			if($columnname != ''){
-				$prifldarr=explode(":",$columnname);
-				$fieldname = $prifldarr[2];
-				$priarr=explode("_",$prifldarr[3],2); //getting field label
-				$prifld = str_replace("_"," ",$priarr[1]);
-				if (!is_admin($current_user)){
-					$fld_permission = getFieldVisibilityPermission($fieldmodule,$current_user->id,$fieldname);
-				} else {
-					$fld_permission = '0';
-				}
-				if($fld_permission == 0){
-					$field_query = $adb->pquery("SELECT fieldlabel FROM vtiger_field WHERE fieldname = ? AND tablename = ? and vtiger_field.presence in (0,2)", array($fieldname,$prifldarr[0]));
-					$field_label = $adb->query_result($field_query,0,'fieldlabel');
-					if(trim($field_label) != '')
-						$html .= "<option value='".$columnname."'>".getTranslatedString($field_label, $fieldmodule)."</option>";
-				}
-			}
-		}
-		$html .= '</select>';
 	}
-	echo $html;
+
+    $html = '<select id=selPrimeFldid name=PrimeFld multiple class="detailedViewTextBox" onfocus="this.className=\'detailedViewTextBoxOn\'" onblur="this.className=\'detailedViewTextBox\'" style="width:60%">';
+    for($i=0; $i<$adb->num_rows($result); $i++){
+        $columnname=$adb->query_result($result,$i,"columnname");
+        if($columnname != ''){
+            $prifldarr=explode(":",$columnname);
+            $fieldname = $prifldarr[2];
+            $priarr=explode("_",$prifldarr[3],2); //getting field label
+            $prifld = str_replace("_"," ",$priarr[1]);
+            if (!is_admin($current_user)){
+                $fld_permission = getFieldVisibilityPermission($fieldmodule,$current_user->id,$fieldname);
+            } else {
+                $fld_permission = '0';
+            }
+            if($fld_permission == 0){
+                $field_query = $adb->pquery("SELECT fieldlabel FROM vtiger_field WHERE fieldname = ? AND tablename = ? and vtiger_field.presence in (0,2)", array($fieldname,$prifldarr[0]));
+                $field_label = $adb->query_result($field_query,0,'fieldlabel');
+                if(trim($field_label) != '')
+                    $html .= "<option value='".$columnname."'>".getTranslatedString($field_label, $fieldmodule)."</option>";
+            }
+        }
+    }
+    $html .= '</select>';
+    echo $html;
 }
 
 if(!empty($_REQUEST['showmaxval']) && !empty($_REQUEST['sid'])){

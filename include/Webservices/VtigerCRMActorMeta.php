@@ -122,11 +122,11 @@ class VtigerCRMActorMeta extends EntityMeta {
 			$row = $this->pearDB->query_result_rowdata($result,0);
 			VtigerCRMActorMeta::$fieldTypeMapping[$tableName][$dbField->name] = $row;
 			return $row['fieldtype'];
-		} else {
-			VtigerCRMActorMeta::$fieldTypeMapping[$tableName][$dbField->name] = 'null';
-			return null;
 		}
-	}
+
+        VtigerCRMActorMeta::$fieldTypeMapping[$tableName][$dbField->name] = 'null';
+        return null;
+    }
 
 	protected function getTypeOfDataForType($type) {
 		switch ($type) {
@@ -164,28 +164,28 @@ class VtigerCRMActorMeta extends EntityMeta {
 	public function hasPermission($operation,$webserviceId) {
 		if (is_admin($this->user)) {
 			return true;
-		} else {
-            return strcmp($operation,EntityMeta::$RETRIEVE)===0;
 		}
-	}
+
+        return strcmp($operation,EntityMeta::$RETRIEVE)===0;
+    }
 
 	public function hasAssignPrivilege($ownerWebserviceId) {
 		if (is_admin($this->user)) {
 			return true;
-		} else {
-			$idComponents = vtws_getIdComponents($webserviceId);
-			$userId=$idComponents[1];
-            return $this->user->id === $userId;
 		}
-	}
+
+        $idComponents = vtws_getIdComponents($webserviceId);
+        $userId=$idComponents[1];
+        return $this->user->id === $userId;
+    }
 
 	public function hasDeleteAccess() {
 		if (is_admin($this->user)) {
 			return true;
-		} else {
-			return false;
 		}
-	}
+
+        return false;
+    }
 
 	public function hasAccess() {
 		return true;
@@ -198,10 +198,10 @@ class VtigerCRMActorMeta extends EntityMeta {
 	public function hasWriteAccess() {
 		if (is_admin($this->user)) {
 			return true;
-		} else {
-			return false;
 		}
-	}
+
+        return false;
+    }
 
 	public function getEntityName() {
 		return $this->webserviceObject->getEntityName();

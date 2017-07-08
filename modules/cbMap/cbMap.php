@@ -212,10 +212,10 @@ class cbMap extends CRMEntity {
 			$cbmap = new cbMap();
 			$cbmap->retrieve_entity_info($cbmapid, 'cbMap');
 			return $cbmap;
-		} else {
-			return null;
 		}
-	}
+
+        return null;
+    }
 
 	public static function getMapIdByName($name) {
 		global $adb;
@@ -226,10 +226,10 @@ class cbMap extends CRMEntity {
 		if ($mrs and $adb->num_rows($mrs)>0) {
 			$cbmapid = $adb->query_result($mrs, 0, 0);
 			return $cbmapid;
-		} else {
-			return 0;
 		}
-	}
+
+        return 0;
+    }
 
 	public function getMapArray() {
 		$ret = array();

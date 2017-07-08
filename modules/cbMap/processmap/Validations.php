@@ -219,10 +219,10 @@ class Validations extends processcbMap {
 		}
 		if (count($validations)==0) {
 			return true;
-		} else {
-			return $validations;
 		}
-	}
+
+        return $validations;
+    }
 
 	public function convertMap2Array() {
 		$xml = $this->getXMLContent();

@@ -39,11 +39,10 @@ class vtigerRSS extends CRMEntity {
 			$this->rss_link = $feed->get_link();
 			$this->rss_object = $info;
 			return true;
-		}else
-		{
-			return false;
 		}
-	}
+
+        return false;
+    }
 
 	/** Function to get the List of Rss feeds
 	  * This Function accepts no arguments and returns the listview contents on Sucess
@@ -99,11 +98,10 @@ class vtigerRSS extends CRMEntity {
 			$return_more=Array("Details"=>$return_value,"More"=>$this->rss_link);
 			return $return_more;
 
-		}else
-		{
-			return $return_more;
 		}
-	}
+
+        return $return_more;
+    }
 
 	/** Function to save the Rss Feeds
 	  * This Function accepts the RssURl,Starred Status as arguments and
@@ -128,11 +126,10 @@ class vtigerRSS extends CRMEntity {
 			if($result)
 			{
 				return $genRssId;
-			}else
-			{
-				return false;
 			}
-		}
+
+            return false;
+        }
 	}
 
 	public function getCRMRssFeeds()

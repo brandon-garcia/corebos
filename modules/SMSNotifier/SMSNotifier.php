@@ -111,10 +111,10 @@ class SMSNotifier extends SMSNotifierBase {
 		$result = $adb->pquery("SELECT 1 FROM vtiger_users WHERE id=?", array($id));
 		if($result && $adb->num_rows($result)) {
 			return 'U';
-		} else {
-			return 'T';
 		}
-	}
+
+        return 'T';
+    }
 
 	public function save_module($module) {
 		$this->smsAssignedTo();

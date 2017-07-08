@@ -194,34 +194,34 @@ class VTScheduledReport extends Reports {
 
 			if(date('w',time()) == $scheduledDayOfWeek) {
 				return date("Y-m-d H:i:s",strtotime('+1 week '.$scheduledTime));
-			} else {
-				return date("Y-m-d H:i:s",strtotime($weekDays[$scheduledDayOfWeek].' '.$scheduledTime));
 			}
-		}
+
+            return date("Y-m-d H:i:s",strtotime($weekDays[$scheduledDayOfWeek].' '.$scheduledTime));
+        }
 		if($scheduleType == VTScheduledReport::$SCHEDULED_BIWEEKLY) {
 			$weekDays = array('0'=>'Sunday','1'=>'Monday','2'=>'Tuesday','3'=>'Wednesday','4'=>'Thursday','5'=>'Friday','6'=>'Saturday');
 			if(date('w',time()) == $scheduledDayOfWeek) {
 				return date("Y-m-d H:i:s",strtotime('+2 weeks '.$scheduledTime));
-			} else {
-				return date("Y-m-d H:i:s",strtotime($weekDays[$scheduledDayOfWeek].' '.$scheduledTime));
 			}
-		}
+
+            return date("Y-m-d H:i:s",strtotime($weekDays[$scheduledDayOfWeek].' '.$scheduledTime));
+        }
 		if($scheduleType == VTScheduledReport::$SCHEDULED_MONTHLY) {
 			$currentTime = time();
 			$currentDayOfMonth = date('j',$currentTime);
 
 			if($scheduledDayOfMonth == $currentDayOfMonth) {
 				return date("Y-m-d H:i:s",strtotime('+1 month '.$scheduledTime));
-			} else {
-				$monthInFullText = date('F',$currentTime);
-				$yearFullNumberic = date('Y',$currentTime);
-				if($scheduledDayOfMonth < $currentDayOfMonth) {
-					$nextMonth = date("Y-m-d H:i:s",strtotime('next month'));
-					$monthInFullText = date('F',strtotime($nextMonth));
-				}
-				return date("Y-m-d H:i:s",strtotime($scheduledDayOfMonth.' '.$monthInFullText.' '.$yearFullNumberic.' '.$scheduledTime));
 			}
-		}
+
+            $monthInFullText = date('F',$currentTime);
+            $yearFullNumberic = date('Y',$currentTime);
+            if($scheduledDayOfMonth < $currentDayOfMonth) {
+                $nextMonth = date("Y-m-d H:i:s",strtotime('next month'));
+                $monthInFullText = date('F',strtotime($nextMonth));
+            }
+            return date("Y-m-d H:i:s",strtotime($scheduledDayOfMonth.' '.$monthInFullText.' '.$yearFullNumberic.' '.$scheduledTime));
+        }
 		if($scheduleType == VTScheduledReport::$SCHEDULED_ANNUALLY) {
 			$months = array(0=>'January',1=>'February',2=>'March',3=>'April',4=>'May',5=>'June',6=>'July',
 								7=>'August',8=>'September',9=>'October',10=>'November',11=>'December');
@@ -229,16 +229,16 @@ class VTScheduledReport extends Reports {
 			$currentMonth = date('n',$currentTime);
 			if(($scheduledMonth+1) == $currentMonth) {
 				return date("Y-m-d H:i:s",strtotime('+1 year '.$scheduledTime));
-			} else {
-				$monthInFullText = $months[$scheduledMonth];
-				$yearFullNumberic = date('Y',$currentTime);
-				if(($scheduledMonth+1) < $currentMonth) {
-					$nextMonth = date("Y-m-d H:i:s",strtotime('next year'));
-					$yearFullNumberic = date('Y',strtotime($nextMonth));
-				}
-				return date("Y-m-d H:i:s",strtotime($scheduledDayOfMonth.' '.$monthInFullText.' '.$yearFullNumberic.' '.$scheduledTime));
 			}
-		}
+
+            $monthInFullText = $months[$scheduledMonth];
+            $yearFullNumberic = date('Y',$currentTime);
+            if(($scheduledMonth+1) < $currentMonth) {
+                $nextMonth = date("Y-m-d H:i:s",strtotime('next year'));
+                $yearFullNumberic = date('Y',strtotime($nextMonth));
+            }
+            return date("Y-m-d H:i:s",strtotime($scheduledDayOfMonth.' '.$monthInFullText.' '.$yearFullNumberic.' '.$scheduledTime));
+        }
 	}
 
 	public function updateNextTriggerTime() {

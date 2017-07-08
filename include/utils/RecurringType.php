@@ -547,18 +547,18 @@ class RecurringType {
 	public function getLastdayofmonth($dayofweek, & $dateObj) {
 		if ($dayofweek == $dateObj->dayofweek) {
 			return $dateObj;
-		} else {
-			if ($dayofweek > $dateObj->dayofweek)
-				$day = $dateObj->day - 7 + ($dayofweek - $dateObj->dayofweek);
-			else
-				$day = $dateObj->day - ($dateObj->dayofweek - $dayofweek);
-			$index = $day - 1;
-			$month = $dateObj->month;
-			$year = $dateObj->year;
-			$dateObj = $dateObj->getThismonthDaysbyIndex($index, $day, $month, $year);
-			return $dateObj;
 		}
-	}
+
+        if ($dayofweek > $dateObj->dayofweek)
+            $day = $dateObj->day - 7 + ($dayofweek - $dateObj->dayofweek);
+        else
+            $day = $dateObj->day - ($dateObj->dayofweek - $dayofweek);
+        $index = $day - 1;
+        $month = $dateObj->month;
+        $year = $dateObj->year;
+        $dateObj = $dateObj->getThismonthDaysbyIndex($index, $day, $month, $year);
+        return $dateObj;
+    }
 
 	public function getDayOfWeekPerWeekPositionInMonth($dow, $year, $month, $position) {
 		$list = array(1=>'first',2=>'second',3=>'third',4=>'last');

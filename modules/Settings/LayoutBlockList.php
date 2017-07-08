@@ -930,203 +930,202 @@ function addCustomField() {
 		$duplicate = 'yes';
 		return $duplicate ;
 	}
-	else {
-		$max_fieldid = $adb->getUniqueID("vtiger_field");
-		$columnName = 'cf_'.$max_fieldid;
-		$custfld_fieldid = $max_fieldid;
-		//Assigning the vtiger_table Name
-		if($fldmodule != '') {
-			$focus = CRMEntity::getInstance($fldmodule);
-			if (isset($focus->customFieldTable)) {
-				$tableName=$focus->customFieldTable[0];
-			} else {
-				$tableName= 'vtiger_'.strtolower($fldmodule).'cf';
-			}
-		}
-		//Assigning the uitype
-		$fldlength = vtlib_purify($_REQUEST['fldLength']);
-		$uitype='';
-		$fldPickList='';
-		if(isset($_REQUEST['fldDecimal']) && $_REQUEST['fldDecimal'] != '') {
-			$decimal = vtlib_purify($_REQUEST['fldDecimal']);
-		}else {
-			$decimal=0;
-		}
-		$type='';
-		$uichekdata='';
-		if($fldType == 'Text') {
-			$uichekdata='V~O~LE~'.$fldlength;
-			$uitype = 1;
-			$type = "C(".$fldlength.") default ()"; // adodb type
-		}elseif($fldType == 'Number') {
-			$uitype = 7;
-			//this may sound ridiculous passing decimal but that is the way adodb wants
-			$dbfldlength = $fldlength + $decimal + 1;
-			$type="N(".$dbfldlength.".".$decimal.")";	// adodb type
-			// Fix for http://trac.vtiger.com/cgi-bin/trac.cgi/ticket/6363
-			$uichekdata='NN~O~'.$fldlength .','.$decimal;
-		}elseif($fldType == 'Percent') {
-			$uitype = 9;
-			$type="N(5.2)"; //adodb type
-			$uichekdata='N~O~2~2';
-		}elseif($fldType == 'Currency') {
-			$uitype = 71;
-			if ($decimal<2) $decimal=2;
-			$dbfldlength = $fldlength + $decimal + 1;
-			$type="N(".$dbfldlength.".".$decimal.")"; //adodb type
-			$uichekdata='N~O~'.$fldlength .','.$decimal;
-		}elseif($fldType == 'Date') {
-			$uichekdata='D~O';
-			$uitype = 5;
-			$type = "D"; // adodb type
-		}elseif($fldType == 'Datetime') {
-			$uichekdata='DT~O';
-			$uitype = 50;
-			$type = "T"; // adodb type
-		}elseif($fldType == 'Email') {
-			$uitype = 13;
-			$type = "C(50) default () "; //adodb type
-			$uichekdata='E~O';
-		}elseif($fldType == 'Time') {
-			$uitype = 14;
-			$type = "TIME";
-			$uichekdata='T~O';
-		}elseif($fldType == 'Phone') {
-			$uitype = 11;
-			$type = "C(30) default () "; //adodb type
-			$uichekdata='V~O';
-		}elseif($fldType == 'Picklist') {
-			$uitype = 15;
-			$type = "C(255) default () "; //adodb type
-			$uichekdata='V~O';
-		}elseif($fldType == 'URL') {
-			$uitype = 17;
-			$type = "C(255) default () "; //adodb type
-			$uichekdata='V~O';
-		}elseif($fldType == 'Checkbox') {
-			$uitype = 56;
-			$type = "C(3) default 0"; //adodb type
-			$uichekdata='C~O';
-		}elseif($fldType == 'TextArea') {
-			$uitype = 21;
-			$type = "X"; //adodb type
-			$uichekdata='V~O';
-		}elseif($fldType == 'MultiSelectCombo') {
-			$uitype = 33;
-			$type = "X"; //adodb type
-			$uichekdata='V~O';
-		}elseif($fldType == 'Skype') {
-			$uitype = 85;
-			$type = "C(255) default () "; //adodb type
-			$uichekdata='V~O';
-		}elseif($fldType == 'Relation') {
-			$uitype = 10;
-			$type = "I(11) "; //adodb type
-			$uichekdata='I~O';
-		}elseif($fldType == 'Image') {
-			$uitype = 69;
-			$type = "C(255) "; //adodb type
-			$uichekdata='V~O';
-		}
 
-		if(is_numeric($blockid)) {
-			if(empty($_REQUEST['fieldid'])) {
-				$max_fieldsequence = "select max(sequence) as maxsequence from vtiger_field where block = ? ";
-				$res = $adb->pquery($max_fieldsequence,array($blockid));
-				$max_seq = $adb->query_result($res,0,'maxsequence');
-				if($fldmodule == 'Quotes' || $fldmodule == 'PurchaseOrder' || $fldmodule == 'SalesOrder' || $fldmodule == 'Invoice') {
-					$quickcreate = 3;
-				}else {
-					$quickcreate = 1;
-				}
-				$query = "insert into vtiger_field (tabid,fieldid,columnname,tablename,generatedtype,uitype,fieldname,fieldlabel,readonly,presence,defaultvalue,maximumlength,sequence,block,displaytype,typeofdata,quickcreate,quickcreatesequence,info_type,masseditable) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-				$qparams = array($tabid,$custfld_fieldid,$columnName,$tableName,2,$uitype,$columnName,$fldlabel,0,2,'',100,$max_seq+1,$blockid,1,$uichekdata,$quickcreate,0,'BAS',1);
-				$adb->pquery($query, $qparams);
-				$adb->alterTable($tableName, $columnName." ".$type, "Add_Column");
-				//Inserting values into vtiger_profile2field vtiger_tables
-				$sql1 = "select * from vtiger_profile";
-				$sql1_result = $adb->pquery($sql1, array());
-				$sql1_num = $adb->num_rows($sql1_result);
-				for($i=0; $i<$sql1_num; $i++) {
-					$profileid = $adb->query_result($sql1_result,$i,"profileid");
-					$sql2 = "insert into vtiger_profile2field values(?,?,?,?,?)";
-					$adb->pquery($sql2, array($profileid, $tabid, $custfld_fieldid, 0, 0));
-				}
+    $max_fieldid = $adb->getUniqueID("vtiger_field");
+    $columnName = 'cf_'.$max_fieldid;
+    $custfld_fieldid = $max_fieldid;
+    //Assigning the vtiger_table Name
+    if($fldmodule != '') {
+        $focus = CRMEntity::getInstance($fldmodule);
+        if (isset($focus->customFieldTable)) {
+            $tableName=$focus->customFieldTable[0];
+        } else {
+            $tableName= 'vtiger_'.strtolower($fldmodule).'cf';
+        }
+    }
+    //Assigning the uitype
+    $fldlength = vtlib_purify($_REQUEST['fldLength']);
+    $uitype='';
+    $fldPickList='';
+    if(isset($_REQUEST['fldDecimal']) && $_REQUEST['fldDecimal'] != '') {
+        $decimal = vtlib_purify($_REQUEST['fldDecimal']);
+    }else {
+        $decimal=0;
+    }
+    $type='';
+    $uichekdata='';
+    if($fldType == 'Text') {
+        $uichekdata='V~O~LE~'.$fldlength;
+        $uitype = 1;
+        $type = "C(".$fldlength.") default ()"; // adodb type
+    }elseif($fldType == 'Number') {
+        $uitype = 7;
+        //this may sound ridiculous passing decimal but that is the way adodb wants
+        $dbfldlength = $fldlength + $decimal + 1;
+        $type="N(".$dbfldlength.".".$decimal.")";	// adodb type
+        // Fix for http://trac.vtiger.com/cgi-bin/trac.cgi/ticket/6363
+        $uichekdata='NN~O~'.$fldlength .','.$decimal;
+    }elseif($fldType == 'Percent') {
+        $uitype = 9;
+        $type="N(5.2)"; //adodb type
+        $uichekdata='N~O~2~2';
+    }elseif($fldType == 'Currency') {
+        $uitype = 71;
+        if ($decimal<2) $decimal=2;
+        $dbfldlength = $fldlength + $decimal + 1;
+        $type="N(".$dbfldlength.".".$decimal.")"; //adodb type
+        $uichekdata='N~O~'.$fldlength .','.$decimal;
+    }elseif($fldType == 'Date') {
+        $uichekdata='D~O';
+        $uitype = 5;
+        $type = "D"; // adodb type
+    }elseif($fldType == 'Datetime') {
+        $uichekdata='DT~O';
+        $uitype = 50;
+        $type = "T"; // adodb type
+    }elseif($fldType == 'Email') {
+        $uitype = 13;
+        $type = "C(50) default () "; //adodb type
+        $uichekdata='E~O';
+    }elseif($fldType == 'Time') {
+        $uitype = 14;
+        $type = "TIME";
+        $uichekdata='T~O';
+    }elseif($fldType == 'Phone') {
+        $uitype = 11;
+        $type = "C(30) default () "; //adodb type
+        $uichekdata='V~O';
+    }elseif($fldType == 'Picklist') {
+        $uitype = 15;
+        $type = "C(255) default () "; //adodb type
+        $uichekdata='V~O';
+    }elseif($fldType == 'URL') {
+        $uitype = 17;
+        $type = "C(255) default () "; //adodb type
+        $uichekdata='V~O';
+    }elseif($fldType == 'Checkbox') {
+        $uitype = 56;
+        $type = "C(3) default 0"; //adodb type
+        $uichekdata='C~O';
+    }elseif($fldType == 'TextArea') {
+        $uitype = 21;
+        $type = "X"; //adodb type
+        $uichekdata='V~O';
+    }elseif($fldType == 'MultiSelectCombo') {
+        $uitype = 33;
+        $type = "X"; //adodb type
+        $uichekdata='V~O';
+    }elseif($fldType == 'Skype') {
+        $uitype = 85;
+        $type = "C(255) default () "; //adodb type
+        $uichekdata='V~O';
+    }elseif($fldType == 'Relation') {
+        $uitype = 10;
+        $type = "I(11) "; //adodb type
+        $uichekdata='I~O';
+    }elseif($fldType == 'Image') {
+        $uitype = 69;
+        $type = "C(255) "; //adodb type
+        $uichekdata='V~O';
+    }
 
-				//Inserting values into def_org vtiger_tables
-				$sql_def = "insert into vtiger_def_org_field values(?,?,?,?)";
-				$adb->pquery($sql_def, array($tabid, $custfld_fieldid, 0, 0));
+    if(is_numeric($blockid)) {
+        if(empty($_REQUEST['fieldid'])) {
+            $max_fieldsequence = "select max(sequence) as maxsequence from vtiger_field where block = ? ";
+            $res = $adb->pquery($max_fieldsequence,array($blockid));
+            $max_seq = $adb->query_result($res,0,'maxsequence');
+            if($fldmodule == 'Quotes' || $fldmodule == 'PurchaseOrder' || $fldmodule == 'SalesOrder' || $fldmodule == 'Invoice') {
+                $quickcreate = 3;
+            }else {
+                $quickcreate = 1;
+            }
+            $query = "insert into vtiger_field (tabid,fieldid,columnname,tablename,generatedtype,uitype,fieldname,fieldlabel,readonly,presence,defaultvalue,maximumlength,sequence,block,displaytype,typeofdata,quickcreate,quickcreatesequence,info_type,masseditable) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            $qparams = array($tabid,$custfld_fieldid,$columnName,$tableName,2,$uitype,$columnName,$fldlabel,0,2,'',100,$max_seq+1,$blockid,1,$uichekdata,$quickcreate,0,'BAS',1);
+            $adb->pquery($query, $qparams);
+            $adb->alterTable($tableName, $columnName." ".$type, "Add_Column");
+            //Inserting values into vtiger_profile2field vtiger_tables
+            $sql1 = "select * from vtiger_profile";
+            $sql1_result = $adb->pquery($sql1, array());
+            $sql1_num = $adb->num_rows($sql1_result);
+            for($i=0; $i<$sql1_num; $i++) {
+                $profileid = $adb->query_result($sql1_result,$i,"profileid");
+                $sql2 = "insert into vtiger_profile2field values(?,?,?,?,?)";
+                $adb->pquery($sql2, array($profileid, $tabid, $custfld_fieldid, 0, 0));
+            }
 
-				if($fldType == 'Relation') {
-					$moduleInstance = Vtiger_Module::getInstance($tabid);
-					$block = Vtiger_Block::getInstance($blockid, $moduleInstance);
-					$field = Vtiger_Field::getInstance($custfld_fieldid,$moduleInstance);
-					if ($field) {
-						$moduleNames = explode(';', trim($_REQUEST['relationmodules'],';'));
-						$field->setRelatedModules($moduleNames);
-						foreach ($moduleNames as $mod) {
-							$modrel = Vtiger_Module::getInstance($mod);
-							$modrel->setRelatedList($moduleInstance, $fldmodule, Array('ADD'),'get_dependents_list');
-						}
-					}
-				}
-				if($fldType == 'Picklist' || $fldType == 'MultiSelectCombo') {
-					$columnName = $adb->sql_escape_string($columnName);
-					// Creating the PickList Table and Populating Values
-					if(empty($_REQUEST['fieldid'])) {
-						$qur = "CREATE TABLE vtiger_".$columnName." (
-							".$columnName."id int(19) NOT NULL auto_increment,
-							".$columnName." varchar(200) NOT NULL,
-							presence int(1) NOT NULL default '1',
-							picklist_valueid int(19) NOT NULL default '0',
-							PRIMARY KEY  (".$columnName."id)
-						)";
-						$adb->pquery($qur, array());
-					}
+            //Inserting values into def_org vtiger_tables
+            $sql_def = "insert into vtiger_def_org_field values(?,?,?,?)";
+            $adb->pquery($sql_def, array($tabid, $custfld_fieldid, 0, 0));
 
-					//Adding a  new picklist value in the picklist table
-					if($mode != 'edit') {
-						$picklistid = $adb->getUniqueID("vtiger_picklist");
-						$sql="insert into vtiger_picklist values(?,?)";
-						$adb->pquery($sql, array($picklistid,$columnName));
-					}
-					$roleid=$current_user->roleid;
-					$qry="select picklistid from vtiger_picklist where  name=?";
-					$picklistid = $adb->query_result($adb->pquery($qry, array($columnName)), 0,'picklistid');
-					$pickArray = Array();
-					$fldPickList = vtlib_purify($_REQUEST['fldPickList']);
-					$pickArray = explode("\n",$fldPickList);
-					$count = count($pickArray);
-					global $default_charset;
-					for($i = 0; $i < $count; $i++) {
-						$pickArray[$i] = trim($pickArray[$i]);
-						if($pickArray[$i] != '') {
-							$picklistcount=0;
-							$sql ="select $columnName from vtiger_$columnName";
-							$numrow = $adb->num_rows($adb->pquery($sql, array()));
-							for($x=0;$x < $numrow ; $x++) {
-								$picklistvalues = $adb->query_result($adb->pquery($sql, array()),$x,$columnName);
-								if($pickArray[$i] == $picklistvalues) {
-									$picklistcount++;
-								}
-							}
-							if($picklistcount == 0) {
-								$picklist_valueid = getUniquePicklistID();
-								$query = "insert into vtiger_".$columnName." values(?,?,?,?)";
-								$adb->pquery($query, array($adb->getUniqueID("vtiger_".$columnName),$pickArray[$i],1,$picklist_valueid));
-								/*$sql="update vtiger_picklistvalues_seq set id = ?";
-								$adb->pquery($sql, array(++$picklist_valueid));*/
-							}
-							$sql = "select picklist_valueid from vtiger_$columnName where $columnName=?";
-							$pick_valueid = $adb->query_result($adb->pquery($sql, array($pickArray[$i])),0,'picklist_valueid');
-							$sql = "insert into vtiger_role2picklist select roleid,$pick_valueid,$picklistid,$i from vtiger_role";
-							$adb->pquery($sql, array());
-						}
-					}
-				}
-			}
-		}
-	}
+            if($fldType == 'Relation') {
+                $moduleInstance = Vtiger_Module::getInstance($tabid);
+                $block = Vtiger_Block::getInstance($blockid, $moduleInstance);
+                $field = Vtiger_Field::getInstance($custfld_fieldid,$moduleInstance);
+                if ($field) {
+                    $moduleNames = explode(';', trim($_REQUEST['relationmodules'],';'));
+                    $field->setRelatedModules($moduleNames);
+                    foreach ($moduleNames as $mod) {
+                        $modrel = Vtiger_Module::getInstance($mod);
+                        $modrel->setRelatedList($moduleInstance, $fldmodule, Array('ADD'),'get_dependents_list');
+                    }
+                }
+            }
+            if($fldType == 'Picklist' || $fldType == 'MultiSelectCombo') {
+                $columnName = $adb->sql_escape_string($columnName);
+                // Creating the PickList Table and Populating Values
+                if(empty($_REQUEST['fieldid'])) {
+                    $qur = "CREATE TABLE vtiger_".$columnName." (
+                        ".$columnName."id int(19) NOT NULL auto_increment,
+                        ".$columnName." varchar(200) NOT NULL,
+                        presence int(1) NOT NULL default '1',
+                        picklist_valueid int(19) NOT NULL default '0',
+                        PRIMARY KEY  (".$columnName."id)
+                    )";
+                    $adb->pquery($qur, array());
+                }
+
+                //Adding a  new picklist value in the picklist table
+                if($mode != 'edit') {
+                    $picklistid = $adb->getUniqueID("vtiger_picklist");
+                    $sql="insert into vtiger_picklist values(?,?)";
+                    $adb->pquery($sql, array($picklistid,$columnName));
+                }
+                $roleid=$current_user->roleid;
+                $qry="select picklistid from vtiger_picklist where  name=?";
+                $picklistid = $adb->query_result($adb->pquery($qry, array($columnName)), 0,'picklistid');
+                $pickArray = Array();
+                $fldPickList = vtlib_purify($_REQUEST['fldPickList']);
+                $pickArray = explode("\n",$fldPickList);
+                $count = count($pickArray);
+                global $default_charset;
+                for($i = 0; $i < $count; $i++) {
+                    $pickArray[$i] = trim($pickArray[$i]);
+                    if($pickArray[$i] != '') {
+                        $picklistcount=0;
+                        $sql ="select $columnName from vtiger_$columnName";
+                        $numrow = $adb->num_rows($adb->pquery($sql, array()));
+                        for($x=0;$x < $numrow ; $x++) {
+                            $picklistvalues = $adb->query_result($adb->pquery($sql, array()),$x,$columnName);
+                            if($pickArray[$i] == $picklistvalues) {
+                                $picklistcount++;
+                            }
+                        }
+                        if($picklistcount == 0) {
+                            $picklist_valueid = getUniquePicklistID();
+                            $query = "insert into vtiger_".$columnName." values(?,?,?,?)";
+                            $adb->pquery($query, array($adb->getUniqueID("vtiger_".$columnName),$pickArray[$i],1,$picklist_valueid));
+                            /*$sql="update vtiger_picklistvalues_seq set id = ?";
+                            $adb->pquery($sql, array(++$picklist_valueid));*/
+                        }
+                        $sql = "select picklist_valueid from vtiger_$columnName where $columnName=?";
+                        $pick_valueid = $adb->query_result($adb->pquery($sql, array($pickArray[$i])),0,'picklist_valueid');
+                        $sql = "insert into vtiger_role2picklist select roleid,$pick_valueid,$picklistid,$i from vtiger_role";
+                        $adb->pquery($sql, array());
+                    }
+                }
+            }
+        }
+    }
 }
 
 function show_move_hiddenfields($submode) {

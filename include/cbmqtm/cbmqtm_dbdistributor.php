@@ -108,10 +108,10 @@ class cbmqtm_dbdistributor extends cbmqtm_manager {
 				'userid' => $msg['userid'],
 				'information' => html_entity_decode($msg['information'],ENT_QUOTES,$default_charset),
 			);
-		} else {
-			return false;
 		}
-	}
+
+        return false;
+    }
 
 	public function isMessageWaiting($channel, $consumer, $producer='*', $userid='*') {
 		self::setDB();

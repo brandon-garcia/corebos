@@ -249,18 +249,20 @@ class Google_Oauth2_Connector {
             $this->setToken($token);
             if($this->isTokenExpired()) $this->refreshToken();
             return $this;
+        }
+
+        if(!empty($_REQUEST['service']) && $_REQUEST['service'] && !empty($_REQUEST['code']) && $_REQUEST['code']) {
+            $authCode = $_REQUEST['code'];
+            $token = $this->exchangeCodeForToken($authCode);
+            $this->storeToken($token);
+            echo '<script>window.close();window.opener.location.reload();</script>'; exit;
+        }
+
+        if(!empty($_REQUEST['service']) and $_REQUEST['service']) {
+            echo '<script>window.close();</script>'; exit;
         } else {
-            if(!empty($_REQUEST['service']) && $_REQUEST['service'] && !empty($_REQUEST['code']) && $_REQUEST['code']) {
-                $authCode = $_REQUEST['code'];
-                $token = $this->exchangeCodeForToken($authCode);
-                $this->storeToken($token);
-                echo '<script>window.close();window.opener.location.reload();</script>'; exit;
-            } else if(!empty($_REQUEST['service']) and $_REQUEST['service']) {
-                echo '<script>window.close();</script>'; exit;
-            } else {
-                $this->setState();
-                $this->showConsentScreen();
-            }
+            $this->setState();
+            $this->showConsentScreen();
         }
     }
 

@@ -151,10 +151,10 @@ class MailManager_UploadFileXHR extends MailManager_UploadFile {
 	public function getSize() {
 		if (isset($_SERVER["CONTENT_LENGTH"])){
 			return (int)$_SERVER["CONTENT_LENGTH"];
-		} else {
-			throw new Exception('Getting content length is not supported.');
 		}
-	}
+
+        throw new Exception('Getting content length is not supported.');
+    }
 
 }
 
@@ -173,10 +173,12 @@ class MailManager_UploadFileForm extends MailManager_UploadFile {
 		global $root_directory;
 		if(is_file($root_directory."/".$path)) {
 			return true;
-		} else if(move_uploaded_file($_FILES['qqfile']['tmp_name'], $path)) {
-			return true;
 		}
-		return false;
+
+        if(move_uploaded_file($_FILES['qqfile']['tmp_name'], $path)) {
+            return true;
+        }
+        return false;
 	}
 
 	public function getName() {
@@ -249,9 +251,9 @@ class MailManager_Uploader {
 		$response = $this->file->process();
         if ($response['success'] == true) {
             return $response;
-        } else {
-            return array('error'=> 'Could not save uploaded file. The upload was cancelled, or server error encountered');
         }
+
+        return array('error'=> 'Could not save uploaded file. The upload was cancelled, or server error encountered');
 
     }
 

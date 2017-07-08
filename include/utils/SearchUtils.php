@@ -303,13 +303,15 @@ function BasicSearch($module,$search_field,$search_string,$input=''){
 		//Check added for tickets by accounts/contacts in dashboard
 		$search_field_first = $search_field;
 		if($module=='HelpDesk'){
-			if($search_field == 'contactid'){
-				$where = "(vtiger_contactdetails.contact_no like '". formatForSqlLike($search_string) ."')";
-				return $where;
-			}elseif($search_field == 'account_id'){
-				$search_field = "parent_id";
-			}
-		}
+            if ($search_field == 'contactid') {
+                $where = "(vtiger_contactdetails.contact_no like '". formatForSqlLike($search_string) ."')";
+                return $where;
+            }
+
+            if($search_field == 'account_id') {
+                $search_field = "parent_id";
+            }
+        }
 		//Check ends
 
 		//Added to search contact name by lastname

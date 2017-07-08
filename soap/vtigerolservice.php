@@ -391,10 +391,10 @@ function AddMessageToContact($username,$session,$contactid,$msgdtls)
 			// $email->set_emails_user_invitee_relationship($email->id,$user_id);
 	        
 	        return $email->id;
-		}else{
-			return "";
 		}
-	}
+
+        return "";
+    }
 }
 
 function LoginToVtiger($user_name,$password,$version)
@@ -448,10 +448,9 @@ function CheckEmailPermission($username,$session)
 	if(isPermitted("Emails","EditView") == "yes" && (isPermitted("Contacts","index") == 'yes'))
 	{
 		return "allowed";
-	}else
-	{
-		return "denied";
 	}
+
+    return "denied";
 }
 
 function CheckContactPermission($username,$session)
@@ -468,10 +467,9 @@ function CheckContactPermission($username,$session)
 	if(isPermitted("Contacts","Delete") == "yes" && isPermitted("Contacts","EditView") == "yes")
 	{
 		return "allowed";
-	}else
-	{
-		return "denied";
 	}
+
+    return "denied";
 }
 
 function CheckActivityPermission($username,$session)
@@ -488,10 +486,9 @@ function CheckActivityPermission($username,$session)
 	if(isPermitted("Calendar","Delete") == "yes" && isPermitted("Calendar","EditView") == "yes")
 	{
 		return "allowed";
-	}else
-	{
-		return "denied";
 	}
+
+    return "denied";
 }
 
 function AddEmailAttachment($emailid,$filedata,$filename,$filesize,$filetype,$username,$session)
@@ -534,11 +531,9 @@ function AddEmailAttachment($emailid,$filedata,$filename,$filesize,$filetype,$us
 
 		return $crmid;
 	}
-	else
-	{
-		//$server->setError("Invalid username and/or password");
-		return "";
-	}
+
+//$server->setError("Invalid username and/or password");
+    return "";
 }
 
 function GetContacts($username,$session)
@@ -860,18 +855,19 @@ function retrieve_account_id($account_name,$user_id)
 		//mysql_close();
 		return $account->id;
 	}
-	else if ($rows_count==1)
-	{
-		$row = $db->fetchByAssoc($result, 0);
-		//mysql_close();
-		return $row["accountid"];
-	}
-	else
-	{
-		$row = $db->fetchByAssoc($result, 0);
-		//mysql_close();
-		return $row["accountid"];
-	}
+
+    if ($rows_count==1)
+    {
+        $row = $db->fetchByAssoc($result, 0);
+        //mysql_close();
+        return $row["accountid"];
+    }
+    else
+    {
+        $row = $db->fetchByAssoc($result, 0);
+        //mysql_close();
+        return $row["accountid"];
+    }
 
 }
 
@@ -1427,10 +1423,10 @@ function validateSession($username, $sessionid)
 	if($server_sessionid == $sessionid) {
 		$adb->println("Session id match. Authenticated to do the current operation.");
 		return true;
-	} else {
-		$adb->println("Session id does not match. Not authenticated to do the current operation.");
-		return false;
 	}
+
+    $adb->println("Session id does not match. Not authenticated to do the current operation.");
+    return false;
 }
 
 function __GetSOAPEncode($text)

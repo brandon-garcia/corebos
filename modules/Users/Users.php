@@ -211,10 +211,10 @@ class Users extends CRMEntity {
 			}
 			return -1;
 
-		} else {
-			return -1;
 		}
-	}
+
+        return -1;
+    }
 
 	/** Function for authorization check */
 	public function authorization_check($validate, $authkey, $i) {
@@ -247,10 +247,10 @@ class Users extends CRMEntity {
 				$result = ldapAuthenticate($this->column_fields["user_name"], $user_password);
 				if ($result == NULL) {
 					return false;
-				} else {
-					return true;
 				}
-				break;
+
+                return true;
+                break;
 
 			case 'AD' :
 				$this->log->debug("Using Active Directory authentication");
@@ -258,10 +258,10 @@ class Users extends CRMEntity {
 				$adldap = new adLDAP();
 				if ($adldap->authenticate($this->column_fields["user_name"], $user_password)) {
 					return true;
-				} else {
-					return false;
 				}
-				break;
+
+                return false;
+                break;
 
 			default :
 				$this->log->debug("Using integrated/SQL authentication");
@@ -283,10 +283,10 @@ class Users extends CRMEntity {
 				$result = $this->db->requirePsSingleResult($query, $params, false);
 				if (empty($result)) {
 					return false;
-				} else {
-					return true;
 				}
-				break;
+
+                return true;
+                break;
 		}
 		return false;
 	}
@@ -569,10 +569,10 @@ class Users extends CRMEntity {
 		$do2FA = GlobalVariable::getVariable('User_2FAAuthentication',0,'Users',Users::getActiveAdminId());
 		if ($do2FA) {
 			return $this->twoFAauthenticated;
-		} else {
-			return true;
 		}
-	}
+
+        return true;
+    }
 
 	/** gives the user id for the specified user name
 	 * @param $user_name -- user name:: Type varchar

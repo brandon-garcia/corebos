@@ -143,10 +143,10 @@ class CustomView extends CRMEntity {
 			$viewid = $adb->query_result($cvresult, 0, 'cvid');
 			;
 			return $viewid;
-		} else {
-			return 0;
 		}
-	}
+
+        return 0;
+    }
 
 	// return type array
 	/** to get the details of a customview

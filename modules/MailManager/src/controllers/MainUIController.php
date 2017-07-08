@@ -27,25 +27,25 @@ class MailManager_MainUIController extends MailManager_Controller {
 			$content = $viewer->fetch($this->getModuleTpl('Mainui.QuickLinks.tpl'));
 			$response->setResult( array('ui' => $content));
 			return $response;
-		} else {
-			$folders = array();
-			if ($this->hasMailboxModel()) {
-				$connector = $this->getConnector();
-
-				if ($connector->hasError()) {
-					$viewer->assign('ERROR', $connector->lastError());
-				} else {
-					$folders = $connector->folders();
-					$connector->updateFolders();
-				}
-				$this->closeConnector();
-			}
-			$viewer->assign('FOLDERS', $folders);
-			$viewer->assign('MODULE', $currentModule);
-			$content = $viewer->fetch($this->getModuleTpl('Mainui.tpl'));
-			$response->setResult( array('mailbox' => $this->hasMailboxModel(), 'ui' => $content));
-			return $response;
 		}
-	}
+
+        $folders = array();
+        if ($this->hasMailboxModel()) {
+            $connector = $this->getConnector();
+
+            if ($connector->hasError()) {
+                $viewer->assign('ERROR', $connector->lastError());
+            } else {
+                $folders = $connector->folders();
+                $connector->updateFolders();
+            }
+            $this->closeConnector();
+        }
+        $viewer->assign('FOLDERS', $folders);
+        $viewer->assign('MODULE', $currentModule);
+        $content = $viewer->fetch($this->getModuleTpl('Mainui.tpl'));
+        $response->setResult( array('mailbox' => $this->hasMailboxModel(), 'ui' => $content));
+        return $response;
+    }
 }
 ?>

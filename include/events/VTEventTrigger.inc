@@ -61,10 +61,12 @@ class VTEventTrigger{
 	public static function lookupCache($name) {
 		if(self::isCached($name)) {
 			return self::$cache[$name];
-		} else if(self::$cacheLookupType == self::CACHE_LOOKUP_TYPE_ALL) {
-			return array();
 		}
-		return false;
+
+        if(self::$cacheLookupType == self::CACHE_LOOKUP_TYPE_ALL) {
+            return array();
+        }
+        return false;
 	}
 
 	public static function getActiveEventInfos($adb, $name = false) {

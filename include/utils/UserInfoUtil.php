@@ -727,39 +727,37 @@ function _vtisPermitted($module,$actionname,$record_id='') {
 	//Checking for Default Org Sharing permission
 	if($others_permission_id == 0)
 	{
-		if($actionid == 1 || $actionid == 0)
-		{
-			if($module == 'Calendar')
-			{
-				if($recOwnType == 'Users')
-				{
-					$permission = isCalendarPermittedBySharing($record_id);
-				}
-				else
-				{
-					$permission='no';
-				}
-			}
-			else
-			{
-				$permission = isReadWritePermittedBySharing($module,$tabid,$actionid,$record_id);
-			}
-			$log->debug("Exiting isPermitted method ...");
-			return $permission;
-		}
-		elseif($actionid == 2)
-		{
-			$permission = "no";
-			$log->debug("Exiting isPermitted method ...");
-			return $permission;
-		}
-		else
-		{
-			$permission = "yes";
-			$log->debug("Exiting isPermitted method ...");
-			return $permission;
-		}
-	}
+        if ($actionid == 1 || $actionid == 0) {
+            if($module == 'Calendar')
+            {
+                if($recOwnType == 'Users')
+                {
+                    $permission = isCalendarPermittedBySharing($record_id);
+                }
+                else
+                {
+                    $permission='no';
+                }
+            }
+            else
+            {
+                $permission = isReadWritePermittedBySharing($module,$tabid,$actionid,$record_id);
+            }
+            $log->debug("Exiting isPermitted method ...");
+            return $permission;
+        }
+
+        if($actionid == 2) {
+            $permission = "no";
+            $log->debug("Exiting isPermitted method ...");
+            return $permission;
+        } else
+        {
+            $permission = "yes";
+            $log->debug("Exiting isPermitted method ...");
+            return $permission;
+        }
+    }
 	elseif($others_permission_id == 1)
 	{
 		if($actionid == 2)
@@ -768,13 +766,11 @@ function _vtisPermitted($module,$actionname,$record_id='') {
 			$log->debug("Exiting isPermitted method ...");
 			return $permission;
 		}
-		else
-		{
-			$permission = "yes";
-			$log->debug("Exiting isPermitted method ...");
-			return $permission;
-		}
-	}
+
+        $permission = "yes";
+        $log->debug("Exiting isPermitted method ...");
+        return $permission;
+    }
 	elseif($others_permission_id == 2)
 	{
 		$wfs = new VTWorkflowManager($adb);
@@ -787,69 +783,69 @@ function _vtisPermitted($module,$actionname,$record_id='') {
 	}
 	elseif($others_permission_id == 3)
 	{
-		if($actionid == 3 || $actionid == 4)
-		{
-			if ($module == 'Calendar' || $module == 'cbCalendar')
-			{
-				if($recOwnType == 'Users')
-				{
-					$permission = isCalendarPermittedBySharing($record_id);
-				}
-				else
-				{
-					$permission='no';
-				}
-			}
-			else
-			{
-				$wfs = new VTWorkflowManager($adb);
-				$racbr = $wfs->getRACRuleForRecord($module, $record_id);
-				if ($racbr) {
-					if ($actionid == 3 and !$racbr->hasListViewPermissionTo('retrieve')) {
-						return 'no';
-					} elseif ($actionid == 4 and !$racbr->hasDetailViewPermissionTo('retrieve')) {
-						return 'no';
-					}
-				}
-				$permission = isReadPermittedBySharing($module,$tabid,$actionid,$record_id);
-			}
-			$log->debug("Exiting isPermitted method ...");
-			return $permission;
-		}
-		elseif($actionid ==0 || $actionid ==1)
-		{
-			if($module == 'Calendar')
-			{
-				$permission='no';
-			}
-			else
-			{
-				$wfs = new VTWorkflowManager($adb);
-				$racbr = $wfs->getRACRuleForRecord($module, $record_id);
-				if ($racbr) {
-					if ($actionid == 0 and !$racbr->hasDetailViewPermissionTo('create')) {
-						return 'no';
-					} elseif ($actionid == 1 and !$racbr->hasDetailViewPermissionTo('update')) {
-						return 'no';
-					}
-				}
-				$permission = isReadWritePermittedBySharing($module,$tabid,$actionid,$record_id);
-			}
-			$log->debug("Exiting isPermitted method ...");
-			return $permission;
-		}
-		elseif($actionid ==2)
-		{
-				$permission ="no";
-				return $permission;
-		}
-		else
-		{
-			$permission = "yes";
-			$log->debug("Exiting isPermitted method ...");
-			return $permission;
-		}
-	}
+        if ($actionid == 3 || $actionid == 4) {
+            if ($module == 'Calendar' || $module == 'cbCalendar')
+            {
+                if($recOwnType == 'Users')
+                {
+                    $permission = isCalendarPermittedBySharing($record_id);
+                }
+                else
+                {
+                    $permission='no';
+                }
+            }
+            else
+            {
+                $wfs = new VTWorkflowManager($adb);
+                $racbr = $wfs->getRACRuleForRecord($module, $record_id);
+                if ($racbr) {
+                    if ($actionid == 3 and !$racbr->hasListViewPermissionTo('retrieve')) {
+                        return 'no';
+                    } elseif ($actionid == 4 and !$racbr->hasDetailViewPermissionTo('retrieve')) {
+                        return 'no';
+                    }
+                }
+                $permission = isReadPermittedBySharing($module,$tabid,$actionid,$record_id);
+            }
+            $log->debug("Exiting isPermitted method ...");
+            return $permission;
+        }
+
+        if($actionid ==0 || $actionid ==1) {
+            if($module == 'Calendar')
+            {
+                $permission='no';
+            }
+            else
+            {
+                $wfs = new VTWorkflowManager($adb);
+                $racbr = $wfs->getRACRuleForRecord($module, $record_id);
+                if ($racbr) {
+if ($actionid == 0 and !$racbr->hasDetailViewPermissionTo('create')) {
+return 'no';
+}
+
+if ($actionid == 1 and !$racbr->hasDetailViewPermissionTo('update')) {
+return 'no';
+}
+}
+                $permission = isReadWritePermittedBySharing($module,$tabid,$actionid,$record_id);
+            }
+            $log->debug("Exiting isPermitted method ...");
+            return $permission;
+        } elseif($actionid ==2)
+        {
+                $permission ="no";
+                return $permission;
+        }
+        else
+        {
+            $permission = "yes";
+            $log->debug("Exiting isPermitted method ...");
+            return $permission;
+        }
+    }
 	else
 	{
 		$permission = "yes";
@@ -3633,37 +3629,35 @@ function getFieldVisibilityPermission($fld_module, $userid, $fieldname, $accessm
 		$log->debug("Exiting getFieldVisibilityPermission method ...");
 		return '0';
 	}
-	else
-	{
-		//get profile list using userid
-		$profilelist = array();
-		foreach ($current_user_profiles as $profid) {
-			array_push($profilelist, $profid);
-		}
 
-		//get tabid
-		$tabid = getTabid($fld_module);
+//get profile list using userid
+    $profilelist = array();
+    foreach ($current_user_profiles as $profid) {
+        array_push($profilelist, $profid);
+    }
 
-		if (count($profilelist) > 0) {
-			if($accessmode == 'readonly') {
-				$query="SELECT vtiger_profile2field.visible FROM vtiger_field INNER JOIN vtiger_profile2field ON vtiger_profile2field.fieldid=vtiger_field.fieldid INNER JOIN vtiger_def_org_field ON vtiger_def_org_field.fieldid=vtiger_field.fieldid WHERE vtiger_field.tabid=? AND vtiger_profile2field.visible=0 AND vtiger_def_org_field.visible=0  AND vtiger_profile2field.profileid in (". generateQuestionMarks($profilelist) .") AND vtiger_field.fieldname= ? and vtiger_field.presence in (0,2) GROUP BY vtiger_field.fieldid";
-			} else {
-				$query="SELECT vtiger_profile2field.visible FROM vtiger_field INNER JOIN vtiger_profile2field ON vtiger_profile2field.fieldid=vtiger_field.fieldid INNER JOIN vtiger_def_org_field ON vtiger_def_org_field.fieldid=vtiger_field.fieldid WHERE vtiger_field.tabid=? AND vtiger_profile2field.visible=0 AND vtiger_profile2field.readonly=0 AND vtiger_def_org_field.visible=0  AND vtiger_profile2field.profileid in (". generateQuestionMarks($profilelist) .") AND vtiger_field.fieldname= ? and vtiger_field.presence in (0,2) GROUP BY vtiger_field.fieldid";
-			}
-			$params = array($tabid, $profilelist, $fieldname);
-		} else {
-			if($accessmode == 'readonly') {
-				$query="SELECT vtiger_profile2field.visible FROM vtiger_field INNER JOIN vtiger_profile2field ON vtiger_profile2field.fieldid=vtiger_field.fieldid INNER JOIN vtiger_def_org_field ON vtiger_def_org_field.fieldid=vtiger_field.fieldid WHERE vtiger_field.tabid=? AND vtiger_profile2field.visible=0 AND vtiger_def_org_field.visible=0  AND vtiger_field.fieldname= ? and vtiger_field.presence in (0,2) GROUP BY vtiger_field.fieldid";
-			} else {
-				$query="SELECT vtiger_profile2field.visible FROM vtiger_field INNER JOIN vtiger_profile2field ON vtiger_profile2field.fieldid=vtiger_field.fieldid INNER JOIN vtiger_def_org_field ON vtiger_def_org_field.fieldid=vtiger_field.fieldid WHERE vtiger_field.tabid=? AND vtiger_profile2field.visible=0 AND vtiger_profile2field.readonly=0 AND vtiger_def_org_field.visible=0  AND vtiger_field.fieldname= ? and vtiger_field.presence in (0,2) GROUP BY vtiger_field.fieldid";
-			}
-			$params = array($tabid, $fieldname);
-		}
-		$result = $adb->pquery($query, $params);
-		$log->debug("Exiting getFieldVisibilityPermission method ...");
-		if($adb->num_rows($result) == 0) return '1';
-		return ($adb->query_result($result,0,'visible').'');
-	}
+    //get tabid
+    $tabid = getTabid($fld_module);
+
+    if (count($profilelist) > 0) {
+        if($accessmode == 'readonly') {
+            $query="SELECT vtiger_profile2field.visible FROM vtiger_field INNER JOIN vtiger_profile2field ON vtiger_profile2field.fieldid=vtiger_field.fieldid INNER JOIN vtiger_def_org_field ON vtiger_def_org_field.fieldid=vtiger_field.fieldid WHERE vtiger_field.tabid=? AND vtiger_profile2field.visible=0 AND vtiger_def_org_field.visible=0  AND vtiger_profile2field.profileid in (". generateQuestionMarks($profilelist) .") AND vtiger_field.fieldname= ? and vtiger_field.presence in (0,2) GROUP BY vtiger_field.fieldid";
+        } else {
+            $query="SELECT vtiger_profile2field.visible FROM vtiger_field INNER JOIN vtiger_profile2field ON vtiger_profile2field.fieldid=vtiger_field.fieldid INNER JOIN vtiger_def_org_field ON vtiger_def_org_field.fieldid=vtiger_field.fieldid WHERE vtiger_field.tabid=? AND vtiger_profile2field.visible=0 AND vtiger_profile2field.readonly=0 AND vtiger_def_org_field.visible=0  AND vtiger_profile2field.profileid in (". generateQuestionMarks($profilelist) .") AND vtiger_field.fieldname= ? and vtiger_field.presence in (0,2) GROUP BY vtiger_field.fieldid";
+        }
+        $params = array($tabid, $profilelist, $fieldname);
+    } else {
+        if($accessmode == 'readonly') {
+            $query="SELECT vtiger_profile2field.visible FROM vtiger_field INNER JOIN vtiger_profile2field ON vtiger_profile2field.fieldid=vtiger_field.fieldid INNER JOIN vtiger_def_org_field ON vtiger_def_org_field.fieldid=vtiger_field.fieldid WHERE vtiger_field.tabid=? AND vtiger_profile2field.visible=0 AND vtiger_def_org_field.visible=0  AND vtiger_field.fieldname= ? and vtiger_field.presence in (0,2) GROUP BY vtiger_field.fieldid";
+        } else {
+            $query="SELECT vtiger_profile2field.visible FROM vtiger_field INNER JOIN vtiger_profile2field ON vtiger_profile2field.fieldid=vtiger_field.fieldid INNER JOIN vtiger_def_org_field ON vtiger_def_org_field.fieldid=vtiger_field.fieldid WHERE vtiger_field.tabid=? AND vtiger_profile2field.visible=0 AND vtiger_profile2field.readonly=0 AND vtiger_def_org_field.visible=0  AND vtiger_field.fieldname= ? and vtiger_field.presence in (0,2) GROUP BY vtiger_field.fieldid";
+        }
+        $params = array($tabid, $fieldname);
+    }
+    $result = $adb->pquery($query, $params);
+    $log->debug("Exiting getFieldVisibilityPermission method ...");
+    if($adb->num_rows($result) == 0) return '1';
+    return ($adb->query_result($result,0,'visible').'');
 }
 
 /** Function to check permission to access the column for a given user

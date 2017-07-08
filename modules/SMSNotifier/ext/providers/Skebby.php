@@ -187,27 +187,27 @@ class Skebby implements ISMSProvider {
 				return 'status=failed&message='.NET_ERROR;
 			}
 			return $response;
-		} else {
-			$ch = curl_init();
-			curl_setopt($ch,CURLOPT_CONNECTTIMEOUT,10);
-			curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
-			curl_setopt($ch,CURLOPT_TIMEOUT,60);
-			curl_setopt($ch,CURLOPT_USERAGENT,'Generic Client');
-			curl_setopt($ch,CURLOPT_POSTFIELDS,$data);
-			curl_setopt($ch,CURLOPT_URL,$url);
-	
-			if ($optional_headers !== null) {
-				curl_setopt($ch,CURLOPT_HTTPHEADER,$optional_headers);
-			}
-
-			$response = curl_exec($ch);
-			curl_close($ch);
-			if(!$response){
-				return 'status=failed&message='.NET_ERROR;
-			}
-			return $response;
 		}
-	}
+
+        $ch = curl_init();
+        curl_setopt($ch,CURLOPT_CONNECTTIMEOUT,10);
+        curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
+        curl_setopt($ch,CURLOPT_TIMEOUT,60);
+        curl_setopt($ch,CURLOPT_USERAGENT,'Generic Client');
+        curl_setopt($ch,CURLOPT_POSTFIELDS,$data);
+        curl_setopt($ch,CURLOPT_URL,$url);
+
+        if ($optional_headers !== null) {
+            curl_setopt($ch,CURLOPT_HTTPHEADER,$optional_headers);
+        }
+
+        $response = curl_exec($ch);
+        curl_close($ch);
+        if(!$response){
+            return 'status=failed&message='.NET_ERROR;
+        }
+        return $response;
+    }
 
 	public function skebbyGatewaySendSMS($username, $password, $recipients, $text, $sms_type=SMS_TYPE_CLASSIC, $sender_number='', $sender_string='', $user_reference='', $charset='', $optional_headers=null) {
 		$url = $this->getServiceUrl(self::SERVICE_SEND);

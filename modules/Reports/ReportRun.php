@@ -147,115 +147,113 @@ class ReportRun extends CRMEntity {
 			{
 				continue;
 			}
-			else
-			{
-				$header_label = $selectedfields[2]; // Header label to be displayed in the reports table
-				// To check if the field in the report is a custom field
-				// and if yes, get the label of this custom field freshly from the vtiger_field as it would have been changed.
-				// Asha - Reference ticket : #4906
 
-				if($querycolumns == '') {
-					if($selectedfields[4] == 'C')
-					{
-						$field_label_data = explode("_",$selectedfields[2]);
-						$module= $field_label_data[0];
-						if($module!=$this->primarymodule)
-							$columnslist[$fieldcolname] = "case when (".$selectedfields[0].".".$selectedfields[1]."='1')then '".getTranslatedString('LBL_YES')."' else case when (vtiger_crmentity$module.crmid !='') then '".getTranslatedString('LBL_NO')."' else '-' end end as '$selectedfields[2]'";
-						else
-							$columnslist[$fieldcolname] = "case when (".$selectedfields[0].".".$selectedfields[1]."='1')then '".getTranslatedString('LBL_YES')."' else case when (vtiger_crmentity.crmid !='') then '".getTranslatedString('LBL_NO')."' else '-' end end as '$selectedfields[2]'";
-					}
-					elseif($selectedfields[0] == 'vtiger_activity' && $selectedfields[1] == 'status')
-					{
-						$columnslist[$fieldcolname] = " case when (vtiger_activity.status not like '') then vtiger_activity.status else vtiger_activity.eventstatus end as Calendar_Status";
-					}
-					elseif($selectedfields[0] == 'vtiger_activity' && $selectedfields[1] == 'date_start')
-					{
-						$columnslist[$fieldcolname] = "cast(concat(vtiger_activity.date_start,'  ',vtiger_activity.time_start) as DATETIME) as Calendar_Start_Date_and_Time";
-					}
-					elseif(stristr($selectedfields[0],"vtiger_users") && ($selectedfields[1] == 'user_name'))
-					{
-						$temp_module_from_tablename = str_replace("vtiger_users","",$selectedfields[0]);
-						if($module!=$this->primarymodule){
-							$condition = "and vtiger_crmentity".$module.".crmid!=''";
-						} else {
-							$condition = "and vtiger_crmentity.crmid!=''";
-						}
-						if($temp_module_from_tablename == $module)
-							$columnslist[$fieldcolname] = " case when(".$selectedfields[0].".last_name NOT LIKE '' $condition ) THEN ".$concatSql." else vtiger_groups".$module.".groupname end as '".$module."_$field'";
-						else//Some Fields can't assigned to groups so case avoided (fields like inventory manager)
-							$columnslist[$fieldcolname] = $selectedfields[0].".user_name as '".$header_label."'";
+            $header_label = $selectedfields[2]; // Header label to be displayed in the reports table
+            // To check if the field in the report is a custom field
+            // and if yes, get the label of this custom field freshly from the vtiger_field as it would have been changed.
+            // Asha - Reference ticket : #4906
 
-					}
-					elseif(stristr($selectedfields[0],"vtiger_crmentity") && ($selectedfields[1] == 'modifiedby')) {
-						$concatSql = getSqlForNameInDisplayFormat(array('last_name'=>'vtiger_lastModifiedBy'.$module.'.last_name', 'first_name'=>'vtiger_lastModifiedBy'.$module.'.first_name'), 'Users');
-						$columnslist[$fieldcolname] = "trim($concatSql) as $header_label";
-					}
-					elseif(stristr($selectedfields[0],"vtiger_crmentity") && ($selectedfields[1] == 'smcreatorid')) {
-						$concatSql = getSqlForNameInDisplayFormat(array('last_name'=>'vtiger_CreatedBy'.$module.'.last_name', 'first_name'=>'vtiger_CreatedBy'.$module.'.first_name'), 'Users');
-						$columnslist[$fieldcolname] = "trim($concatSql) as $header_label";
-					}
-					elseif($selectedfields[0] == "vtiger_crmentity".$this->primarymodule)
-					{
-						$columnslist[$fieldcolname] = "vtiger_crmentity.".$selectedfields[1]." AS '".$header_label."'";
-					}
-					elseif($selectedfields[0] == 'vtiger_products' && $selectedfields[1] == 'unit_price')//handled for product fields in Campaigns Module Reports
-					{
-						$columnslist[$fieldcolname] = "concat(".$selectedfields[0].".currency_id,'::',innerProduct.actual_unit_price) as '". $header_label ."'";
-					}
-					elseif(in_array($selectedfields[2], $this->append_currency_symbol_to_value)) {
-						$columnslist[$fieldcolname] = "concat(".$selectedfields[0].".currency_id,'::',".$selectedfields[0].".".$selectedfields[1].") as '" . $header_label ."'";
-					}
-					elseif($selectedfields[0] == 'vtiger_notes' && ($selectedfields[1] == 'filelocationtype' || $selectedfields[1] == 'filesize' || $selectedfields[1] == 'folderid' || $selectedfields[1]=='filestatus'))//handled for product fields in Campaigns Module Reports
-					{
-						if($selectedfields[1] == 'filelocationtype'){
-							$columnslist[$fieldcolname] = "case ".$selectedfields[0].".".$selectedfields[1]." when 'I' then 'Internal' when 'E' then 'External' else '-' end as '$selectedfields[2]'";
-						} else if($selectedfields[1] == 'folderid'){
-							$columnslist[$fieldcolname] = "vtiger_attachmentsfolder.foldername as '$selectedfields[2]'";
-						} elseif($selectedfields[1] == 'filestatus'){
-							$columnslist[$fieldcolname] = "case ".$selectedfields[0].".".$selectedfields[1]." when '1' then '".getTranslatedString('LBL_YES')."' when '0' then '".getTranslatedString('LBL_NO')."' else '-' end as '$selectedfields[2]'";
-						} elseif($selectedfields[1] == 'filesize'){
-							$columnslist[$fieldcolname] = "case ".$selectedfields[0].".".$selectedfields[1]." when '' then '-' else concat(".$selectedfields[0].".".$selectedfields[1]."/1024,'  ','KB') end as '$selectedfields[2]'";
-						}
-					}
-					elseif($selectedfields[0] == 'vtiger_inventoryproductrel')//handled for product fields in Campaigns Module Reports
-					{
-						if($selectedfields[1] == 'discount'){
-							$columnslist[$fieldcolname] = " case when (vtiger_inventoryproductrel{$module}.discount_amount != '') then vtiger_inventoryproductrel{$module}.discount_amount else ROUND((vtiger_inventoryproductrel{$module}.listprice * vtiger_inventoryproductrel{$module}.quantity * (vtiger_inventoryproductrel{$module}.discount_percent/100)),3) end as '" . $header_label ."'";
-						} else if($selectedfields[1] == 'productid'){
-							$columnslist[$fieldcolname] = "vtiger_products{$module}.productname as '" . $header_label ."'";
-						} else if($selectedfields[1] == 'serviceid'){
-							$columnslist[$fieldcolname] = "vtiger_service{$module}.servicename as '" . $header_label ."'";
-						} else {
-							$columnslist[$fieldcolname] = $selectedfields[0].$module.".".$selectedfields[1]." as '".$header_label."'";
-						}
-					}
-					elseif($selectedfields[0] == 'vtiger_inventoryproductrel'.$module)//handled for product fields in Campaigns Module Reports
-					{
-						if($selectedfields[1] == 'discount'){
-							$columnslist[$fieldcolname] = " case when (vtiger_inventoryproductrel{$module}.discount_amount != '') then vtiger_inventoryproductrel{$module}.discount_amount else ROUND((vtiger_inventoryproductrel{$module}.listprice * vtiger_inventoryproductrel{$module}.quantity * (vtiger_inventoryproductrel{$module}.discount_percent/100)),3) end as '" . $header_label ."'";
-						} else if($selectedfields[1] == 'productid'){
-							$columnslist[$fieldcolname] = "vtiger_products{$module}.productname as '" . $header_label ."'";
-						} else if($selectedfields[1] == 'serviceid'){
-							$columnslist[$fieldcolname] = "vtiger_service{$module}.servicename as '" . $header_label ."'";
-						} else {
-							$columnslist[$fieldcolname] = $selectedfields[0].".".$selectedfields[1]." as '".$header_label."'";
-						}
-					}
-					elseif(stristr($selectedfields[1],'cf_')==true && stripos($selectedfields[1],'cf_')==0)
-					{
-						$columnslist[$fieldcolname] = $selectedfields[0].".".$selectedfields[1]." AS '".$adb->sql_escape_string(decode_html($header_label))."'";
-					}
-					else
-					{
-						$columnslist[$fieldcolname] = $selectedfields[0].".".$selectedfields[1]." AS '".$header_label."'";
-					}
-				}
-				else
-				{
-					$columnslist[$fieldcolname] = $querycolumns;
-				}
-			}
-		}
+            if($querycolumns == '') {
+                if($selectedfields[4] == 'C')
+                {
+                    $field_label_data = explode("_",$selectedfields[2]);
+                    $module= $field_label_data[0];
+                    if($module!=$this->primarymodule)
+                        $columnslist[$fieldcolname] = "case when (".$selectedfields[0].".".$selectedfields[1]."='1')then '".getTranslatedString('LBL_YES')."' else case when (vtiger_crmentity$module.crmid !='') then '".getTranslatedString('LBL_NO')."' else '-' end end as '$selectedfields[2]'";
+                    else
+                        $columnslist[$fieldcolname] = "case when (".$selectedfields[0].".".$selectedfields[1]."='1')then '".getTranslatedString('LBL_YES')."' else case when (vtiger_crmentity.crmid !='') then '".getTranslatedString('LBL_NO')."' else '-' end end as '$selectedfields[2]'";
+                }
+                elseif($selectedfields[0] == 'vtiger_activity' && $selectedfields[1] == 'status')
+                {
+                    $columnslist[$fieldcolname] = " case when (vtiger_activity.status not like '') then vtiger_activity.status else vtiger_activity.eventstatus end as Calendar_Status";
+                }
+                elseif($selectedfields[0] == 'vtiger_activity' && $selectedfields[1] == 'date_start')
+                {
+                    $columnslist[$fieldcolname] = "cast(concat(vtiger_activity.date_start,'  ',vtiger_activity.time_start) as DATETIME) as Calendar_Start_Date_and_Time";
+                }
+                elseif(stristr($selectedfields[0],"vtiger_users") && ($selectedfields[1] == 'user_name'))
+                {
+                    $temp_module_from_tablename = str_replace("vtiger_users","",$selectedfields[0]);
+                    if($module!=$this->primarymodule){
+                        $condition = "and vtiger_crmentity".$module.".crmid!=''";
+                    } else {
+                        $condition = "and vtiger_crmentity.crmid!=''";
+                    }
+                    if($temp_module_from_tablename == $module)
+                        $columnslist[$fieldcolname] = " case when(".$selectedfields[0].".last_name NOT LIKE '' $condition ) THEN ".$concatSql." else vtiger_groups".$module.".groupname end as '".$module."_$field'";
+                    else//Some Fields can't assigned to groups so case avoided (fields like inventory manager)
+                        $columnslist[$fieldcolname] = $selectedfields[0].".user_name as '".$header_label."'";
+
+                }
+                elseif(stristr($selectedfields[0],"vtiger_crmentity") && ($selectedfields[1] == 'modifiedby')) {
+                    $concatSql = getSqlForNameInDisplayFormat(array('last_name'=>'vtiger_lastModifiedBy'.$module.'.last_name', 'first_name'=>'vtiger_lastModifiedBy'.$module.'.first_name'), 'Users');
+                    $columnslist[$fieldcolname] = "trim($concatSql) as $header_label";
+                }
+                elseif(stristr($selectedfields[0],"vtiger_crmentity") && ($selectedfields[1] == 'smcreatorid')) {
+                    $concatSql = getSqlForNameInDisplayFormat(array('last_name'=>'vtiger_CreatedBy'.$module.'.last_name', 'first_name'=>'vtiger_CreatedBy'.$module.'.first_name'), 'Users');
+                    $columnslist[$fieldcolname] = "trim($concatSql) as $header_label";
+                }
+                elseif($selectedfields[0] == "vtiger_crmentity".$this->primarymodule)
+                {
+                    $columnslist[$fieldcolname] = "vtiger_crmentity.".$selectedfields[1]." AS '".$header_label."'";
+                }
+                elseif($selectedfields[0] == 'vtiger_products' && $selectedfields[1] == 'unit_price')//handled for product fields in Campaigns Module Reports
+                {
+                    $columnslist[$fieldcolname] = "concat(".$selectedfields[0].".currency_id,'::',innerProduct.actual_unit_price) as '". $header_label ."'";
+                }
+                elseif(in_array($selectedfields[2], $this->append_currency_symbol_to_value)) {
+                    $columnslist[$fieldcolname] = "concat(".$selectedfields[0].".currency_id,'::',".$selectedfields[0].".".$selectedfields[1].") as '" . $header_label ."'";
+                }
+                elseif($selectedfields[0] == 'vtiger_notes' && ($selectedfields[1] == 'filelocationtype' || $selectedfields[1] == 'filesize' || $selectedfields[1] == 'folderid' || $selectedfields[1]=='filestatus'))//handled for product fields in Campaigns Module Reports
+                {
+                    if($selectedfields[1] == 'filelocationtype'){
+                        $columnslist[$fieldcolname] = "case ".$selectedfields[0].".".$selectedfields[1]." when 'I' then 'Internal' when 'E' then 'External' else '-' end as '$selectedfields[2]'";
+                    } else if($selectedfields[1] == 'folderid'){
+                        $columnslist[$fieldcolname] = "vtiger_attachmentsfolder.foldername as '$selectedfields[2]'";
+                    } elseif($selectedfields[1] == 'filestatus'){
+                        $columnslist[$fieldcolname] = "case ".$selectedfields[0].".".$selectedfields[1]." when '1' then '".getTranslatedString('LBL_YES')."' when '0' then '".getTranslatedString('LBL_NO')."' else '-' end as '$selectedfields[2]'";
+                    } elseif($selectedfields[1] == 'filesize'){
+                        $columnslist[$fieldcolname] = "case ".$selectedfields[0].".".$selectedfields[1]." when '' then '-' else concat(".$selectedfields[0].".".$selectedfields[1]."/1024,'  ','KB') end as '$selectedfields[2]'";
+                    }
+                }
+                elseif($selectedfields[0] == 'vtiger_inventoryproductrel')//handled for product fields in Campaigns Module Reports
+                {
+                    if($selectedfields[1] == 'discount'){
+                        $columnslist[$fieldcolname] = " case when (vtiger_inventoryproductrel{$module}.discount_amount != '') then vtiger_inventoryproductrel{$module}.discount_amount else ROUND((vtiger_inventoryproductrel{$module}.listprice * vtiger_inventoryproductrel{$module}.quantity * (vtiger_inventoryproductrel{$module}.discount_percent/100)),3) end as '" . $header_label ."'";
+                    } else if($selectedfields[1] == 'productid'){
+                        $columnslist[$fieldcolname] = "vtiger_products{$module}.productname as '" . $header_label ."'";
+                    } else if($selectedfields[1] == 'serviceid'){
+                        $columnslist[$fieldcolname] = "vtiger_service{$module}.servicename as '" . $header_label ."'";
+                    } else {
+                        $columnslist[$fieldcolname] = $selectedfields[0].$module.".".$selectedfields[1]." as '".$header_label."'";
+                    }
+                }
+                elseif($selectedfields[0] == 'vtiger_inventoryproductrel'.$module)//handled for product fields in Campaigns Module Reports
+                {
+                    if($selectedfields[1] == 'discount'){
+                        $columnslist[$fieldcolname] = " case when (vtiger_inventoryproductrel{$module}.discount_amount != '') then vtiger_inventoryproductrel{$module}.discount_amount else ROUND((vtiger_inventoryproductrel{$module}.listprice * vtiger_inventoryproductrel{$module}.quantity * (vtiger_inventoryproductrel{$module}.discount_percent/100)),3) end as '" . $header_label ."'";
+                    } else if($selectedfields[1] == 'productid'){
+                        $columnslist[$fieldcolname] = "vtiger_products{$module}.productname as '" . $header_label ."'";
+                    } else if($selectedfields[1] == 'serviceid'){
+                        $columnslist[$fieldcolname] = "vtiger_service{$module}.servicename as '" . $header_label ."'";
+                    } else {
+                        $columnslist[$fieldcolname] = $selectedfields[0].".".$selectedfields[1]." as '".$header_label."'";
+                    }
+                }
+                elseif(stristr($selectedfields[1],'cf_')==true && stripos($selectedfields[1],'cf_')==0)
+                {
+                    $columnslist[$fieldcolname] = $selectedfields[0].".".$selectedfields[1]." AS '".$adb->sql_escape_string(decode_html($header_label))."'";
+                }
+                else
+                {
+                    $columnslist[$fieldcolname] = $selectedfields[0].".".$selectedfields[1]." AS '".$header_label."'";
+                }
+            }
+            else
+            {
+                $columnslist[$fieldcolname] = $querycolumns;
+            }
+        }
 		$columnslist['vtiger_crmentity:crmid:LBL_ACTION:crmid:I'] = 'vtiger_crmentity.crmid AS "LBL_ACTION"' ;
 		// Save the information
 		$this->_columnslist = $columnslist;
@@ -373,11 +371,10 @@ class ReportRun extends CRMEntity {
 					{
 						$ordercolumnsequal = false;
 						break;
-					}else
-					{
-						$ordercolumnsequal = true;
 					}
-				}
+
+                    $ordercolumnsequal = true;
+                }
 				if($ordercolumnsequal)
 				{
 					$selectedfields = explode(":",$fieldcolname);

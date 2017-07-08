@@ -37,10 +37,10 @@ class VTExpressionEngineEnv implements VTEnv{
 	public function get($var){
 		if(array_key_exists($var, $this->vars)){
 			return $this->vars[$var]->get();
-		}else{
-			return $this->data[$var];
 		}
-	}
+
+        return $this->data[$var];
+    }
 }
 
 class VTExpressionEngine{
@@ -146,12 +146,14 @@ class VTExpressionEngine{
 				$syms = array();
 			}
 			return $syms;
-		}else if($expr instanceof Symbol && in_array($expr->value, $this->vars)){
-			return array($expr->value=>$expr);
-		}else{
-			return array();
 		}
-	}
+
+        if($expr instanceof Symbol && in_array($expr->value, $this->vars)){
+            return array($expr->value=>$expr);
+        }else{
+            return array();
+        }
+    }
 
 	private function loadExpression($var, $expr){
 		$this->expressions[$var] = $value;

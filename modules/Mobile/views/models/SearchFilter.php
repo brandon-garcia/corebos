@@ -61,28 +61,26 @@ class crmtogo_UI_SearchFilterModel extends crmtogo_WS_SearchFilterModel {
 				$lstresult[$i]['id']= "31x".$db->query_result($result,$i,'projectid');
 			}
 			return $lstresult;
-		} 
-		else {
-			$selectClause = sprintf("SELECT %s", implode(',', $fieldnames));
-			$fromClause = sprintf("FROM %s", $this->moduleName);
-			$whereClause = "";
-			$orderClause = "";
-			$groupClause = "";
-			if ($paging) {
-				$config = crmtogo_WS_Controller::getUserConfigSettings();
-				$limitClause = "LIMIT 0,".$config ['NavigationLimit'];
-			}
-		
-			if (!empty($this->criterias)) {
-				$_sortCriteria = $this->criterias['_sort'];
-				if(!empty($_sortCriteria)) {
-					$orderClause = $_sortCriteria;
-				}
-			}
-		 
-			$query = sprintf("%s %s %s %s %s %s;", $selectClause, $fromClause, $whereClause, $orderClause, $groupClause, $limitClause);
-			return vtws_query($query, $this->getUser()); 
-		
-		}	  
-	}
+		}
+
+        $selectClause = sprintf("SELECT %s", implode(',', $fieldnames));
+        $fromClause = sprintf("FROM %s", $this->moduleName);
+        $whereClause = "";
+        $orderClause = "";
+        $groupClause = "";
+        if ($paging) {
+            $config = crmtogo_WS_Controller::getUserConfigSettings();
+            $limitClause = "LIMIT 0,".$config ['NavigationLimit'];
+        }
+
+        if (!empty($this->criterias)) {
+            $_sortCriteria = $this->criterias['_sort'];
+            if(!empty($_sortCriteria)) {
+                $orderClause = $_sortCriteria;
+            }
+        }
+
+        $query = sprintf("%s %s %s %s %s %s;", $selectClause, $fromClause, $whereClause, $orderClause, $groupClause, $limitClause);
+        return vtws_query($query, $this->getUser());
+    }
 }

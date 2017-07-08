@@ -49,11 +49,10 @@ class crmtogo_WS_FetchRecordDetails extends crmtogo_WS_FetchRecord {
 			$response->setResult(array('record' => $newrecord));
 			return $response;
 		}
-		else {
-			$response = parent::process($request);
-			return $this->processWithGrouping($request, $response);
-		}
-	}
+
+        $response = parent::process($request);
+        return $this->processWithGrouping($request, $response);
+    }
 	
 	protected function processWithGrouping(crmtogo_API_Request $request, $response) {
 		$result = $response->getResult();

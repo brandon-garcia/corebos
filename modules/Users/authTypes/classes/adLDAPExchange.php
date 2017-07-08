@@ -173,23 +173,22 @@ class adLDAPExchange {
             $result = @ldap_mod_replace($this->adldap->getLdapConnection(), $userDn, $modAddresses);
             return !($result == false);
         }
-        else {
-            // We do not have to demote an email address from the default so we can just add the new proxy address
-            $attributes['exchange_proxyaddress'] = $proxyValue . $emailAddress;
-            
-            // Translate the update to the LDAP schema                
-            $add = $this->adldap->adldap_schema($attributes);
-            
-            if (!$add) { 
-                return false; 
-            }
-            
-            // Do the update
-            // Take out the @ to see any errors, usually this error might occur because the address already
-            // exists in the list of proxyAddresses
-            $result = @ldap_mod_add($this->adldap->getLdapConnection(), $userDn,$add);
-            return !($result == false);
+
+// We do not have to demote an email address from the default so we can just add the new proxy address
+        $attributes['exchange_proxyaddress'] = $proxyValue . $emailAddress;
+
+        // Translate the update to the LDAP schema
+        $add = $this->adldap->adldap_schema($attributes);
+
+        if (!$add) {
+            return false;
         }
+
+        // Do the update
+        // Take out the @ to see any errors, usually this error might occur because the address already
+        // exists in the list of proxyAddresses
+        $result = @ldap_mod_add($this->adldap->getLdapConnection(), $userDn,$add);
+        return !($result == false);
     }
     
     /**
@@ -226,9 +225,8 @@ class adLDAPExchange {
             $result = @ldap_mod_del($this->adldap->getLdapConnection(), $userDn,$mod);
             return !($result == false);
         }
-        else {
-            return false;
-        }
+
+        return false;
     }
     /**
     * Change the default address

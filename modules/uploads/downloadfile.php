@@ -42,8 +42,8 @@ if(!empty($deletecheck) && $adb->query_result($deletecheck, 0, 'deleted') == 1) 
 		header("Content-Disposition: attachment; filename=\"$name\"");
 		echo $fileContent;
 		die();
-	} else {
-		echo $app_strings['LBL_RECORD_NOT_FOUND'];
 	}
+
+    echo $app_strings['LBL_RECORD_NOT_FOUND'];
 }
 ?>

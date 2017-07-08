@@ -97,10 +97,10 @@ class ConfigFileReader {
 				if ($row->matchesVariableName($name)) {
 					if($name == 'upload_maxsize'){
 						return $row->setVariableValue($value*1000000);
-					}else{
-						return $row->setVariableValue($value);
 					}
-				}
+
+                    return $row->setVariableValue($value);
+                }
 			}
 		}
 	}
@@ -209,10 +209,10 @@ class ConfigFileRow {
 			$editables = $this->parent->editables();
 			if (!empty($editables)) {
 				return in_array($this->parsedVarName, $this->parent->viewables());
-			} else {
-				return true;
 			}
-		}
+
+            return true;
+        }
 		return false;
 	}
 	

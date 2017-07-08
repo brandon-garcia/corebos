@@ -109,17 +109,17 @@ class VTWorkflowTemplateManager{
 										 array($template->title, $template->moduleName, 
 													 $template->template, $templateId));	
 				return $templateId;
-			}else{
-				$templateId = $adb->getUniqueID("com_vtiger_workflowtemplates");
-				$template->id = $templateId;
-				$adb->pquery("insert into com_vtiger_workflowtemplates 
-							(template_id, title, module_name, template) 
-							values (?, ?, ?, ?)", 
-					array($templateId, $template->title, 
-								$template->moduleName, $template->template));
-				return $templateId;
 			}
-	}
+
+        $templateId = $adb->getUniqueID("com_vtiger_workflowtemplates");
+        $template->id = $templateId;
+        $adb->pquery("insert into com_vtiger_workflowtemplates 
+                    (template_id, title, module_name, template) 
+                    values (?, ?, ?, ?)",
+            array($templateId, $template->title,
+                        $template->moduleName, $template->template));
+        return $templateId;
+    }
 
 	/**
 	 * Delete a template

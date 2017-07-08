@@ -250,11 +250,11 @@ function vtws_getEmailFromClause(){
 function getSyncQueryBaseTable($elementType){
 	if ($elementType!="Calendar" && $elementType!="Events") {
 		return "vtiger_crmentity";
-	} else {
-		$activityCondition = getCalendarTypeCondition($elementType);
-		$query = "vtiger_crmentity INNER JOIN vtiger_activity ON (vtiger_crmentity.crmid = vtiger_activity.activityid and $activityCondition)";
-		return $query;
 	}
+
+    $activityCondition = getCalendarTypeCondition($elementType);
+    $query = "vtiger_crmentity INNER JOIN vtiger_activity ON (vtiger_crmentity.crmid = vtiger_activity.activityid and $activityCondition)";
+    return $query;
 }
 
 function getCalendarTypeCondition($elementType){

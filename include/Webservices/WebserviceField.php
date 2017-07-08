@@ -101,10 +101,10 @@ class WebserviceField{
 		if ($rs and $adb->num_rows($rs)==1) {
 			$row = $adb->fetch_array($rs);
 			return new WebserviceField($adb,$row);
-		} else {
-			return false;
 		}
-	}
+
+        return false;
+    }
 
 	public function getTableName(){
 		return $this->tableName;
@@ -387,11 +387,11 @@ class WebserviceField{
 			}
 			$row = WebserviceField::$fieldTypeMapping[$this->getUIType()];
 			return $row['fieldtype'];
-		} else {
-			WebserviceField::$fieldTypeMapping[$this->getUIType()] = false;
-			return null;
 		}
-	}
+
+        WebserviceField::$fieldTypeMapping[$this->getUIType()] = false;
+        return null;
+    }
 	
 	public function getPicklistDetails(){
 		$hardCodedPickListNames = array("hdntaxtype","email_flag");

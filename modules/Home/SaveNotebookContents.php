@@ -23,11 +23,11 @@ echo json_encode($returnvalue);
 function SaveNotebookContents(){
 	if(empty($_REQUEST['notebookid'])){
 		return false;
-	}else{
-		$notebookid = $_REQUEST['notebookid'];
 	}
-	
-	global $adb,$current_user;
+
+    $notebookid = $_REQUEST['notebookid'];
+
+    global $adb,$current_user;
 	
 	$contents = $_REQUEST['contents'];
 	

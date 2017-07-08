@@ -59,9 +59,9 @@ class cbMapcore {
 		if(self::isXML($xmlcontent)){
 			$xml=simplexml_load_string($xmlcontent);
 			return $xml;
-		} else {
-			return null;
 		}
-	}
+
+        return null;
+    }
 
 }

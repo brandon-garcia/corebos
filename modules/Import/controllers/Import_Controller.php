@@ -84,11 +84,11 @@ class Import_Controller {
 //			}
 			self::showCurrentStatus($importInfo, $importStatusCount, $continueImport);
 			exit;
-		} else {
-			$importDataController->finishImport();
-			self::showResult($importInfo, $importStatusCount);
 		}
-	}
+
+        $importDataController->finishImport();
+        self::showResult($importInfo, $importStatusCount);
+    }
 
 	public static function showCurrentStatus($importInfo, $importStatusCount, $continueImport) {
 		$moduleName = $importInfo['module'];
@@ -160,12 +160,12 @@ class Import_Controller {
 		if($fileReader->getStatus() == 'success') {
 			$this->numberOfRecords = $fileReader->getNumberOfRecordsRead();
 			return true;
-		} else {
-			Import_Utils::showErrorPage(getTranslatedString('ERR_FILE_READ_FAILED', 'Import').' - '.
-											getTranslatedString($fileReader->getErrorMessage(), 'Import'));
-			return false;
 		}
-	}
+
+        Import_Utils::showErrorPage(getTranslatedString('ERR_FILE_READ_FAILED', 'Import').' - '.
+                                        getTranslatedString($fileReader->getErrorMessage(), 'Import'));
+        return false;
+    }
 
 	public function queueDataImport() {
 

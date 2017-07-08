@@ -43,9 +43,9 @@ if (!empty($allids)) {
 			fputcsv($fp, $csvContent);
 		}
 		exit;
-	} else {
-		echo getTranslatedString('LBL_RECORD_NOT_FOUND');
 	}
+
+    echo getTranslatedString('LBL_RECORD_NOT_FOUND');
 } else {
 	echo getTranslatedString('LBL_RECORD_NOT_FOUND');
 }

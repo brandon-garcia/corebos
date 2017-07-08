@@ -14,16 +14,14 @@ class colorConverter {
 
 		if($dec<0 || $dec>255) {
 			return false;
-		} else {
-
-			$p = floor($dec/16);
-			$s = $dec%16;
-
-			return dechex($p).dechex($s);
-
 		}
 
-	}
+        $p = floor($dec/16);
+        $s = $dec%16;
+
+        return dechex($p).dechex($s);
+
+    }
 
 	public function Deci($hex) { // convert hex to dec
 
@@ -37,11 +35,11 @@ class colorConverter {
 
 				return ($dec * 16) + $dec;
 
-			} else {
-				return false;
 			}
 
-		} elseif(strlen($hex)==2) {
+            return false;
+
+        } elseif(strlen($hex)==2) {
 
 			$hex1 = substr($hex,0,1);
 			$hex2 = substr($hex,1,1);
@@ -53,11 +51,11 @@ class colorConverter {
 
 				return ($dec1 * 16) + $dec2;
 
-			} else {
-				return false;
 			}
 
-		} else {
+            return false;
+
+        } else {
 			return false;
 
 		}
@@ -351,17 +349,19 @@ class colorConverter {
 			--$temp3;
 		}
 
-		if((6*$temp3)<1) {
-			return $temp1+($temp2-$temp1)*6*$temp3;
-		} elseif((2*$temp3)<1) {
-			return $temp2;
-		} elseif((3*$temp3)<2) {
-			return $temp1+($temp2-$temp1)*((2/3)-$temp3)*6;
-		} else {
-			return $temp1;
-		}
+        if ((6*$temp3)<1) {
+            return $temp1+($temp2-$temp1)*6*$temp3;
+        }
 
-	}
+        if((2*$temp3)<1) {
+            return $temp2;
+        } elseif((3*$temp3)<2) {
+            return $temp1+($temp2-$temp1)*((2/3)-$temp3)*6;
+        } else {
+            return $temp1;
+        }
+
+    }
 
 	public function HEX2HSL($HEX) { // convert HEX to HSL color
 

@@ -48,11 +48,13 @@ class MailManager_SettingsController extends MailManager_MainUIController {
 				
 				$request->set('_operation', 'mainui');
 				return parent::process($request);
-			} else if($connector->hasError()) {
-                            $response->isJSON(true);
-                            $response->setError( 101, $connector->lastError());
-                        }
-		} else if ('remove' == $request->getOperationArg()) {
+			}
+
+            if($connector->hasError()) {
+$response->isJSON(true);
+$response->setError( 101, $connector->lastError());
+}
+        } else if ('remove' == $request->getOperationArg()) {
 			
 			$model = $this->getMailBoxModel();
 			$model->delete();

@@ -375,11 +375,11 @@ function __FQNExtendedQueryField2Column($field,$mainModule,$maincolumnTable,$use
 		$fmod = $relmeta->getTabName();  // normalize module name
 		if ($fmod==$mainModule) {
 			return $fieldtable[$fname].'.'.$maincolumnTable[$fname];
-		} else {
-			$fmodreffld = __FQNExtendedQueryGetRefFieldForModule($fromrfs,$fmod,$fname);
-			return $fieldtable[$fname].$fmodreffld.'.'.$fieldcolumn[$fname];
 		}
-	}
+
+        $fmodreffld = __FQNExtendedQueryGetRefFieldForModule($fromrfs,$fmod,$fname);
+        return $fieldtable[$fname].$fmodreffld.'.'.$fieldcolumn[$fname];
+    }
 	return $field;
 }
 

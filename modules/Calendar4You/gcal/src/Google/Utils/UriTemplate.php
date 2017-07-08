@@ -165,8 +165,9 @@ class Google_Utils_UriTemplate
           $tag_empty,
           $combine_on_empty
       );
-    } else {
-      // If we have multiple values, we need to split and loop over them.
+    }
+
+// If we have multiple values, we need to split and loop over them.
       // Each is treated individually, then glued together with the
       // separator character.
       $vars = explode(",", $section);
@@ -179,7 +180,6 @@ class Google_Utils_UriTemplate
           false, // Never emit empty strings in multi-param replacements
           $combine_on_empty
       );
-    }
   }
 
   public function combine(

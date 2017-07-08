@@ -19,8 +19,8 @@ function vtws_extendSession(){
 		$vtigerVersion = vtws_getVtigerVersion();
 		$resp = array("sessionName"=>$sessionManager->getSessionId(),"userId"=>$userId,"version"=>$API_VERSION,"vtigerVersion"=>$vtigerVersion);
 		return $resp;
-	} else {
-		throw new WebServiceException(WebServiceErrorCode::$AUTHFAILURE,"Authentication Failed");
 	}
+
+    throw new WebServiceException(WebServiceErrorCode::$AUTHFAILURE,"Authentication Failed");
 }
 ?>

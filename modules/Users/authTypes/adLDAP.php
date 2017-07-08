@@ -646,9 +646,8 @@ class adLDAP {
                     // If you have problems troubleshooting, remove the @ character from the ldapldapBind command above to get the actual error message
                     throw new adLDAPException('Bind to Active Directory failed. Either the LDAPs connection failed or the login credentials are incorrect. AD said: ' . $this->getLastError());
                 }
-                else {
-                    throw new adLDAPException('Bind to Active Directory failed. Check the login credentials and/or server details. AD said: ' . $this->getLastError());
-                }
+
+                throw new adLDAPException('Bind to Active Directory failed. Check the login credentials and/or server details. AD said: ' . $this->getLastError());
             }
         }
         if ($this->useSSO && $_SERVER['REMOTE_USER'] && $this->adminUsername === null && $_SERVER['KRB5CCNAME']) {
@@ -657,9 +656,8 @@ class adLDAP {
             if (!$this->ldapBind){ 
                 throw new adLDAPException('Rebind to Active Directory failed. AD said: ' . $this->getLastError()); 
             }
-            else {
-                return true;
-            }
+
+            return true;
         }
                 
         
@@ -701,9 +699,8 @@ class adLDAP {
             if (!$this->ldapBind) {
                 throw new adLDAPException('Rebind to Active Directory failed. AD said: ' . $this->getLastError());
             }
-            else {
-                return true;
-            }
+
+            return true;
         }
         
         // Bind as the user        

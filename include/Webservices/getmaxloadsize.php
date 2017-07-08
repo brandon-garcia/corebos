@@ -45,9 +45,9 @@ function parse_size($size) {
 	if ($unit) {
 		// Find the position of the unit in the ordered string which is the power of magnitude to multiply a kilobyte by.
 		return round($size * pow(1024, stripos('bkmgtpezy', $unit[0])));
-	} else {
-		return round($size);
 	}
+
+    return round($size);
 }
 
 ?>

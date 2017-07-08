@@ -20,11 +20,11 @@ class VtigerCompanyDetails extends VtigerActorOperation {
 			$meta = $this->getMeta();
 			$element['id'] = vtws_getId($meta->getEntityId(), $id);
 			return $this->update($element);
-		} else {
-			$element = $this->handleFileUpload($element);
-			return parent::create($elementType, $element);
 		}
-	}
+
+        $element = $this->handleFileUpload($element);
+        return parent::create($elementType, $element);
+    }
 
 	public function handleFileUpload($element) {
 		$fileFieldList = $this->meta->getFieldListByType('file');

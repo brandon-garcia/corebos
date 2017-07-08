@@ -42,10 +42,10 @@ class VTParser{
 	public function nextToken(){
 		if(sizeof($this->tokenQueue)==0){
 			return $this->tokens->nextToken();
-		}else{
-			return array_shift($this->tokenQueue);
 		}
-	}
+
+        return array_shift($this->tokenQueue);
+    }
 
 	public function la($n = 1){
 		for($i=sizeof($this->tokenQueue); $i<$n; $i++){
@@ -120,27 +120,29 @@ class VTParser{
 		$la2 = $this->la(2);
 		if($this->checkSymbol($la1, 'if')){
 			return $this->ifCondition();
-		}else if($la1->label=='SYMBOL' && $la2->label=='OPEN_BRACKET'){
-			$arr = array($this->nextToken()->value);
-			$this->nextToken();
-			if($this->la()->label != 'CLOSE_BRACKET'){
-				$arr[] = $this->expression();
-				$comma = $this->nextToken();
-				while($comma->label == 'COMMA'){
-					$arr[] = $this->expression();
-					$comma = $this->nextToken();
-				}
-				if($comma->label != 'CLOSE_BRACKET'){
-					throw new Exception("Was expecting a closing bracket");
-				}
-			}else{
-				$this->consume('CLOSE_BRACKET', new Symbol(')'));
-			}
-			return new VTTreeNode($arr);
-		}else{
-			return $this->binOp();
 		}
-	}
+
+        if($la1->label=='SYMBOL' && $la2->label=='OPEN_BRACKET'){
+            $arr = array($this->nextToken()->value);
+            $this->nextToken();
+            if($this->la()->label != 'CLOSE_BRACKET'){
+                $arr[] = $this->expression();
+                $comma = $this->nextToken();
+                while($comma->label == 'COMMA'){
+                    $arr[] = $this->expression();
+                    $comma = $this->nextToken();
+                }
+                if($comma->label != 'CLOSE_BRACKET'){
+                    throw new Exception("Was expecting a closing bracket");
+                }
+            }else{
+                $this->consume('CLOSE_BRACKET', new Symbol(')'));
+            }
+            return new VTTreeNode($arr);
+        }else{
+            return $this->binOp();
+        }
+    }
 
 	public $precedence = array(
 		array('*', '/'),
@@ -161,10 +163,10 @@ class VTParser{
 				$operator = $this->nextToken()->value;
 				$rhs = $this->binOpPrec($prec);
 				return new VTTreeNode(array($operator, $lhs, $rhs));
-			}else{
-				return $lhs;
 			}
-		}else{
+
+            return $lhs;
+        }else{
 			return $this->unaryOp();
 		}
 	}
@@ -176,9 +178,9 @@ class VTParser{
 			$operator = $la->value;
 			$operand = $this->unaryOp();
 			return new VTTreeNode(array($operator, $operand));
-		}else{
-			return $this->atom();
 		}
-	}
+
+        return $this->atom();
+    }
 }
 ?>

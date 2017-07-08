@@ -484,9 +484,8 @@ class adLDAPUsers {
                 }
                 throw new adLDAPException($msg);
             }
-            else {
-                return false;
-            }
+
+            return false;
         }
         
         return true;

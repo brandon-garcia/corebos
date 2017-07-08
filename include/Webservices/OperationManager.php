@@ -136,21 +136,21 @@ class OperationManager{
 			if(!$this->preLogin){
 				$params[] = $user;
 				return call_user_func_array($this->handlerMethod,$params);
-			}else{
-				$userDetails = call_user_func_array($this->handlerMethod,$params);
-				if(is_array($userDetails)){
-					return $userDetails;
-				}else{
-					$this->sessionManager->set("authenticatedUserId", $userDetails->id);
-					global $adb;
-					$webserviceObject = VtigerWebserviceObject::fromName($adb,"Users");
-					$userId = vtws_getId($webserviceObject->getEntityId(),$userDetails->id);
-					$vtigerVersion = vtws_getVtigerVersion();
-					$resp = array("sessionName"=>$this->sessionManager->getSessionId(),"userId"=>$userId,"version"=>$API_VERSION,"vtigerVersion"=>$vtigerVersion);
-					return $resp;
-				}
 			}
-		}catch(WebServiceException $e){
+
+            $userDetails = call_user_func_array($this->handlerMethod,$params);
+            if(is_array($userDetails)){
+                return $userDetails;
+            }
+
+            $this->sessionManager->set("authenticatedUserId", $userDetails->id);
+            global $adb;
+            $webserviceObject = VtigerWebserviceObject::fromName($adb,"Users");
+            $userId = vtws_getId($webserviceObject->getEntityId(),$userDetails->id);
+            $vtigerVersion = vtws_getVtigerVersion();
+            $resp = array("sessionName"=>$this->sessionManager->getSessionId(),"userId"=>$userId,"version"=>$API_VERSION,"vtigerVersion"=>$vtigerVersion);
+            return $resp;
+        }catch(WebServiceException $e){
 			throw $e;
 		}catch(Exception $e){
 			throw new WebServiceException(WebServiceErrorCode::$INTERNALERROR,"Unknown Error while processing request");

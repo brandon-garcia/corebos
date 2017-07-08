@@ -20,10 +20,10 @@ if(isset($_REQUEST['dup_check']) && $_REQUEST['dup_check']!='')
 	if ($adb->num_rows($result) > 0) {
 		echo $mod_strings['LBL_PROFILENAME_EXIST'];
 		die;
-	} else {
-		echo 'SUCCESS';
-		die;
 	}
+
+    echo 'SUCCESS';
+    die;
 }
 
 global $theme;

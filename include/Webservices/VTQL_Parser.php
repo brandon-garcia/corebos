@@ -723,9 +723,9 @@ static public $yy_action = array(
         }
         if ($tokenType > 0 && $tokenType < count(self::$yyTokenName)) {
             return self::$yyTokenName[$tokenType];
-        } else {
-            return "Unknown";
         }
+
+        return "Unknown";
     }
 
     /**
@@ -842,7 +842,9 @@ static public $yy_action = array(
                         $x->major = self::$yyRuleInfo[$yyruleno]['lhs'];
                         $this->yystack[$this->yyidx] = $x;
                         continue 2;
-                    } elseif ($nextstate == self::YYNSTATE + self::YYNRULE + 1) {
+                    }
+
+                    if ($nextstate == self::YYNSTATE + self::YYNRULE + 1) {
                         $this->yyidx = $yyidx;
                         $this->yystack = $stack;
                         // the last token was just ignored, we can't accept
@@ -916,7 +918,9 @@ static public $yy_action = array(
                         $x->major = self::$yyRuleInfo[$yyruleno]['lhs'];
                         $this->yystack[$this->yyidx] = $x;
                         continue 2;
-                    } elseif ($nextstate == self::YYNSTATE + self::YYNRULE + 1) {
+                    }
+
+                    if ($nextstate == self::YYNSTATE + self::YYNRULE + 1) {
                         $this->yyidx = $yyidx;
                         $this->yystack = $stack;
                         if (!$token) {
@@ -980,9 +984,9 @@ static public $yy_action = array(
                 return $this->yy_find_shift_action($iFallback);
             }
             return self::$yy_default[$stateno];
-        } else {
-            return self::$yy_action[$i];
         }
+
+        return self::$yy_action[$i];
     }
 
     /**
@@ -1013,9 +1017,9 @@ static public $yy_action = array(
         if ($i < 0 || $i >= self::YY_SZ_ACTTAB ||
               self::$yy_lookahead[$i] != $iLookAhead) {
             return self::$yy_default[$stateno];
-        } else {
-            return self::$yy_action[$i];
         }
+
+        return self::$yy_action[$i];
     }
 
     /**

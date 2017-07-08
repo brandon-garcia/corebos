@@ -24,9 +24,9 @@ function checkAsteriskDetails(){
 	$count = $adb->num_rows($result);
 	if($count > 0){
 		return "true";
-	}else{
-		return "false";
 	}
+
+    return "false";
 }
 
 /**

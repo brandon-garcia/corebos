@@ -176,9 +176,9 @@ class PEAR
                     $GLOBALS['_PEAR_SHUTDOWN_REGISTERED'] = true;
                 }
                 break;
-            } else {
-                $classname = get_parent_class($classname);
             }
+
+            $classname = get_parent_class($classname);
         }
     }
 
@@ -301,7 +301,9 @@ class PEAR
 
         if (is_null($code)) {
             return true;
-        } elseif (is_string($code)) {
+        }
+
+        if (is_string($code)) {
             return $data->getMessage() == $code;
         }
 
@@ -469,7 +471,9 @@ class PEAR
             }
 
             return $deleted ? true : PEAR::raiseError("The expected error you submitted does not exist"); // IMPROVE ME
-        } elseif (!empty($error_code)) {
+        }
+
+        if (!empty($error_code)) {
             // $error_code comes alone, trying to unset it
             if ($this->_checkDelExpect($error_code)) {
                 return true;
@@ -789,9 +793,9 @@ function _PEAR_call_destructors()
                 if (method_exists($objref, $destructor)) {
                     $objref->$destructor();
                     break;
-                } else {
-                    $classname = get_parent_class($classname);
                 }
+
+                $classname = get_parent_class($classname);
             }
         }
         // Empty the object list to ensure that destructors are

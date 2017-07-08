@@ -62,19 +62,19 @@ class VTExpressionTokenizer{
 		$idx = $this->idx;
 		if($idx == sizeof($matches)){
 			return $this->EOF;
-		}else{
-			$match = $matches[$idx];
-			$this->idx = $idx + 1;
-			$i=1;
-			while($match[$i]==null){
-				++$i;
-			}
-			$tokenName = $this->tokenNames[$i-1];
-			$token = new VTExpressionToken($tokenName);
-			$token->value = $this->tokenTypes[$tokenName][1]($match[$i]);
-			return $token;
 		}
-	}
+
+        $match = $matches[$idx];
+        $this->idx = $idx + 1;
+        $i=1;
+        while($match[$i]==null){
+            ++$i;
+        }
+        $tokenName = $this->tokenNames[$i-1];
+        $token = new VTExpressionToken($tokenName);
+        $token->value = $this->tokenTypes[$tokenName][1]($match[$i]);
+        return $token;
+    }
 }
 
 class VTExpressionSpaceFilter{

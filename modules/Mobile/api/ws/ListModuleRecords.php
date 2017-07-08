@@ -57,10 +57,9 @@ class crmtogo_WS_ListModuleRecords extends crmtogo_WS_Controller {
 				//no limits for compact calendar
 				return $this->processSearchRecordLabelForCalendar($request, false);
 			}
-			else {
-				return $this->processSearchRecordLabelForCalendar($request, true);
-			}
-		}
+
+            return $this->processSearchRecordLabelForCalendar($request, true);
+        }
 		$records = $this->fetchRecordLabelsForModule($module, $current_user, array(), $filterOrAlertInstance, true);
 
 		$modifiedRecords = array();
@@ -188,10 +187,9 @@ class crmtogo_WS_ListModuleRecords extends crmtogo_WS_Controller {
 			if (($module == 'Calendar' || $module == 'Events') and $calfilter !='') {
 				return $filterOrAlertInstance->execute($fieldnames, $paging,$calfilter);
 			}
-			else {
-				return $filterOrAlertInstance->execute($fieldnames, $paging);
-			}
-		}
+
+            return $filterOrAlertInstance->execute($fieldnames, $paging);
+        }
 		$moduleWSId = crmtogo_WS_Utils::getEntityModuleWSId($module);
 		$columnByFieldNames = crmtogo_WS_Utils::getModuleColumnTableByFieldNames($module, $fieldnames);
 

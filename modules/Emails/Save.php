@@ -114,11 +114,9 @@ function checkIfContactExists($mailid)
 		$log->debug("Exiting checkIfContactExists method ...");
 		return $adb->query_result($result,0,"contactid");
 	}
-	else
-	{
-		$log->debug("Exiting checkIfContactExists method ...");
-		return -1;
-	}
+
+    $log->debug("Exiting checkIfContactExists method ...");
+    return -1;
 }
 //assign the focus values
 $focus->filename = isset($_REQUEST['file_name']) ? $_REQUEST['file_name'] : '';

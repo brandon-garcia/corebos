@@ -141,10 +141,10 @@ class Import_Utils {
 				&& ($defaultOrgSharingPermission[$tabId] == 3 or $defaultOrgSharingPermission[$tabId] == 0)) {
 
 			return get_user_array(FALSE, "Active", $current_user->id,'private');
-		} else {
-			return get_user_array(FALSE, "Active", $current_user->id);
 		}
-	}
+
+        return get_user_array(FALSE, "Active", $current_user->id);
+    }
 
 	public static function getAssignedToGroupList($module) {
 		global $current_user;
@@ -155,10 +155,10 @@ class Import_Utils {
 		if(!is_admin($current_user) && $profileGlobalPermission[2] == 1
 				&& ($defaultOrgSharingPermission[$tabId] == 3 or $defaultOrgSharingPermission[$tabId] == 0)) {
 			return get_group_array(FALSE, "Active", $current_user->id,'private');
-		} else {
-			return get_group_array(FALSE, "Active", $current_user->id);
 		}
-	}
+
+        return get_group_array(FALSE, "Active", $current_user->id);
+    }
 
 	public static function hasAssignPrivilege($moduleName, $assignToUserId) {
 		$assignableUsersList = self::getAssignedToUserList($moduleName);

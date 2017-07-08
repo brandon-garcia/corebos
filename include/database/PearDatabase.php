@@ -37,10 +37,10 @@ class PreparedQMark2SqlValue {
 		if($matches[3]=='?'){
 			$this->ctr++;
 			return $this->vals[$this->ctr-1];
-		}else{
-			return $matches[0];
 		}
-	}
+
+        return $matches[0];
+    }
 }
 
 /**
@@ -263,10 +263,10 @@ class PearDatabase{
 			}
 			$this->println("ADODB error ".$msg."->[".$this->database->ErrorNo()."]".$this->database->ErrorMsg());
 			die($msg."ADODB error ".$msg."->".$this->database->ErrorMsg());
-		} else {
-			$this->println("ADODB error ".$msg."->[".$this->database->ErrorNo()."]".$this->database->ErrorMsg());
 		}
-		return false;
+
+        $this->println("ADODB error ".$msg."->[".$this->database->ErrorNo()."]".$this->database->ErrorMsg());
+        return false;
 	}
 
 	public function change_key_case($arr) {
@@ -1036,12 +1036,14 @@ class PearDatabase{
 				$fldtype =strtoupper($fld->type);
 				if(strcmp($fldtype,'CHAR')==0 || strcmp($fldtype,'VARCHAR') == 0 || strcmp($fldtype,'VARCHAR2') == 0 || strcmp($fldtype,'LONGTEXT')==0 || strcmp($fldtype,'TEXT')==0) {
 					return $this->database->Quote($str);
-				} else if(strcmp($fldtype,'DATE') ==0 || strcmp($fldtype,'TIMESTAMP')==0) {
-					return $this->formatDate($str);
-				} else {
-					return $str;
 				}
-			}
+
+                if(strcmp($fldtype,'DATE') ==0 || strcmp($fldtype,'TIMESTAMP')==0) {
+                    return $this->formatDate($str);
+                } else {
+                    return $str;
+                }
+            }
 		}
 		$this->println("format String Illegal field name ".$fldname);
 		return $str;

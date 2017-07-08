@@ -61,10 +61,10 @@ class CustomReportUtils {
 		list($tablename, $colname, $module_field, $fieldname, $typeOfData) = explode(":", $reportColDetails);
 		if ($typeOfData == "D") {
 			return true;
-		} else {
-			return false;
 		}
-	}
+
+        return false;
+    }
 
 	public static function getAdvanceSearchCondition($fieldDetails, $criteria, $fieldvalue) {
 		list($tablename, $colname, $module_field, $fieldname, $single) = explode(":", $fieldDetails);

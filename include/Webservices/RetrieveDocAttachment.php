@@ -104,10 +104,10 @@ function vtws_retrievedocattachment_get_attachment($fileid,$nr=false,$returnfile
 			$log->debug('Unable to open file');
 			return array();
 			throw new WebServiceException(WebServiceErrorCode::$ACCESSDENIED,"Unable to open file $saved_filename. Object is denied");
-		} else {
-			$fileContent = $returnfile ? fread(fopen($filepath.$saved_filename, "r"), $filesize) : '';
 		}
-		if ($fileContent != '') {
+
+        $fileContent = $returnfile ? fread(fopen($filepath.$saved_filename, "r"), $filesize) : '';
+        if ($fileContent != '') {
 			$log->debug('About to update download count');
 			$rsn = $adb->pquery('select filedownloadcount from vtiger_notes where notesid= ?',array($fileid));
 			$download_count = $adb->query_result($rsn,0,'filedownloadcount') + 1;

@@ -66,10 +66,10 @@ class Asterisk {
 			print_r($response);
 			$this->log->debug($response);
 			return false;
-		} else {
-			return true;
 		}
-	}
+
+        return true;
+    }
 
 	/**
 	 * create a call between from and to

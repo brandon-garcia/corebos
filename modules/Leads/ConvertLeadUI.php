@@ -241,11 +241,11 @@ class ConvertLeadUI {
 		}
 		if (empty($leadfname) or empty($this->row[$leadfname])) {
 			return '';
-		} else {
-			$value = html_entity_decode($this->row[$leadfname], ENT_QUOTES, $default_charset);
-			return htmlentities($value, ENT_QUOTES, $default_charset);
 		}
-	}
+
+        $value = html_entity_decode($this->row[$leadfname], ENT_QUOTES, $default_charset);
+        return htmlentities($value, ENT_QUOTES, $default_charset);
+    }
 
 }
 

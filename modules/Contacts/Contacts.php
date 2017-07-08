@@ -872,10 +872,10 @@ public function get_contactsforol($user_name)
 		}
 		if ($saveerror) {
 			return array($saveerror,$errmsg,'EditView','');
-		} else {
-			return parent::preSaveCheck($request);
 		}
-	}
+
+        return parent::preSaveCheck($request);
+    }
 
 	/**
 	 * Move the related records of the specified list of id's to the given record.
@@ -1348,9 +1348,9 @@ public function get_contactsforol($user_name)
 	public function getvtlib_open_popup_window_function($fieldname, $basemodule) {
 		if ($basemodule=='Issuecards') {
 			return 'set_return_shipbilladdress';
-		} else {
-			return 'vtlib_open_popup_window';
 		}
-	}
+
+        return 'vtlib_open_popup_window';
+    }
 }
 

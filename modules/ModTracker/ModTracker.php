@@ -145,11 +145,11 @@ class ModTracker {
 			if($rows<1){
 				self::updateCache($tabid,$visible);
 				return false;
-			} else{
-				self::updateCache($tabid,$visible);
-				return true;
 			}
-		} else
+
+            self::updateCache($tabid,$visible);
+            return true;
+        } else
 			return true;
 	}
 

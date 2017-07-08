@@ -156,14 +156,13 @@ class crxml implements arrayAccess, iterator
 			}
 			return $crxml;
 		}
-		else {
-			$crxml=new crxml($this->version,$this->encoding,$this,$this->root,$name);
-			if($this->_getNode() && $node=$this->_getChildrenForNode($this->_getNode(),$name)->item(0)) {
-				$crxml->node=$node;
-			}
-			return $crxml;
-		}
-	}
+
+        $crxml=new crxml($this->version,$this->encoding,$this,$this->root,$name);
+        if($this->_getNode() && $node=$this->_getChildrenForNode($this->_getNode(),$name)->item(0)) {
+            $crxml->node=$node;
+        }
+        return $crxml;
+    }
 	public function __set($name,$value)
 	{
 		if(is_null($this->node)) {
@@ -179,30 +178,29 @@ class crxml implements arrayAccess, iterator
 				$this->_assignValue($childNode,$value);
 			}
 			return;
-		} else {
-			if($this->_getChildrenForNode($this->parent->_getNode(),$this->nodeName)->length-1 < $this->offset) {
-				while($this->_getChildrenForNode($this->parent->_getNode(),$this->nodeName)->length < $this->offset) {
-					$element=$this->_getNewElement($this->nodeName);
-					$this->parent->_getNode()->appendChild($element);
-				}
-				$element=$this->_getNewElement($this->nodeName);
-				$lastNode=$this->parent->_getNode()->appendChild($element);
-				$element=$this->_getNewElement($name);
-				$lastNode->appendChild($element);
-				$this->_assignValue($element,$value);
-			} else {
-				$targetNode=$this->_getChildrenForNode($this->parent->_getNode(),$this->nodeName)->item($this->offset);
-				if($node=$this->_getChildrenForNode($targetNode,$name)->item(0)) {
-					$this->_assignValue($node,$value);
-				} else {
-					$element=$this->_getNewElement($name);
-					$targetNode->appendChild($element);
-					$this->_assignValue($element,$value);
-				}
-			}
-
 		}
-	}
+
+        if($this->_getChildrenForNode($this->parent->_getNode(),$this->nodeName)->length-1 < $this->offset) {
+            while($this->_getChildrenForNode($this->parent->_getNode(),$this->nodeName)->length < $this->offset) {
+                $element=$this->_getNewElement($this->nodeName);
+                $this->parent->_getNode()->appendChild($element);
+            }
+            $element=$this->_getNewElement($this->nodeName);
+            $lastNode=$this->parent->_getNode()->appendChild($element);
+            $element=$this->_getNewElement($name);
+            $lastNode->appendChild($element);
+            $this->_assignValue($element,$value);
+        } else {
+            $targetNode=$this->_getChildrenForNode($this->parent->_getNode(),$this->nodeName)->item($this->offset);
+            if($node=$this->_getChildrenForNode($targetNode,$name)->item(0)) {
+                $this->_assignValue($node,$value);
+            } else {
+                $element=$this->_getNewElement($name);
+                $targetNode->appendChild($element);
+                $this->_assignValue($element,$value);
+            }
+        }
+    }
 	public function debug($flag)
 	{
 		self::$debug = $flag;
@@ -218,12 +216,11 @@ class crxml implements arrayAccess, iterator
 			}
 			return false;
 		}
-		else {
-			if($this->_getNode())  {
-				if($this->_getChildrenForNode($this->_getNode(),$name)->length==0) return false; else return true;
-			}
-		}
-		return false;
+
+        if($this->_getNode())  {
+            if($this->_getChildrenForNode($this->_getNode(),$name)->length==0) return false; else return true;
+        }
+        return false;
 	}
 
 	public function setError($error)
@@ -295,10 +292,10 @@ class crxml implements arrayAccess, iterator
 		} else {
 			if($node=$this->_getChildrenForNode($this->parent->_getNode(),$this->nodeName)->item($offset)) {
 				return true;
-			} else {
-				return false;
 			}
-		}
+
+            return false;
+        }
 	}
 	public function offsetGet($offset)
 	{
@@ -383,25 +380,24 @@ class crxml implements arrayAccess, iterator
 				$count++;	
 			}
 			return $return;	
-		} else {
-
-			//Error reporting on attempt to echo non existing child elements
-
-			$parent = $this->parent;
-			$child = $this;
-			while(!$parent->_getNode()) {
-				$child = $parent;
-				$parent = $parent->parent;
-			}
-			$foundChildNodes = array();
-			if($parent->_getNode()->childNodes->length) 	foreach(range(0,$parent->_getNode()->childNodes->length-1) as $v) {
-				$childNodeName = $parent->_getNode()->childNodes->item($v)->nodeName;
-				if($childNodeName !== '#text') $foundChildNodes[] = $childNodeName;
-			}
-			$this->setError("<pre>crxml error:No {$child->offset}-nth child '{$child->nodeName}' found for node \" {$parent->nodeName}\".The avaliable child nodes of node {$parent->nodeName} are\n".join("\n",$foundChildNodes)."</pre>");
-			return '';
 		}
-	}
+
+//Error reporting on attempt to echo non existing child elements
+
+        $parent = $this->parent;
+        $child = $this;
+        while(!$parent->_getNode()) {
+            $child = $parent;
+            $parent = $parent->parent;
+        }
+        $foundChildNodes = array();
+        if($parent->_getNode()->childNodes->length) 	foreach(range(0,$parent->_getNode()->childNodes->length-1) as $v) {
+            $childNodeName = $parent->_getNode()->childNodes->item($v)->nodeName;
+            if($childNodeName !== '#text') $foundChildNodes[] = $childNodeName;
+        }
+        $this->setError("<pre>crxml error:No {$child->offset}-nth child '{$child->nodeName}' found for node \" {$parent->nodeName}\".The avaliable child nodes of node {$parent->nodeName} are\n".join("\n",$foundChildNodes)."</pre>");
+        return '';
+    }
 	public function loadXML($xmlString)
 	{
 		$this->node->loadXML($xmlString);
@@ -426,19 +422,18 @@ class crxml implements arrayAccess, iterator
 	{
 		if($this->offset==0) {
 			return $this->node;
-		} else {
-			if($this->parent) if($this->parent->_getNode()) {
-				if($this->offset>0) 
-					return  $this->_getChildrenForNode($this->parent->_getNode(),$this->nodeName)->item($this->offset);
-				else {
-					$childNodes = $this->_getChildrenForNode($this->parent->_getNode(),$this->nodeName);
-					$offset = $childNodes->length+$this->offset;
-					return $childNodes->item($offset);
-				}
-			}
-			
 		}
-		return null;
+
+        if($this->parent) if($this->parent->_getNode()) {
+            if($this->offset>0)
+                return  $this->_getChildrenForNode($this->parent->_getNode(),$this->nodeName)->item($this->offset);
+            else {
+                $childNodes = $this->_getChildrenForNode($this->parent->_getNode(),$this->nodeName);
+                $offset = $childNodes->length+$this->offset;
+                return $childNodes->item($offset);
+            }
+        }
+        return null;
 	}
 	public function count($name='')
 	{
@@ -446,10 +441,9 @@ class crxml implements arrayAccess, iterator
 			if($name) {
 				return $this->_getChildrenForNode($this->_getNode(),$name)->length;
 			}
-			else {
-				return $this->_getNode()->childNodes->length;
-			}
-		} else  return 0;
+
+            return $this->_getNode()->childNodes->length;
+        } else  return 0;
 	}
 	public function addNameSpaceDefNode($prefix, $nodeName, $nameSpaceURI)
 	{
@@ -487,24 +481,26 @@ class crxml implements arrayAccess, iterator
 			}
 			if($value) $element->nodeValue=$value;
 			return $element;
-		} else if(strpos($name,":")!==false) {
-			list($prefix,$localName)=explode(':',$name);
-			if(!$nameSpaceURI = $this->root->_getNode()->lookupNamespaceURI($prefix)) 
-				$nameSpaceURI = $this->parent->_getNode()->lookupNamespaceURI($prefix);
-			$element=$this->root->_getNode()->createElementNS($nameSpaceURI,"$prefix:$localName",'');
-			if($value) $element->nodeValue=$value;
-			return $element;
-		} else {
-			if(isset($this->parent) && $this->parentNode!=null  && $parentNode = $this->parent->_getNode()) {
-				if($parentNode->isDefaultNamespace($parentNode->namespaceURI)) {
-					$element=$this->root->_getNode()->createElementNS($parentNode->namespaceURI,$name,'');
-					if($value) $element->nodeValue=$value;
-					return $element;
-				}
-			}
-			return new DOMElement($name,$value);
 		}
-	}
+
+        if(strpos($name,":")!==false) {
+            list($prefix,$localName)=explode(':',$name);
+            if(!$nameSpaceURI = $this->root->_getNode()->lookupNamespaceURI($prefix))
+                $nameSpaceURI = $this->parent->_getNode()->lookupNamespaceURI($prefix);
+            $element=$this->root->_getNode()->createElementNS($nameSpaceURI,"$prefix:$localName",'');
+            if($value) $element->nodeValue=$value;
+            return $element;
+        } else {
+            if(isset($this->parent) && $this->parentNode!=null  && $parentNode = $this->parent->_getNode()) {
+                if($parentNode->isDefaultNamespace($parentNode->namespaceURI)) {
+                    $element=$this->root->_getNode()->createElementNS($parentNode->namespaceURI,$name,'');
+                    if($value) $element->nodeValue=$value;
+                    return $element;
+                }
+            }
+            return new DOMElement($name,$value);
+        }
+    }
 	public function _getChildrenForNode($node, $name)
 	{
 		if(strpos($name,"|")!==false) {
@@ -698,11 +694,11 @@ class crxml implements arrayAccess, iterator
 				$temp->$nodeName->offsetSet($attributeNode->nodeName, $attributeNode->nodeValue);
 			}
 			return $temp;
-		} else {
-		if($this->offset > 0) $offsetPart = "[{$this->offset}]";else $offsetPart = '';
-		$this->setError("Non-existant node `{$this->nodeName}{$offsetPart}` node given in parameter.");
 		}
-	}
+
+        if($this->offset > 0) $offsetPart = "[{$this->offset}]";else $offsetPart = '';
+        $this->setError("Non-existant node `{$this->nodeName}{$offsetPart}` node given in parameter.");
+    }
 	//Iterator Interface
 	public function current()
 	{
@@ -719,10 +715,10 @@ class crxml implements arrayAccess, iterator
 		$childNodes=$this->_getChildrenForNode($this->_getNode(),'*');
 		if($node=$childNodes->item($this->current)) {
 			return $node->nodeName;
-		} else {
-			return false;
 		}
-	}
+
+        return false;
+    }
 	public function next()
 	{
 		$this->current++;
@@ -736,10 +732,10 @@ class crxml implements arrayAccess, iterator
 		$childNodes=$this->_getChildrenForNode($this->_getNode(),'*');
 		if($node=$childNodes->item($this->current)) {
 			return true;
-		} else {
-			return false;
 		}
-	}
+
+        return false;
+    }
 	private function findWayToTop($node,$topNode=null)
 	{
 		while($node->parentNode) {

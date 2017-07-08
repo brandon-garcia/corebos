@@ -189,10 +189,10 @@ class RecordAccessControl extends processcbMap {
 				}
 				if ($condition===true or strtolower($condition)=='true' or strtolower($condition)=='yes' or (is_numeric($condition) and $condition>0)) {
 					return $map2use['condition'];
-				} else {
-					return $map2use;
 				}
-			} else {
+
+                return $map2use;
+            } else {
 				return $map2use;
 			}
 		} else {

@@ -4235,10 +4235,11 @@ function html_substr($str, $start, $length = NULL) {
 	else if ($length > 0) { // copy $length chars
 		if ($start + $length >= $html_length) { // return all remaining characters
 			return substr($str, $real_start);
-		} else { //return $length characters
-			return substr($str, $real_start, $chars[max($start, 0) + $length][1] - $real_start);
 		}
-	} else { //negative $length. Omit $length characters from end
+
+//return $length characters
+        return substr($str, $real_start, $chars[max($start, 0) + $length][1] - $real_start);
+    } else { //negative $length. Omit $length characters from end
 		return substr($str, $real_start, $chars[$html_length + $length][1] - $real_start);
 	}
 }

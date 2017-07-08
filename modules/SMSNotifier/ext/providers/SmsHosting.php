@@ -175,10 +175,10 @@ class SmsHosting implements ISMSProvider {
 		// check response
 		if ( $response ) {
 			return $response;
-		} else {
-			return false;
 		}
-	}
+
+        return false;
+    }
 
 	public function do_POST ($complete_uri, $data ) {
 		$post = "";

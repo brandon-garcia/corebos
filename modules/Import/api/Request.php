@@ -37,10 +37,10 @@ class Import_API_Request extends Import_API_UserInput {
 			$value = $this->valuemap[$key];
 			if(json_decode($value) != null) {
 				return $this->valuemap[$key];
-			} else {
-				return vtlib_purify($this->valuemap[$key]);
 			}
-		}
+
+            return vtlib_purify($this->valuemap[$key]);
+        }
 		return '';
 	}
 }

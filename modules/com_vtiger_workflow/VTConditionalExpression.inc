@@ -101,10 +101,10 @@ class VTConditionalParser{
 		if(sizeof($this->tokens)>$this->pos and in_array($this->peek(), array($op["and"], $op["or"]))){
 			$nt = $this->nextToken();
 			return array($nt[1], $left, $this->parse());
-		}else{
-			return $left;
 		}
-	}
+
+        return $left;
+    }
 	
 	private function cond(){
 		$left = $this->nextToken();

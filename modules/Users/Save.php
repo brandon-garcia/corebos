@@ -25,16 +25,18 @@ if(isset($_REQUEST['dup_check']) && $_REQUEST['dup_check'] != '')
 	$user_result = $adb->pquery($user_query, array($user_name));
 	$group_query = "SELECT groupname FROM vtiger_groups WHERE groupname =?";
 	$group_result = $adb->pquery($group_query, array($user_name));
-	if($adb->num_rows($user_result) > 0) {
-		echo $mod_strings['LBL_USERNAME_EXIST'];
-		die;
-	} elseif($adb->num_rows($group_result) > 0) {
-		echo $mod_strings['LBL_GROUPNAME_EXIST'];
-		die;
-	} else {
-		echo 'SUCCESS';
-		die;
-	}
+    if ($adb->num_rows($user_result) > 0) {
+        echo $mod_strings['LBL_USERNAME_EXIST'];
+        die;
+    }
+
+    if($adb->num_rows($group_result) > 0) {
+        echo $mod_strings['LBL_GROUPNAME_EXIST'];
+        die;
+    } else {
+        echo 'SUCCESS';
+        die;
+    }
 }
 if(!empty($_REQUEST['user_role']) && !is_admin($current_user) && $_REQUEST['user_role'] != $current_user->roleid){
 	$log->fatal("SECURITY:Non-Admin user:". $current_user->id . " attempted to change user role");

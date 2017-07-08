@@ -93,10 +93,10 @@ class VTWorkflowEntity{
 		$oldEntity = $entityDelta->getOldEntity($this->moduleName, $recordId);
 		if($oldEntity == null) {
 			return true;
-		} else {
-			return false;
 		}
-	}
+
+        return false;
+    }
 
 	public function isDeleted(){
 		return $this->isDeleted;

@@ -127,10 +127,10 @@ class CurrencyField {
 		}
 		if(isset($user->no_of_currency_decimals)) {
 			return $user->no_of_currency_decimals;
-		} else {
-			return 2;
 		}
-	}
+
+        return 2;
+    }
 
 	/**
 	 * Returns the Formatted Currency value for the User

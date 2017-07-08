@@ -495,12 +495,12 @@ class MailManager_Model_Message extends Vtiger_MailRecord {
 			}
 			$userDate = str_replace('--','',getValidDisplayDate($date));
 			return $userDate;
-		} else {
-			$dateWithTime = new DateTimeField(date('Y-m-d H:i:s',$date));
-			$userDateTime = $dateWithTime->getDisplayDateTimeValue();
-			return $userDateTime;
 		}
-	}
+
+        $dateWithTime = new DateTimeField(date('Y-m-d H:i:s',$date));
+        $userDateTime = $dateWithTime->getDisplayDateTimeValue();
+        return $userDateTime;
+    }
 
 	/**
 	 * Sets the Mail Date

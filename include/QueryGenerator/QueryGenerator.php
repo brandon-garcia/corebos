@@ -212,19 +212,19 @@ class QueryGenerator {
 						if ($returnName) {
 							if ($mname=='Users') {
 								return $field->getTableName().'.'.$fldname;
-							} else {
-								if($fldname=='assigned_user_id' && strstr($field->getTableName(),"vtiger_crmentity")) {
-									$fldname='smownerid as smowner'.strtolower(getTabModuleName($field->getTabId()));
-								} else {
-									if ($alias) {
-										$fldname=$field->getColumnName().' as '.strtolower(getTabModuleName($field->getTabId())).$field->getColumnName();
-									} else {
-										$fldname=$field->getColumnName();
-									}
-								}
-								return $field->getTableName().$fld.'.'.$fldname;
 							}
-						} else {
+
+                            if($fldname=='assigned_user_id' && strstr($field->getTableName(),"vtiger_crmentity")) {
+                                $fldname='smownerid as smowner'.strtolower(getTabModuleName($field->getTabId()));
+                            } else {
+                                if ($alias) {
+                                    $fldname=$field->getColumnName().' as '.strtolower(getTabModuleName($field->getTabId())).$field->getColumnName();
+                                } else {
+                                    $fldname=$field->getColumnName();
+                                }
+                            }
+                            return $field->getTableName().$fld.'.'.$fldname;
+                        } else {
 							return $field;
 						}
 					}
@@ -238,19 +238,19 @@ class QueryGenerator {
 					if ($returnName) {
 						if ($fldmod=='Users') {
 							return $field->getTableName().'.'.$fldname;
-						} else {
-							if($fldname=='assigned_user_id' && strstr($field->getTableName(),"vtiger_crmentity")) {
-								$fldname='smownerid as smowner'.strtolower(getTabModuleName($field->getTabId()));
-							} else {
-								if ($alias) {
-									$fldname=$field->getColumnName().' as '.strtolower(getTabModuleName($field->getTabId())).$field->getColumnName();
-								} else {
-									$fldname=$field->getColumnName();
-								}
-							}
-							return $field->getTableName().$fld.'.'.$fldname;
 						}
-					} else {
+
+                        if($fldname=='assigned_user_id' && strstr($field->getTableName(),"vtiger_crmentity")) {
+                            $fldname='smownerid as smowner'.strtolower(getTabModuleName($field->getTabId()));
+                        } else {
+                            if ($alias) {
+                                $fldname=$field->getColumnName().' as '.strtolower(getTabModuleName($field->getTabId())).$field->getColumnName();
+                            } else {
+                                $fldname=$field->getColumnName();
+                            }
+                        }
+                        return $field->getTableName().$fld.'.'.$fldname;
+                    } else {
 						return $field;
 					}
 				}
@@ -421,10 +421,10 @@ class QueryGenerator {
 			$query = 'SELECT '.(($distinct or $specialPermissionWithDuplicateRows) ? 'DISTINCT ' : '') . $query;
 			$this->query = $query;
 			return $query;
-		} else {
-			return $this->query;
 		}
-	}
+
+        return $this->query;
+    }
 
 	public function getSQLColumn($name,$alias=true) {
 		if ($name == 'id') {
@@ -1097,42 +1097,45 @@ class QueryGenerator {
 				$sql[] = sprintf("IS NOT NULL AND %s != ''", ($referenceFieldName=='' ? $this->getSQLColumn($field->getFieldName(),false) : $referenceFieldName.'.'.$field->getColumnName()));
 				continue;
 			}
-			if((strtolower(trim($value)) == 'null') ||
-					(trim($value) == '' && !$this->isStringType($field->getFieldDataType())) &&
-							($operator == 'e' || $operator == 'n')) {
-				if($operator == 'e'){
-					$sql[] = "IS NULL";
-					continue;
-				}
-				$sql[] = "IS NOT NULL";
-				continue;
-			} elseif($field->getFieldDataType() == 'boolean') {
-				$value = strtolower($value);
-				if ($value == 'yes' or $value == $yes) {
-					$value = 1;
-				} elseif($value == 'no' or $value == $no) {
-					$value = 0;
-				}
-			} elseif($this->isDateType($field->getFieldDataType())) {
-				$value = getValidDBInsertDateTimeValue($value);
-				if (empty($value)) {
-					$sql[] = 'IS NULL or '.$field->getTableName().'.'.$field->getColumnName()." = ''";
-					return $sql;
-				}
-			} elseif ($field->getFieldDataType()=='picklist' || $field->getFieldDataType()=='multipicklist'
-					and !in_array($field->getUIType(),array('1613','1614','1615','1024','3313','3314'))) {
-				if(!isValueInPicklist($value,$field->getFieldName()))
-					$value = getTranslationKeyFromTranslatedValue($this->module, $value);
-			} else if ($field->getFieldDataType() === 'currency') {
-				$uiType = $field->getUIType();
-				if ($uiType == 72) {
-					$value = CurrencyField::convertToDBFormat($value, null, true);
-				} elseif ($uiType == 71) {
-					$value = CurrencyField::convertToDBFormat($value,$this->user);
-				}
-			}
+            if ((strtolower(trim($value)) == 'null') ||
+                    (trim($value) == '' && !$this->isStringType($field->getFieldDataType())) &&
+                            ($operator == 'e' || $operator == 'n')
+            ) {
+if($operator == 'e'){
+$sql[] = "IS NULL";
+continue;
+}
+$sql[] = "IS NOT NULL";
+continue;
+}
 
-			if($field->getFieldName() == 'birthday' && !$this->isRelativeSearchOperators($operator)) {
+            if($field->getFieldDataType() == 'boolean') {
+                $value = strtolower($value);
+                if ($value == 'yes' or $value == $yes) {
+                    $value = 1;
+                } elseif($value == 'no' or $value == $no) {
+                    $value = 0;
+                }
+            } elseif($this->isDateType($field->getFieldDataType())) {
+                $value = getValidDBInsertDateTimeValue($value);
+                if (empty($value)) {
+                    $sql[] = 'IS NULL or '.$field->getTableName().'.'.$field->getColumnName()." = ''";
+                    return $sql;
+                }
+            } elseif ($field->getFieldDataType()=='picklist' || $field->getFieldDataType()=='multipicklist'
+                    and !in_array($field->getUIType(),array('1613','1614','1615','1024','3313','3314'))) {
+                if(!isValueInPicklist($value,$field->getFieldName()))
+                    $value = getTranslationKeyFromTranslatedValue($this->module, $value);
+            } else if ($field->getFieldDataType() === 'currency') {
+                $uiType = $field->getUIType();
+                if ($uiType == 72) {
+                    $value = CurrencyField::convertToDBFormat($value, null, true);
+                } elseif ($uiType == 71) {
+                    $value = CurrencyField::convertToDBFormat($value,$this->user);
+                }
+            }
+
+            if($field->getFieldName() == 'birthday' && !$this->isRelativeSearchOperators($operator)) {
 				$value = "DATE_FORMAT(".$db->quote($value).", '%m%d')";
 			} else {
 				$value = $db->sql_escape_string($value);
@@ -1233,10 +1236,10 @@ class QueryGenerator {
 			if(strrpos($value, ' ') === false) {
 				if($first) {
 					return $value.' 00:00:00';
-				}else{
-					return $value.' 23:59:59';
 				}
-			}
+
+                return $value.' 23:59:59';
+            }
 		}
 		return $value;
 	}

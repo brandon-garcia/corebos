@@ -29,20 +29,20 @@ function SaveTooltipInformation($fieldid, $sequence, $view=1){
 
 	if(empty($fieldid)){
 		return "FAILURE";
-	}else{
-		$checkedFields = array();
-		if(!empty($_REQUEST['checkedFields'])){
-			$checkedFields = explode(",",$_REQUEST['checkedFields']);
-			//add to vtiger_quickview table
-			foreach($checkedFields as $checkedField){
-				$query = "insert into vtiger_quickview (fieldid,related_fieldid,sequence,currentview) values (?,?,?,?)";
-				$adb->pquery($query,array($fieldid, $checkedField, $sequence, $view));
-				$sequence++;
-			}
-		}
-		$data = getDetailViewForTooltip($fieldid, $checkedFields);
-		return $data;
 	}
+
+    $checkedFields = array();
+    if(!empty($_REQUEST['checkedFields'])){
+        $checkedFields = explode(",",$_REQUEST['checkedFields']);
+        //add to vtiger_quickview table
+        foreach($checkedFields as $checkedField){
+            $query = "insert into vtiger_quickview (fieldid,related_fieldid,sequence,currentview) values (?,?,?,?)";
+            $adb->pquery($query,array($fieldid, $checkedField, $sequence, $view));
+            $sequence++;
+        }
+    }
+    $data = getDetailViewForTooltip($fieldid, $checkedFields);
+    return $data;
 }
 
 /**

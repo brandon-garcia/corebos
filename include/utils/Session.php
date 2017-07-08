@@ -121,10 +121,10 @@ class coreBOS_Session {
 		if (count($keyparts)==1) {
 			if (is_null($sespos)) {
 				return isset($_SESSION[$key]);
-			} else {
-				return isset($sespos[$keyparts[0]]);
 			}
-		} else {
+
+            return isset($sespos[$keyparts[0]]);
+        } else {
 			if (is_null($sespos)) {
 				if (!isset($_SESSION[$keyparts[0]]) or !is_array($_SESSION[$keyparts[0]])) return false;
 				$sespos = $_SESSION[$keyparts[0]];

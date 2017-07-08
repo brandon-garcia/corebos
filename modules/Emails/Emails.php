@@ -686,10 +686,10 @@ function pdfAttach($obj, $module, $file_name, $id) {
 		unlink($source_file_path);
 
 		return true;
-	} else {
-		$log->debug("pdf not attached");
-		return false;
 	}
+
+    $log->debug("pdf not attached");
+    return false;
 }
 
 //this function check email fields profile permission as well as field access permission

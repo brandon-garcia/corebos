@@ -107,10 +107,12 @@ class VtigerBackup {
 			$start = $index + 1;
 			if($index != false && $path[$index - 1] == '\\'.DIRECTORY_SEPARATOR) {
 				continue;
-			}else if($index != false){
-				$path[$index] = DIRECTORY_SEPARATOR;
 			}
-		}while($index != false);
+
+            if($index != false){
+                $path[$index] = DIRECTORY_SEPARATOR;
+            }
+        }while($index != false);
 		return $path;
 	}
 

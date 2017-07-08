@@ -143,15 +143,17 @@ class colorHarmony extends colorConverter {
 
 	public function FixHue($Hue) {
 
-		if($Hue<0) {
-			return $Hue+360;
-		} elseif($Hue>360) {
-			return $Hue-360;
-		} else {
-			return $Hue;
-		}
+        if ($Hue<0) {
+            return $Hue+360;
+        }
 
-	}
+        if($Hue>360) {
+            return $Hue-360;
+        } else {
+            return $Hue;
+        }
+
+    }
 
 	public function SecondC($c) {
 
@@ -181,34 +183,40 @@ class colorHarmony extends colorConverter {
 		$diff = abs($diffC);
 
 		if($n==2) {
-			if($diffC>=1) {
-				return $par2+floor(0.5*$diff);
-			} elseif($diffC<0) {
-				return $par2-floor(0.5*$diff);
-			} else {
-				return $par2;
-			}
-		} 
+            if ($diffC>=1) {
+                return $par2+floor(0.5*$diff);
+            }
+
+            if($diffC<0) {
+                return $par2-floor(0.5*$diff);
+            } else {
+                return $par2;
+            }
+        }
 		
 		if($n==3) {
-			if($diffC>=1) {
-				return $par3+floor(0.5*$diff);
-			} elseif($diffC<0) {
-				return $par3-floor(0.5*$diff);
-			} else {
-				return $par3;
-			}
-		} 
+            if ($diffC>=1) {
+                return $par3+floor(0.5*$diff);
+            }
+
+            if($diffC<0) {
+                return $par3-floor(0.5*$diff);
+            } else {
+                return $par3;
+            }
+        }
 		
 		if($n==4) {
-			if($diffC>=1) {
-				return $par4+floor(0.25*$diff);
-			} elseif($diffC<0) {
-				return $par4-floor(0.25*$diff);
-			} else {
-				return $par4;
-			}
-		} 
+            if ($diffC>=1) {
+                return $par4+floor(0.25*$diff);
+            }
+
+            if($diffC<0) {
+                return $par4-floor(0.25*$diff);
+            } else {
+                return $par4;
+            }
+        }
 
 	}
 

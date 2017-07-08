@@ -33,19 +33,21 @@ function handlecolumn_list($lexer, $val) {
 					incrementN ( $lexer, 1 );
 				}
 				return VTQL_Parser::ASTERISK;
-			} else if ((strcmp ( $val, "(" ) === 0)) {
-				return VTQL_Parser::PARENOPEN;
-			} else if (strcmp ( $val, ")" ) === 0) {
-				return VTQL_Parser::PARENCLOSE;
-			} else if ((strcasecmp ( $val, "count" ) === 0)) {
-				$count = true;
-				return VTQL_Parser::COUNT;
-			} else if (strcmp ( $val, "," ) === 0) {
-				return VTQL_Parser::COMMA;
-			} else {
-				return VTQL_Parser::COLUMNNAME;
 			}
-		} else {
+
+            if ((strcmp ( $val, "(" ) === 0)) {
+                return VTQL_Parser::PARENOPEN;
+            } else if (strcmp ( $val, ")" ) === 0) {
+                return VTQL_Parser::PARENCLOSE;
+            } else if ((strcasecmp ( $val, "count" ) === 0)) {
+                $count = true;
+                return VTQL_Parser::COUNT;
+            } else if (strcmp ( $val, "," ) === 0) {
+                return VTQL_Parser::COMMA;
+            } else {
+                return VTQL_Parser::COLUMNNAME;
+            }
+        } else {
 			incrementN ( $lexer, 2 );
 			return VTQL_Parser::FRM;
 		}
@@ -71,46 +73,48 @@ function handlewhere($lexer, $val) {
 	$val = trim ( $val );
 	if ((strcmp ( $val, "=" ) === 0)) {
 		return VTQL_Parser::EQ;
-	} else if ((strcasecmp ( $val, $lexer->optional_states [$lexer->current_state] ) === 0)) {
-		return VTQL_Parser::WHERE;
-	} else if ((strcmp ( $val, "<" ) === 0)) {
-		return VTQL_Parser::LT;
-	} else if ((strcmp ( $val, "<=" ) === 0)) {
-		return VTQL_Parser::LTE;
-	} else if ((strcmp ( $val, ">=" ) === 0)) {
-		return VTQL_Parser::GTE;
-	} else if ((strcmp ( $val, "!=" ) === 0)) {
-		return VTQL_Parser::NE;
-	} else if ((strcmp ( $val, ">" ) === 0)) {
-		return VTQL_Parser::GT;
-	} else if ((strcmp ( $val, "(" ) === 0)) {
-		return VTQL_Parser::PARENOPEN;
-	} else if ((strcmp ( $val, ")" ) === 0)) {
-		if ($in_started) {
-			$in_started = false;
-			$where_col = false;
-		}
-		return VTQL_Parser::PARENCLOSE;
-	} else if ((strcasecmp ( $val, "and" ) === 0)) {
-		return VTQL_Parser::LOGICAL_AND;
-	} else if ((strcasecmp ( $val, "or" ) === 0)) {
-		return VTQL_Parser::LOGICAL_OR;
-	} else if (! $where_col) {
-		$where_col = true;
-		return VTQL_Parser::COLUMNNAME;
-	} else if ((strcasecmp ( $val, "in" ) === 0)) {
-		$in_started = true;
-		return VTQL_Parser::IN;
-	} else if (strcmp ( $val, "," ) === 0) {
-		return VTQL_Parser::COMMA;
-	} else if (strcasecmp ( $val, "like" ) === 0) {
-		return VTQL_Parser::LIKE;
-	} else if ($where_col) {
-		if (! $in_started) {
-			$where_col = false;
-		}
-		return VTQL_Parser::VALUE;
 	}
+
+    if ((strcasecmp ( $val, $lexer->optional_states [$lexer->current_state] ) === 0)) {
+        return VTQL_Parser::WHERE;
+    } else if ((strcmp ( $val, "<" ) === 0)) {
+        return VTQL_Parser::LT;
+    } else if ((strcmp ( $val, "<=" ) === 0)) {
+        return VTQL_Parser::LTE;
+    } else if ((strcmp ( $val, ">=" ) === 0)) {
+        return VTQL_Parser::GTE;
+    } else if ((strcmp ( $val, "!=" ) === 0)) {
+        return VTQL_Parser::NE;
+    } else if ((strcmp ( $val, ">" ) === 0)) {
+        return VTQL_Parser::GT;
+    } else if ((strcmp ( $val, "(" ) === 0)) {
+        return VTQL_Parser::PARENOPEN;
+    } else if ((strcmp ( $val, ")" ) === 0)) {
+        if ($in_started) {
+            $in_started = false;
+            $where_col = false;
+        }
+        return VTQL_Parser::PARENCLOSE;
+    } else if ((strcasecmp ( $val, "and" ) === 0)) {
+        return VTQL_Parser::LOGICAL_AND;
+    } else if ((strcasecmp ( $val, "or" ) === 0)) {
+        return VTQL_Parser::LOGICAL_OR;
+    } else if (! $where_col) {
+        $where_col = true;
+        return VTQL_Parser::COLUMNNAME;
+    } else if ((strcasecmp ( $val, "in" ) === 0)) {
+        $in_started = true;
+        return VTQL_Parser::IN;
+    } else if (strcmp ( $val, "," ) === 0) {
+        return VTQL_Parser::COMMA;
+    } else if (strcasecmp ( $val, "like" ) === 0) {
+        return VTQL_Parser::LIKE;
+    } else if ($where_col) {
+        if (! $in_started) {
+            $where_col = false;
+        }
+        return VTQL_Parser::VALUE;
+    }
 }
 function handleorderby($lexer, $val) {
 	global $orderby;
@@ -120,26 +124,30 @@ function handleorderby($lexer, $val) {
 	}
 	if (strcmp ( $val, "," ) === 0) {
 		return VTQL_Parser::COMMA;
-	} else if (strcasecmp ( $val, "asc" ) === 0) {
-		return VTQL_Parser::ASC;
-	} else if (strcasecmp ( $val, "desc" ) === 0) {
-		return VTQL_Parser::DESC;
-	} else {
-		return VTQL_Parser::COLUMNNAME;
 	}
+
+    if (strcasecmp ( $val, "asc" ) === 0) {
+        return VTQL_Parser::ASC;
+    } else if (strcasecmp ( $val, "desc" ) === 0) {
+        return VTQL_Parser::DESC;
+    } else {
+        return VTQL_Parser::COLUMNNAME;
+    }
 }
 function handlelimit($lexer, $val) {
 	if ((strcasecmp ( $val, "limit" ) === 0)) {
 		return VTQL_Parser::LIMIT;
-	} else if ((strcmp ( $val, "(" ) === 0)) {
-		return VTQL_Parser::PARENOPEN;
-	} else if ((strcmp ( $val, ")" ) === 0)) {
-		return VTQL_Parser::PARENCLOSE;
-	} else if (strcmp ( $val, "," ) === 0) {
-		return VTQL_Parser::COMMA;
-	} else {
-		return VTQL_Parser::VALUE;
 	}
+
+    if ((strcmp ( $val, "(" ) === 0)) {
+        return VTQL_Parser::PARENOPEN;
+    } else if ((strcmp ( $val, ")" ) === 0)) {
+        return VTQL_Parser::PARENCLOSE;
+    } else if (strcmp ( $val, "," ) === 0) {
+        return VTQL_Parser::COMMA;
+    } else {
+        return VTQL_Parser::VALUE;
+    }
 }
 function handleend($lexer, $val) {
 	return VTQL_Parser::SEMICOLON;
@@ -216,48 +224,50 @@ class VTQL_Lexer {
 				}
 				$this->value = current ( $yymatches ); // token value
 				$r = $this->{'yy_r1_' . $this->token} ( $yysubmatches );
-				if ($r === null) {
-					$this->index += strlen ( $this->value );
-					$this->linenum += substr_count ( "\n", $this->value );
-					// accept this token
-					return true;
-				} elseif ($r === true) {
-					// we have changed state
-					// process this token in the new state
-					return $this->yylex ();
-				} elseif ($r === false) {
-					$this->index += strlen ( $this->value );
-					$this->linenum += substr_count ( "\n", $this->value );
-					if ($this->index >= strlen ( $this->data )) {
-						return false; // end of input
-					}
-					// skip this token
-					continue;
-				} else {
-					$yy_yymore_patterns = array (
-							1 => "^([ \t\r\n]+)",
-							4 => "" 
-					);
-					
-					// yymore is needed
-					do {
-						if (! strlen ( $yy_yymore_patterns [$this->token] )) {
-							throw new Exception ( 'cannot do yymore for the last token' );
-						}
-						if (preg_match ( $yy_yymore_patterns [$this->token], substr ( $this->data, $this->index ), $yymatches )) {
-							$yymatches = array_filter ( $yymatches, 'strlen' ); // remove empty sub-patterns
-							next ( $yymatches ); // skip global match
-							$this->token = key ( $yymatches ); // token number
-							$this->value = current ( $yymatches ); // token value
-							$this->linenum = substr_count ( "\n", $this->value );
-						}
-					} while ( $this->{'yy_r1_' . $this->token} () !== null );
-					// accept
-					$this->index += strlen ( $this->value );
-					$this->linenum += substr_count ( "\n", $this->value );
-					return true;
-				}
-			} else {
+                if ($r === null) {
+                    $this->index += strlen ( $this->value );
+                    $this->linenum += substr_count ( "\n", $this->value );
+                    // accept this token
+                    return true;
+                }
+
+                if ($r === true) {
+                    // we have changed state
+                    // process this token in the new state
+                    return $this->yylex ();
+                } elseif ($r === false) {
+                    $this->index += strlen ( $this->value );
+                    $this->linenum += substr_count ( "\n", $this->value );
+                    if ($this->index >= strlen ( $this->data )) {
+                        return false; // end of input
+                    }
+                    // skip this token
+                    continue;
+                } else {
+                    $yy_yymore_patterns = array (
+                            1 => "^([ \t\r\n]+)",
+                            4 => ""
+                    );
+
+                    // yymore is needed
+                    do {
+                        if (! strlen ( $yy_yymore_patterns [$this->token] )) {
+                            throw new Exception ( 'cannot do yymore for the last token' );
+                        }
+                        if (preg_match ( $yy_yymore_patterns [$this->token], substr ( $this->data, $this->index ), $yymatches )) {
+                            $yymatches = array_filter ( $yymatches, 'strlen' ); // remove empty sub-patterns
+                            next ( $yymatches ); // skip global match
+                            $this->token = key ( $yymatches ); // token number
+                            $this->value = current ( $yymatches ); // token value
+                            $this->linenum = substr_count ( "\n", $this->value );
+                        }
+                    } while ( $this->{'yy_r1_' . $this->token} () !== null );
+                    // accept
+                    $this->index += strlen ( $this->value );
+                    $this->linenum += substr_count ( "\n", $this->value );
+                    return true;
+                }
+            } else {
 				throw new Exception ( 'Unexpected input at line' . $this->linenum . ': ' . $this->data [$this->index] );
 			}
 			break;
@@ -280,11 +290,13 @@ class VTQL_Lexer {
 			if (strcasecmp ( $this->value, "order" ) === 0) {
 				$orderby = true;
 				return false;
-			} else if (strcasecmp ( $this->value, "by" ) === 0 && $orderby === true) {
-				$orderby = false;
-				$this->current_state = 1;
 			}
-			$index = array_search ( strtolower ( $str ), $this->optional_states, true );
+
+            if (strcasecmp ( $this->value, "by" ) === 0 && $orderby === true) {
+                $orderby = false;
+                $this->current_state = 1;
+            }
+            $index = array_search ( strtolower ( $str ), $this->optional_states, true );
 			if ($index !== false) {
 				$this->current_state = $index;
 			}

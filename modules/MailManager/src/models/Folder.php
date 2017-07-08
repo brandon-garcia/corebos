@@ -31,10 +31,10 @@ class MailManager_Model_Folder {
 		}
 		if ($endswith) {
 			return $prefix;
-		} else {
-			return $prefix.$this->mName;
 		}
-	}
+
+        return $prefix.$this->mName;
+    }
 	
 	public function setName($name) {
 		$this->mName = $name;

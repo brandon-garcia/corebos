@@ -60,9 +60,9 @@ class Google_Utils_Helper {
         if ($result && $db->num_rows($result) > 0) {
             $row = $db->fetch_array($result);
             return $row['synctime'];
-        } else {
-            return false;
         }
+
+        return false;
     }
 
     /**
@@ -80,9 +80,9 @@ class Google_Utils_Helper {
         if ($result && $db->num_rows($result) > 0) {
             $row = $db->fetch_array($result);
             return $row['lastsynctime'];
-        } else {
-            return false;
         }
+
+        return false;
     }
 
     /**
@@ -164,12 +164,12 @@ class Google_Utils_Helper {
         $userId = $user->id;
         if(!Google_Utils_Helper::hasSettingsForUser($userId)) {
             return ''; // defaults to all - other contacts groups
-        } else {
-            $db = PearDatabase::getInstance();
-            $sql = 'SELECT clientgroup FROM ' . self::settings_table_name . ' WHERE user = ?';
-            $result = $db->pquery($sql, array($userId));
-            return $db->query_result($result, 0, 'clientgroup');
         }
+
+        $db = PearDatabase::getInstance();
+        $sql = 'SELECT clientgroup FROM ' . self::settings_table_name . ' WHERE user = ?';
+        $result = $db->pquery($sql, array($userId));
+        return $db->query_result($result, 0, 'clientgroup');
     }
 
     public static function getSyncDirectionForUser($user = false) {
@@ -177,12 +177,12 @@ class Google_Utils_Helper {
         $user = $current_user;
         if(!Google_Utils_Helper::hasSettingsForUser($user->id)) {
             return '11'; // defaults to bi-directional sync
-        } else {
-            $db = PearDatabase::getInstance();
-            $sql = 'SELECT direction FROM ' . self::settings_table_name . ' WHERE user = ?';
-            $result = $db->pquery($sql, array($user->id));
-            return $db->query_result($result, 0, 'direction');
         }
+
+        $db = PearDatabase::getInstance();
+        $sql = 'SELECT direction FROM ' . self::settings_table_name . ' WHERE user = ?';
+        $result = $db->pquery($sql, array($user->id));
+        return $db->query_result($result, 0, 'direction');
     }
 
     public static function getFieldMappingForUser($user = false) {

@@ -120,12 +120,12 @@ function vtws_create($elementType, $element, $user) {
 			}
 		}
 		return $entity;
-	} else {
-		if (!empty($_FILES)) {
-			foreach ($_FILES as $field => $file) {
-				unlink($file['tmp_name']);
-			}
-		}
-		return null;
 	}
+
+    if (!empty($_FILES)) {
+        foreach ($_FILES as $field => $file) {
+            unlink($file['tmp_name']);
+        }
+    }
+    return null;
 }

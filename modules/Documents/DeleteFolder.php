@@ -17,36 +17,34 @@ if($current_user->is_admin != 'on')
 	echo 'NOT_PERMITTED';
 	die;
 }
+
+$local_log = LoggerManager::getLogger('index');
+if(isset($_REQUEST['folderid']) && $_REQUEST['folderid'] != '')
+    $folderId = $_REQUEST['folderid'];
 else
-{	
-	$local_log = LoggerManager::getLogger('index');
-	if(isset($_REQUEST['folderid']) && $_REQUEST['folderid'] != '')
-		$folderId = $_REQUEST['folderid'];
-	else
-	{
-		echo 'FAILURE';
-		die;
-	}
-	if(isset($_REQUEST['deletechk']) && $_REQUEST['deletechk'] == 'true')
-	{
-		$query = 'select notesid from vtiger_notes INNER JOIN vtiger_crmentity ON vtiger_crmentity.crmid = vtiger_notes.notesid WHERE vtiger_notes.folderid = ? and vtiger_crmentity.deleted = 0';
-		$result = $adb->pquery($query,array($folderId));
-		if($adb->num_rows($result) > 0)
-		{
-			echo 'FAILURE';
-		}
-		else
-		{
-			header("Location: index.php?action=DocumentsAjax&file=ListView&mode=ajax&ajax=true&module=Documents");
-			exit;
-		}
-	}
-	else
-	{
-		$sql="delete from vtiger_attachmentsfolder where (folderid=? and folderid != 1)";
-		$adb->pquery($sql,array($folderId));
-		header("Location: index.php?action=DocumentsAjax&file=ListView&mode=ajax&ajax=true&module=Documents");
-		exit;
-	}
+{
+    echo 'FAILURE';
+    die;
+}
+if(isset($_REQUEST['deletechk']) && $_REQUEST['deletechk'] == 'true')
+{
+    $query = 'select notesid from vtiger_notes INNER JOIN vtiger_crmentity ON vtiger_crmentity.crmid = vtiger_notes.notesid WHERE vtiger_notes.folderid = ? and vtiger_crmentity.deleted = 0';
+    $result = $adb->pquery($query,array($folderId));
+    if($adb->num_rows($result) > 0)
+    {
+        echo 'FAILURE';
+    }
+    else
+    {
+        header("Location: index.php?action=DocumentsAjax&file=ListView&mode=ajax&ajax=true&module=Documents");
+        exit;
+    }
+}
+else
+{
+    $sql="delete from vtiger_attachmentsfolder where (folderid=? and folderid != 1)";
+    $adb->pquery($sql,array($folderId));
+    header("Location: index.php?action=DocumentsAjax&file=ListView&mode=ajax&ajax=true&module=Documents");
+    exit;
 }
 ?>

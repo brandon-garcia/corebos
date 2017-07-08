@@ -98,20 +98,20 @@ class VTJsonCondition {
 		$ssl = strlen($subStr);
 		if ($sl >= $ssl) {
 			return substr_compare($str, $subStr, 0, $ssl) == 0;
-		} else {
-			return FALSE;
 		}
-	}
+
+        return FALSE;
+    }
 
 	public function endsWith($str, $subStr) {
 		$sl = strlen($str);
 		$ssl = strlen($subStr);
 		if ($sl >= $ssl) {
 			return substr_compare($str, $subStr, $sl - $ssl, $ssl) == 0;
-		} else {
-			return FALSE;
 		}
-	}
+
+        return FALSE;
+    }
 
 	public function checkCondition($entityData, $cond, $referredEntityData=null) {
 		$data = $entityData->getData();
@@ -166,10 +166,10 @@ class VTJsonCondition {
 				if ($rs) {
 					$ex = $adb->query_result($rs, 0, 0);
 					return ($ex == '1');
-				} else {
-					return false;
 				}
-			case "equal to":
+
+                return false;
+            case "equal to":
 				return $fieldValue == $value;
 			case "less than":
 				return $fieldValue < $value;
@@ -186,71 +186,75 @@ class VTJsonCondition {
 					$value = $match[1];
 					if ($value == 'true') {
 						return $fieldValue === 'on' || $fieldValue === 1 || $fieldValue === '1';
-					} else {
-						return $fieldValue === 'off' || $fieldValue === 0 || $fieldValue === '0' || $fieldValue === '';
 					}
-				} else {
+
+                    return $fieldValue === 'off' || $fieldValue === 0 || $fieldValue === '0' || $fieldValue === '';
+                } else {
 					global $current_user,$adb;
 					$tabid = getTabid($entityData->getModuleName());
 					$sql = "select *, '0' as readonly from vtiger_field where tabid = ? and fieldname=?";
 					$result = $adb->pquery($sql, array($tabid, $cond['fieldname']));
 					$webserviceField = WebserviceField::fromQueryResult($adb,$result,0);
 					$ftype = $webserviceField->getFieldDataType();
-					if ($ftype=='multipicklist') {
-						$flvals = explode('|##|', $fieldValue);
-						$flvals = array_map('trim',$flvals);
-						return in_array($value, $flvals);
-					} elseif ($ftype=='reference') {
-						$isthesame = false;
-						$rlist = $webserviceField->getReferenceList();
-						foreach ($rlist as $modName) {
-							$wsidrs = $adb->pquery('SELECT id FROM vtiger_ws_entity WHERE name=?',array($modName));
-							if ($wsidrs and $adb->num_rows($wsidrs)>0) {
-								$wsid = $adb->query_result($wsidrs, 0,0);
-								$isthesame = ($fieldValue == $wsid.'x'.$value);
-							}
-							if ($isthesame) break;
-						}
-						return $isthesame || ($fieldValue == $value);
-					} else {
-						return $fieldValue == $value;
-					}
-				}
+                    if ($ftype=='multipicklist') {
+                        $flvals = explode('|##|', $fieldValue);
+                        $flvals = array_map('trim',$flvals);
+                        return in_array($value, $flvals);
+                    }
+
+                    if ($ftype=='reference') {
+                        $isthesame = false;
+                        $rlist = $webserviceField->getReferenceList();
+                        foreach ($rlist as $modName) {
+                            $wsidrs = $adb->pquery('SELECT id FROM vtiger_ws_entity WHERE name=?',array($modName));
+                            if ($wsidrs and $adb->num_rows($wsidrs)>0) {
+                                $wsid = $adb->query_result($wsidrs, 0,0);
+                                $isthesame = ($fieldValue == $wsid.'x'.$value);
+                            }
+                            if ($isthesame) break;
+                        }
+                        return $isthesame || ($fieldValue == $value);
+                    } else {
+                        return $fieldValue == $value;
+                    }
+                }
 			case "is not":
 				if (preg_match('/([^:]+):boolean$/', $value, $match)) {
 					$value = $match[1];
 					if ($value == 'true') {
 						return $fieldValue === 'off' || $fieldValue === 0 || $fieldValue === '0' || $fieldValue === '';
-					} else {
-						return $fieldValue === 'on' || $fieldValue === 1 || $fieldValue === '1';
 					}
-				} else {
+
+                    return $fieldValue === 'on' || $fieldValue === 1 || $fieldValue === '1';
+                } else {
 					global $current_user,$adb;
 					$tabid = getTabid($entityData->getModuleName());
 					$sql = "select *, '0' as readonly from vtiger_field where tabid = ? and fieldname=?";
 					$result = $adb->pquery($sql, array($tabid, $cond['fieldname']));
 					$webserviceField = WebserviceField::fromQueryResult($adb,$result,0);
 					$ftype = $webserviceField->getFieldDataType();
-					if ($ftype=='multipicklist') {
-						$flvals = explode('|##|', $fieldValue);
-						$flvals = array_map('trim',$flvals);
-						return !in_array($value, $flvals);
-					} elseif ($ftype=='reference') {
-						$isthesame = false;
-						$rlist = $webserviceField->getReferenceList();
-						foreach ($rlist as $modName) {
-							$wsidrs = $adb->pquery('SELECT id FROM vtiger_ws_entity WHERE name=?',array($modName));
-							if ($wsidrs and $adb->num_rows($wsidrs)>0) {
-								$wsid = $adb->query_result($wsidrs, 0,0);
-								$isthesame = ($fieldValue == $wsid.'x'.$value);
-							}
-							if ($isthesame) break;
-						}
-						return !$isthesame && ($fieldValue != $value);
-					} else {
-						return $fieldValue != $value;
-					}
-				}
+                    if ($ftype=='multipicklist') {
+                        $flvals = explode('|##|', $fieldValue);
+                        $flvals = array_map('trim',$flvals);
+                        return !in_array($value, $flvals);
+                    }
+
+                    if ($ftype=='reference') {
+                        $isthesame = false;
+                        $rlist = $webserviceField->getReferenceList();
+                        foreach ($rlist as $modName) {
+                            $wsidrs = $adb->pquery('SELECT id FROM vtiger_ws_entity WHERE name=?',array($modName));
+                            if ($wsidrs and $adb->num_rows($wsidrs)>0) {
+                                $wsid = $adb->query_result($wsidrs, 0,0);
+                                $isthesame = ($fieldValue == $wsid.'x'.$value);
+                            }
+                            if ($isthesame) break;
+                        }
+                        return !$isthesame && ($fieldValue != $value);
+                    } else {
+                        return $fieldValue != $value;
+                    }
+                }
 			case "contains":
 				if(is_array($value)) {
 					return in_array($fieldValue, $value);

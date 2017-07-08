@@ -54,10 +54,10 @@ function vtws_loginportal($username,$password) {
 				'contactid' => $ctowsid.'x'.$ctocmrid,
 			);
 			return $accessinfo;
-		} else {
-			throw new WebServiceException(WebServiceErrorCode::$AUTHREQUIRED,'Given user is inactive');
 		}
-	}
+
+        throw new WebServiceException(WebServiceErrorCode::$AUTHREQUIRED,'Given user is inactive');
+    }
 	throw new WebServiceException(WebServiceErrorCode::$AUTHREQUIRED,"Given contact is inactive");
 }
 

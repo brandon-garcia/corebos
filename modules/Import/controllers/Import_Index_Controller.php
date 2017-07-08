@@ -276,70 +276,71 @@ class Import_Index_Controller {
 		$moduleName = $requestObject->get('module');
 		$mode = $requestObject->get('mode');
 
-		if($mode == 'undo_import') {
-			Import_Index_Controller::undoLastImport($requestObject, $user);
-			exit;
-		} elseif($mode == 'listview') {
-			Import_ListView_Controller::render($requestObject, $user);
-			exit;
-		} elseif($mode == 'delete_map') {
-			Import_Index_Controller::deleteMap($requestObject, $user);
-			exit;
-		} elseif($mode == 'clear_corrupted_data') {
-			Import_Utils::clearUserImportInfo($user);
-		} elseif($mode == 'cancel_import') {
-			$importId = $requestObject->get('import_id');
-			$importInfo = Import_Queue_Controller::getImportInfoById($importId);
-			if($importInfo != null) {
-				if($importInfo['user_id'] == $user->id || is_admin($user)) {
-					$importuser = new Users();
-					$importuser->id = $importInfo['user_id'];
-					$importuser->retrieve_entity_info($importInfo['user_id'], 'Users');
-					$importDataController = new Import_Data_Controller($importInfo, $importuser);
-					$importStatusCount = $importDataController->getImportStatusCount();
-					$importDataController->finishImport();
-					Import_Controller::showResult($importInfo, $importStatusCount);
-				}
-				exit;
-			}
-		}
+        if ($mode == 'undo_import') {
+            Import_Index_Controller::undoLastImport($requestObject, $user);
+            exit;
+        }
 
-		// Check if import on the module is locked
+        if($mode == 'listview') {
+            Import_ListView_Controller::render($requestObject, $user);
+            exit;
+        } elseif($mode == 'delete_map') {
+            Import_Index_Controller::deleteMap($requestObject, $user);
+            exit;
+        } elseif($mode == 'clear_corrupted_data') {
+            Import_Utils::clearUserImportInfo($user);
+        } elseif($mode == 'cancel_import') {
+            $importId = $requestObject->get('import_id');
+            $importInfo = Import_Queue_Controller::getImportInfoById($importId);
+            if($importInfo != null) {
+                if($importInfo['user_id'] == $user->id || is_admin($user)) {
+                    $importuser = new Users();
+                    $importuser->id = $importInfo['user_id'];
+                    $importuser->retrieve_entity_info($importInfo['user_id'], 'Users');
+                    $importDataController = new Import_Data_Controller($importInfo, $importuser);
+                    $importStatusCount = $importDataController->getImportStatusCount();
+                    $importDataController->finishImport();
+                    Import_Controller::showResult($importInfo, $importStatusCount);
+                }
+                exit;
+            }
+        }
+
+        // Check if import on the module is locked
 		$lockInfo = Import_Lock_Controller::isLockedForModule($moduleName);
 		if($lockInfo != null) {
 			$lockedBy = $lockInfo['userid'];
 			if($user->id != $lockedBy && !is_admin($user)) {
 				Import_Utils::showImportLockedError($lockInfo);
 				exit;
-			} else {
-				if($mode == 'continue_import' && $user->id == $lockedBy) {
-					$importController = new Import_Controller($requestObject, $user);
-					$importController->triggerImport(true);
-				} else {
-					$importInfo = Import_Queue_Controller::getImportInfoById($lockInfo['importid']);
-					$lockOwner = $user;
-					if($user->id != $lockedBy) {
-						$lockOwner = new Users();
-						$lockOwner->id = $lockInfo['userid'];
-						$lockOwner->retrieve_entity_info( $lockInfo['userid'], 'Users');
-					}
-					Import_Controller::showImportStatus($importInfo, $lockOwner);
-				}
-				exit;
-
 			}
-		}
+
+            if($mode == 'continue_import' && $user->id == $lockedBy) {
+                $importController = new Import_Controller($requestObject, $user);
+                $importController->triggerImport(true);
+            } else {
+                $importInfo = Import_Queue_Controller::getImportInfoById($lockInfo['importid']);
+                $lockOwner = $user;
+                if($user->id != $lockedBy) {
+                    $lockOwner = new Users();
+                    $lockOwner->id = $lockInfo['userid'];
+                    $lockOwner->retrieve_entity_info( $lockInfo['userid'], 'Users');
+                }
+                Import_Controller::showImportStatus($importInfo, $lockOwner);
+            }
+            exit;
+        }
 
 		if(Import_Utils::isUserImportBlocked($user)) {
 			$importInfo = Import_Queue_Controller::getUserCurrentImportInfo($user);
 			if($importInfo != null) {
 				Import_Controller::showImportStatus($importInfo, $user);
 				exit;
-			} else {
-				Import_Utils::showImportTableBlockedError($moduleName, $user);
-				exit;
 			}
-		}
+
+            Import_Utils::showImportTableBlockedError($moduleName, $user);
+            exit;
+        }
 		Import_Utils::clearUserImportInfo($user);
 
 		if($mode == 'upload_and_parse') {

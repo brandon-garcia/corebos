@@ -1591,15 +1591,13 @@ function get_textmanField($label,$name,$tid)
 		$log->debug("Exiting get_textmanField method ...");
 		return $form_field;
 	}
-	else
-	{
-		$form_field .='<td>';
-		$form_field .= '<font color="red">*</font>';
-		$form_field .= $label.':<br>';
-		$form_field .='<input name="'.$name.'" id="QCK_'.$name.'" type="text" size="20" maxlength="" value=""></td>';
-		$log->debug("Exiting get_textmanField method ...");
-		return $form_field;
-	}
+
+    $form_field .='<td>';
+    $form_field .= '<font color="red">*</font>';
+    $form_field .= $label.':<br>';
+    $form_field .='<input name="'.$name.'" id="QCK_'.$name.'" type="text" size="20" maxlength="" value=""></td>';
+    $log->debug("Exiting get_textmanField method ...");
+    return $form_field;
 }
 
 /** Function to get textfield for website field
@@ -1638,14 +1636,12 @@ function get_textField($label,$name)
 		$log->debug("Exiting get_textField method ...");
 		return $form_field;
 	}
-	else
-	{
-		$form_field .='<td>';
-		$form_field .= $label.':<br>';
-		$form_field .='<input name="'.$name.'" id="QCK_'.$name.'" type="text" size="20" maxlength="" value=""></td>';
-		$log->debug("Exiting get_textField method ...");
-		return $form_field;
-	}
+
+    $form_field .='<td>';
+    $form_field .= $label.':<br>';
+    $form_field .='<input name="'.$name.'" id="QCK_'.$name.'" type="text" size="20" maxlength="" value=""></td>';
+    $log->debug("Exiting get_textField method ...");
+    return $form_field;
 }
 
 /** Function to get account textfield
@@ -1670,15 +1666,13 @@ function get_textaccField($label,$name,$tid)
 		$log->debug("Exiting get_textaccField method ...");
 		return $form_field;
 	}
-	else
-	{
-		$form_field .='<td>';
-		$form_field .= $label.':<br>';
-		$form_field .='<input name="account_name" type="text" size="20" maxlength="" value="" readonly><br>';
-		$form_field .='<input name="'.$name.'" id="QCK_'.$name.'" type="hidden" value="">&nbsp;<input title="'.$app_strings[LBL_CHANGE_BUTTON_TITLE].'" accessKey="'.$app_strings[LBL_CHANGE_BUTTON_KEY].'" type="button" tabindex="3" class="button" value="'.$app_strings[LBL_CHANGE_BUTTON_LABEL].'" name="btn1" onclick=\'return window.open("index.php?module=Accounts&action=Popup&popuptype=specific&form=EditView&form_submit=false","test","width=600,height=400,resizable=1,scrollbars=1");\'></td>';
-		$log->debug("Exiting get_textaccField method ...");
-		return $form_field;
-	}
+
+    $form_field .='<td>';
+    $form_field .= $label.':<br>';
+    $form_field .='<input name="account_name" type="text" size="20" maxlength="" value="" readonly><br>';
+    $form_field .='<input name="'.$name.'" id="QCK_'.$name.'" type="hidden" value="">&nbsp;<input title="'.$app_strings[LBL_CHANGE_BUTTON_TITLE].'" accessKey="'.$app_strings[LBL_CHANGE_BUTTON_KEY].'" type="button" tabindex="3" class="button" value="'.$app_strings[LBL_CHANGE_BUTTON_LABEL].'" name="btn1" onclick=\'return window.open("index.php?module=Accounts&action=Popup&popuptype=specific&form=EditView&form_submit=false","test","width=600,height=400,resizable=1,scrollbars=1");\'></td>';
+    $log->debug("Exiting get_textaccField method ...");
+    return $form_field;
 }
 
 /** Function to get combo field values
@@ -1825,17 +1819,15 @@ function get_textdateField($label,$name,$tid)
 		$log->debug("Exiting get_textdateField method ...");
 		return $form_field;
 	}
-	else
-	{
-		$form_field .='<td>';
-		$form_field .= '<font color="red">*</font>';
-		$form_field .= $label.':<br>';
-		$form_field .='<input name="'.$name.'" id="QCK_'.$name.'" type="text" size="10" maxlength="10" value="'.$default_date_start.'">&nbsp';
-		$form_field.= '<img src="themes/'.$theme.'/images/btnL3Calendar.gif" id="jscal_trigger">&nbsp';
-		$form_field.='<input name="time_start" type="text" size="5" maxlength="5" type="text" value="'.$default_time_start.'"><br><font size="1"><em old="ntc_date_format">('.$current_user->date_format.')</em></font>&nbsp<font size="1"><em>'.$ntc_time_format.'</em></font></td>';
-		$log->debug("Exiting get_textdateField method ...");
-		return $form_field;
-	}
+
+    $form_field .='<td>';
+    $form_field .= '<font color="red">*</font>';
+    $form_field .= $label.':<br>';
+    $form_field .='<input name="'.$name.'" id="QCK_'.$name.'" type="text" size="10" maxlength="10" value="'.$default_date_start.'">&nbsp';
+    $form_field.= '<img src="themes/'.$theme.'/images/btnL3Calendar.gif" id="jscal_trigger">&nbsp';
+    $form_field.='<input name="time_start" type="text" size="5" maxlength="5" type="text" value="'.$default_time_start.'"><br><font size="1"><em old="ntc_date_format">('.$current_user->date_format.')</em></font>&nbsp<font size="1"><em>'.$ntc_time_format.'</em></font></td>';
+    $log->debug("Exiting get_textdateField method ...");
+    return $form_field;
 
 }
 
@@ -2568,9 +2560,9 @@ function generateQuestionMarks($items_list) {
 	// array_map will call the function specified in the first parameter for every element of the list in second parameter
 	if (is_array($items_list)) {
 		return implode(",", array_map("_questionify", $items_list));
-	} else {
-		return implode(",", array_map("_questionify", explode(",", $items_list)));
 	}
+
+    return implode(",", array_map("_questionify", explode(",", $items_list)));
 }
 
 /**
@@ -3244,12 +3236,10 @@ function getDuplicateRecordsArr($module)
 				</td></tr></table>";
 			exit();
 		}
-		else
-		{
-			echo "<br><br><table align='center' class='reportCreateBottom big' width='95%'><tr><td align='center'>".$app_strings['LBL_NO_DUPLICATE']."</td></tr></table>";
-			die;
-		}
-	}
+
+        echo "<br><br><table align='center' class='reportCreateBottom big' width='95%'><tr><td align='center'>".$app_strings['LBL_NO_DUPLICATE']."</td></tr></table>";
+        die;
+    }
 
 	$rec_cnt = 0;
 	$temp = Array();
@@ -3783,10 +3773,10 @@ function get_use_asterisk($id){
 		$asterisk_extension = $adb->query_result($result, 0, "asterisk_extension");
 		if($use_asterisk == 0 || empty($asterisk_extension)){
 			return 'false';
-		}else{
-			return 'true';
 		}
-	}else{
+
+        return 'true';
+    }else{
 		return 'false';
 	}
 }
@@ -4224,9 +4214,9 @@ function columnExists($columnName, $tableName){
 
 	if(in_array($columnName, $columnNames)){
 		return true;
-	}else{
-		return false;
 	}
+
+    return false;
 }
 
 /* To get modules list for which work flow and field formulas is permitted*/

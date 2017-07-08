@@ -22,41 +22,41 @@ function __vt_substring($arr) {
 	if (count($arr)<2 or count($arr)>3) return $arr[0];
 	if (count($arr)==2) {
 		return substr($arr[0],$arr[1]);
-	} else {
-		return substr($arr[0],$arr[1],$arr[2]);
 	}
+
+    return substr($arr[0],$arr[1],$arr[2]);
 }
 
 function __vt_uppercase($arr) {
 	if (count($arr)==0) {
 		return '';
-	} else {
-		return strtoupper($arr[0]);
 	}
+
+    return strtoupper($arr[0]);
 }
 
 function __vt_lowercase($arr) {
 	if (count($arr)==0) {
 		return '';
-	} else {
-		return strtolower($arr[0]);
 	}
+
+    return strtolower($arr[0]);
 }
 
 function __vt_uppercasefirst($arr) {
 	if (count($arr)==0) {
 		return '';
-	} else {
-		return ucfirst($arr[0]);
 	}
+
+    return ucfirst($arr[0]);
 }
 
 function __vt_uppercasewords($arr) {
 	if (count($arr)==0) {
 		return '';
-	} else {
-		return ucwords($arr[0]);
 	}
+
+    return ucwords($arr[0]);
 }
 
 ?>

@@ -456,42 +456,39 @@ function display_date($view,$date_time)
 {
 	global $cal_log;
 	$cal_log->debug("Entering display_date() method...");
-	if ($view == 'day')
-        {
-		//$label = $date_time->getdayofWeek()." ";
-		$label = $date_time->get_Date()." ";
-		$label .= $date_time->getmonthName()." ";
-		$label .= $date_time->year;
-		$cal_log->debug("Exiting display_date() method...");
-		return $label;
-        }
-	elseif ($view == 'week')
-        {
-                $week_start = $date_time->getThisweekDaysbyIndex(1);
-                $week_end = $date_time->getThisweekDaysbyIndex(7);
-                $label = $week_start->get_Date()." ";
-                $label .= $week_start->getmonthName()." ";
-                $label .= $week_start->year;
-                $label .= " - ";
-                $label .= $week_end->get_Date()." ";
-                $label .= $week_end->getmonthName()." ";
-                $label .= $week_end->year;
-		$cal_log->debug("Exiting display_date() method...");
-		return $label;
-        }
+    if ($view == 'day') {
+    //$label = $date_time->getdayofWeek()." ";
+    $label = $date_time->get_Date()." ";
+    $label .= $date_time->getmonthName()." ";
+    $label .= $date_time->year;
+    $cal_log->debug("Exiting display_date() method...");
+    return $label;
+    }
 
-	elseif ($view == 'month')
-	{
-		$label = $date_time->getmonthName()." ";
-		$label .= $date_time->year;
-		$cal_log->debug("Exiting display_date() method...");
-		return $label;
-        }
-	elseif ($view == 'year')
-	{
-		$cal_log->debug("Exiting display_date() method...");
-		return $date_time->year;
-        }
+    if ($view == 'week') {
+$week_start = $date_time->getThisweekDaysbyIndex(1);
+$week_end = $date_time->getThisweekDaysbyIndex(7);
+$label = $week_start->get_Date()." ";
+$label .= $week_start->getmonthName()." ";
+$label .= $week_start->year;
+$label .= " - ";
+$label .= $week_end->get_Date()." ";
+$label .= $week_end->getmonthName()." ";
+$label .= $week_end->year;
+        $cal_log->debug("Exiting display_date() method...");
+        return $label;
+} elseif ($view == 'month')
+    {
+        $label = $date_time->getmonthName()." ";
+        $label .= $date_time->year;
+        $cal_log->debug("Exiting display_date() method...");
+        return $label;
+}
+    elseif ($view == 'year')
+    {
+        $cal_log->debug("Exiting display_date() method...");
+        return $date_time->year;
+}
 
 }
 /**
@@ -511,11 +508,9 @@ function dateCheck($slice_date)
 		//css class for day having event(s)
 		return 'currDay';
 	}
-	else
-	{
-		$cal_log->debug("Exiting dateCheck() method...");
-		return '';
-	}
+
+    $cal_log->debug("Exiting dateCheck() method...");
+    return '';
 }
 
 /**
@@ -604,13 +599,11 @@ function getEventListView(& $cal,$mode='')
 		$cal_log->debug("Exiting getEventListView() method...");
 		return $activity_list;
 	}
-	else
-	{
-		$ret_arr = getEventList($cal, $start_date, $end_date,$mode);
-	        $activity_list = $ret_arr[0];
-	        $navigation_array = $ret_arr[1];
-	}
-	//To get Events listView
+
+    $ret_arr = getEventList($cal, $start_date, $end_date,$mode);
+    $activity_list = $ret_arr[0];
+    $navigation_array = $ret_arr[1];
+    //To get Events listView
 	$list_view .="<br><div id='listView'>";
 	$list_view .=constructEventListView($cal,$activity_list,$navigation_array);
 	$list_view .="<br></div>
@@ -669,13 +662,11 @@ function getTodosListView($cal, $check='',$subtab='')
 		$cal_log->debug("Exiting getTodosListView() method...");
 		return $todo_list;
 	}
-	else
-	{
-		$ret_arr = getTodoList($cal, $start_date, $end_date,$check);
-		$todo_list = $ret_arr[0];
-		$navigation_arr = $ret_arr[1];
-	}
-	$cal_log->debug("Exiting getTodosListView() method...");
+
+    $ret_arr = getTodoList($cal, $start_date, $end_date,$check);
+    $todo_list = $ret_arr[0];
+    $navigation_arr = $ret_arr[1];
+    $cal_log->debug("Exiting getTodosListView() method...");
 	$list_view .="<div id='mnuTab2' style='background-color: rgb(255, 255, 215); display:block;'>";
 	//To get Todos listView
 	$list_view .= constructTodoListView($todo_list,$cal,$subtab,$navigation_arr);

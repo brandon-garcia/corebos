@@ -14,17 +14,17 @@ interface VTEnv{
 function _vt_add($arr){
 	if(sizeof($arr)==1){
 		return $arr[0];
-	}else{
-		return $arr[0]+$arr[1];
 	}
+
+    return $arr[0]+$arr[1];
 }
 
 function _vt_sub($arr){
 	if(sizeof($arr)==1){
 		return -$arr[0];
-	}else{
-		return $arr[0]-$arr[1];
 	}
+
+    return $arr[0]-$arr[1];
 }
 
 function _vt_mul($arr){
@@ -125,25 +125,27 @@ class VTExpressionEvaluater{
 	public function exec($expr){
 		if($expr instanceof Symbol){
 			return $this->env($expr);
-		}else if($expr instanceof VTTreeNode){
-			$op = $expr->getName();
-			if($op->value=='if'){
-				$params = $expr->getParams();
-				$cond = $this->exec($params[0]);
-				if($cond){
-					return $this->exec($params[1]);
-				}else{
-					return $this->exec($params[2]);
-				}
-			}else{
-				$params = array_map(array($this, 'exec'), $expr->getParams());
-				$func = $this->operations[$op->value];
-				return $func($params);
-			}
-		}else{
-			return $expr;
 		}
-	}
+
+        if($expr instanceof VTTreeNode){
+            $op = $expr->getName();
+            if($op->value=='if'){
+                $params = $expr->getParams();
+                $cond = $this->exec($params[0]);
+                if($cond){
+                    return $this->exec($params[1]);
+                }
+
+return $this->exec($params[2]);
+}else{
+                $params = array_map(array($this, 'exec'), $expr->getParams());
+                $func = $this->operations[$op->value];
+                return $func($params);
+            }
+        }else{
+            return $expr;
+        }
+    }
 
 	public function env($sym){
 		return $this->env->get($sym->value);

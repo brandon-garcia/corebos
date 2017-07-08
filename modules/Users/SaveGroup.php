@@ -27,16 +27,18 @@ if(isset($_REQUEST['dup_check']) && $_REQUEST['dup_check']!='') {
 	$user_query = "SELECT user_name FROM vtiger_users WHERE user_name =?";
 	$user_result = $adb->pquery($user_query, array($groupName));
 
-	if($adb->num_rows($result) > 0) {
-		echo $mod_strings['LBL_GROUPNAME_EXIST'];
-		die;
-	} elseif($adb->num_rows($user_result) > 0) {
-		echo $mod_strings['LBL_USERNAME_EXIST'];
-		die;
-	} else {
-		echo 'SUCCESS';
-		die;
-	}
+    if ($adb->num_rows($result) > 0) {
+        echo $mod_strings['LBL_GROUPNAME_EXIST'];
+        die;
+    }
+
+    if($adb->num_rows($user_result) > 0) {
+        echo $mod_strings['LBL_USERNAME_EXIST'];
+        die;
+    } else {
+        echo 'SUCCESS';
+        die;
+    }
 }
 
 /** returns the group members in an formatted array

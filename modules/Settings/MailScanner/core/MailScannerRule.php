@@ -329,13 +329,13 @@ class Vtiger_MailScannerRule {
 		$rule_partinfo = Array();
 		if($adb->num_rows($ruleresult) != 2) {
 			return false;
-		} else {
-			$rule_partinfo[$adb->query_result($ruleresult, 0, 'ruleid')] = $adb->query_result($ruleresult, 0, 'sequence');
-			$rule_partinfo[$adb->query_result($ruleresult, 1, 'ruleid')] = $adb->query_result($ruleresult, 1, 'sequence');
-			$adb->pquery("UPDATE vtiger_mailscanner_rules SET sequence = ? WHERE ruleid = ?", Array($rule_partinfo[$ruleid2], $ruleid1));
-			$adb->pquery("UPDATE vtiger_mailscanner_rules SET sequence = ? WHERE ruleid = ?", Array($rule_partinfo[$ruleid1], $ruleid2));
 		}
-	}
+
+        $rule_partinfo[$adb->query_result($ruleresult, 0, 'ruleid')] = $adb->query_result($ruleresult, 0, 'sequence');
+        $rule_partinfo[$adb->query_result($ruleresult, 1, 'ruleid')] = $adb->query_result($ruleresult, 1, 'sequence');
+        $adb->pquery("UPDATE vtiger_mailscanner_rules SET sequence = ? WHERE ruleid = ?", Array($rule_partinfo[$ruleid2], $ruleid1));
+        $adb->pquery("UPDATE vtiger_mailscanner_rules SET sequence = ? WHERE ruleid = ?", Array($rule_partinfo[$ruleid1], $ruleid2));
+    }
 
 	/**
 	 * Update rule information in database.

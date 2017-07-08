@@ -23,10 +23,10 @@
 			$this->data = $obj;
 			if($this->expr==null){
 				return true;
-			}else{
-				return $this->evaluate($this->expr);
 			}
-		}
+
+            return $this->evaluate($this->expr);
+        }
 		
 		private function getParser($expr){
 			$ass = new ANTLRStringStream($expr);
@@ -47,36 +47,36 @@
 						$out = $this->get($out, $sym->name);
 					}
 					return $out;
-				}else{
-					$evaled = array_map(array($this, 'evaluate'), array_slice($expr, 1));
-					switch($oper){
-						case "in":
-							return in_array($evaled[0], $evaled[1]);
-						case "==":
-							return $evaled[0] == $evaled[1];
-						case "list":
-							return $evaled;
-						default:
-							return false;
-					}
 				}
-			}else{
+
+                $evaled = array_map(array($this, 'evaluate'), array_slice($expr, 1));
+                switch($oper){
+                    case "in":
+                        return in_array($evaled[0], $evaled[1]);
+                    case "==":
+                        return $evaled[0] == $evaled[1];
+                    case "list":
+                        return $evaled;
+                    default:
+                        return false;
+                }
+            }else{
 				if($expr instanceof VTEventConditionSymbol){
 					return $this->get($this->data, $expr->name);
-				}else{
-					return $expr;
 				}
-			}
+
+                return $expr;
+            }
 		}
 		
 		private function get($obj, $field){
 			if(is_array($obj)){
 				return $obj[$field];
-			}else{
-				$func = "get".ucwords($field);
-				return $obj->$func();
 			}
-			
-		}
+
+            $func = "get".ucwords($field);
+            return $obj->$func();
+
+        }
 	}
 ?>

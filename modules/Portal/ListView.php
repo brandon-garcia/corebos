@@ -109,13 +109,12 @@ function isEmbbedeable($url) {
 		//it is a https request
 		return 0;
 	}
-	else{
-		$header_size = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
-		$headers = substr($response, 0, $header_size);
-		// echo "$url <br />header - > ";
-		// var_dump($headers);
-		return (strpos($headers, 'X-Frame-Options: deny') > -1 || strpos($headers, 'X-Frame-Options: SAMEORIGIN') > -1 ? 0 : 1);
-	}
-	curl_close($ch);
+
+    $header_size = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
+    $headers = substr($response, 0, $header_size);
+    // echo "$url <br />header - > ";
+    // var_dump($headers);
+    return (strpos($headers, 'X-Frame-Options: deny') > -1 || strpos($headers, 'X-Frame-Options: SAMEORIGIN') > -1 ? 0 : 1);
+    curl_close($ch);
 }
 ?>

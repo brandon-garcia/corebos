@@ -26,11 +26,11 @@ function getAsteriskInfo($adb){
 		$data['password'] = $adb->query_result($result,0,"password");
 		$data['version'] = $adb->query_result($result,0,"version");
 		return $data;
-	}else{
-		$log->debug("Asterisk server settings not specified.\n".
-					"Change the configuration from vtiger-> Settings-> Softphone Settings\n");
-		return false;
 	}
+
+    $log->debug("Asterisk server settings not specified.\n".
+                "Change the configuration from vtiger-> Settings-> Softphone Settings\n");
+    return false;
 }
 
 /**
@@ -52,11 +52,11 @@ function authorizeUser($username, $password, $asterisk){
 					Password: $password\n
 					Please check your configuration details.\n";
 			exit(0);
-		}else{
-			echo "Logged in successfully to asterisk server\n\n";
-			return true;
 		}
-	}else{
+
+        echo "Logged in successfully to asterisk server\n\n";
+        return true;
+    }else{
 		return false;
 	}
 }
@@ -76,10 +76,10 @@ function loginUser($username, $password, $asterisk){
 					Password: $password\n
 					Please check your configuration details.\n";
 			exit(0);
-		}else{
-			return true;
 		}
-	}else{
+
+        return true;
+    }else{
 		echo "Missing username and/or password";
 		return false;
 	}

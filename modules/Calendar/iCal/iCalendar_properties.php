@@ -50,11 +50,10 @@ class iCalendar_property {
             if(!$this->val_multi) {
                 return false;
             }
-            else {
-                foreach($value as $oneval) {
-                    if(!rfc2445_is_valid_value($oneval, $this->val_type)) {
-                        return false;
-                    }
+
+            foreach($value as $oneval) {
+                if(!rfc2445_is_valid_value($oneval, $this->val_type)) {
+                    return false;
                 }
             }
             return true;
@@ -169,10 +168,8 @@ class iCalendar_property {
                 return $this->parameters[$name];
             }
 
-            else {
-                if(substr($this->parameters[$name], 0, 1) == '"') {
-                    return substr($this->parameters[$name], 1, strlen($this->parameters[$name]) - 2);
-                }
+            if(substr($this->parameters[$name], 0, 1) == '"') {
+                return substr($this->parameters[$name], 1, strlen($this->parameters[$name]) - 2);
             }
         }
 
@@ -1205,7 +1202,8 @@ class iCalendar_property_request_status extends iCalendar_property {
                 // Even-indexed chars must be periods
                 return false;
             }
-            else if(($i & 1) == 0 && ($parts[0]{$i} < '0' || $parts[0]{$i} > '9')) {
+
+            if(($i & 1) == 0 && ($parts[0]{$i} < '0' || $parts[0]{$i} > '9')) {
                 // Odd-indexed chars must be numbers
                 return false;
             }

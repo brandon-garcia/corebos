@@ -735,9 +735,9 @@ function unhtmlentities ($string)
 function convertMailData2Html($maildata, $cutafter = 0) {
   if (($cutafter > 0) && (strlen($maildata) > $cutafter)) {
     return htmlspecialchars(substr($maildata, 0, $cutafter)) . '&hellip;';
-  } else {
-    return htmlspecialchars($maildata);
   }
+
+    return htmlspecialchars($maildata);
 }
 
 // Save session informations.

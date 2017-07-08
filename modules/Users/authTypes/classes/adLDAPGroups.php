@@ -365,12 +365,13 @@ class adLDAPGroups {
                     $userArray = array_unique($userArray);  
                 }
                 continue;  
-             } 
-             else if ($entries['count'] == 0) {   
-                continue; 
-             } 
+             }
 
-             if ((!isset($entries[0]['samaccountname'][0]) || $entries[0]['samaccountname'][0] === NULL) && $entries[0]['distinguishedname'][0] !== NULL) {
+            if ($entries['count'] == 0) {
+               continue;
+            }
+
+            if ((!isset($entries[0]['samaccountname'][0]) || $entries[0]['samaccountname'][0] === NULL) && $entries[0]['distinguishedname'][0] !== NULL) {
                  $userArray[] = $entries[0]['distinguishedname'][0];
              }
              else if ($entries[0]['samaccountname'][0] !== NULL) {

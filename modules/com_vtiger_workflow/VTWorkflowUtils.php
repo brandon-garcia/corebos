@@ -27,10 +27,10 @@ class VTWorkflowUtils {
 	public function validIdentifier($identifier) {
 		if (is_string($identifier)) {
 			return preg_match("/^[a-zA-Z][a-zA-Z_0-9]+$/", $identifier);
-		} else {
-			return false;
 		}
-	}
+
+        return false;
+    }
 
 	/**
 	 * Push the admin user on to the user stack
@@ -130,10 +130,10 @@ class VTWorkflowUtils {
 		$rows = $adb->num_rows($result);
 		if ($rows > 0) {
 			return true;
-		} else {
-			return false;
 		}
-	}
+
+        return false;
+    }
 
 	public function vtGetModules($adb) {
 		$modules_not_supported = array('PBXManager');

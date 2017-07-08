@@ -162,18 +162,20 @@ class Google_Model implements ArrayAccess
   {
     if ($value instanceof Google_Model) {
       return $value->toSimpleObject();
-    } else if (is_array($value)) {
-      $return = array();
-      foreach ($value as $key => $a_value) {
-        $a_value = $this->getSimpleValue($a_value);
-        if ($a_value !== null) {
-          $key = $this->getMappedName($key);
-          $return[$key] = $this->nullPlaceholderCheck($a_value);
-        }
-      }
-      return $return;
     }
-    return $value;
+
+      if (is_array($value)) {
+        $return = array();
+        foreach ($value as $key => $a_value) {
+          $a_value = $this->getSimpleValue($a_value);
+          if ($a_value !== null) {
+            $key = $this->getMappedName($key);
+            $return[$key] = $this->nullPlaceholderCheck($a_value);
+          }
+        }
+        return $return;
+      }
+      return $value;
   }
 
   /**

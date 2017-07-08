@@ -152,11 +152,9 @@ function getUserEmailId($name,$val)
 		$adb->println("Email id is selected => '".$email."'");
 		return $email;
 	}
-	else
-	{
-		$adb->println("User id is empty. so return value is ''");
-		return '';
-	}
+
+    $adb->println("User id is empty. so return value is ''");
+    return '';
 }
 
 /**	Funtion to add the user's signature with the content passed
@@ -439,10 +437,10 @@ function MailSend($mail)
 	if(!$mail->Send()) {
 		$log->debug("Error in Mail Sending : Error log = '".$mail->ErrorInfo."'");
 		return $mail->ErrorInfo;
-	} else {
-		$log->info("Mail has been sent from the application : Status : '".$mail->ErrorInfo."'");
-		return 1;
 	}
+
+    $log->info("Mail has been sent from the application : Status : '".$mail->ErrorInfo."'");
+    return 1;
 }
 
 /**	Function to get the Parent email id from HelpDesk to send the details about the ticket via email
@@ -569,35 +567,33 @@ function parseEmailErrorString($mail_error_str) {
 		if($status_str[1] != 1 && $status_str[1] != '')
 		{
 			$adb->println("Error in mail sending");
-			if($status_str[1] == 'connect_host')
-			{
-				$adb->println("if part - Mail sever is not configured");
-				$errorstr .= '<br><b><font color=red>'.getTranslatedString('MESSAGE_CHECK_MAIL_SERVER_NAME','Emails').'</font></b>';
-				break;
-			}
-			elseif($status_str[1] == '0')
-			{
-				$adb->println("first elseif part - status will be 0 which is the case of assigned to vtiger_users's email is empty.");
-				$errorstr .= '<br><b><font color=red> '.getTranslatedString('MESSAGE_MAIL_COULD_NOT_BE_SEND','Emails').' '.getTranslatedString('MESSAGE_PLEASE_CHECK_FROM_THE_MAILID','Emails').'</font></b>';
-				//Added to display the message about the CC && BCC mail sending status
-				if($status_str[0] == 'cc_success')
-				{
-					$cc_msg = 'But the mail has been sent to CC & BCC addresses.';
-					$errorstr .= '<br><b><font color=purple>'.$cc_msg.'</font></b>';
-				}
-			}
-			elseif(strstr($status_str[1],'from_failed'))
-			{
-				$adb->println("second elseif part - from email id is failed.");
-				$from = explode('from_failed',$status_str[1]);
-				$errorstr .= "<br><b><font color=red>".getTranslatedString('MESSAGE_PLEASE_CHECK_THE_FROM_MAILID','Emails')." '".$from[1]."'</font></b>";
-			}
-			else
-			{
-				$adb->println("else part - mail send process failed due to the following reason.");
-				$errorstr .= "<br><b><font color=red> ".getTranslatedString('MESSAGE_MAIL_COULD_NOT_BE_SEND_TO_THIS_EMAILID','Emails')." '".$status_str[0]."'. ".getTranslatedString('PLEASE_CHECK_THIS_EMAILID','Emails')."</font></b>";
-			}
-		}
+            if ($status_str[1] == 'connect_host') {
+                $adb->println("if part - Mail sever is not configured");
+                $errorstr .= '<br><b><font color=red>'.getTranslatedString('MESSAGE_CHECK_MAIL_SERVER_NAME','Emails').'</font></b>';
+                break;
+            }
+
+            if($status_str[1] == '0') {
+                $adb->println("first elseif part - status will be 0 which is the case of assigned to vtiger_users's email is empty.");
+                $errorstr .= '<br><b><font color=red> '.getTranslatedString('MESSAGE_MAIL_COULD_NOT_BE_SEND','Emails').' '.getTranslatedString('MESSAGE_PLEASE_CHECK_FROM_THE_MAILID','Emails').'</font></b>';
+                //Added to display the message about the CC && BCC mail sending status
+                if($status_str[0] == 'cc_success')
+                {
+                    $cc_msg = 'But the mail has been sent to CC & BCC addresses.';
+                    $errorstr .= '<br><b><font color=purple>'.$cc_msg.'</font></b>';
+                }
+            } elseif(strstr($status_str[1],'from_failed'))
+            {
+                $adb->println("second elseif part - from email id is failed.");
+                $from = explode('from_failed',$status_str[1]);
+                $errorstr .= "<br><b><font color=red>".getTranslatedString('MESSAGE_PLEASE_CHECK_THE_FROM_MAILID','Emails')." '".$from[1]."'</font></b>";
+            }
+            else
+            {
+                $adb->println("else part - mail send process failed due to the following reason.");
+                $errorstr .= "<br><b><font color=red> ".getTranslatedString('MESSAGE_MAIL_COULD_NOT_BE_SEND_TO_THIS_EMAILID','Emails')." '".$status_str[0]."'. ".getTranslatedString('PLEASE_CHECK_THIS_EMAILID','Emails')."</font></b>";
+            }
+        }
 	}
 	$adb->println("Return Error string => ".$errorstr);
 	return $errorstr;

@@ -310,11 +310,11 @@ class CRMEntity {
 				$adb->pquery($sql3, array($id, $current_id));
 			}
 			return true;
-		} else {
-			$log->debug("Skip the save attachment process.");
-			return false;
 		}
-	}
+
+        $log->debug("Skip the save attachment process.");
+        return false;
+    }
 
 	/** Function to insert values in the vtiger_crmentity for the specified module
 	 * @param $module -- module:: Type varchar
@@ -1323,10 +1323,10 @@ class CRMEntity {
 				// Skip non-supported fields
 				if (in_array($fieldinfo['uitype'], $skip_uitypes)) {
 					continue;
-				} else {
-					$colf[$fieldinfo['fieldname']] = $fieldinfo['uitype'];
 				}
-			}
+
+                $colf[$fieldinfo['fieldname']] = $fieldinfo['uitype'];
+            }
 		}
 
 		foreach ($colf as $key => $value) {
@@ -1566,17 +1566,19 @@ class CRMEntity {
 
 				$adb->pquery("INSERT into vtiger_modentity_num values(?,?,?,?,?,?)", array($numid, $module, $req_str, $req_no, $req_no, 1));
 				return true;
-			} else if ($adb->num_rows($check) != 0) {
-				$num_check = $adb->query_result($check, 0, 'cur_id');
-				if ($req_no < $num_check) {
-					return false;
-				} else {
-					$adb->pquery("UPDATE vtiger_modentity_num SET active=0 where active=1 and semodule=?", array($module));
-					$adb->pquery("UPDATE vtiger_modentity_num SET cur_id=?, active = 1 where prefix=? and semodule=?", array($req_no, $req_str, $module));
-					return true;
-				}
 			}
-		} else if ($mode == "increment") {
+
+            if ($adb->num_rows($check) != 0) {
+                $num_check = $adb->query_result($check, 0, 'cur_id');
+                if ($req_no < $num_check) {
+                    return false;
+                }
+
+$adb->pquery("UPDATE vtiger_modentity_num SET active=0 where active=1 and semodule=?", array($module));
+$adb->pquery("UPDATE vtiger_modentity_num SET cur_id=?, active = 1 where prefix=? and semodule=?", array($req_no, $req_str, $module));
+return true;
+}
+        } else if ($mode == "increment") {
 			list($mode, $module, $req_str, $req_no, $result, $returnResult) = cbEventHandler::do_filter('corebos.filter.ModuleSeqNumber.increment', array($mode, $module, $req_str, $req_no, '', false));
 			if ($returnResult) return $result;
 			//when we save new record we will increment the autonumber field
@@ -1825,15 +1827,17 @@ class CRMEntity {
 			if ($modifiedby == '0' && ($smownerid == $smcreatorid)) {
 				/** When module record is created * */
 				return true;
-			} else if ($smownerid == $modifiedby) {
-				/** Owner and Modifier as same. * */
-				return true;
-			} else if ($lastviewed && $modifiedon) {
-				/** Lastviewed and Modified time is available. */
-				if ($this->__timediff($modifiedon, $lastviewed) > 0)
-					return true;
 			}
-		}
+
+            if ($smownerid == $modifiedby) {
+                /** Owner and Modifier as same. * */
+                return true;
+            } else if ($lastviewed && $modifiedon) {
+                /** Lastviewed and Modified time is available. */
+                if ($this->__timediff($modifiedon, $lastviewed) > 0)
+                    return true;
+            }
+        }
 		return false;
 	}
 
@@ -2575,11 +2579,11 @@ class CRMEntity {
 		if (!empty($focus1->id)) {
 			$this->column_fields[$fieldname] = $focus1->id;
 			return true;
-		} else {
-			$this->column_fields[$fieldname] = "";
-			return false;
 		}
-	}
+
+        $this->column_fields[$fieldname] = "";
+        return false;
+    }
 
 	/**
 	 * To keep track of action of field filtering and avoiding doing more than once.
@@ -2699,10 +2703,10 @@ class CRMEntity {
 	public function getJoinClause($tableName) {
 		if (strripos($tableName, 'rel') === (strlen($tableName) - 3)) {
 			return 'LEFT JOIN';
-		} else {
-			return 'INNER JOIN';
 		}
-	}
+
+        return 'INNER JOIN';
+    }
 
 	/**
 	 *

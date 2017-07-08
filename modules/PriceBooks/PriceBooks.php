@@ -226,22 +226,20 @@ class PriceBooks extends CRMEntity {
 		{
 			$pb_query = 'select vtiger_crmentity.crmid, vtiger_pricebook.pricebookid,vtiger_pricebookproductrel.productid from vtiger_pricebook inner join vtiger_crmentity on vtiger_crmentity.crmid=vtiger_pricebook.pricebookid inner join vtiger_pricebookproductrel on vtiger_pricebookproductrel.pricebookid=vtiger_pricebook.pricebookid where vtiger_crmentity.deleted=0 and vtiger_pricebookproductrel.productid=?';
 			$result_pb = $this->db->pquery($pb_query, array($id));
-			if($no_count == $this->db->num_rows($result_pb))
-			{
-				$log->debug("Exiting get_pricebook_noproduct method ...");
-				return false;
-			}
-			elseif($this->db->num_rows($result_pb) == 0)
-			{
-				$log->debug("Exiting get_pricebook_noproduct method ...");
-				return true;
-			}
-			elseif($this->db->num_rows($result_pb) < $no_count)
-			{
-				$log->debug("Exiting get_pricebook_noproduct method ...");
-				return true;
-			}
-		}
+            if ($no_count == $this->db->num_rows($result_pb)) {
+                $log->debug("Exiting get_pricebook_noproduct method ...");
+                return false;
+            }
+
+            if($this->db->num_rows($result_pb) == 0) {
+                $log->debug("Exiting get_pricebook_noproduct method ...");
+                return true;
+            } elseif($this->db->num_rows($result_pb) < $no_count)
+            {
+                $log->debug("Exiting get_pricebook_noproduct method ...");
+                return true;
+            }
+        }
 		else
 		{
 			$log->debug("Exiting get_pricebook_noproduct method ...");

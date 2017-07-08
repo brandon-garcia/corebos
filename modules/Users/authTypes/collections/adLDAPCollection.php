@@ -91,15 +91,14 @@ abstract class adLDAPCollection
                     if ($this->info[0][strtolower($attribute)]['count'] == 1) {
                         return $this->info[0][strtolower($attribute)][0];   
                     }
-                    else {
-                        $array = array();
-                        foreach ($this->info[0][strtolower($attribute)] as $key => $value) {
-                            if ((string)$key != 'count') {
-                                $array[$key] = $value;
-                            } 
-                        }  
-                        return $array;   
+
+                    $array = array();
+                    foreach ($this->info[0][strtolower($attribute)] as $key => $value) {
+                        if ((string)$key != 'count') {
+                            $array[$key] = $value;
+                        }
                     }
+                    return $array;
                 }   
             }
         }

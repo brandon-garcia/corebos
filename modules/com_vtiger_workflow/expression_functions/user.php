@@ -18,10 +18,10 @@ function __getCurrentUserID() {
 	$user = VTWorkflowUtils::previousUser();
 	if ($user) {
 		return vtws_getEntityId('Users').'x'.$user->id;
-	} else {
-		global $current_user;
-		return vtws_getEntityId('Users').'x'.$current_user->id;
 	}
+
+    global $current_user;
+    return vtws_getEntityId('Users').'x'.$current_user->id;
 }
 
 function __getCurrentUserName($arr) {
@@ -30,9 +30,9 @@ function __getCurrentUserName($arr) {
 	$userid = ($user ? $user->id : $current_user->id);
 	if (isset($arr[0]) and strtolower($arr[0])=='full') {
 		return trim(getUserFullName($userid));
-	} else {
-		return trim(getUserName($userid));
 	}
+
+    return trim(getUserName($userid));
 }
 
 ?>

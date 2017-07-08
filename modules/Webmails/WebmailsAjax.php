@@ -21,11 +21,11 @@ if($_POST['config_chk'] == 'true')
 	if($MailBox->enabled == 'false') {
 		echo 'FAILED';
 		exit();
-	} else {
-		echo 'SUCCESS';
-		exit();
 	}
-	exit();
+
+    echo 'SUCCESS';
+    exit();
+    exit();
 }
 if(isset($_REQUEST['file']) && $_REQUEST['file']!='' && !isset($_REQUEST['ajax'])){
 	checkFileAccessForInclusion("modules/".$_REQUEST['module']."/".$_REQUEST['file'].".php");

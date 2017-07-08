@@ -105,10 +105,10 @@ class mimetype {
       if (isset($mimetypes[$ext])) {
          return $mimetypes[$ext];
       // if the extension wasn't found return octet-stream         
-      } else {
-         return 'application/octet-stream';
       }
-         
+
+       return 'application/octet-stream';
+
    }
 
    public function privBuildMimeArray() {

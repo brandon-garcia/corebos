@@ -389,10 +389,9 @@ class crmtogo_WS_Utils {
 		if ($type_array[1]=='M') {
 			return 'M';
 		}
-		else {
-			return '';
-		}
-	}
+
+        return '';
+    }
 
 	/**     Function to get all the comments for a troubleticket
 	  *     @param int $ticketid -- troubleticket id
@@ -532,10 +531,9 @@ class crmtogo_WS_Utils {
 			$str = "data:image/".$type.";base64,".base64_encode($data);
 			return $str ;
 		}
-		else {
-			return '';
-		}
-	}
+
+        return '';
+    }
 	public static function getProductBase64Image($productid) {
 		$productid = explode ('x',$productid);
 		$db = PearDatabase::getInstance();
@@ -555,10 +553,9 @@ class crmtogo_WS_Utils {
 			$str = "data:image/".$type.";base64,".base64_encode($data);
 			return $str ;
 		}
-		else {
-			return '';
-		}
-	}
+
+        return '';
+    }
 	public static function gettaxclassInformation($productid) {
 		$productid = explode ('x',$productid);
 		$db = PearDatabase::getInstance();
@@ -570,10 +567,9 @@ class crmtogo_WS_Utils {
 			$taxpercentage = $db->query_result($result, 0, 'taxpercentage');
 			return $taxpercentage ;
 		}
-		else {
-			return '';
-		}
-	}
+
+        return '';
+    }
 	public static function getDetailedDocumentInformation($documentrecord) {
 		$documentid = explode ('x',$documentrecord['id']);
 		$db = PearDatabase::getInstance();

@@ -30,11 +30,10 @@ if(isset($_REQUEST['dup_check']) && $_REQUEST['dup_check']!='')
 	{
 		echo $mod_strings['LBL_ROLENAME_EXIST'];
 		die;
-	}else
-	{
-		echo 'SUCCESS';
-		die;
 	}
+
+    echo 'SUCCESS';
+    die;
 
 }
 $parentRoleId= vtlib_purify($_REQUEST['parent']);

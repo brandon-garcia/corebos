@@ -2119,8 +2119,8 @@ function getDBValidationData($tablearray, $tabid='') {
 			$fieldinfos[$fieldname] = Array($fieldlabel => $typeofdata);
 		}
 		return $fieldinfos;
-	} else {
-		return array();
 	}
+
+    return array();
 }
 ?>

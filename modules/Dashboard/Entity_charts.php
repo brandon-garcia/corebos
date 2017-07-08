@@ -507,11 +507,9 @@ function module_Chart($user_id,$date_start="2000-01-01",$end_date="2017-01-01",$
 			$Prod_mod_val=array($mod_name_val,$mod_cnt_val,$title_of_graph,$bar_target_val,$mod_graph_date,$urlstring,$mod_cnt_table,$test_target_val);
 			return $Prod_mod_val;
 		}
-		else
-		{
-			$data=0;
-		}
-	}
+
+        $data=0;
+    }
 	else
 	{
 		$data=0;
@@ -572,11 +570,10 @@ function get_graph_by_type($graph_by,$graph_title,$module,$where,$query,$width=9
 		if($frompage != '')
 		{
 			return ChartUtils::getChartHTML($labels, $values, $graph_title, $target_values,$html_imagename, $width, $height, $left, $right, $top, $bottom, $Chart_Type, $Chart_position);
-		}else
-		{
-			return ChartUtils::getChartHTML($labels, $values, $graph_title, $target_values,$html_imagename, $width, $height, $left, $right, $top, $bottom, $Chart_Type, $Chart_position, false);
 		}
-	}
+
+        return ChartUtils::getChartHTML($labels, $values, $graph_title, $target_values,$html_imagename, $width, $height, $left, $right, $top, $bottom, $Chart_Type, $Chart_position, false);
+    }
 	else
 	{
 		sleep(1);

@@ -152,21 +152,21 @@ class Homestuff{
 			elseif($stufftype == 'ReportCharts'){
 				if(vtlib_isModuleActive('Reports') === false){
 					continue;
-				}else{
-					require_once('modules/Reports/CustomReportUtils.php');
-					$query = "SELECT * FROM vtiger_homereportchart WHERE stuffid=?";
-					$result= $adb->pquery($query,array($stuffid));
-					$reportId = $adb->query_result($result,0,'reportid');
-					$reportQuery = CustomReportUtils::getCustomReportsQuery($reportId);
-					if($reportQuery == '')
-						continue;
-					$reportResult= $adb->query($reportQuery);
-					$num_rows = $adb->num_rows($reportResult);
-					if($num_rows <=0 ){
-						continue;
-					}
 				}
-			}
+
+                require_once('modules/Reports/CustomReportUtils.php');
+                $query = "SELECT * FROM vtiger_homereportchart WHERE stuffid=?";
+                $result= $adb->pquery($query,array($stuffid));
+                $reportId = $adb->query_result($result,0,'reportid');
+                $reportQuery = CustomReportUtils::getCustomReportsQuery($reportId);
+                if($reportQuery == '')
+                    continue;
+                $reportResult= $adb->query($reportQuery);
+                $num_rows = $adb->num_rows($reportResult);
+                if($num_rows <=0 ){
+                    continue;
+                }
+            }
 
 			$nontrans_stufftitle = $adb->query_result($resultstuff,$i,'stufftitle');
 			$trans_stufftitle = getTranslatedString($nontrans_stufftitle);
@@ -320,10 +320,10 @@ class Homestuff{
 				$return_value =Array('ModuleName'=>$modname,'cvid'=>$cvid,'Maxentries'=>$maxval,'Header'=>$header,'Entries'=>$listview_entries);
 				if(sizeof($header)!=0){
 					return $return_value;
-				}else{
-					return array('Entries'=>"Fields not found in Selected Filter");
 				}
-			}
+
+                return array('Entries'=>"Fields not found in Selected Filter");
+            }
 			else{
 				return array('Entries'=>"<font color='red'>Filter You have Selected is Not Found</font>");
 			}
@@ -372,10 +372,10 @@ class Homestuff{
 		$from_page='HomePage';
 		if($chart==''){
 			return $this->getdisplayChart($type,$charttype,$from_page);
-		}else{
-			return $dash;
 		}
-	}
+
+        return $dash;
+    }
 
 	/**
 	 * this function returns detailed information of the homepage big dashboard
@@ -396,10 +396,10 @@ class Homestuff{
 		$this->reportdetails[$stuffId] = $reportDetails;
 		if($skipChart == '') {
 			return $this->getDisplayReportChart($reportId, $chartType);
-		} else {
-			return $reportDetails;
 		}
-	}
+
+        return $reportDetails;
+    }
 
 	public function getDisplayReportChart($reportId, $chartType) {
 		require_once('modules/Reports/CustomReportUtils.php');

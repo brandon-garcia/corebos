@@ -228,10 +228,10 @@ class VtigerCRMObjectMeta extends EntityMeta {
 			}
 			if(in_array($userId,array_keys($this->assignUsers))){
 				return true;
-			}else{
-				return false;
 			}
-		}elseif(strcasecmp($webserviceObject->getEntityName(),"Groups") === 0){
+
+            return false;
+        }elseif(strcasecmp($webserviceObject->getEntityName(),"Groups") === 0){
 			$tabId = $this->getTabId();
 			$groups = vtws_getUserAccessibleGroups($tabId, $this->user);
 			foreach ($groups as $group) {

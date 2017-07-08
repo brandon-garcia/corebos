@@ -33,18 +33,18 @@
 				$adb->pquery("update com_vtiger_workflowtasks set summary=?, task=? where task_id=?",
 					array($task->summary, serialize($task), $taskId));
 				return $taskId;
-			}else{
-				$taskId = $adb->getUniqueID("com_vtiger_workflowtasks");
-				$task->id = $taskId;
-				$orderrs = $adb->pquery('select max(executionorder) from com_vtiger_workflowtasks where workflow_id=?',array($task->workflowId));
-				$order = $adb->query_result($orderrs, 0, 0)+1;
-				$adb->pquery("insert into com_vtiger_workflowtasks
-						(task_id, workflow_id, summary, task, executionorder)
-						values (?, ?, ?, ?, ?)",
-					array($taskId, $task->workflowId, $task->summary, serialize($task), $order));
-				return $taskId;
 			}
-		}
+
+            $taskId = $adb->getUniqueID("com_vtiger_workflowtasks");
+            $task->id = $taskId;
+            $orderrs = $adb->pquery('select max(executionorder) from com_vtiger_workflowtasks where workflow_id=?',array($task->workflowId));
+            $order = $adb->query_result($orderrs, 0, 0)+1;
+            $adb->pquery("insert into com_vtiger_workflowtasks
+                    (task_id, workflow_id, summary, task, executionorder)
+                    values (?, ?, ?, ?, ?)",
+                array($taskId, $task->workflowId, $task->summary, serialize($task), $order));
+            return $taskId;
+        }
 
 		public function deleteTask($taskId){
 			$adb = $this->adb;
@@ -166,11 +166,11 @@
 			$taskTemplatePath = $taskTypeInstance->get('templatepath');
 			if(!empty($taskTemplatePath)) {
 				return $taskTemplatePath;
-			} else {
-				$taskType = $taskTypeInstance->get('classname');
-				return $moduleName."/taskforms/".$taskType.".tpl";
 			}
-		}
+
+            $taskType = $taskTypeInstance->get('classname');
+            return $moduleName."/taskforms/".$taskType.".tpl";
+        }
 
 	}
 
@@ -201,11 +201,11 @@
 		public function evaluate($entityCache, $id){
 			if($this->test==""){
 				return true;
-			}else{
-				$cs = new VTJsonCondition();
-				return $cs->evaluate($this->test, $entityCache, $id);
 			}
-		}
+
+            $cs = new VTJsonCondition();
+            return $cs->evaluate($this->test, $entityCache, $id);
+        }
 
 		public function getMetaVariables() {
 			return array(
@@ -290,21 +290,23 @@ class VTTaskType {
 				}
 			}
 
-			if(empty($includeModules) && empty($excludeModules)) {
-				$taskTypeInstances[] = $taskName;
-				continue;
-			} elseif(!empty($includeModules)) {
-				if(in_array($moduleName, $includeModules)) {
-					$taskTypeInstances[] = $taskName;
-				}
-				continue;
-			} elseif(!empty($excludeModules)) {
-				if(!(in_array($moduleName, $excludeModules))) {
-					$taskTypeInstances[] = $taskName;
-				}
-				continue;
-			}
-		}
+            if (empty($includeModules) && empty($excludeModules)) {
+                $taskTypeInstances[] = $taskName;
+                continue;
+            }
+
+            if(!empty($includeModules)) {
+                if(in_array($moduleName, $includeModules)) {
+                    $taskTypeInstances[] = $taskName;
+                }
+                continue;
+            } elseif(!empty($excludeModules)) {
+                if(!(in_array($moduleName, $excludeModules))) {
+                    $taskTypeInstances[] = $taskName;
+                }
+                continue;
+            }
+        }
 		return $taskTypeInstances;
 	}
 

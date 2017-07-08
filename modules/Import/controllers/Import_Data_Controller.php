@@ -117,10 +117,10 @@ class Import_Data_Controller {
 			if($lockInfo['userid'] != $this->user->id) {
 				Import_Utils::showImportLockedError($lockInfo);
 				return false;
-			} else {
-				return true;
 			}
-		} else {
+
+            return true;
+        } else {
 			Import_Lock_Controller::lock($this->id, $this->module, $this->user);
 			return true;
 		}

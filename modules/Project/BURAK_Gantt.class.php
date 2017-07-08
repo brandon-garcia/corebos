@@ -229,19 +229,19 @@ class BURAK_Gantt {
 	public function addRelation($parent, $child, $type){
 		if(!array_key_exists($parent,$this->data_tree)){
 			die("{$parent} is not a valid identifier");
-		}else{
-			if($this->data_gantt[$parent]["type"] == "G"){
-				die("Parent element can not be a group");
-			}
 		}
-		if(!array_key_exists($child,$this->data_tree)){
+
+        if($this->data_gantt[$parent]["type"] == "G"){
+            die("Parent element can not be a group");
+        }
+        if(!array_key_exists($child,$this->data_tree)){
 			die("{$child} is not a valid identifier");
-		}else{
-			if($this->data_gantt[$child]["type"] == "G"){
-				die("Child element can not be a group");
-			}
 		}
-		$this->data_rel[] = array("parent"=>$parent,"child"=>$child,"type"=>$type);
+
+        if($this->data_gantt[$child]["type"] == "G"){
+            die("Child element can not be a group");
+        }
+        $this->data_rel[] = array("parent"=>$parent,"child"=>$child,"type"=>$type);
 	}
 	
 	/**
@@ -362,12 +362,12 @@ class BURAK_Gantt {
 	public function addChild($id, $gid, $pm=TRUE){
 		if(!array_key_exists($gid,$this->data_tree)){
 			die("{$gid} is not a valid group identifier");
-		}else{
-			if($this->data_gantt[$gid]["type"] != "G"){
-				die("{$gid} is not a group");
-			}
 		}
-		$this->data_tree[$gid][] = $id; // contains all group members recursively
+
+        if($this->data_gantt[$gid]["type"] != "G"){
+            die("{$gid} is not a group");
+        }
+        $this->data_tree[$gid][] = $id; // contains all group members recursively
 		if($this->data_gantt[$id]["type"] != "G"){
 			$this->data_gantt[$gid]["valid"] = TRUE;
 		}
@@ -514,10 +514,10 @@ class BURAK_Gantt {
 	public function isValidGroup($id){
 		if($this->data_gantt[$id]["valid"]){
 			return TRUE;
-		}else{
-			return FALSE;
 		}
-	}
+
+        return FALSE;
+    }
 	
 	/**
 	* Sorts all gantt elements by start date

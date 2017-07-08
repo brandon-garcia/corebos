@@ -88,9 +88,9 @@ function tooltip_exists($fieldid, $related_fieldid) {
 
 	if ($adb->num_rows($result) > 0) {
 		return true;
-	} else {
-		return false;
 	}
+
+    return false;
 }
 
 /**
@@ -159,26 +159,26 @@ function getToolTip($text,$format = "default"){
 function ToolTipExists($fieldname,$tabid){
 	if(empty($fieldname) || empty($tabid)){
 		return false;
-	}else{
-		global $adb;
-		$sql = "select fieldid from vtiger_field where tabid = ? and fieldname = ? and vtiger_field.presence in (0,2)";
-		$result = $adb->pquery($sql,array($tabid,$fieldname));
-		$count = $adb->num_rows($result);
-		if($count > 0){
-			$fieldid = $adb->query_result($result,0,'fieldid');
-		
-			$sql = "select * from vtiger_quickview where fieldid = ?";
-			$result = $adb->pquery($sql, array($fieldid));
-		
-			if($adb->num_rows($result) > 0){
-				return $fieldid;
-			}else{
-				return false;
-			}
-		}else{
-			return false;
-		}
 	}
+
+    global $adb;
+    $sql = "select fieldid from vtiger_field where tabid = ? and fieldname = ? and vtiger_field.presence in (0,2)";
+    $result = $adb->pquery($sql,array($tabid,$fieldname));
+    $count = $adb->num_rows($result);
+    if($count > 0){
+        $fieldid = $adb->query_result($result,0,'fieldid');
+
+        $sql = "select * from vtiger_quickview where fieldid = ?";
+        $result = $adb->pquery($sql, array($fieldid));
+
+        if($adb->num_rows($result) > 0){
+            return $fieldid;
+        }
+
+return false;
+}else{
+        return false;
+    }
 }
 
 /**
@@ -258,9 +258,9 @@ function QuickViewFieldList($module){
 		}
 		$fieldlist.= '</select>';
 		return $fieldlist;
-	}else{
-		return '';
 	}
+
+    return '';
 }
 
 ?>

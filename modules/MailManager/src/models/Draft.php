@@ -99,10 +99,10 @@ class MailManager_Model_DraftEmail {
 			$draftMails = vtws_query($query, $current_user);
 			self::$totalDraftCount = count($draftMails);
 			return self::$totalDraftCount;
-		} else {
-			return self::$totalDraftCount;
 		}
-	}
+
+        return self::$totalDraftCount;
+    }
 
 	public function getDraftMail($request) {
 		global $adb, $current_user;

@@ -47,8 +47,8 @@ class CBSelectcbMap extends VTTask{
 			list($mod,$rec) = explode('x', $recordid);
 			$return->setRelatedRecordID($rec);
 			return $return;
-		} else {
-			return false;
 		}
-	}
+
+        return false;
+    }
 }

@@ -49,12 +49,10 @@ function calculate_font_name($locale)
 				return FF_DEJAVUSAN;
 
 			}
-			else
-			{
-				$log->debug("Exiting calculate_font_name method ...");
-				 return FF_CHINESE;
-			}
-		default:
+
+            $log->debug("Exiting calculate_font_name method ...");
+            return FF_CHINESE;
+        default:
 			$log->debug("Exiting calculate_font_name method ...");
 			return FF_DEJAVUSAN;
 	}

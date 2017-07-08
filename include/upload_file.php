@@ -70,12 +70,13 @@ class UploadFile {
 			$log->debug("Exiting confirm_upload method ...");
 			return false;
 		}
-		else if ($_FILES[$this->field_name]['size'] > $upload_maxsize)
-		{
-			die("ERROR: uploaded file was too big: max filesize:$upload_maxsize");
-		}
 
-		if( !is_writable( $root_directory.'/'.$upload_dir))
+        if ($_FILES[$this->field_name]['size'] > $upload_maxsize)
+        {
+            die("ERROR: uploaded file was too big: max filesize:$upload_maxsize");
+        }
+
+        if( !is_writable( $root_directory.'/'.$upload_dir))
 		{
 			die("ERROR: cannot write to directory: $root_directory/$upload_dir for uploads");
 		}

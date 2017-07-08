@@ -351,7 +351,8 @@ function rfc2445_is_valid_value($value, $type) {
                 // It has to be after the start time, so
                 return ($parts[1] > $parts[0]);
             }
-            else if(rfc2445_is_valid_value($parts[1], RFC2445_TYPE_DURATION)) {
+
+            if(rfc2445_is_valid_value($parts[1], RFC2445_TYPE_DURATION)) {
                 // The period MUST NOT be negative
                 return ($parts[1]{0} != '-');
             }

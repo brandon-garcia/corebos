@@ -272,10 +272,10 @@ class GlobalVariable extends CRMEntity {
 		if (sizeof($list_of_modules)>0) {
 			if (array_key_exists($module,$list_of_modules)) {
 				return $list_of_modules[$module];
-			} else {
-				return $list_of_modules['Default'];
 			}
-		}
+
+            return $list_of_modules['Default'];
+        }
 		return '';
 	}
 

@@ -58,14 +58,16 @@ class ConditionQuery extends processcbMap {
 
 	public function processMap($arguments) {
 		$xml = $this->getXMLContent();
-		if (isset($xml->sql)) {
-			return $this->processSQL($xml,$arguments);
-		} elseif (isset($xml->conditions)) {
-			return $this->processQuery($xml,$arguments);
-		} else {
-			return false;
-		}
-	}
+        if (isset($xml->sql)) {
+            return $this->processSQL($xml,$arguments);
+        }
+
+        if (isset($xml->conditions)) {
+            return $this->processQuery($xml,$arguments);
+        } else {
+            return false;
+        }
+    }
 
 	private function executeSQL($sql,$arguments,$return) {
 		global $adb;
@@ -86,10 +88,10 @@ class ConditionQuery extends processcbMap {
 				return $f[$return];
 			}
 			return false;
-		} else {
-			return false;
 		}
-	}
+
+        return false;
+    }
 
 	private function processSQL($xml,$arguments) {
 		return $this->executeSQL((String)$xml->sql, $arguments, (String)$xml->return);

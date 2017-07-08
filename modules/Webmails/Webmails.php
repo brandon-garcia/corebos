@@ -585,10 +585,10 @@ public function GetCodeScoreAll($Data, $beg_charset) {
 
 		if($cnt > $max_detect_limit) {
 			break;
-		} else {
-			$cnt++;
 		}
-		$dlina=strlen($val2)-$PairSize;
+
+        $cnt++;
+        $dlina=strlen($val2)-$PairSize;
 		if($dlina < 1) {$cnt--; continue;}
 		$val3=strtolower($val2);
 		if (ucfirst($val3) == $val2) {
@@ -626,10 +626,10 @@ public function detect_charset($Data, $dbg_fl = 0) {
 	$rc=preg_match("/(.*)([\x7F-\xFF]+)/xU",$Data,$tst_ar);
 	if($rc == 0) {
 		return 'US-ASCII';
-	} else {
-		$beg_charset=strpos($Data,$tst_ar[2]);
 	}
-	list($KoiMark,$WinMark) = GetCodeScoreAll($Data,$beg_charset);
+
+    $beg_charset=strpos($Data,$tst_ar[2]);
+    list($KoiMark,$WinMark) = GetCodeScoreAll($Data,$beg_charset);
 	$Ratio['koi8-r'] =  $KoiMark/($WinMark + 1);
 	$Ratio['windows-1251'] =  $WinMark/($KoiMark + 1);
 
@@ -695,9 +695,9 @@ public function link_att(&$mail, $attach_tab, &$display_part_no, $ev)
 public function convertMailData2Html($maildata, $cutafter = 0) {
 	if (($cutafter > 0) && (strlen($maildata) > $cutafter)) {
 		return htmlspecialchars(substr($maildata, 0, $cutafter)) . '&hellip;';
-	} else {
-		return htmlspecialchars($maildata);
 	}
+
+    return htmlspecialchars($maildata);
 }
 
 	// Convert a language string to HTML
@@ -921,11 +921,9 @@ public function convertMailData2Html($maildata, $cutafter = 0) {
 
 			return $parts;
 		}
-		else
-		{
-			return false;
-		}
-	}
+
+        return false;
+    }
 
 	// returns an array with all parts that are
 	// subparts of the given part
@@ -943,28 +941,26 @@ public function convertMailData2Html($maildata, $cutafter = 0) {
 		$body = substr($part, $endOfHead + $delLength, strlen($part));
 
 		// check whether it is a message according to rfc822
-		if (stristr($head, "Content-Type: message/rfc822"))
-		{
-			$part = substr($part, $endOfHead + $delLength, strlen($part));
-			$returnParts[1] = $this->mail_mimesub($part);
-			return $returnParts;
-			// if no message, get subparts and call function recursively
-		}
-		elseif ($subParts = $this->mail_mimesplit($head, $body))
-		{
-			// got more subparts
-			while (list ($key, $val) = each($subParts))
-			{
-				$returnParts[$i] = $this->mail_mimesub($val);
-				$i++;
-			}
-			return $returnParts;
-			}
-			else
-			{
-				return $body;
-			}
-	}
+        if (stristr($head, "Content-Type: message/rfc822")) {
+            $part = substr($part, $endOfHead + $delLength, strlen($part));
+            $returnParts[1] = $this->mail_mimesub($part);
+            return $returnParts;
+            // if no message, get subparts and call function recursively
+        }
+
+        if ($subParts = $this->mail_mimesplit($head, $body)) {
+            // got more subparts
+            while (list ($key, $val) = each($subParts))
+            {
+                $returnParts[$i] = $this->mail_mimesub($val);
+                $i++;
+            }
+            return $returnParts;
+            } else
+            {
+                return $body;
+            }
+    }
 
 	// get an array with the bodies all parts of an email
 	// the structure of the array corresponds to the

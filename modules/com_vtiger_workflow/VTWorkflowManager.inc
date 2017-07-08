@@ -190,10 +190,10 @@
 			$util->revertUser();
 			if ($found) {
 				return $wf;
-			} else {
-				return false;
 			}
-		}
+
+            return false;
+        }
 
 		public function executeRACWorkflow($workflow, $recordid) {
 			$adb=$this->adb;
@@ -253,10 +253,10 @@
 				$workflow = $this->getWorkflowInstance($data['type']);
 				$workflow->setup($data);
 				return $workflow;
-			}else{
-				return null;
 			}
-		}
+
+            return null;
+        }
 
 		public function delete($id){
 			$adb=$this->adb;
@@ -378,11 +378,11 @@
 		public function evaluate($entityCache, $id){
 			if($this->test==""){
 				return true;
-			}else{
-				$cs = $this->conditionStrategy;
-				return $cs->evaluate($this->test, $entityCache, $id);
 			}
-		}
+
+            $cs = $this->conditionStrategy;
+            return $cs->evaluate($this->test, $entityCache, $id);
+        }
 
 		public function isCompletedForRecord($recordId) {
 			global $adb;
@@ -398,10 +398,10 @@
 
 			if($adb->num_rows($result)===0 && $adb->num_rows($result2)===0) { // Workflow not done for specified record
 				return false;
-			} else {
-				return true;
 			}
-		}
+
+            return true;
+        }
 
 		public function markAsCompletedForRecord($recordId) {
 			global $adb;
@@ -457,20 +457,20 @@
 			if($label==null){
 				$arr = array('ON_FIRST_SAVE', 'ONCE', 'ON_EVERY_SAVE', 'ON_MODIFY', 'ON_DELETE', 'ON_SCHEDULE', 'MANUAL', 'RECORD_ACCESS_CONTROL');
 				return $arr[$this->executionCondition-1];
-			}else{
-				$arr = array(
-					'ON_FIRST_SAVE'=>VTWorkflowManager::$ON_FIRST_SAVE,
-					'ONCE'=>VTWorkflowManager::$ONCE,
-					'ON_EVERY_SAVE'=>VTWorkflowManager::$ON_EVERY_SAVE,
-					'ON_MODIFY'=>VTWorkflowManager::$ON_MODIFY,
-					'ON_DELETE'=>VTWorkflowManager::$ON_DELETE,
-					'ON_SCHEDULE'=>VTWorkflowManager::$ON_SCHEDULE,
-					'MANUAL'=>VTWorkflowManager::$MANUAL,
-					'RECORD_ACCESS_CONTROL'=>VTWorkflowManager::$RECORD_ACCESS_CONTROL,
-				);
-				$this->executionCondition = $arr[$label];
 			}
-		}
+
+            $arr = array(
+                'ON_FIRST_SAVE'=>VTWorkflowManager::$ON_FIRST_SAVE,
+                'ONCE'=>VTWorkflowManager::$ONCE,
+                'ON_EVERY_SAVE'=>VTWorkflowManager::$ON_EVERY_SAVE,
+                'ON_MODIFY'=>VTWorkflowManager::$ON_MODIFY,
+                'ON_DELETE'=>VTWorkflowManager::$ON_DELETE,
+                'ON_SCHEDULE'=>VTWorkflowManager::$ON_SCHEDULE,
+                'MANUAL'=>VTWorkflowManager::$MANUAL,
+                'RECORD_ACCESS_CONTROL'=>VTWorkflowManager::$RECORD_ACCESS_CONTROL,
+            );
+            $this->executionCondition = $arr[$label];
+        }
 		public function setNextTriggerTime($time) {
 			if($time) {
 				$db = PearDatabase::getInstance();
@@ -593,19 +593,19 @@
 							if ($currentTime < $scheduleWeekDayInTime) { //if the scheduled time is greater than current time, select today
 								$nextTriggerWeekDay = $currentWeekDay;
 								break;
-							} else {
-								//current time greater than scheduled time, get the next weekday
-								if (count($scheduledDaysOfWeek) == 1) { //if only one weekday selected, then get next week
-									$nextTime = date('Y-m-d', strtotime('next ' . $weekDays[$weekDay-1])) . ' ' . $scheduledTime;
-								} else {
-									$nextWeekDay = $scheduledDaysOfWeek[$index + 1];
-									if (empty($nextWeekDay)) { // its the last day of the week i.e. sunday
-										$nextWeekDay = $scheduledDaysOfWeek[0];
-									}
-									$nextTime = date('Y-m-d', strtotime('next ' . $weekDays[$nextWeekDay-1])) . ' ' . $scheduledTime;
-								}
 							}
-						} else if ($weekDay-1 > $currentWeekDay) {
+
+//current time greater than scheduled time, get the next weekday
+                            if (count($scheduledDaysOfWeek) == 1) { //if only one weekday selected, then get next week
+                                $nextTime = date('Y-m-d', strtotime('next ' . $weekDays[$weekDay-1])) . ' ' . $scheduledTime;
+                            } else {
+                                $nextWeekDay = $scheduledDaysOfWeek[$index + 1];
+                                if (empty($nextWeekDay)) { // its the last day of the week i.e. sunday
+                                    $nextWeekDay = $scheduledDaysOfWeek[0];
+                                }
+                                $nextTime = date('Y-m-d', strtotime('next ' . $weekDays[$nextWeekDay-1])) . ' ' . $scheduledTime;
+                            }
+                        } else if ($weekDay-1 > $currentWeekDay) {
 							$nextTriggerWeekDay = $weekDay-1;
 							break;
 						}

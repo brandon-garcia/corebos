@@ -860,11 +860,9 @@ function create_ticket($input_array)
 		$adb->println("Ticket from Portal is saved with id => ".$ticket->id);
 		return $record_array;
 	}
-	else
-	{
-		$adb->println("There may be error in saving the ticket.");
-		return null;
-	}
+
+    $adb->println("There may be error in saving the ticket.");
+    return null;
 }
 
 /**	function used to update the ticket comment which is added from the customer portal
@@ -1430,10 +1428,10 @@ function validateSession($id, $sessionid)
 	if($server_sessionid == $sessionid) {
 		$adb->println("Session id match. Authenticated to do the current operation.");
 		return true;
-	} else {
-		$adb->println("Session id does not match. Not authenticated to do the current operation.");
-		return false;
 	}
+
+    $adb->println("Session id does not match. Not authenticated to do the current operation.");
+    return false;
 }
 
 
@@ -3231,10 +3229,10 @@ function show_all($module){
 	if($norows > 0){
 		if($adb->query_result($query,0,'prefvalue') == 1){
 			return 'true';
-		}else {
-			return 'false';
 		}
-	}else {
+
+        return 'false';
+    }else {
 		return 'false';
 	}
 	$log->debug("Exiting customerportal function show_all");

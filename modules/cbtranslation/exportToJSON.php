@@ -42,9 +42,9 @@ if (!empty($allids)) {
 		}
 		print json_encode($csvContent);
 		exit;
-	} else {
-		echo getTranslatedString('LBL_RECORD_NOT_FOUND');
 	}
+
+    echo getTranslatedString('LBL_RECORD_NOT_FOUND');
 } else {
 	echo getTranslatedString('LBL_RECORD_NOT_FOUND');
 }

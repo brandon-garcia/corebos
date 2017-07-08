@@ -203,9 +203,9 @@ function __cb_next_dateLaborable($arr) {
 			$found->add($interval);
 		}
 		return $found->format("Y-m-d");
-	} else {
-		return '';
 	}
+
+    return '';
 }
 
 ?>
