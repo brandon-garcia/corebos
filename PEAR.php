@@ -299,7 +299,7 @@ class PEAR
             return false;
         }
 
-        if (is_null($code)) {
+        if (null === $code) {
             return true;
         }
 
