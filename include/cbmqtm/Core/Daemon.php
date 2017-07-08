@@ -1191,7 +1191,7 @@ abstract class Core_Daemon
      */
     protected function create_init_script($template_name, $install = false)
     {
-	    $template = dirname(__FILE__) . '/Templates/' . $template_name;
+	    $template = __DIR__ . '/Templates/' . $template_name;
 
         if (!file_exists($template))
             $this->show_help("Invalid Template Name '{$template_name}'");

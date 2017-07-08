@@ -282,7 +282,7 @@ if(isset($_REQUEST['subtab']) && $_REQUEST['subtab']!='')
 	$subtab=vtlib_purify($_REQUEST['subtab']);
 
 if($_REQUEST['recurringcheck']) {
-	include_once dirname(__FILE__) . '/RepeatEvents.php';
+	include_once __DIR__ . '/RepeatEvents.php';
 	Calendar_RepeatEvents::repeatFromRequest($focus);
 }
 

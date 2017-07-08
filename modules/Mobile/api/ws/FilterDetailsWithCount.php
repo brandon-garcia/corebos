@@ -8,7 +8,7 @@
  * All Rights Reserved.
  * Modified by crm-now GmbH, www.crm-now.com
  ************************************************************************************/
-include_once dirname(__FILE__) . '/FetchModuleFilters.php';
+include_once __DIR__ . '/FetchModuleFilters.php';
 include_once 'modules/CustomView/CustomView.php';
 
 class crmtogo_WS_FilterDetailsWithCount extends crmtogo_WS_FetchModuleFilters {

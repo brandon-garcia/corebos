@@ -7,7 +7,7 @@
  * Portions created by vtiger are Copyright (C) vtiger.
  * All Rights Reserved.
  ************************************************************************************/
-include_once dirname(__FILE__) . '/Login.php';
+include_once __DIR__ . '/Login.php';
 class crmtogo_WS_LoginAndFetchModules extends crmtogo_WS_Login {
 	
 	public function postProcess(crmtogo_API_Response $response) {
