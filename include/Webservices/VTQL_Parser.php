@@ -205,16 +205,16 @@ public function buildSelectStmt($sqlDump){
 	$accessControlQuery = $meta->getEntityAccessControlQuery();
 	$this->query = $this->query.' '.$accessControlQuery;
 	if (!empty($sqlDump['where_condition'])) {
-		$sofCN = isset($sqlDump['where_condition']['column_names']) ? sizeof($sqlDump['where_condition']['column_names']) : 0;
-		$sofCV = isset($sqlDump['where_condition']['column_values']) ? sizeof($sqlDump['where_condition']['column_values']) : 0;
-		$sofCO = isset($sqlDump['where_condition']['column_operators']) ? sizeof($sqlDump['where_condition']['column_operators']) : 0;
-		$sofOp = isset($sqlDump['where_condition']['operators']) ? sizeof($sqlDump['where_condition']['operators']) : 0;
+		$sofCN = isset($sqlDump['where_condition']['column_names']) ? count($sqlDump['where_condition']['column_names']) : 0;
+		$sofCV = isset($sqlDump['where_condition']['column_values']) ? count($sqlDump['where_condition']['column_values']) : 0;
+		$sofCO = isset($sqlDump['where_condition']['column_operators']) ? count($sqlDump['where_condition']['column_operators']) : 0;
+		$sofOp = isset($sqlDump['where_condition']['operators']) ? count($sqlDump['where_condition']['operators']) : 0;
 		if ($sofCN == $sofCV && $sofCO == ($sofOp+1)) {
 			$this->query .= ' WHERE (';
 			$i=0;
 			$referenceFields = $meta->getReferenceFieldDetails();
 			$ownerFields = $meta->getOwnerFields();
-			for(;$i<sizeof($sqlDump['where_condition']['column_values']);++$i){
+			for(; $i<count($sqlDump['where_condition']['column_values']); ++$i){
 				if(!$fieldcol[$sqlDump['where_condition']['column_names'][$i]]){
 					throw new WebServiceException(WebServiceErrorCode::$ACCESSDENIED, "Permission to access ".$sqlDump['where_condition']['column_names'][$i]." attribute denied.");
 				}
@@ -255,7 +255,7 @@ public function buildSelectStmt($sqlDump){
 				}
 				$this->query = $this->query.$columnTable[$fieldcol[$whereField]].'.'.
 									$fieldcol[$whereField]." ".$whereOperator." ".$whereValue;
-				if($i <sizeof($sqlDump['where_condition']['column_values'])-1){
+				if($i <count($sqlDump['where_condition']['column_values'])-1){
 					$this->query .= ' ';
 					$this->query = $this->query.$sqlDump['where_condition']['operators'][$i].' ';
 				}
@@ -300,7 +300,7 @@ public function buildSelectStmt($sqlDump){
 	if (!empty($sqlDump['limit'])) {
 		$i=0;
 		$offset =false;
-		if(sizeof($sqlDump['limit'])>1){
+		if(count($sqlDump['limit'])>1){
 			$offset = true;
 		}
 		$this->query .= ' LIMIT ';
@@ -1224,7 +1224,7 @@ $this->out['where_condition']['operators'][] = $this->yystack[$this->yyidx + 0]-
 $this->out['columnDone']=true;
 $this->out['where_condition']['column_names'][] = $this->yystack[$this->yyidx + -2]->minor;
 if(strcmp($this->yystack[$this->yyidx + -2]->minor, 'id')===0){
-$prev = $this->out['where_condition']['column_values'][sizeof($this->out['where_condition']['column_values'])-1];
+$prev = $this->out['where_condition']['column_values'][count($this->out['where_condition']['column_values'])-1];
 if(is_array($prev)){
 $new = array();
 foreach($prev as $ind=>$val){
@@ -1232,21 +1232,21 @@ $val = trim($val,'\'"');
 $value = vtws_getIdComponents($val);
 $new[] = $value[1];
 }
-$this->out['where_condition']['column_values'][sizeof($this->out['where_condition']['column_values'])-1] = $new;
+$this->out['where_condition']['column_values'][count($this->out['where_condition']['column_values'])-1] = $new;
 }else{
 $prev = trim($prev,'\'"');
 $value = vtws_getIdComponents($prev);
-if(strcasecmp($this->out['where_condition']['column_operators'][sizeof($this->out['where_condition']['column_operators'])-1],'like')===0){
+if(strcasecmp($this->out['where_condition']['column_operators'][count($this->out['where_condition']['column_operators'])-1],'like')===0){
 $value[1] = "'".$value[1]."'";
 }
-$this->out['where_condition']['column_values'][sizeof($this->out['where_condition']['column_values'])-1] = $value[1];
+$this->out['where_condition']['column_values'][count($this->out['where_condition']['column_values'])-1] = $value[1];
 }
 }
     }
 #line 1240 "e:\workspace\nonadmin\pkg\vtiger\extensions\Webservices\VTQL_parser.php"
 #line 82 "e:\workspace\nonadmin\pkg\vtiger\extensions\Webservices\VTQL_parser.y"
     public function yy_r17(){
-$length = (isset($this->out['where_condition']) && isset($this->out['where_condition']['column_values'])) ? sizeof($this->out['where_condition']['column_values']) : 0;
+$length = (isset($this->out['where_condition']) && isset($this->out['where_condition']['column_values'])) ? count($this->out['where_condition']['column_values']) : 0;
 $pos = $length - 1;
 if($pos < 0){
 $pos = 0;

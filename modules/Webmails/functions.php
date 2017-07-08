@@ -125,7 +125,7 @@ function inbox(&$pop, $skip = 0, &$ev)
             $newmail = '<img src="themes/' . $_SESSION['nocc_theme'] . '/img/new.png" alt=""/>';
         else
             $newmail = '&nbsp;';
-        $timestamp = chop($ref_contenu_message->udate);
+        $timestamp = rtrim($ref_contenu_message->udate);
         $date = format_date($timestamp, $lang);
         $time = format_time($timestamp, $lang);
         $msg_list[$i] =  Array(
@@ -425,7 +425,7 @@ function cut_address(&$addr, &$charset)
     */
 
     // Loop through addresses
-    for ($i = 0; $i < sizeof($addresses); $i++)
+    for ($i = 0; $i < count($addresses); $i++)
     {
         // Wrap address in brackets, if not already
         $pos = strrpos($addresses[$i], '<');
@@ -708,7 +708,7 @@ function save_list ($path, $contacts, $conf, &$ev)
      $ev = new NoccException($html_err_file_contacts);
      return;
   }
-  if (!is_writeable($conf->prefs_dir)) {
+  if (!is_writable($conf->prefs_dir)) {
       $ev = new NoccException($html_err_file_contacts);
       return;
   }

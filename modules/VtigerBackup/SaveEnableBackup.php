@@ -40,7 +40,7 @@ if(isset($_REQUEST['enable_ftp_backup']) && vtlib_purify($_REQUEST['enable_ftp_b
 	}
 
 	$handle = fopen($filename, "w");
-	fputs($handle, $new_buffer);
+	fwrite($handle, $new_buffer);
 	fclose($handle);
 }
 elseif(isset($_REQUEST['enable_local_backup']) && vtlib_purify($_REQUEST['enable_local_backup']) != '')
@@ -74,7 +74,7 @@ elseif(isset($_REQUEST['enable_local_backup']) && vtlib_purify($_REQUEST['enable
 	}
 
 	$handle = fopen($filename, "w");
-	fputs($handle, $new_buffer);
+	fwrite($handle, $new_buffer);
 	fclose($handle);
 }
 elseif(isset($_REQUEST['GetBackupDetail']) && vtlib_purify($_REQUEST['GetBackupDetail']) != '' && ($_REQUEST['servertype'] == 'local_backup' || $_REQUEST['servertype'] == 'ftp_backup'))

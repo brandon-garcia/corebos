@@ -37,7 +37,7 @@ if (is_writable($filename)) {
 	}
 
 	$handle = fopen($filename, "w");
-	fputs($handle, $new_buffer);
+	fwrite($handle, $new_buffer);
 	fflush($handle);
 	fclose($handle);
 	sleep(3);

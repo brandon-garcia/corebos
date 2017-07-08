@@ -114,7 +114,7 @@ class VTExpressionEngine{
 
 	private function checkForCycles(){
 		foreach($this->independents as $independent){
-			$this->testCall($independent, array(), sizeof($this->dependents));
+			$this->testCall($independent, array(), count($this->dependents));
 		}
 	}
 
@@ -133,9 +133,9 @@ class VTExpressionEngine{
 	private function getSyms($expr){
 		if($expr instanceof VTTreeNode){
 			$params = $expr->getParams();
-			if(sizeof($params)!=0){
+			if(count($params)!=0){
 				$sym_arr = array_map(array($this, "getSyms"), $params);
-				if(sizeof($sym_arr)>1){
+				if(count($sym_arr)>1){
 					$syms = call_user_func_array('array_merge', $sym_arr);
 
 				}else{
@@ -164,7 +164,7 @@ class VTExpressionEngine{
 	}
 
 	private function isEmpty($arr){
-		return sizeof($arr)!=0;
+		return count($arr)!=0;
 	}
 
 	private function expression($str){

@@ -1337,7 +1337,7 @@ abstract class Core_Daemon
         if ($set_value === null)
             return $this->pid;
 
-        if (!is_integer($set_value))
+        if (!is_int($set_value))
             throw new Exception(__METHOD__ . ' Failed. Could not set pid. Integer Expected. Given: ' . $set_value);
 
         $this->pid = $set_value;

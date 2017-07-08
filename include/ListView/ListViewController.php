@@ -512,7 +512,7 @@ class ListViewController {
 					$content=array();
 					if ($value != '') {
 						$arr_evo_actions=explode(' |##| ',$value);
-						for($fvalues=0;$fvalues<sizeof($arr_evo_actions);$fvalues++) {
+						for($fvalues=0; $fvalues<count($arr_evo_actions); $fvalues++) {
 							$roleid=$arr_evo_actions[$fvalues];
 							$rolename=getRoleName($roleid);
 							$content[$fvalues]=$rolename;

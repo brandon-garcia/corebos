@@ -69,7 +69,7 @@ $fields_node=$xml->createElement('fields');
 $search->appendChild($fields_node);
 
 $field_data=json_decode($fields_expected_values);
-for($i=0;$i<sizeof($field_data);$i++){
+for($i=0; $i<count($field_data); $i++){
 $field_node=$xml->createElement('field');
 $fields_node->appendChild($field_node);
 
@@ -114,7 +114,7 @@ else {
     $rule_node=$xml->createElement('rule');
     $rules_node->appendChild($rule_node);
     $rule_data=$rules_data[$j];
-  for($r=0;$r<sizeof($field_data);$r++){
+  for($r=0; $r<count($field_data); $r++){
    $searchfield_node=$xml->createElement('searchfield');
    $rule_node->appendChild($searchfield_node);
 
@@ -131,7 +131,7 @@ else {
    
    $alter_value=$xml->createElement('value');
    $alter_expectedvalue->appendChild($alter_value);
-   if($r<sizeof($field_data)-1){
+   if($r<count($field_data)-1){
        $rule_operator=$xml->createElement('operator');
        $rule_node->appendChild($rule_operator);
        $rule_operator_text=$xml->createTextNode('and');
@@ -140,12 +140,12 @@ else {
     }
 
 }
-for($j=0;$j<sizeof($rules_data);$j++){
+for($j=0; $j<count($rules_data); $j++){
     $rule_node=$xml->createElement('rule');
     $rules_node->appendChild($rule_node);
     $rule_data=$rules_data[$j];
     
-  for($r=0;$r<sizeof($rule_data);$r++){
+  for($r=0; $r<count($rule_data); $r++){
    $searchfield_node=$xml->createElement('searchfield');
    $rule_node->appendChild($searchfield_node);
       
@@ -214,7 +214,7 @@ $update_expectedvalue_node=$xml->createElement('expectedvalue');
 $update_field_node->appendChild($update_expectedvalue_node);
 }
 
-for($i=0;$i<sizeof($update_data);$i++){
+for($i=0; $i<count($update_data); $i++){
 
 $update_field_node=$xml->createElement('field');
 $update_fields_node->appendChild($update_field_node);

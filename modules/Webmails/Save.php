@@ -166,7 +166,7 @@ function add_attachment_to_contact($cid,$email,$emailid) {
 
 			$fp = fopen($move_filename, 'w');
 			if ($fp) {
-				fputs($fp, base64_decode($attachments[$i]['filedata']));
+				fwrite($fp, base64_decode($attachments[$i]['filedata']));
 				fclose($fp);
 			} else {
 				echo "Can't open file";

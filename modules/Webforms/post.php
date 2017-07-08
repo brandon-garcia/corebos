@@ -46,7 +46,7 @@ require_once('Smarty_setup.php');
 
 function webforms_getUserData($ownerId, $describeFields,$source){
 	$userData = Array();
-	$len = sizeof($describeFields);
+	$len = count($describeFields);
 	for($i=0;$i<$len;++$i){
 		$fieldName = $describeFields[$i]['name'];
 		// Handle meta fields right away
@@ -162,7 +162,7 @@ function webforms_init(){
 			return ;
 		}
 		
-		if(sizeof($userData)<1){
+		if(count($userData)<1){
 			webforms_returnError(array('code'=>"WEBFORMS_INVALID_DATA",'message'=>'data provided is invalid'),$module);
 			return ;
 		}

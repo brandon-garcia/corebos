@@ -1367,7 +1367,7 @@ function add_ticket_attachment($input_array)
 
 	//write a file with the passed content
 	$handle = @fopen($upload_filepath.$new_filename,'w');
-	fputs($handle, $data);
+	fwrite($handle, $data);
 	fclose($handle);
 
 	//Now store this file information in db and relate with the ticket

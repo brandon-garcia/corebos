@@ -1801,7 +1801,7 @@ function create_tab_data_file() {
 			$newbuf .= "\n";
 			$newbuf .= "\$action_name_array=" . constructSingleStringValueArray($actionname_array) . ";\n";
 			$newbuf .= "?>";
-			fputs($handle, $newbuf);
+			fwrite($handle, $newbuf);
 			fclose($handle);
 		} else {
 			echo "The file $filename is not writable";
@@ -1850,7 +1850,7 @@ function getQuickCreateModules() {
 			$return_qcmodule[] = $tabname;
 		}
 	}
-	if (sizeof($return_qcmodule > 0)) {
+	if (count($return_qcmodule > 0)) {
 		$return_qcmodule = array_chunk($return_qcmodule, 2);
 	}
 

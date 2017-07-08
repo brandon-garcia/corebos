@@ -34,7 +34,7 @@ $module1 = (int)$_POST['modulePortal'];
 $module= getTabModuleName($module1);
 $focus = CRMEntity::getInstance($module);
 var_dump($mv);
-for($i=0;$i<sizeof($mv);$i++){
+for($i=0; $i<count($mv); $i++){
         $target_block = $xml->createElement("block");
         $blockname_node = $xml->createElement("name");
         $blockname = $xml->createTextNode($mv[$i]->blockname);
@@ -42,7 +42,7 @@ for($i=0;$i<sizeof($mv);$i++){
         $target_block->appendChild($blockname_node);
         $all_fields=$mv[$i]->fields;
         $count_col=0;
-        for($j=0;$j<sizeof($all_fields);$j++){
+        for($j=0; $j<count($all_fields); $j++){
             if($count_col==2 || $count_col==0){
                 $target_row = $xml->createElement("row");
                 $count_col=0;

@@ -242,7 +242,7 @@ class crxml implements arrayAccess, iterator
 	}
 	public function getError()
 	{
-		return "<pre>".join("\n",$this->error)."</pre>";
+		return "<pre>".implode("\n",$this->error)."</pre>";
 	}
 	public function connectToParent()
 	{
@@ -395,7 +395,7 @@ class crxml implements arrayAccess, iterator
             $childNodeName = $parent->_getNode()->childNodes->item($v)->nodeName;
             if($childNodeName !== '#text') $foundChildNodes[] = $childNodeName;
         }
-        $this->setError("<pre>crxml error:No {$child->offset}-nth child '{$child->nodeName}' found for node \" {$parent->nodeName}\".The avaliable child nodes of node {$parent->nodeName} are\n".join("\n",$foundChildNodes)."</pre>");
+        $this->setError("<pre>crxml error:No {$child->offset}-nth child '{$child->nodeName}' found for node \" {$parent->nodeName}\".The avaliable child nodes of node {$parent->nodeName} are\n".implode("\n",$foundChildNodes)."</pre>");
         return '';
     }
 	public function loadXML($xmlString)
@@ -793,7 +793,7 @@ class crxml implements arrayAccess, iterator
 					if($relative) $path = $this->findWayToTop($node,$thisNode); else $path = $this->findWayToTop($node);
 					$nodeContent = $this->root->_getNode()->saveXML($node);
 					$htmlEncoded = htmlentities($nodeContent);
-					$return[] = array('nodeName'=>$node->nodeName,'accessStatement'=>'...->'.join('->',$path),'nodeChildrenCount'=>$node->childNodes->length,'nodeType'=>$node->nodeType,'namespaceURI'=>$node->namespaceURI,'nodeContent'=>$nodeContent,'htmlEncodedNodeContent'=>$htmlEncoded);
+					$return[] = array('nodeName'=>$node->nodeName,'accessStatement'=>'...->'.implode('->',$path),'nodeChildrenCount'=>$node->childNodes->length,'nodeType'=>$node->nodeType,'namespaceURI'=>$node->namespaceURI,'nodeContent'=>$nodeContent,'htmlEncodedNodeContent'=>$htmlEncoded);
 				}
 			}
 		}

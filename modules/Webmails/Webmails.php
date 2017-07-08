@@ -714,7 +714,7 @@ public function convertMailData2Html($maildata, $cutafter = 0) {
 		$mail = $this->mbox;
 		$ev = $this->mailid;
 		$conf->display_rfc822 = true;
-		if ($struct_msg->type == 3 || (isset($struct_msg->parts) && (sizeof($struct_msg->parts) > 0)))
+		if ($struct_msg->type == 3 || (isset($struct_msg->parts) && (count($struct_msg->parts) > 0)))
 		{
 			$this->GetPart($attach_tab, $struct_msg, NULL, $conf->display_rfc822);
 		}
@@ -779,7 +779,7 @@ public function convertMailData2Html($maildata, $cutafter = 0) {
 		$conf->display_part_no = true;
 		if ($struct_msg->subtype != 'ALTERNATIVE' || $struct_msg->subtype != 'RELATED')
 		{
-			switch (sizeof($attach_tab))
+			switch (count($attach_tab))
 			{
 			case 0:
 				$link_att = '<span id="webmail_cont" style="display:none;"><tr><th class="mailHeaderLabel right"></th><td class="mailHeaderData"></td></tr></span>';
@@ -852,7 +852,7 @@ public function convertMailData2Html($maildata, $cutafter = 0) {
 				$reply_to .= $reply_to_array[$j]->text;
 		}
 
-		$timestamp = chop($ref_contenu_message->udate);
+		$timestamp = rtrim($ref_contenu_message->udate);
 		$date = format_date($timestamp, $lang);
 		$time = format_time($timestamp, $lang);
 		$content = Array(

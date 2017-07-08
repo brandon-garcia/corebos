@@ -147,7 +147,7 @@ class Asterisk {
 	 * 			if no array is present it returns a null
 	 */
 	public function getAsteriskResponse($echoFlag = true){
-		if(sizeof($this->queue)==0){
+		if(count($this->queue)==0){
 			$this->strData.=fread($this->sock, 4096);
 
 			if($echoFlag){
@@ -157,7 +157,7 @@ class Asterisk {
 			$this->log->debug($this->strData);
 			$arr = explode("\r\n\r\n", $this->strData);
 
-			for($i=0;$i<sizeof($arr)-1;$i++){
+			for($i=0; $i<count($arr)-1; $i++){
 				$resp = $arr[$i];
 				$lines = explode("\r\n", $resp);
 				$obj = array();

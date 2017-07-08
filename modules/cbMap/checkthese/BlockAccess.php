@@ -56,7 +56,7 @@ if(strpos($targetVal,',')!=false)
 else 
   $targetarr[]=$targetVal;
 
-for($i = 0;$i < sizeof($targetarr); $i++){
+for($i = 0; $i < count($targetarr); $i++){
     $block = $xml->createElement("block");
     $blockID = $xml->createElement("blockID");
     $fieldideText = $xml->createTextNode($targetarr[$i]);

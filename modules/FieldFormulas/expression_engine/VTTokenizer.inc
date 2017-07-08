@@ -57,7 +57,7 @@ class VTTokenizer{
 	public function nextToken(){
 		$matches = $this->matches;
 		$idx = $this->idx;
-		if($idx == sizeof($matches)){
+		if($idx == count($matches)){
 			return $this->EOF;
 		}
 

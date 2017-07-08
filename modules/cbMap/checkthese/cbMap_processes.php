@@ -699,7 +699,7 @@ public function getBlockInfo($modId)
     }
     if($moduleName=='Project')
     {
-        $size=sizeof($blockinfo);
+        $size=count($blockinfo);
         $blockinfo[$size]=array(
             'blockid' => '1000',
             'tabid' => $modId,
@@ -717,7 +717,7 @@ public function getBlockHTML($blocks, $module)
     $mod_strings = return_module_language($current_language,$module);
     $block_listed = array();
     $modName = getTabModuleName($module,$this->dbname);$shtml='';
-    for($i=0;$i<sizeof($blocks);$i++)
+    for($i=0; $i<count($blocks); $i++)
     {
        foreach($blocks[$i] as $key=>$value)
            {  if($key=='blocklabel')
@@ -813,10 +813,10 @@ public function readInputFields() {
         $deleted=' ';
         $where=" ";
         $entityid=array();
-        if(sizeof($modules)>0 && sizeof($fields)>0 ){
-            if(sizeof($modules)>1){
-                for($i=0;$i<sizeof($modules);$i++){
-                    for($j=$i+1;$j<sizeof($modules);$j++){
+        if(count($modules)>0 && count($fields)>0 ){
+            if(count($modules)>1){
+                for($i=0; $i<count($modules); $i++){
+                    for($j=$i+1; $j<count($modules); $j++){
                         $modulename_i=$modules[$i]['modulename'];
                         $modulename_j=$modules[$j]['modulename'];
                        // $tablename_i=$modules[$i]['tablename'];
@@ -872,7 +872,7 @@ public function readInputFields() {
               
                 $where.=' and ';
                 $join.= $crmentity_check. " where  ". $deleted;
-            } else if(sizeof($modules)==1){
+            } else if(count($modules)==1){
                  $modulename=$modules[0]['modulename'];
                  //$tablename=$modules[0]['tablename'];
                   $module_info=getEntityFieldNames($modulename);
@@ -880,7 +880,7 @@ public function readInputFields() {
                               
             }
             $vals=' ';
-            for($f=0;$f<sizeof($fields);$f++){
+            for($f=0; $f<count($fields); $f++){
                 if($f!=0)
                     $vals.=' and ';
 
@@ -1183,7 +1183,7 @@ if(!empty($expectedvalue_array)){
              $search_xml_rules=$xml->search->rules->rule;
              foreach($search_xml_rules as $search_rule_key=>$search_rule_value){
                  $rule=array();
-                 for($f=0;$f<sizeof($search_rule_value->searchfield);$f++){
+                 for($f=0; $f<count($search_rule_value->searchfield); $f++){
                    if((string)$search_rule_value->searchfield[$f]!='')
                    $rule_field=(string)$search_rule_value->searchfield[$f];
                    if((string)$search_rule_value->operator[$f] !='')
@@ -1236,16 +1236,16 @@ if(!empty($expectedvalue_array)){
         crmid=".$search_module_info['tablename'].".".$search_module_info['entityidfield'] ." where deleted=0 and ";
 
     $rules=$result['Search']['rules'];
-    for($r=0;$r<sizeof($rules);$r++){
+    for($r=0; $r<count($rules); $r++){
         $expected_values='';$where='';
 
       
-        for($rr=0;$rr<sizeof($rules[$r]);$rr++){
+        for($rr=0; $rr<count($rules[$r]); $rr++){
             
             $rule_field=trim($rules[$r][$rr]['field']);
             $rule_operator=$rules[$r][$rr]['operator'];
             $rule_alter_rule=$rules[$r][$rr]['alter_expectedvalue'];
-            for($f=0;$f<sizeof($result['Search']['fields']);$f++){
+            for($f=0; $f<count($result['Search']['fields']); $f++){
                 
                $fieldname=trim($result['Search']['fields'][$f]['fieldname']);
                if($rule_field===$fieldname){ 
@@ -1258,7 +1258,7 @@ if(!empty($expectedvalue_array)){
                 }else
                 $expected_values.=$result['Search']['fields'][$f]['expectedvalue'];
                 $where.=" ".$fieldname.$result['Search']['fields'][$f]['operator']."? ";
-                $f=sizeof($result['Search']['fields'])+1;
+                $f=count($result['Search']['fields'])+1;
                 }
 
             }

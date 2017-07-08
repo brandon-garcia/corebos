@@ -42,10 +42,10 @@ if($fld_module == 'Events') {
 	$temp_module_strings = return_module_language($current_language, $fld_module);
 }
 $picklists_entries = getUserFldArray($fld_module,$roleid);
-if((sizeof($picklists_entries) %3) != 0) {
-	$value = (sizeof($picklists_entries) + 3 - (sizeof($picklists_entries))%3);
+if((count($picklists_entries) %3) != 0) {
+	$value = (count($picklists_entries) + 3 - (count($picklists_entries))%3);
 }else {
-	$value = sizeof($picklists_entries);
+	$value = count($picklists_entries);
 }
 $available_module_picklist = array();
 $picklist_fields = array();

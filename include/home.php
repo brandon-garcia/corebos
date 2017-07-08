@@ -54,7 +54,7 @@ class Homestuff{
 				return false;
 			}
 
-			for($q=0;$q<sizeof($fieldarray);$q++){
+			for($q=0; $q<count($fieldarray); $q++){
 				$queryfld="insert into vtiger_homemoduleflds values(? ,?);";
 				$params = array($stuffid,$fieldarray[$q]);
 				$result=$adb->pquery($queryfld, $params);
@@ -317,7 +317,7 @@ class Homestuff{
 					$listview_entries = $controller->getListViewEntries($focus,$modname,$list_result,$navigation_array, true);
 				}
 				$return_value =Array('ModuleName'=>$modname,'cvid'=>$cvid,'Maxentries'=>$maxval,'Header'=>$header,'Entries'=>$listview_entries);
-				if(sizeof($header)!=0){
+				if(count($header)!=0){
 					return $return_value;
 				}
 

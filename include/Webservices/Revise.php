@@ -80,7 +80,7 @@ function vtws_revise($element,$user){
 	$meta->isUpdateMandatoryFields($element);
 
 	$ownerFields = $meta->getOwnerFields();
-	if (is_array($ownerFields) && sizeof($ownerFields) >0) {
+	if (is_array($ownerFields) && count($ownerFields) >0) {
 		foreach($ownerFields as $ownerField){
 			if (isset($element[$ownerField]) && $element[$ownerField]!==null && !$meta->hasAssignPrivilege($element[$ownerField])) {
 				throw new WebServiceException(WebServiceErrorCode::$ACCESSDENIED, "Cannot assign record to the given user");

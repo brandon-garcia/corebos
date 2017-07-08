@@ -12,7 +12,7 @@ interface VTEnv{
 }
 
 function _vt_add($arr){
-	if(sizeof($arr)==1){
+	if(count($arr)==1){
 		return $arr[0];
 	}
 
@@ -20,7 +20,7 @@ function _vt_add($arr){
 }
 
 function _vt_sub($arr){
-	if(sizeof($arr)==1){
+	if(count($arr)==1){
 		return -$arr[0];
 	}
 
