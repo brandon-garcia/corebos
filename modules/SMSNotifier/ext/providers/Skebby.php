@@ -124,7 +124,7 @@ class Skebby implements ISMSProvider {
 			case 'classic_plus':
 			default:
 				$typeToSend = 'classic' == $smsType ? SMS_TYPE_CLASSIC : SMS_TYPE_CLASSIC_PLUS;
-				$sender = $params['From'] ? $params['From'] : 'SMS';
+				$sender = $params['From'] ?: 'SMS';
 
 				if (is_numeric($sender)){
 					// Invio SMS con mittente personalizzato di tipo numerico
@@ -143,7 +143,7 @@ class Skebby implements ISMSProvider {
 		foreach($recipients as $to) {
 			$result = array(  'to' => $to );
 			if('success' == $response['status']){
-				$result['id'] = $response['id'] ? $response['id'] : $to;
+				$result['id'] = $response['id'] ?: $to;
 				$result['status'] = self::MSG_STATUS_DISPATCHED;
 				$result['error'] = false;
 				$result['statusmessage'] = 'Sent';

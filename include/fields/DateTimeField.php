@@ -183,7 +183,7 @@ class DateTimeField {
 		if(empty($user)) {
 			$user = $current_user;
 		}
-		$timeZone = $user->time_zone ? $user->time_zone : $default_timezone;
+		$timeZone = $user->time_zone ?: $default_timezone;
 		return DateTimeField::convertTimeZone($value, self::getDBTimeZone(), $timeZone);
 	}
 
@@ -198,7 +198,7 @@ class DateTimeField {
 		if(empty($user)) {
 			$user = $current_user;
 		}
-		$timeZone = $user->time_zone ? $user->time_zone : $default_timezone;
+		$timeZone = $user->time_zone ?: $default_timezone;
 		$value = self::sanitizeDate($value, $user);
 		return DateTimeField::convertTimeZone($value, $timeZone, self::getDBTimeZone() );
 	}
