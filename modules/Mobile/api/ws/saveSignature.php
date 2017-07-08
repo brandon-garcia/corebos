@@ -11,11 +11,11 @@
 
 class WS_saveSignature extends crmtogo_WS_Controller {
 	
-	function process(crmtogo_API_Request $request) {
+	public function process(crmtogo_API_Request $request) {
 		return $this->getContent($request);
 	}
 	
-	function getContent(crmtogo_API_Request $request) {
+	public function getContent(crmtogo_API_Request $request) {
 		include_once 'include/Webservices/Create.php';
 		include_once 'include/Webservices/Query.php';
 		$signature = $request->get('signature');

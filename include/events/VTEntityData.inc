@@ -22,7 +22,7 @@ class VTEntityData{
 	 * @param $entityId The id of the entity to load.
 	 * @return The new entity data object.
 	 */
-	static function fromEntityId($adb, $entityId){
+	public static function fromEntityId($adb, $entityId){
 		$obj = new VTEntityData();
 		$obj->entityId = $entityId;
 		$result = $adb->pquery("select setype from vtiger_crmentity where crmid=?", array($entityId));
@@ -50,7 +50,7 @@ class VTEntityData{
 	 * @param $userId The id of the entity to load.
 	 * @return The new entity data object.
 	 */
-	static function fromUserId($adb,$userId){
+	public static function fromUserId($adb, $userId){
 		$obj = new VTEntityData();
 		$obj->entityId = $userId;
 
@@ -72,7 +72,7 @@ class VTEntityData{
 	 * @param $crmEntity The CRMEntity instance.
 	 * @return The new entity data object.
 	 */
-	static function fromCRMEntity($crmEntity){
+	public static function fromCRMEntity($crmEntity){
 		$obj = new VTEntityData();
 		$obj->focus = $crmEntity;
 		$obj->isNew = !(isset($crmEntity->id) && $crmEntity->id != null);
@@ -84,7 +84,7 @@ class VTEntityData{
 	 *
 	 * @return An array representation of the module data.
 	 */
-	function getData(){
+	public function getData(){
 		return $this->focus->column_fields;
 	}
 
@@ -93,7 +93,7 @@ class VTEntityData{
 	 *
 	 * @return The entity id.
 	 */
-	function getId(){
+	public function getId(){
 		return (isset($this->focus->id) ? $this->focus->id : 0);
 	}
 
@@ -102,7 +102,7 @@ class VTEntityData{
 	 *
 	 * @return The module name.
 	 */
-	function getModuleName(){
+	public function getModuleName(){
 		$className =  get_class($this->focus);
 		$importModuleMapping = Array(
 			"ImportLead"=>"Leads",
@@ -127,11 +127,11 @@ class VTEntityData{
 		return $moduleName;
 	}
 
-	function get($fieldName){
+	public function get($fieldName){
 		return $this->focus->column_fields[$fieldName];
 	}
 
-	function set($fieldName, $value){
+	public function set($fieldName, $value){
 		$data = $this->focus->column_fields[$fieldName] = $value;
 	}
 
@@ -140,7 +140,7 @@ class VTEntityData{
 	 * 
 	 * @return True if the object is saved false otherwiser.
 	 */
-	function isSaved(){
+	public function isSaved(){
 		return isset($this->focus->id);
 	}
 
@@ -149,7 +149,7 @@ class VTEntityData{
 	* 
 	* @return True if the object is new, false otherwise.
 	*/
-	function isNew(){
+	public function isNew(){
 		return $this->isNew;
 	}
 
@@ -157,10 +157,10 @@ class VTEntityData{
 	* Check whether the object has been deleted.
 	* @return True if the object has been deleted, false otherwise.
 	*/
-	function isDeleted(){
+	public function isDeleted(){
 		return $this->isDeleted;
 	}
-	function SetDeleted($id){
+	public function SetDeleted($id){
 		$this->isNew=false;
 		$this->isDeleted=true;
 		$this->focus->id=$id;

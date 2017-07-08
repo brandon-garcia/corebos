@@ -11,10 +11,10 @@
 //A collection of util functions for the workflow module
 
 class VTWorkflowUtils {
-	static $userStack;
-	static $loggedInUser;
+	public static $userStack;
+	public static $loggedInUser;
 
-	function __construct() {
+	public function __construct() {
 		global $current_user;
 		if(empty(self::$userStack)) {
 			self::$userStack = array();
@@ -24,7 +24,7 @@ class VTWorkflowUtils {
 	/**
 	 * Check whether the given identifier is valid.
 	 */
-	function validIdentifier($identifier) {
+	public function validIdentifier($identifier) {
 		if (is_string($identifier)) {
 			return preg_match("/^[a-zA-Z][a-zA-Z_0-9]+$/", $identifier);
 		} else {
@@ -37,7 +37,7 @@ class VTWorkflowUtils {
 	 * and make it the $current_user
 	 *
 	 */
-	function adminUser() {
+	public function adminUser() {
         $user = Users::getActiveAdminUser();
 		global $current_user;
 		if (empty(self::$userStack) || count(self::$userStack) == 0) {
@@ -52,7 +52,7 @@ class VTWorkflowUtils {
 	 * Push the logged in user on the user stack
 	 * and make it the $current_user
 	 */
-	function loggedInUser() {
+	public function loggedInUser() {
 		$user = self::$loggedInUser;
 		global $current_user;
 		array_push(self::$userStack, $current_user);
@@ -63,7 +63,7 @@ class VTWorkflowUtils {
 	/**
 	 * Revert to the previous use on the user stack
 	 */
-	function revertUser() {
+	public function revertUser() {
 		global $current_user;
 		if (count(self::$userStack) != 0) {
 			$current_user = array_pop(self::$userStack);
@@ -86,7 +86,7 @@ class VTWorkflowUtils {
 	/**
 	 * The the webservice entity type of an EntityData object
 	 */
-	function toWSModuleName($entityData) {
+	public function toWSModuleName($entityData) {
 		$moduleName = $entityData->getModuleName();
 		if ($moduleName == 'Activity') {
 			$arr = array('Task' => 'Calendar', 'Emails' => 'Emails');
@@ -101,7 +101,7 @@ class VTWorkflowUtils {
 	/**
 	 * Insert redirection script
 	 */
-	function redirectTo($to, $message) {
+	public function redirectTo($to, $message) {
 ?>
 		<script type="text/javascript" charset="utf-8">
 			window.location="<?php echo $to ?>";
@@ -113,7 +113,7 @@ class VTWorkflowUtils {
 	/**
 	 * Check if the current user is admin
 	 */
-	function checkAdminAccess() {
+	public function checkAdminAccess() {
 		global $current_user;
 		return strtolower($current_user->is_admin) === 'on';
 	}
@@ -135,7 +135,7 @@ class VTWorkflowUtils {
 		}
 	}
 
-	function vtGetModules($adb) {
+	public function vtGetModules($adb) {
 		$modules_not_supported = array('PBXManager');
 		$sql = "select distinct vtiger_field.tabid, name
 			from vtiger_field 

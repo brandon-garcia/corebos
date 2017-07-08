@@ -9,24 +9,24 @@
  ******************************************************************************/
 require_once("include/events/SqlResultIterator.inc");
 class VTExpressionsManager{
-	function __construct($adb){
+	public function __construct($adb){
 		$this->adb = $adb;
 	}
 
 	/** Caching logic **/
 	private static $cache = array();
-	static function addToCache($key, $value) {
+	public static function addToCache($key, $value) {
 		self::$cache[$key] = $value;
 	}
-	static function fromCache($key) {
+	public static function fromCache($key) {
 		if(isset(self::$cache[$key])) return self::$cache[$key];
 		return false;
 	}
-	static function clearCache() {
+	public static function clearCache() {
 		self::$cache = array();
 	}
 
-	function fields($moduleName){
+	public function fields($moduleName){
 		global $current_user;
 		$result = vtws_describe($moduleName, $current_user);
 		$fields = $result['fields'];
@@ -37,7 +37,7 @@ class VTExpressionsManager{
 		return $arr;
 	}
 
-	function expressionFunctions() {
+	public function expressionFunctions() {
 		global $adb;
 		$return = array('concat' => 'concat(a,b)', 'time_diffdays(a,b)' => 'time_diffdays(a,b)', 'time_diffdays(a)' => 'time_diffdays(a)', 'time_diff(a,b)' => 'time_diff(a,b)','time_diff(a)' => 'time_diff(a)',
 			'add_days' => 'add_days(datefield, noofdays)', 'sub_days' => 'sub_days(datefield, noofdays)', 'add_time(timefield, minutes)' => 'add_time(timefield, minutes)', 'sub_time(timefield, minutes)' => 'sub_time(timefield, minutes)',

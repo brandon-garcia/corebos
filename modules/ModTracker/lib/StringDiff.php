@@ -1,7 +1,7 @@
 <?php
 class StringDiff {
 
-	static function toHtml($original, $new) {
+	public static function toHtml($original, $new) {
 		return self::htmlDiff($original, $new);
 	}
 
@@ -25,7 +25,7 @@ class StringDiff {
 		Look at original license: http://en.wikipedia.org/wiki/Zlib_License
 	*/
 
-	static function diff($old, $new){
+	public static function diff($old, $new){
 		foreach($old as $oindex => $ovalue){
 			$nkeys = array_keys($new, $ovalue);
 			foreach($nkeys as $nindex){
@@ -45,7 +45,7 @@ class StringDiff {
 			self::diff(array_slice($old, $omax + $maxlen), array_slice($new, $nmax + $maxlen)));
 	}
 
-	static function htmlDiff($old, $new){
+	public static function htmlDiff($old, $new){
 		$diff = self::diff(explode(' ', $old), explode(' ', $new));
 		foreach($diff as $k){
 			if(is_array($k))

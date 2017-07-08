@@ -15,7 +15,7 @@
 
 class evcbrcHandler extends VTEventHandler {
 
-	function handleEvent($eventName, $entityData) {
+	public function handleEvent($eventName, $entityData) {
 
 		if($eventName == 'vtiger.entity.beforesave') {
 			// Entity is about to be saved, take required action
@@ -63,7 +63,7 @@ class evcbrcHandler extends VTEventHandler {
 		}
 	}
 
-	function getEmail($relid) {
+	public function getEmail($relid) {
 		global $adb;
 		$email = '';
 		if (!empty($relid)) {

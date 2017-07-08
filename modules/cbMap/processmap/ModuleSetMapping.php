@@ -28,7 +28,7 @@
  *************************************************************************************************/
 class ModuleSetMapping extends processcbMap {
 
-	function processMap($arguments) {
+	public function processMap($arguments) {
 		$this->convertMap2Array();
 		return $this;
 	}

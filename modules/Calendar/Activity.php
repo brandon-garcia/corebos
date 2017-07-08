@@ -20,28 +20,28 @@ require_once('modules/Calendar/CalendarCommon.php');
 
 // Task is used to store customer information.
 class Activity extends CRMEntity {
-	var $log;
-	var $db;
-	var $table_name = "vtiger_activity";
-	var $table_index= 'activityid';
-	var $reminder_table = 'vtiger_activity_reminder';
-	var $tab_name = Array('vtiger_crmentity','vtiger_activity','vtiger_activitycf');
+	public $log;
+	public $db;
+	public $table_name = "vtiger_activity";
+	public $table_index= 'activityid';
+	public $reminder_table = 'vtiger_activity_reminder';
+	public $tab_name = Array('vtiger_crmentity','vtiger_activity','vtiger_activitycf');
 
-	var $tab_name_index = Array('vtiger_crmentity'=>'crmid','vtiger_activity'=>'activityid','vtiger_seactivityrel'=>'activityid','vtiger_cntactivityrel'=>'activityid','vtiger_salesmanactivityrel'=>'activityid','vtiger_activity_reminder'=>'activity_id','vtiger_recurringevents'=>'activityid','vtiger_activitycf'=>'activityid');
+	public $tab_name_index = Array('vtiger_crmentity'=>'crmid','vtiger_activity'=>'activityid','vtiger_seactivityrel'=>'activityid','vtiger_cntactivityrel'=>'activityid','vtiger_salesmanactivityrel'=>'activityid','vtiger_activity_reminder'=>'activity_id','vtiger_recurringevents'=>'activityid','vtiger_activitycf'=>'activityid');
 
-	var $column_fields = Array();
-	var $sortby_fields = Array('subject','due_date','date_start','smownerid','activitytype','lastname');	//Sorting is added for due date and start date
+	public $column_fields = Array();
+	public $sortby_fields = Array('subject','due_date','date_start','smownerid','activitytype','lastname');	//Sorting is added for due date and start date
 
 	// This is used to retrieve related vtiger_fields from form posts.
-	var $additional_column_fields = Array('assigned_user_name', 'assigned_user_id', 'contactname', 'contact_phone', 'contact_email', 'parent_name');
+	public $additional_column_fields = Array('assigned_user_name', 'assigned_user_id', 'contactname', 'contact_phone', 'contact_email', 'parent_name');
 
 	/**
 	 * Mandatory table for supporting custom fields.
 	 */
-	var $customFieldTable = Array('vtiger_activitycf', 'activityid');
+	public $customFieldTable = Array('vtiger_activitycf', 'activityid');
 
 	// This is the list of vtiger_fields that are in the lists.
-	var $list_fields = Array(
+	public $list_fields = Array(
        'Close'=>Array('activity'=>'status'),
        'Type'=>Array('activity'=>'activitytype'),
        'Subject'=>Array('activity'=>'subject'),
@@ -55,7 +55,7 @@ class Activity extends CRMEntity {
        'Contact Name'=>Array('contactdetails'=>'lastname')
        );
 
-       var $list_fields_name = Array(
+       public $list_fields_name = Array(
        'Close'=>'status',
        'Type'=>'activitytype',
        'Subject'=>'subject',
@@ -70,21 +70,21 @@ class Activity extends CRMEntity {
        'End Date'=>'due_date',
        'End Time'=>'time_end');
 
-	var $list_link_field= 'subject';
+	public $list_link_field= 'subject';
 
 	//Added these variables which are used as default order by and sortorder in ListView
-	var $default_order_by = 'due_date';
-	var $default_sort_order = 'ASC';
+	public $default_order_by = 'due_date';
+	public $default_sort_order = 'ASC';
 
 	//var $groupTable = Array('vtiger_activitygrouprelation','activityid');
 
-	function __construct() {
+	public function __construct() {
 		$this->log = LoggerManager::getLogger('Calendar');
 		$this->db = PearDatabase::getInstance();
 		$this->column_fields = getColumnFields('Calendar');
 	}
 
-	function save_module($module)
+	public function save_module($module)
 	{
 		global $adb;
 		$insertion_mode = $this->mode;
@@ -164,7 +164,7 @@ class Activity extends CRMEntity {
 	/** Function to insert values in vtiger_activity_reminder_popup table for the specified module
 	  * @param $cbmodule -- module:: Type varchar
 	 */
-	function insertIntoActivityReminderPopup($cbmodule) {
+	public function insertIntoActivityReminderPopup($cbmodule) {
 		global $adb;
 
 		$cbrecord = $this->id;
@@ -199,7 +199,7 @@ class Activity extends CRMEntity {
 	  * @param $table_name -- table name:: Type varchar
 	  * @param $module -- module:: Type varchar
 	 */
-	function insertIntoReminderTable($table_name,$module,$recurid)
+	public function insertIntoReminderTable($table_name, $module, $recurid)
 	{
 		global $log;
 		$log->info("in insertIntoReminderTable ".$table_name." module is ".$module);
@@ -240,7 +240,7 @@ class Activity extends CRMEntity {
 /** Function to insert values in vtiger_recurringevents table for the specified tablename,module
   * @param $recurObj -- Recurring Object:: Type varchar
  */
-function insertIntoRecurringTable(& $recurObj)
+public function insertIntoRecurringTable(& $recurObj)
 {
 	global $log,$adb;
 	$log->info("in insertIntoRecurringTable  ");
@@ -320,7 +320,7 @@ function insertIntoRecurringTable(& $recurObj)
 	  * @param $module -- module:: Type varchar
 	  * @param $invitees_array Array
 	 */
-	function insertIntoInviteeTable($module,$invitees_array)
+	public function insertIntoInviteeTable($module, $invitees_array)
 	{
 		global $log,$adb;
 		$log->debug("Entering insertIntoInviteeTable($module,".print_r($invitees_array,true).") method ...");
@@ -342,7 +342,7 @@ function insertIntoRecurringTable(& $recurObj)
 	/** Function to insert values in vtiger_salesmanactivityrel table for the specified module
 	  * @param $module -- module:: Type varchar
 	*/
-	function insertIntoSmActivityRel($module)
+	public function insertIntoSmActivityRel($module)
 	{
 		global $adb, $current_user;
 		if($this->mode == 'edit'){
@@ -388,7 +388,7 @@ function insertIntoRecurringTable(& $recurObj)
 	 * Function to get sort order
 	 * return string $sorder    - sortorder string either 'ASC' or 'DESC'
 	 */
-	function getSortOrder()
+	public function getSortOrder()
 	{
 		global $log;
 		$log->debug("Entering getSortOrder() method ...");
@@ -404,7 +404,7 @@ function insertIntoRecurringTable(& $recurObj)
 	 * Function to get order by
 	 * return string  $order_by    - fieldname(eg: 'subject')
 	 */
-	function getOrderBy()
+	public function getOrderBy()
 	{
 		global $log;
 		$log->debug("Entering getOrderBy() method ...");
@@ -427,7 +427,7 @@ function insertIntoRecurringTable(& $recurObj)
 	 * @param  integer   $id      - activityid
 	 * returns related Contacts record in array format
 	 */
-	function get_contacts($id, $cur_tab_id, $rel_tab_id, $actions=false) {
+	public function get_contacts($id, $cur_tab_id, $rel_tab_id, $actions=false) {
 		global $log, $singlepane_view,$currentModule,$current_user;
 		$log->debug("Entering get_contacts(".$id.") method ...");
 		$this_module = $currentModule;
@@ -462,7 +462,7 @@ function insertIntoRecurringTable(& $recurObj)
 	 * @param  integer   $id      - activityid
 	 * returns related Users record in array format
 	 */
-	function get_users($id) {
+	public function get_users($id) {
 		global $log, $app_strings;
 		$log->debug("Entering get_contacts(".$id.") method ...");
 
@@ -488,7 +488,7 @@ function insertIntoRecurringTable(& $recurObj)
 	 * @param  string   $user_name        - User Name
 	 * return  integer  $row["count(*)"]  - count
 	 */
-	function getCount_Meeting($user_name) {
+	public function getCount_Meeting($user_name) {
 		global $log;
 		$log->debug("Entering getCount_Meeting(".$user_name.") method ...");
 		$query = "select count(*) from vtiger_activity inner join vtiger_crmentity on vtiger_crmentity.crmid=vtiger_activity.activityid inner join vtiger_salesmanactivityrel on vtiger_salesmanactivityrel.activityid=vtiger_activity.activityid inner join vtiger_users on vtiger_users.id=vtiger_salesmanactivityrel.smid where user_name=? and vtiger_crmentity.deleted=0 and vtiger_activity.activitytype='Meeting'";
@@ -504,7 +504,7 @@ function insertIntoRecurringTable(& $recurObj)
 	 * @param  string   $user_name        - User Name
 	 * return  integer  $row["count(*)"]  - count
 	 */
-	function getCount($user_name) {
+	public function getCount($user_name) {
 		global $log;
 		$log->debug("Entering getCount(".$user_name.") method ...");
 		$query = "select count(*) from vtiger_activity inner join vtiger_crmentity on vtiger_crmentity.crmid=vtiger_activity.activityid inner join vtiger_salesmanactivityrel on vtiger_salesmanactivityrel.activityid=vtiger_activity.activityid inner join vtiger_users on vtiger_users.id=vtiger_salesmanactivityrel.smid where user_name=? and vtiger_crmentity.deleted=0 and vtiger_activity.activitytype='Task'";
@@ -523,7 +523,7 @@ function insertIntoRecurringTable(& $recurObj)
 	 * @param  integer   $recurid         - recuring eventid
 	 * @param  string    $remindermode    - string like 'edit'
 	 */
-	function activity_reminder($activity_id,$reminder_time,$reminder_sent=0,$recurid,$remindermode='')
+	public function activity_reminder($activity_id, $reminder_time, $reminder_sent=0, $recurid, $remindermode='')
 	{
 		global $log;
 		$log->debug("Entering vtiger_activity_reminder(".$activity_id.",".$reminder_time.",".$reminder_sent.",".$recurid.",".$remindermode.") method ...");
@@ -565,7 +565,7 @@ function insertIntoRecurringTable(& $recurObj)
 	* @param   string    $username     -  User name
 	* return   string    $query        -  sql query
 	*/
-	function get_tasksforol($username)
+	public function get_tasksforol($username)
 	{
 		global $log,$adb;
 		$log->debug("Entering get_tasksforol(".$username.") method ...");
@@ -624,7 +624,7 @@ function insertIntoRecurringTable(& $recurObj)
 	* @param   string    $username     -  User name
 	* @return  string    $query        -  sql query
 	*/
-	function get_calendarsforol($user_name)
+	public function get_calendarsforol($user_name)
 	{
 		global $log,$adb,$current_user;
 		$log->debug("Entering get_calendarsforol(".$user_name.") method ...");
@@ -694,7 +694,7 @@ function insertIntoRecurringTable(& $recurObj)
 	}
 
 	// Function to unlink all the dependent entities of the given Entity by Id
-	function unlinkDependencies($module, $id) {
+	public function unlinkDependencies($module, $id) {
 		global $log;
 
 		$sql = 'DELETE FROM vtiger_activity_reminder WHERE activity_id=?';
@@ -707,7 +707,7 @@ function insertIntoRecurringTable(& $recurObj)
 	}
 
 	// Function to unlink an entity with given Id from another entity
-	function unlinkRelationship($id, $return_module, $return_id) {
+	public function unlinkRelationship($id, $return_module, $return_id) {
 		global $log;
 		if(empty($return_module) || empty($return_id)) return;
 
@@ -731,7 +731,7 @@ function insertIntoRecurringTable(& $recurObj)
 	 * @param string $status - the status of the activity flag to set
 	 * @return:: true if successful; false otherwise
 	 */
-	function setActivityReminder($status){
+	public function setActivityReminder($status){
 		global $adb;
 		if($status == "on"){
 			$flag = 0;
@@ -750,7 +750,7 @@ function insertIntoRecurringTable(& $recurObj)
 	 * @param - $secmodule secondary module name
 	 * returns the array with table names and fieldnames storing relations between module and this module
 	 */
-	function setRelationTables($secmodule){
+	public function setRelationTables($secmodule){
 		$rel_tables = array (
 			"Contacts" => array("vtiger_cntactivityrel"=>array("activityid","contactid"),"vtiger_activity"=>"activityid"),
 			"Leads" => array("vtiger_seactivityrel"=>array("activityid","crmid"),"vtiger_activity"=>"activityid"),
@@ -766,7 +766,7 @@ function insertIntoRecurringTable(& $recurObj)
 	 * @param - $secmodule secondary module name
 	 * returns the query string formed on fetching the related data for report for secondary module
 	 */
-	function generateReportsSecQuery($module,$secmodule){
+	public function generateReportsSecQuery($module, $secmodule){
 		$query = $this->getRelationQuery($module,$secmodule,"vtiger_activity","activityid");
 		$query .=" left join vtiger_crmentity as vtiger_crmentityCalendar on vtiger_crmentityCalendar.crmid=vtiger_activity.activityid and vtiger_crmentityCalendar.deleted=0
 				left join vtiger_cntactivityrel on vtiger_cntactivityrel.activityid= vtiger_activity.activityid

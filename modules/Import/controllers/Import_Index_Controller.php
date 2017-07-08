@@ -14,7 +14,7 @@ require_once 'modules/Import/ui/Viewer.php';
 
 class Import_Index_Controller {
 
-	static $_cached_module_meta;
+	public static $_cached_module_meta;
 
 	public function __construct() {
 	}

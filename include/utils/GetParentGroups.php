@@ -14,13 +14,13 @@
  */
 class GetParentGroups { 
 
-	var $parent_groups=Array();
+	public $parent_groups=Array();
 
 	/** to get all the parent vtiger_groups of the specified group
 	 * @params $groupId --> Group Id :: Type Integer
          * @returns updates the parent group in the varibale $parent_groups of the class
          */
-	function getAllParentGroups($groupid)
+	public function getAllParentGroups($groupid)
 	{
 		global $adb,$log;
 		$log->debug("Entering getAllParentGroups(".$groupid.") method...");

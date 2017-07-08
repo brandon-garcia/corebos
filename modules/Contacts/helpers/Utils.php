@@ -92,7 +92,7 @@ class Google_Utils_Helper {
      * @param <array> $options any extra parameter add to url
      * @return string callback url
      */
-    static function getCallbackUrl($request, $options = array()) {
+    public static function getCallbackUrl($request, $options = array()) {
         global $site_URL;
 
         $callback = rtrim($site_URL, '/') . "/index.php?module=" . $request['module'] . "&view=List&sourcemodule=" . $request['sourcemodule'];
@@ -102,7 +102,7 @@ class Google_Utils_Helper {
         return $callback;
     }
 
-    static function hasSettingsForUser($userId) {
+    public static function hasSettingsForUser($userId) {
         $db = PearDatabase::getInstance();
         $sql = 'SELECT 1 FROM ' . self::settings_table_name . ' WHERE user = ?';
         $result = $db->pquery($sql, array($userId));
@@ -112,7 +112,7 @@ class Google_Utils_Helper {
         return false;
     }
 
-    static function saveSettings($request) {
+    public static function saveSettings($request) {
         $db = PearDatabase::getInstance();
 //        $user = Users_Record_Model::getCurrentUserModel();
         global $current_user;
@@ -132,7 +132,7 @@ class Google_Utils_Helper {
         }
     }
 
-    static function saveFieldMappings($sourceModule, $fieldMappings) {
+    public static function saveFieldMappings($sourceModule, $fieldMappings) {
         $db = PearDatabase::getInstance();
 //        $user = Users_Record_Model::getCurrentUserModel();
         global $current_user;
@@ -160,7 +160,7 @@ class Google_Utils_Helper {
         $db->pquery($sql,$sqlParams);
     }
 
-    static function getSelectedContactGroupForUser($user = false) {
+    public static function getSelectedContactGroupForUser($user = false) {
         global $current_user;
 
         $user = $current_user;
@@ -175,7 +175,7 @@ class Google_Utils_Helper {
         }
     }
 
-    static function getSyncDirectionForUser($user = false) {
+    public static function getSyncDirectionForUser($user = false) {
         global $current_user;
         $user = $current_user;
         if(!Google_Utils_Helper::hasSettingsForUser($user->id)) {
@@ -188,7 +188,7 @@ class Google_Utils_Helper {
         }
     }
 
-    static function getFieldMappingForUser($user = false) {
+    public static function getFieldMappingForUser($user = false) {
         global $current_user;
         $user = $current_user;
         $db = PearDatabase::getInstance();

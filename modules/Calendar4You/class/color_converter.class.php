@@ -10,7 +10,7 @@ last updated: Sept 18, 2010
 
 class colorConverter {
 
-	function Hexa($dec) { // convert dec to hex
+	public function Hexa($dec) { // convert dec to hex
 
 		if($dec<0 || $dec>255) {
 			return false;
@@ -25,7 +25,7 @@ class colorConverter {
 
 	}
 
-	function Deci($hex) { // convert hex to dec
+	public function Deci($hex) { // convert hex to dec
 
 		$HEXpar = preg_split('//','0123456789abcdef',-1,PREG_SPLIT_NO_EMPTY);
 		
@@ -64,7 +64,7 @@ class colorConverter {
 
 	}
 
-	function isRGB($R,$G,$B) { // check validity of RGB color code
+	public function isRGB($R, $G, $B) { // check validity of RGB color code
 
 		if($this->Hexa($R)==false || $this->Hexa($G)==false || $this->Hexa($B)==false) {
 
@@ -96,7 +96,7 @@ class colorConverter {
 
 	}
 
-	function isHEX($HEX) { // check validity of HEX color code
+	public function isHEX($HEX) { // check validity of HEX color code
 
 		$HEX = strtolower(str_replace('#','',$HEX));
 		$HEX = preg_split('//',$HEX,-1,PREG_SPLIT_NO_EMPTY);
@@ -151,7 +151,7 @@ class colorConverter {
 
 	}
 
-	function isHSL($H,$S,$L) { // check validity of HSL color code
+	public function isHSL($H, $S, $L) { // check validity of HSL color code
 
 		if(($H<0 || $S<0 || $L<0) || ($H>360 || $S>100 || $L>100)) {
 			$this->HSLError = 1;
@@ -180,7 +180,7 @@ class colorConverter {
 
 	}
 
-	function RGB2HEX($R,$G,$B) { // convert RGB to HEX color
+	public function RGB2HEX($R, $G, $B) { // convert RGB to HEX color
 
 		$this->isRGB($R,$G,$B);
 
@@ -212,7 +212,7 @@ class colorConverter {
 		}
 	}
 
-	function HEX2RGB($HEX) { // convert HEX to RGB color
+	public function HEX2RGB($HEX) { // convert HEX to RGB color
 
 		$this->isHEX($HEX);
 
@@ -240,7 +240,7 @@ class colorConverter {
 
 	}
 
-	function RGB2HSL($R,$G,$B) { // convert RGB to HSL color; adapted from www.easyrgb.com
+	public function RGB2HSL($R, $G, $B) { // convert RGB to HSL color; adapted from www.easyrgb.com
 
 		$this->isRGB($R,$G,$B);
 
@@ -301,7 +301,7 @@ class colorConverter {
 
 	}	
 
-	function HSL2RGB($H,$S,$L) { // convert HSL to RGB color; adapted from www.easyrgb.com
+	public function HSL2RGB($H, $S, $L) { // convert HSL to RGB color; adapted from www.easyrgb.com
 
 		$this->isHSL($H,$S,$L);
 
@@ -342,7 +342,7 @@ class colorConverter {
 
 	}
 
-	function Hue2RGB($temp1,$temp2,$temp3) { // part of HSL2RGB function
+	public function Hue2RGB($temp1, $temp2, $temp3) { // part of HSL2RGB function
 
 		if($temp3<0) {
 			$temp3 = $temp3+1;
@@ -363,7 +363,7 @@ class colorConverter {
 
 	}
 
-	function HEX2HSL($HEX) { // convert HEX to HSL color
+	public function HEX2HSL($HEX) { // convert HEX to HSL color
 
 		$this->isHEX($HEX);
 
@@ -377,7 +377,7 @@ class colorConverter {
 
 	}
 
-	function HSL2HEX($H,$S,$L) { // convert HSL to HEX color
+	public function HSL2HEX($H, $S, $L) { // convert HSL to HEX color
 
 		$this->isHSL($H,$S,$L);
 

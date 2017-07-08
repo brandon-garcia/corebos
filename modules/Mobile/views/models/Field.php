@@ -12,21 +12,21 @@
 class crmtogo_UI_FieldModel {
 	private $data; 
 	
-	function initData($fieldData) {
+	public function initData($fieldData) {
 		$this->data = $fieldData;
 	}
 	
-	function uitype() {
+	public function uitype() {
 		return $this->data['uitype'];
 	}
 	
 	
-	function name() {
+	public function name() {
 		return $this->data['name'];
 	}
 	
 	
-	function value() {
+	public function value() {
 		global $current_user;
 		if ($this->data['uitype'] == '15' || $this->data['uitype'] == '33' || ($this->data['uitype'] == '16' and $this->data['name'] !='recurringtype' and $this->data['name'] !='duration_minutes' and $this->data['name'] !='visibility' )) {  
 			$rawValue = $this->data['type']['value'];
@@ -59,18 +59,18 @@ class crmtogo_UI_FieldModel {
 		
 	}
 	
-	function valueLabel() {
+	public function valueLabel() {
 		$rawValue = $this->data['value'];
 		if (is_array($rawValue)) return $rawValue['label'];
 		return $rawValue;
 	}
 	
 	
-	function label() {
+	public function label() {
 		return $this->data['label'];
 	}
 	
-	function isReferenceType() {
+	public function isReferenceType() {
 		static $options = array('101', '116', '357',
 			'50', '51', '52', '53', '57', '59', '66',
 			'73', '75', '76', '77', '78', '80', '81'
@@ -90,7 +90,7 @@ class crmtogo_UI_FieldModel {
 		return $this->isMultiReferenceType();
 	}
 	
-	function isMultiReferenceType() {
+	public function isMultiReferenceType() {
 		static $options = array('10', '68');
 		
 		$uitype = $this->data['uitype'];
@@ -100,7 +100,7 @@ class crmtogo_UI_FieldModel {
 		return false;
 	}
 	
-	static function buildModelsFromResponse($fields) {
+	public static function buildModelsFromResponse($fields) {
 		$instances = array();
 
 		foreach($fields as $fieldData) {
@@ -111,16 +111,16 @@ class crmtogo_UI_FieldModel {
 		return $instances;
 	}
 
-	function typeofdata() {
+	public function typeofdata() {
 		return $this->data['typeofdata'];
 	}
 	
 	// added for crmtogo_WS_Utils::getEntityName
-	function relatedmodule() {
+	public function relatedmodule() {
 		return $this->data['relatedmodule'];
 	}
 	
-	function ismandatory() {
+	public function ismandatory() {
 		$type_array = explode( '~',$this->data['typeofdata']);
 		if ($type_array[1]=='M') {
 			return 'M';
@@ -130,11 +130,11 @@ class crmtogo_UI_FieldModel {
 		}
 	}
 
-	function quickcreate() {
+	public function quickcreate() {
 		return $this->data['quickcreate'];
 	}
 
-	function displaytype() {
+	public function displaytype() {
 		return $this->data['displaytype'];
 	}
 }

@@ -14,15 +14,15 @@ require_once('include/utils/GetParentGroups.php');
 
 class GetGroupUsers {
 
-	var $group_users=array();
-	var $group_subgroups=array();
+	public $group_users=array();
+	public $group_subgroups=array();
 
 	/** to get all the vtiger_users and vtiger_groups of the specified group
 	 * @params $groupId --> Group Id :: Type Integer
 	 * @returns the vtiger_users present in the group in the variable $parent_groups of the class
 	 * @returns the sub vtiger_groups present in the group in the variable $group_subgroups of the class
 	 */
-	function getAllUsersInGroup($groupid)
+	public function getAllUsersInGroup($groupid)
 	{
 		global $adb,$log;
 		$log->debug("Entering getAllUsersInGroup(".$groupid.") method...");

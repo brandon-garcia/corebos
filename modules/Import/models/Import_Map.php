@@ -10,9 +10,9 @@
 
 class Import_Map {
 
-	static $tableName = 'vtiger_import_maps';
-	var $map;
-	var $user;
+	public static $tableName = 'vtiger_import_maps';
+	public $map;
+	public $user;
 
 	public function  __construct($map, $user) {
 		$this->map = $map;

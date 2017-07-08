@@ -19,14 +19,14 @@ class MailManager_DraftController extends MailManager_Controller {
      * Function to process request, currently not used
      * @param MailManager_Request $request
      */
-	function process(MailManager_Request $request) {
+	public function process(MailManager_Request $request) {
 	}
 
     /**
      * Returns a List of search strings on the internal vtiger Drafts
      * @return Array of vtiger Email Fields
      */
-	static function getSearchOptions(){
+	public static function getSearchOptions(){
 		$options = array('subject'=>'SUBJECT', 'saved_toid'=>'TO','description'=>'BODY','bccmail'=>'BCC','ccmail'=>'CC');
 		return $options;
 	}
@@ -35,7 +35,7 @@ class MailManager_DraftController extends MailManager_Controller {
      * Function which returns the Draft Model
      * @return MailManager_Model_DraftEmail
      */
-	function connectorWithModel() {
+	public function connectorWithModel() {
 		if ($this->mMailboxModel === false) {
 			$this->mMailboxModel = MailManager_Model_DraftEmail::getInstance();
 		}

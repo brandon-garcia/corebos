@@ -24,14 +24,14 @@ class ModTracker {
 	public static $__cache_modtracker = array();
 
 	/* Entry point will invoke this function no need to act on */
-	function track_view($user_id, $current_module,$id='') {}
+	public function track_view($user_id, $current_module, $id='') {}
 
 	/**
 	* Invoked when special actions are performed on the module.
 	* @param String Module name
 	* @param String Event Type
 	*/
-	function vtlib_handler($moduleName, $eventType) {
+	public function vtlib_handler($moduleName, $eventType) {
 		global $adb, $currentModule;
 
 		$modtrackerModule = Vtiger_Module::getInstance($currentModule);
@@ -76,7 +76,7 @@ class ModTracker {
 	/**
 	 * function gives an array of module names for which modtracking is enabled
 	*/
-	function getModTrackerEnabledModules() {
+	public function getModTrackerEnabledModules() {
 		global $adb;
 		$moduleResult = $adb->pquery('SELECT * FROM vtiger_modtracker_tabs', array());
 		for($i=0; $i<$adb->num_rows($moduleResult); $i++) {
@@ -94,7 +94,7 @@ class ModTracker {
 	 *Invoked to disable tracking for the module.
 	 * @param Integer $tabid
 	 */
-	static function disableTrackingForModule($tabid){
+	public static function disableTrackingForModule($tabid){
 		global $adb;
 		if(!self::isModulePresent($tabid)){
 				$res=$adb->pquery("INSERT INTO vtiger_modtracker_tabs VALUES(?,?)",array($tabid,0));
@@ -113,7 +113,7 @@ class ModTracker {
 	 *Invoked to enable tracking for the module.
 	 * @param Integer $tabid
 	 */
-	static function enableTrackingForModule($tabid){
+	public static function enableTrackingForModule($tabid){
 		global $adb;
 		if(!self::isModulePresent($tabid)){
 			$res=$adb->pquery("INSERT INTO vtiger_modtracker_tabs VALUES(?,?)",array($tabid,1));
@@ -133,7 +133,7 @@ class ModTracker {
 	 *Invoked to check if tracking is enabled or disabled for the module.
 	 * @param String $modulename
 	 */
-	static function isTrackingEnabledForModule($modulename){
+	public static function isTrackingEnabledForModule($modulename){
 		global $adb;
 		$tabid = getTabid($modulename);
 		if(!self::getVisibilityForModule($tabid)) {
@@ -157,7 +157,7 @@ class ModTracker {
 	 *Invoked to check if the module is present in the table or not.
 	 * @param Integer $tabid
 	 */
-	static function isModulePresent($tabid){
+	public static function isModulePresent($tabid){
 		global $adb;
 		if(!self::checkModuleInModTrackerCache($tabid)){
 			$query=$adb->pquery("SELECT * FROM vtiger_modtracker_tabs WHERE tabid = ?",array($tabid));
@@ -177,7 +177,7 @@ class ModTracker {
 	 *Invoked to check if ModTracker links are enabled for the module.
 	 * @param Integer $tabid
 	 */
-	static function isModtrackerLinkPresent($tabid){
+	public static function isModtrackerLinkPresent($tabid){
 		global $adb;
 		$query1=$adb->pquery("SELECT * FROM vtiger_links WHERE linktype='DETAILVIEWBASIC' AND
 							linklabel = 'View History' AND tabid = ?",array($tabid));
@@ -193,7 +193,7 @@ class ModTracker {
 	 * @param Integer $tabid
 	 * @param Boolean $visible
 	 */
-	static function updateCache($tabid,$visible){
+	public static function updateCache($tabid, $visible){
 		self::$__cache_modtracker[$tabid] = array(
 			'tabid'   => $tabid,
 			'visible' => $visible
@@ -204,7 +204,7 @@ class ModTracker {
 	 *Invoked to check the ModTracker cache.
 	 * @param Integer $tabid
 	 */
-	static function checkModuleInModTrackerCache($tabid){
+	public static function checkModuleInModTrackerCache($tabid){
 		if(isset(self::$__cache_modtracker[$tabid])) {
 			return true;
 		} else
@@ -215,7 +215,7 @@ class ModTracker {
 	 *Invoked to fetch the visibility for the module from the cache.
 	 * @param Integer $tabid
 	 */
-	static function getVisibilityForModule($tabid){
+	public static function getVisibilityForModule($tabid){
 		if(isset(self::$__cache_modtracker[$tabid])) {
 			return self::$__cache_modtracker[$tabid]['visible'];
 		}
@@ -228,7 +228,7 @@ class ModTracker {
 	 * @param <type> $user
 	 * @param <type> $limit
 	 */
-	function getChangedRecords($uniqueId, $mtime, $limit = 100) {
+	public function getChangedRecords($uniqueId, $mtime, $limit = 100) {
 		global $current_user, $adb;
 		$datetime = date('Y-m-d H:i:s', $mtime);
 		$accessibleModules = $this->getModTrackerEnabledModules();
@@ -325,7 +325,7 @@ class ModTracker {
 		return $output;
 	}
 
-	static function getRecordFieldChanges($crmid, $time) {
+	public static function getRecordFieldChanges($crmid, $time) {
 		global $adb;
 		$date = date('Y-m-d H:i:s', $time);
 
@@ -344,7 +344,7 @@ class ModTracker {
 		return $fields;
 	}
 
-	static function isViewPermitted($linkData) {
+	public static function isViewPermitted($linkData) {
 		$moduleName = $linkData->getModule();
 		$recordId = $linkData->getInputParameter('record');
 		if(isPermitted($moduleName, 'DetailView', $recordId) == 'yes') {

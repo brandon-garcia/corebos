@@ -13,7 +13,7 @@ include_once dirname(__FILE__) . '/models/SearchFilter.php';
 		
 class crmtogo_UI_GlobalSearch extends crmtogo_WS_ListModuleRecords {
 	
-	function cachedModule($moduleName) {
+	public function cachedModule($moduleName) {
 		$modules = $this->sessionGet('_MODULES'); // Should be available post login
 		foreach($modules as $module) {
 			if ($module->name() == $moduleName) return $module;
@@ -22,12 +22,12 @@ class crmtogo_UI_GlobalSearch extends crmtogo_WS_ListModuleRecords {
 	}
 	
 	/** For search capability */
-	function cachedSearchFields($module) {
+	public function cachedSearchFields($module) {
 		$cachekey = "_MODULE.{$module}.SEARCHFIELDS";
 		return $this->sessionGet($cachekey, false);
 	}
 	
-	function getSearchFilterModel($module, $search) {
+	public function getSearchFilterModel($module, $search) {
 		$searchFilter = false;
 		if (!empty($search)) {
 			$criterias = array('search' => $search, 'fieldnames' => $this->cachedSearchFields($module));
@@ -38,7 +38,7 @@ class crmtogo_UI_GlobalSearch extends crmtogo_WS_ListModuleRecords {
 	}
 	/** END */
 	
-	function process(crmtogo_API_Request $request) {
+	public function process(crmtogo_API_Request $request) {
 		$db = PearDatabase::getInstance();
 		$displayed_modules=  $this->getUserConfigModuleSettings();
 		$searchmodule = array ();

@@ -22,7 +22,7 @@ class WSAPP_VtigerConnector extends WSAPP_BaseConnector {
 	protected $db;
 	protected $nextSyncSate;
 
-	function __construct() {
+	public function __construct() {
 		$this->db = PearDatabase::getInstance();
 	}
 
@@ -83,12 +83,12 @@ class WSAPP_VtigerConnector extends WSAPP_BaseConnector {
 		return $syncStateModel;
 	}
 
-	function registerWithTracker() {
+	public function registerWithTracker() {
 		global $current_user;
 		return wsapp_register($this->getSyncTrackerHandlerName(), $this->getSynchronizeController()->getSyncType(), $current_user);
 	}
 
-	function updateSyncState(WSAPP_SyncStateModel $syncStateModel) {
+	public function updateSyncState(WSAPP_SyncStateModel $syncStateModel) {
 		$encodedValues = json_encode(array('synctrackerid' => $syncStateModel->getSyncTrackerId(), 'synctoken' => $syncStateModel->getSyncToken(), 'more' => $syncStateModel->get('more')));
 		$query = 'INSERT INTO vtiger_wsapp_sync_state(stateencodedvalues,name,userid) VALUES (?,?,?)';
 		$parameters = array($encodedValues, $this->getName(), $this->getSynchronizeController()->user->id);
@@ -110,7 +110,7 @@ class WSAPP_VtigerConnector extends WSAPP_BaseConnector {
 		return false;
 	}
 
-	function isSyncStateExists() {
+	public function isSyncStateExists() {
 		$result = null;
 		if($this->getSynchronizeController()->getSyncType() == "app"){
 			$result = $this->db->pquery('SELECT 1 FROM vtiger_wsapp_sync_state where name=?', array($this->getName()));

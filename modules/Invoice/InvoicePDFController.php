@@ -11,7 +11,7 @@
 include_once 'include/InventoryPDFController.php';
 
 class Vtiger_InvoicePDFController extends Vtiger_InventoryPDFController{
-	function buildHeaderModelTitle() {
+	public function buildHeaderModelTitle() {
 		$singularModuleNameKey = 'SINGLE_'.$this->moduleName;
 		$translatedSingularModuleLabel = getTranslatedString($singularModuleNameKey, $this->moduleName);
 		if($translatedSingularModuleLabel == $singularModuleNameKey) {
@@ -20,7 +20,7 @@ class Vtiger_InvoicePDFController extends Vtiger_InventoryPDFController{
 		return sprintf("%s: %s", $translatedSingularModuleLabel, $this->focusColumnValue('invoice_no'));
 	}
 
-	function buildHeaderModelColumnCenter() {
+	public function buildHeaderModelColumnCenter() {
 		$customerName = $this->resolveReferenceLabel($this->focusColumnValue('account_id'), 'Accounts');
 		$contactName = $this->resolveReferenceLabel($this->focusColumnValue('contact_id'), 'Contacts');
 		$purchaseOrder = $this->focusColumnValue('vtiger_purchaseorder');
@@ -40,7 +40,7 @@ class Vtiger_InvoicePDFController extends Vtiger_InventoryPDFController{
 		return $modelColumnCenter;
 	}
 
-	function buildHeaderModelColumnRight() {
+	public function buildHeaderModelColumnRight() {
 		$issueDateLabel = getTranslatedString('Issued Date', $this->moduleName);
 		$validDateLabel = getTranslatedString('Due Date', $this->moduleName);
 		$billingAddressLabel = getTranslatedString('Billing Address', $this->moduleName);
@@ -57,7 +57,7 @@ class Vtiger_InvoicePDFController extends Vtiger_InventoryPDFController{
 		return $modelColumnRight;
 	}
 
-	function getWatermarkContent() {
+	public function getWatermarkContent() {
 		return $this->focusColumnValue('invoicestatus');
 	}
 }

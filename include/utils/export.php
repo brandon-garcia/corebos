@@ -258,14 +258,14 @@ exit;
  * this is to make sure that the data is sanitized before sending for export
  */
 class ExportUtils{
-	var $fieldsArr = array();
-	var $picklistValues = array();
+	public $fieldsArr = array();
+	public $picklistValues = array();
 
-	function __construct($module, $fields_array){
+	public function __construct($module, $fields_array){
 		self::__init($module, $fields_array);
 	}
 
-	function __init($module, $fields_array){
+	public function __init($module, $fields_array){
 		$infoArr = self::getInformationArray($module);
 		//attach extra fields related information to the fields_array; this will be useful for processing the export data
 		foreach($infoArr as $fieldname=>$fieldinfo){
@@ -279,7 +279,7 @@ class ExportUtils{
 	 * this function takes in an array of values for an user and sanitizes it for export
 	 * @param array $arr - the array of values
 	 */
-	function sanitizeValues($arr){
+	public function sanitizeValues($arr){
 		global $current_user, $adb;
 		$roleid = fetchUserRole($current_user->id);
 		$decimal = $current_user->currency_decimal_separator;
@@ -329,7 +329,7 @@ class ExportUtils{
 	/**
 	 * this function takes in a module name and returns the field information for it
 	 */
-	function getInformationArray($module){
+	public function getInformationArray($module){
 		require_once 'include/utils/utils.php';
 		global $adb;
 		$tabid = getTabid($module);

@@ -19,7 +19,7 @@ include_once 'include/QueryGenerator/QueryGenerator.php';
 
 class Webform_Capture {
 
-	function captureNow($request,$server) {
+	public function captureNow($request, $server) {
 		global $adb;
 		$returnURL = false;
 		try {

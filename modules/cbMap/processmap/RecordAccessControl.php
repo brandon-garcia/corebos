@@ -81,7 +81,7 @@ class RecordAccessControl extends processcbMap {
 	private $moduleid = 0;
 	private $relatedid = 0;
 
-	function processMap($arguments) {
+	public function processMap($arguments) {
 		$this->convertMap2Array();
 		return $this;
 	}
@@ -164,7 +164,7 @@ class RecordAccessControl extends processcbMap {
 		return $cmap;
 	}
 
-	function getMap2Use($map2use) {
+	public function getMap2Use($map2use) {
 		if (!empty($map2use['condition']['cmapid'])) {
 			$focus = new cbMap();
 			$focus->id = $map2use['condition']['cmapid'];

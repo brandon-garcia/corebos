@@ -11,11 +11,11 @@
 
 class crmtogo_WS_AddComment extends crmtogo_WS_Controller {
 	
-	function process(crmtogo_API_Request $request) {
+	public function process(crmtogo_API_Request $request) {
 		return $this->getContent($request);
 	}
 	
-	function getContent(crmtogo_API_Request $request) {
+	public function getContent(crmtogo_API_Request $request) {
 		$comment = $request->get('comment');
 		$parentid = $request->get('parentid');
 		if (isset($comment) && !empty($comment)) {

@@ -12,19 +12,19 @@ include_once dirname(__FILE__) . '/models/SearchFilter.php';
 
 class crmtogo_WS_ListModuleRecords extends crmtogo_WS_Controller {
 
-	function isCalendarModule($module) {
+	public function isCalendarModule($module) {
 		return ($module == 'Events' || $module == 'Calendar');
 	}
 	
-	function getSearchFilterModel($module, $search) {
+	public function getSearchFilterModel($module, $search) {
 		return crmtogo_WS_SearchFilterModel::modelWithCriterias($module, json_decode($search,true));
 	}
 
-	function process(crmtogo_API_Request $request) {
+	public function process(crmtogo_API_Request $request) {
 		return $this->processSearchRecordLabel($request);
 	}
 
-	function processSearchRecordLabel(crmtogo_API_Request $request) {
+	public function processSearchRecordLabel(crmtogo_API_Request $request) {
 		$current_user = $this->getActiveUser();
 		$module = $request->get('module');
 		$alertid = $request->get('alertid');
@@ -100,7 +100,7 @@ class crmtogo_WS_ListModuleRecords extends crmtogo_WS_Controller {
 		return $response;
 	}
 
-	function processSearchRecordLabelForCalendar(crmtogo_API_Request $request, $paging = false) {
+	public function processSearchRecordLabelForCalendar(crmtogo_API_Request $request, $paging = false) {
 		$current_user = $this->getActiveUser();
 		
 		// Fetch both Calendar (Todo) and Event information
@@ -165,7 +165,7 @@ class crmtogo_WS_ListModuleRecords extends crmtogo_WS_Controller {
 		return $response;
 	}
 
-	function fetchRecordLabelsForModule($module, $user, $morefields=array(), $filterOrAlertInstance=false, $paging = false, $calfilter='') {
+	public function fetchRecordLabelsForModule($module, $user, $morefields=array(), $filterOrAlertInstance=false, $paging = false, $calfilter='') {
 		if($this->isCalendarModule($module)) {
 			$fieldnames = crmtogo_WS_Utils::getEntityFieldnames('Calendar');
 		} 
@@ -183,7 +183,7 @@ class crmtogo_WS_ListModuleRecords extends crmtogo_WS_Controller {
 		return $this->queryToSelectFilteredRecords($module, $fieldnames, $filterOrAlertInstance, $paging,$calfilter);
 	}
 
-	function queryToSelectFilteredRecords($module, $fieldnames, $filterOrAlertInstance, $paging,$calfilter='') {
+	public function queryToSelectFilteredRecords($module, $fieldnames, $filterOrAlertInstance, $paging, $calfilter='') {
 		if ($filterOrAlertInstance instanceof crmtogo_WS_SearchFilterModel) {
 			if (($module == 'Calendar' || $module == 'Events') and $calfilter !='') {
 				return $filterOrAlertInstance->execute($fieldnames, $paging,$calfilter);

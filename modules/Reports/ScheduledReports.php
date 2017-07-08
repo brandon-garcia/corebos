@@ -12,20 +12,20 @@ require_once 'modules/Reports/ReportRun.php';
 
 class VTScheduledReport extends Reports {
 
-	var $db;
-	var $user;
+	public $db;
+	public $user;
 
-	var $isScheduled = false;
-	var $scheduledInterval = null;
-	var $scheduledFormat = null;
-	var $scheduledRecipients = null;
+	public $isScheduled = false;
+	public $scheduledInterval = null;
+	public $scheduledFormat = null;
+	public $scheduledRecipients = null;
 
-	static $SCHEDULED_HOURLY = 1;
-	static $SCHEDULED_DAILY = 2;
-	static $SCHEDULED_WEEKLY = 3;
-	static $SCHEDULED_BIWEEKLY = 4;
-	static $SCHEDULED_MONTHLY = 5;
-	static $SCHEDULED_ANNUALLY = 6;
+	public static $SCHEDULED_HOURLY = 1;
+	public static $SCHEDULED_DAILY = 2;
+	public static $SCHEDULED_WEEKLY = 3;
+	public static $SCHEDULED_BIWEEKLY = 4;
+	public static $SCHEDULED_MONTHLY = 5;
+	public static $SCHEDULED_ANNUALLY = 6;
 
 	public function  __construct($adb, $user, $reportid="") {
 		$this->db	= $adb;

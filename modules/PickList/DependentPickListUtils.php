@@ -12,7 +12,7 @@ require_once 'modules/PickList/PickListUtils.php';
 
 class Vtiger_DependencyPicklist {
 
-	static function getDependentPicklistFields($module='') {
+	public static function getDependentPicklistFields($module='') {
 		global $adb;
 
 		if(empty($module)) {
@@ -49,7 +49,7 @@ class Vtiger_DependencyPicklist {
 		return $dependentPicklists;
 	}
 
-	static function getAvailablePicklists($module) {
+	public static function getAvailablePicklists($module) {
 		global $adb, $log;
 		$tabId = getTabid($module);
 
@@ -70,7 +70,7 @@ class Vtiger_DependencyPicklist {
 		return $fieldlist;
 	}
 
-	static function savePickListDependencies($module, $dependencyMap) {
+	public static function savePickListDependencies($module, $dependencyMap) {
 		global $adb;
 		$tabId = getTabid($module);
 		$sourceField = $dependencyMap['sourcefield'];
@@ -110,7 +110,7 @@ class Vtiger_DependencyPicklist {
 		}
 	}
 
-	static function deletePickListDependencies($module, $sourceField, $targetField) {
+	public static function deletePickListDependencies($module, $sourceField, $targetField) {
 		global $adb;
 
 		$tabId = getTabid($module);
@@ -119,7 +119,7 @@ class Vtiger_DependencyPicklist {
 				array($tabId, $sourceField, $targetField));
 	}
 
-	static function getPickListDependency($module, $sourceField, $targetField) {
+	public static function getPickListDependency($module, $sourceField, $targetField) {
 		global $adb;
 
 		$tabId = getTabid($module);
@@ -149,7 +149,7 @@ class Vtiger_DependencyPicklist {
 		return $dependencyMap;
 	}
 
-	static function getPicklistDependencyDatasource($module) {
+	public static function getPicklistDependencyDatasource($module) {
 		global $adb;
 
 		$tabId = getTabid($module);
@@ -186,12 +186,12 @@ class Vtiger_DependencyPicklist {
 		return $picklistDependencyDatasource;
 	}
 
-	static function getJSPicklistDependencyDatasource($module) {
+	public static function getJSPicklistDependencyDatasource($module) {
 		$picklistDependencyDatasource = Vtiger_DependencyPicklist::getPicklistDependencyDatasource($module);
 		return json_encode($picklistDependencyDatasource);
 	}
 
-	static function checkCyclicDependency($module, $sourceField, $targetField) {
+	public static function checkCyclicDependency($module, $sourceField, $targetField) {
 		$adb = PearDatabase::getInstance();
 
 		// If another parent field exists for the same target field - 2 parent fields should not be allowed for a target field
@@ -207,7 +207,7 @@ class Vtiger_DependencyPicklist {
 		return false;
 	}
 
-	static function getDependentPickListModules() {
+	public static function getDependentPickListModules() {
 		$adb = PearDatabase::getInstance();
 
 		$query = 'SELECT distinct vtiger_field.tabid, vtiger_tab.tablabel, vtiger_tab.name as tabname FROM vtiger_field

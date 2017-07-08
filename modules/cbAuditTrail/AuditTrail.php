@@ -18,28 +18,28 @@ require_once('include/database/PearDatabase.php');
  **/
 class AuditTrail{
 
-	var $log;
-	var $db;
+	public $log;
+	public $db;
 
-	var $auditid;
-	var $userid;
-	var $module;
-	var $action;
-	var $recordid;
-	var $actiondate;
+	public $auditid;
+	public $userid;
+	public $module;
+	public $action;
+	public $recordid;
+	public $actiondate;
 
-	var $module_name = "Settings";
-	var $table_name = "vtiger_audit_trial";
+	public $module_name = "Settings";
+	public $table_name = "vtiger_audit_trial";
 
-	function __construct() {
+	public function __construct() {
 		$this->log = LoggerManager::getLogger('audit_trial');
 		$this->db = PearDatabase::getInstance();
 	}
 
-	var $sortby_fields = Array('module', 'action', 'actiondate', 'recordid');
+	public $sortby_fields = Array('module', 'action', 'actiondate', 'recordid');
 
 	// This is the list of vtiger_fields that are in the lists.
-	var $list_fields = Array(
+	public $list_fields = Array(
 			'User Name'=>Array('vtiger_audit_trial'=>'userid'),
 			'Module'=>Array('vtiger_audit_trial'=>'module'),
 			'Action'=>Array('vtiger_audit_trial'=>'action'),
@@ -47,7 +47,7 @@ class AuditTrail{
 			'Action Date'=>Array('vtiger_audit_trial'=>'actiondate'),
 		);
 
-	var $list_fields_name = Array(
+	public $list_fields_name = Array(
 			'User Name'=>'userid',
 			'Module'=>'module',
 			'Action'=>'action',
@@ -55,14 +55,14 @@ class AuditTrail{
 			'Action Date'=>'actiondate',
 		);
 
-	var $default_order_by = "actiondate";
-	var $default_sort_order = 'DESC';
+	public $default_order_by = "actiondate";
+	public $default_sort_order = 'DESC';
 
 	/**
 	 * Function to get the Headers of Audit Trail Information like Module, Action, RecordID, ActionDate.
 	 * Returns Header Values like Module, Action etc in an array format.
 	**/
-	function getAuditTrailHeader() {
+	public function getAuditTrailHeader() {
 		global $log, $app_strings;
 		$log->debug("Entering getAuditTrailHeader() method ...");
 		$header_array = array($app_strings['LBL_LIST_USER_NAME'], $app_strings['LBL_MODULE'], $app_strings['LBL_ACTION'], $app_strings['LBL_RECORD_ID'], $app_strings['LBL_ACTION_DATE']);
@@ -78,7 +78,7 @@ class AuditTrail{
 	  * @param $orderby - actiondate
 	  * Returns the audit trail entries in an array format.
 	**/
-	function getAuditTrailEntries($userid, $navigation_array, $sorder='', $orderby='') {
+	public function getAuditTrailEntries($userid, $navigation_array, $sorder='', $orderby='') {
 		global $log, $adb, $current_user;
 		$log->debug("Entering getAuditTrailEntries(".$userid.") method ...");
 
@@ -106,7 +106,7 @@ class AuditTrail{
 		}
 	}
 
-	function getAuditJSON($userid, $page, $order_by='actiondate', $sorder='DESC')
+	public function getAuditJSON($userid, $page, $order_by='actiondate', $sorder='DESC')
 	{
 		global $log, $adb, $current_user;
 		$log->debug("Entering getAuditJSON() method ...");

@@ -276,7 +276,7 @@ class VtigerModuleOperation extends WebserviceEntityOperation {
 				"idPrefix"=>$this->meta->getEntityId(),'isEntity'=>$this->isEntity,'labelFields'=>$this->meta->getNameFields());
 	}
 
-	function getModuleFields(){
+	public function getModuleFields(){
 		static $purified_mfcache = array();
 		$mfkey = $this->meta->getTabName();
 		if (array_key_exists($mfkey, $purified_mfcache)) {
@@ -295,7 +295,7 @@ class VtigerModuleOperation extends WebserviceEntityOperation {
 		return $fields;
 	}
 
-	function getDescribeFieldArray($webserviceField){
+	public function getDescribeFieldArray($webserviceField){
 		static $purified_dfcache = array();
 		$dfkey = $webserviceField->getFieldName().$webserviceField->getTabId();
 		if (array_key_exists($dfkey, $purified_dfcache)) {
@@ -328,11 +328,11 @@ class VtigerModuleOperation extends WebserviceEntityOperation {
 		return $describeArray;
 	}
 
-	function getMeta() {
+	public function getMeta() {
 		return $this->meta;
 	}
 
-	function getField($fieldName) {
+	public function getField($fieldName) {
 		$moduleFields = $this->meta->getModuleFields();
 		return $this->getDescribeFieldArray($moduleFields[$fieldName]);
 	}

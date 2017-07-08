@@ -23,7 +23,7 @@ require_once('modules/cbMap/libs/crXml.php');
 class cbMapcore {
 	private $Map;
 
-	function __construct($map) {
+	public function __construct($map) {
 		$this->Map = $map;
 	}
 

@@ -9,11 +9,11 @@
  ************************************************************************************/
 class crmtogo_WS_Login extends crmtogo_WS_Controller {
 	
-	function requireLogin() {
+	public function requireLogin() {
 		return false;
 	}
 	
-	function process(crmtogo_API_Request $request) {
+	public function process(crmtogo_API_Request $request) {
 		if(vtlib_isModuleActive('Mobile') === false) {
 			$response->setError(1501, $default_lang_strings['LBL_NO_SERVICE']);
 			return $response;
@@ -75,7 +75,7 @@ class crmtogo_WS_Login extends crmtogo_WS_Controller {
 		return $response;
 	}
 	
-	function postProcess(crmtogo_API_Response $response) {
+	public function postProcess(crmtogo_API_Response $response) {
 		return $response;
 	}
 }

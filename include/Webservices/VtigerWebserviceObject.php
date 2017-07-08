@@ -25,7 +25,7 @@ class VtigerWebserviceObject{
 	// Cache variables to enable result re-use
 	private static $_fromNameCache = array();
 
-	static function fromName($adb,$entityName){
+	public static function fromName($adb, $entityName){
 		$rowData = false;
 
 		// If the information not available in cache?
@@ -51,7 +51,7 @@ class VtigerWebserviceObject{
 	// Cache variables to enable result re-use
 	private static $_fromIdCache = array();
 
-	static function fromId($adb,$entityId) {
+	public static function fromId($adb, $entityId) {
 		$rowData = false;
 		if (strpos($entityId, 'x')>0) list($entityId,$void) = explode('x', $entityId);
 		// If the information not available in cache?
@@ -74,7 +74,7 @@ class VtigerWebserviceObject{
 		throw new WebServiceException(WebServiceErrorCode::$ACCESSDENIED,"Permission to perform the operation is denied for id");
 	}
 
-	static function fromQuery($adb,$query) {
+	public static function fromQuery($adb, $query) {
 		$moduleRegex = "/[fF][rR][Oo][Mm]\s+([^\s;]+)/";
 		$matches = array();
 		$found = preg_match($moduleRegex,$query,$matches);

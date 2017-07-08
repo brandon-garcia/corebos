@@ -14,26 +14,26 @@ require_once('include/utils/utils.php');
 
 class MailBox {
 
-	var $mbox;
-	var $db;
-	var $boxinfo;
-	var $readonly='false';
-	var $enabled;
+	public $mbox;
+	public $db;
+	public $boxinfo;
+	public $readonly='false';
+	public $enabled;
 
-	var $login_username;
-	var $secretkey;
-	var $imapServerAddress;
-	var $ssltype;
-	var $sslmeth;
-	var $box_refresh;
-	var $mails_per_page;
-	var $mail_protocol;
-	var $account_name;
-	var $display_name;
-	var $mailbox;
-	var $mailList;
+	public $login_username;
+	public $secretkey;
+	public $imapServerAddress;
+	public $ssltype;
+	public $sslmeth;
+	public $box_refresh;
+	public $mails_per_page;
+	public $mail_protocol;
+	public $account_name;
+	public $display_name;
+	public $mailbox;
+	public $mailList;
 
-	function __construct($mailbox = '',$p='',$s='') {
+	public function __construct($mailbox = '', $p='', $s='') {
 		global $current_user;
 		require_once('include/utils/encryption.php');
 		$oencrypt = new Encryption();
@@ -87,7 +87,7 @@ class MailBox {
 		$this->db->println("Exiting MailBox($mailbox)");
 	}
 
-	function customMailList($page) {
+	public function customMailList($page) {
 		$info = imap_check($this->mbox);
 		$numEmails = $info->Nmsgs;
 		$current_mails = ceil($page*$this->mails_per_page);
@@ -101,7 +101,7 @@ class MailBox {
 		return $out;
 	}
 
-	function searchMailList($searchstring,$page) {
+	public function searchMailList($searchstring, $page) {
 		$search="";
 		$searchlist = Array();
 
@@ -129,7 +129,7 @@ class MailBox {
 		return $out;
 	}
 	
-	function fullMailList() {
+	public function fullMailList() {
 		$mailHeaders = @imap_headers($this->mbox);
 		$numEmails = sizeof($mailHeaders);
 		$mailOverviews = @imap_fetch_overview($this->mbox, "1:$numEmails", 0);
@@ -137,12 +137,12 @@ class MailBox {
 		return $out;
 	}
 
-	function isBase64($iVal){
+	public function isBase64($iVal){
 		$_tmp=preg_replace("/[^A-Z0-9\+\/\=]/i","",$iVal);
 		return (strlen($_tmp) % 4 == 0 ) ? "y" : "n";
 	}
 
-	function getImapMbox() {
+	public function getImapMbox() {
 		$this->db->println("Entering getImapMbox()");
 		$mods = parsePHPModules();
 		$this->db->println("Parsing PHP Modules");

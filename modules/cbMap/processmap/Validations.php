@@ -120,7 +120,7 @@ class Validations extends processcbMap {
 	 * $arguments[0] array with all the values to validate, the fieldname as the index of the array
 	 * $arguments[1] crmid of the record being validated
 	 */
-	function processMap($arguments) {
+	public function processMap($arguments) {
 		global $adb, $current_user;
 		$mapping=$this->convertMap2Array();
 		$tabid = getTabid($mapping['origin']);
@@ -224,7 +224,7 @@ class Validations extends processcbMap {
 		}
 	}
 
-	function convertMap2Array() {
+	public function convertMap2Array() {
 		$xml = $this->getXMLContent();
 		$mapping=$val_fields=array();
 		$mapping['origin'] = (String)$xml->originmodule->originname;

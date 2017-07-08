@@ -12,34 +12,34 @@ require_once('data/Tracker.php');
 require_once('include/upload_file.php');
 
 class Documents extends CRMEntity {
-	var $db, $log; // Used in class functions of CRMEntity
-	var $table_name = 'vtiger_notes';
-	var $table_index= 'notesid';
-	var $column_fields = Array();
+	public public $db, $log; // Used in class functions of CRMEntity
+	public $table_name = 'vtiger_notes';
+	public $table_index= 'notesid';
+	public $column_fields = Array();
 
 	/** Indicator if this is a custom module or standard module */
-	var $IsCustomModule = false;
-	var $HasDirectImageField = false;
+	public $IsCustomModule = false;
+	public $HasDirectImageField = false;
 
-	var $tab_name = Array('vtiger_crmentity','vtiger_notes','vtiger_notescf');
-	var $tab_name_index = Array('vtiger_crmentity'=>'crmid','vtiger_notes'=>'notesid','vtiger_notescf'=>'notesid','vtiger_senotesrel'=>'notesid');
-	var $customFieldTable = Array('vtiger_notescf', 'notesid');
+	public $tab_name = Array('vtiger_crmentity','vtiger_notes','vtiger_notescf');
+	public $tab_name_index = Array('vtiger_crmentity'=>'crmid','vtiger_notes'=>'notesid','vtiger_notescf'=>'notesid','vtiger_senotesrel'=>'notesid');
+	public $customFieldTable = Array('vtiger_notescf', 'notesid');
 
-	var $popup_fields = Array('notes_title');
-	var $sortby_fields = Array('title','modifiedtime','filename','createdtime','lastname','filedownloadcount','smownerid');
+	public $popup_fields = Array('notes_title');
+	public $sortby_fields = Array('title','modifiedtime','filename','createdtime','lastname','filedownloadcount','smownerid');
 
 	// This is used to retrieve related vtiger_fields from form posts.
-	var $additional_column_fields = Array('', '', '', '');
+	public $additional_column_fields = Array('', '', '', '');
 
 	// This is the list of vtiger_fields that are in the lists.
-	var $list_fields = Array(
+	public $list_fields = Array(
 		'Title'=>Array('notes'=>'title'),
 		'File Name'=>Array('notes'=>'filename'),
 		'Modified Time'=>Array('crmentity'=>'modifiedtime'),
 		'Assigned To' => Array('crmentity'=>'smownerid'),
 		'Folder Name' => Array('attachmentsfolder'=>'foldername')
 	);
-	var $list_fields_name = Array(
+	public $list_fields_name = Array(
 		'Title'=>'notes_title',
 		'File Name'=>'filename',
 		'Modified Time'=>'modifiedtime',
@@ -47,28 +47,28 @@ class Documents extends CRMEntity {
 		'Folder Name' => 'folderid'
 	);
 
-	var $search_fields = Array(
+	public $search_fields = Array(
 		'Title' => Array('notes'=>'notes_title'),
 		'File Name' => Array('notes'=>'filename'),
 		'Assigned To' => Array('crmentity'=>'smownerid'),
 		'Folder Name' => Array('attachmentsfolder'=>'foldername')
 	);
-	var $search_fields_name = Array(
+	public $search_fields_name = Array(
 		'Title' => 'notes_title',
 		'File Name' => 'filename',
 		'Assigned To' => 'assigned_user_id',
 		'Folder Name' => 'folderid'
 	);
-	var $list_link_field= 'notes_title';
-	var $old_filename = '';
+	public $list_link_field= 'notes_title';
+	public $old_filename = '';
 
-	var $mandatory_fields = Array('notes_title','createdtime' ,'modifiedtime','filename','filesize','filetype','filedownloadcount','assigned_user_id');
+	public $mandatory_fields = Array('notes_title','createdtime' ,'modifiedtime','filename','filesize','filetype','filedownloadcount','assigned_user_id');
 
 	//Added these variables which are used as default order by and sortorder in ListView
-	var $default_order_by = 'title';
-	var $default_sort_order = 'ASC';
+	public $default_order_by = 'title';
+	public $default_sort_order = 'ASC';
 
-	function __construct() {
+	public function __construct() {
 		global $log;
 		$this_module = get_class($this);
 		$this->column_fields = getColumnFields($this_module);
@@ -82,7 +82,7 @@ class Documents extends CRMEntity {
 		}
 	}
 
-	function save_module($module) {
+	public function save_module($module) {
 		if ($this->HasDirectImageField) {
 			$this->insertIntoAttachment($this->id,$module);
 		}
@@ -157,7 +157,7 @@ class Documents extends CRMEntity {
 	 * Return query to use based on given modulename, fieldname
 	 * Useful to handle specific case handling for Popup
 	 */
-	function getQueryByModuleField($module, $fieldname, $srcrecord, $query='') {
+	public function getQueryByModuleField($module, $fieldname, $srcrecord, $query='') {
 		if($module == "MailManager") {
 			$tempQuery = explode('WHERE', $query);
 			if(!empty($tempQuery[1])) {
@@ -177,7 +177,7 @@ class Documents extends CRMEntity {
 	 *   error_action: action to redirect to inside the same module in case of error. if redirected to EditView (default action)
 	 *                 all values introduced by the user will be preloaded
 	 */
-	function preSaveCheck($request) {
+	public function preSaveCheck($request) {
 		global $adb,$log;
 		if (isset($_REQUEST['parentid']) && $_REQUEST['parentid'] != '') {
 			$this->parentid = vtlib_purify($_REQUEST['parentid']);
@@ -206,7 +206,7 @@ class Documents extends CRMEntity {
 	 * @param int $id  - entity id to which the files to be uploaded
 	 * @param string $module  - the current module name
 	*/
-	function insertIntoAttachment($id,$module, $direct_import=false)
+	public function insertIntoAttachment($id, $module, $direct_import=false)
 	{
 		global $log, $adb;
 		$log->debug("Entering into insertIntoAttachment($id,$module) method.");
@@ -232,7 +232,7 @@ class Documents extends CRMEntity {
 	* @param String Related module name
 	* @param mixed Integer or Array of related module record number
 	*/
-	function save_related_module($module, $crmid, $with_module, $with_crmid) {
+	public function save_related_module($module, $crmid, $with_module, $with_crmid) {
 		global $adb;
 		if ($module=='Documents') {
 			// in this case we have to turn the parameters around to call the parent method correctly
@@ -253,7 +253,7 @@ class Documents extends CRMEntity {
 	/** Function used to get the sort order for Documents listview
 	* @return string  $sorder - first check the $_REQUEST['sorder'] if request value is empty then check in the $_SESSION['NOTES_SORT_ORDER'] if this session value is empty then default sort order will be returned.
 	*/
-	function getSortOrder()
+	public function getSortOrder()
 	{
 		global $log;
 		$log->debug("Entering getSortOrder() method ...");
@@ -268,7 +268,7 @@ class Documents extends CRMEntity {
 	/** Function used to get the order by value for Documents listview
 	* @return string  $order_by  - first check the $_REQUEST['order_by'] if request value is empty then check in the $_SESSION['NOTES_ORDER_BY'] if this session value is empty then default order by will be returned.
 	*/
-	function getOrderBy()
+	public function getOrderBy()
 	{
 		global $currentModule,$log;
 		$log->debug("Entering getOrderBy() method ...");
@@ -292,7 +292,7 @@ class Documents extends CRMEntity {
 	 * Function used to get the sort order for Documents listview
 	 * @return String $sorder - sort order for a given folder.
 	 */
-	function getSortOrderForFolder($folderId) {
+	public function getSortOrderForFolder($folderId) {
 		if(isset($_REQUEST['sorder']) && $_REQUEST['folderid'] == $folderId) {
 			$sorder = $this->db->sql_escape_string($_REQUEST['sorder']);
 		} elseif(isset($_SESSION['NOTES_FOLDER_SORT_ORDER']) && is_array($_SESSION['NOTES_FOLDER_SORT_ORDER']) && !empty($_SESSION['NOTES_FOLDER_SORT_ORDER'][$folderId])) {
@@ -307,7 +307,7 @@ class Documents extends CRMEntity {
 	 * Function used to get the order by value for Documents listview
 	 * @return String order by column for a given folder.
 	 */
-	function getOrderByForFolder($folderId) {
+	public function getOrderByForFolder($folderId) {
 		$use_default_order_by = '';
 		if (GlobalVariable::getVariable('Application_ListView_Default_Sorting', 0)) {
 			$use_default_order_by = $this->default_order_by;
@@ -326,7 +326,7 @@ class Documents extends CRMEntity {
 	* @param reference variable - where condition is passed when the query is executed
 	* Returns Export Documents Query.
 	*/
-	function create_export_query($where)
+	public function create_export_query($where)
 	{
 		global $log,$current_user;
 		$log->debug("Entering create_export_query(". $where.") method ...");
@@ -360,7 +360,7 @@ class Documents extends CRMEntity {
 		return $query;
 	}
 
-	function del_create_def_folder($query)
+	public function del_create_def_folder($query)
 	{
 		global $adb;
 		$dbQuery = $query." and vtiger_attachmentsfolder.folderid = 0";
@@ -385,7 +385,7 @@ class Documents extends CRMEntity {
 	 * @param - $module Primary module name
 	 * returns the query string formed on fetching the related data for report for primary module
 	 */
-	function generateReportsQuery($module){
+	public function generateReportsQuery($module){
 		$moduletable = $this->table_name;
 		$moduleindex = $this->tab_name_index[$moduletable];
 		$query = "from $moduletable
@@ -406,7 +406,7 @@ class Documents extends CRMEntity {
 	 * @param - $secmodule secondary module name
 	 * returns the query string formed on fetching the related data for report for secondary module
 	 */
-	function generateReportsSecQuery($module,$secmodule){
+	public function generateReportsSecQuery($module, $secmodule){
 		$query = $this->getRelationQuery($module,$secmodule,"vtiger_notes","notesid");
 		$query .=" left join vtiger_crmentity as vtiger_crmentityDocuments on vtiger_crmentityDocuments.crmid=vtiger_notes.notesid and vtiger_crmentityDocuments.deleted=0 
 			left join vtiger_notescf on vtiger_notescf.notesid = vtiger_notes.notesid 
@@ -422,13 +422,13 @@ class Documents extends CRMEntity {
 	 * @param - $secmodule secondary module name
 	 * returns the array with table names and fieldnames storing relations between module and this module
 	 */
-	function setRelationTables($secmodule){
+	public function setRelationTables($secmodule){
 		$rel_tables = array();
 		return '';
 	}
 
 	// Function to unlink all the dependent entities of the given Entity by Id
-	function unlinkDependencies($module, $id) {
+	public function unlinkDependencies($module, $id) {
 		global $log;
 		/*//Backup Documents Related Records
 		$se_q = 'SELECT crmid FROM vtiger_senotesrel WHERE notesid = ?';
@@ -448,7 +448,7 @@ class Documents extends CRMEntity {
 	}
 
 	// Function to unlink an entity with given Id from another entity
-	function unlinkRelationship($id, $return_module, $return_id) {
+	public function unlinkRelationship($id, $return_module, $return_id) {
 		global $log;
 		if(empty($return_module) || empty($return_id)) return;
 
@@ -463,7 +463,7 @@ class Documents extends CRMEntity {
 
 // Function to get fieldname for uitype 27 assuming that documents have only one file type field
 
-	function getFileTypeFieldName(){
+	public function getFileTypeFieldName(){
 		global $adb,$log;
 		$query = 'SELECT fieldname from vtiger_field where tabid = ? and uitype = ?';
 		$tabid = getTabid('Documents');
@@ -481,7 +481,7 @@ class Documents extends CRMEntity {
 	}
 
 	//	Function to get fieldname for uitype 28 assuming that doc has only one file upload type
-	function getFile_FieldName(){
+	public function getFile_FieldName(){
 		global $adb,$log;
 		$query = 'SELECT fieldname from vtiger_field where tabid = ? and uitype = ?';
 		$tabid = getTabid('Documents');
@@ -500,7 +500,7 @@ class Documents extends CRMEntity {
 	/**
 	 * Check the existence of folder by folderid
 	 */
-	function isFolderPresent($folderid) {
+	public function isFolderPresent($folderid) {
 		global $adb;
 		$result = $adb->pquery("SELECT folderid FROM vtiger_attachmentsfolder WHERE folderid = ?", array($folderid));
 		if(!empty($result) && $adb->num_rows($result) > 0) return true;
@@ -510,7 +510,7 @@ class Documents extends CRMEntity {
 	/**
 	 * Customizing the restore procedure.
 	 */
-	function restore($modulename, $id) {
+	public function restore($modulename, $id) {
 		parent::restore($modulename, $id);
 
 		global $adb;
@@ -524,7 +524,7 @@ class Documents extends CRMEntity {
 		}
 	}
 
-	function getEntities($id, $cur_tab_id, $rel_tab_id, $actions=false) {
+	public function getEntities($id, $cur_tab_id, $rel_tab_id, $actions=false) {
 		global $log, $theme, $adb, $mod_strings, $app_strings;
 		$log->debug("Entering getEntities($id, $cur_tab_id, $rel_tab_id, $actions) method ...");
 		$theme_path="themes/".$theme."/";

@@ -19,34 +19,34 @@ require_once('include/utils/utils.php');
 require('user_privileges/default_module_view.php');
 
 class Potentials extends CRMEntity {
-	var $db, $log; // Used in class functions of CRMEntity
+	public public $db, $log; // Used in class functions of CRMEntity
 
-	var $table_name = 'vtiger_potential';
-	var $table_index= 'potentialid';
-	var $column_fields = Array();
+	public $table_name = 'vtiger_potential';
+	public $table_index= 'potentialid';
+	public $column_fields = Array();
 
 	/** Indicator if this is a custom module or standard module */
-	var $IsCustomModule = false;
-	var $HasDirectImageField = false;
+	public $IsCustomModule = false;
+	public $HasDirectImageField = false;
 	/**
 	 * Mandatory table for supporting custom fields.
 	 */
-	var $customFieldTable = Array('vtiger_potentialscf', 'potentialid');
+	public $customFieldTable = Array('vtiger_potentialscf', 'potentialid');
 
 	/**
 	 * Mandatory for Saving, Include tables related to this module.
 	 */
-	var $tab_name = Array('vtiger_crmentity','vtiger_potential','vtiger_potentialscf');
+	public $tab_name = Array('vtiger_crmentity','vtiger_potential','vtiger_potentialscf');
 
 	/**
 	 * Mandatory for Saving, Include tablename and tablekey columnname here.
 	 */
-	var $tab_name_index = Array('vtiger_crmentity'=>'crmid','vtiger_potential'=>'potentialid','vtiger_potentialscf'=>'potentialid');
+	public $tab_name_index = Array('vtiger_crmentity'=>'crmid','vtiger_potential'=>'potentialid','vtiger_potentialscf'=>'potentialid');
 
 	/**
 	 * Mandatory for Listing (Related listview)
 	 */
-	var $list_fields = Array(
+	public $list_fields = Array(
 		'Potential'=>Array('potential'=>'potentialname'),
 		'Related to'=>Array('potential'=>'related_to'),
 		'Sales Stage'=>Array('potential'=>'sales_stage'),
@@ -54,7 +54,7 @@ class Potentials extends CRMEntity {
 		'Expected Close Date'=>Array('potential'=>'closingdate'),
 		'Assigned To'=>Array('crmentity' =>'smownerid')
 	);
-	var $list_fields_name = Array(
+	public $list_fields_name = Array(
 		'Potential'=>'potentialname',
 		'Related to'=>'related_to',
 		'Sales Stage'=>'sales_stage',
@@ -64,46 +64,46 @@ class Potentials extends CRMEntity {
 	);
 
 	// Make the field link to detail view from list view (Fieldname)
-	var $list_link_field= 'potentialname';
+	public $list_link_field= 'potentialname';
 
-	var $search_fields = Array(
+	public $search_fields = Array(
 		'Potential'=>Array('potential'=>'potentialname'),
 		'Related To'=>Array('potential'=>'related_to'),
 		'Expected Close Date'=>Array('potential'=>'closedate')
 	);
-	var $search_fields_name = Array(
+	public $search_fields_name = Array(
 		'Potential'=>'potentialname',
 		'Related To'=>'related_to',
 		'Expected Close Date'=>'closingdate'
 	);
 
 	// For Popup window record selection
-	var $popup_fields = Array('potentialname');
+	public $popup_fields = Array('potentialname');
 
 	// Placeholder for sort fields - All the fields will be initialized for Sorting through initSortFields
-	var $sortby_fields = Array('potentialname','amount','closingdate','smownerid','accountname');
+	public $sortby_fields = Array('potentialname','amount','closingdate','smownerid','accountname');
 
 	// For Alphabetical search
-	var $def_basicsearch_col = 'potentialname';
+	public $def_basicsearch_col = 'potentialname';
 
 	// Column value to use on detail view record text display
-	var $def_detailview_recname = 'potentialname';
+	public $def_detailview_recname = 'potentialname';
 
 	// Required Information for enabling Import feature
-	var $required_fields =  array();
+	public $required_fields =  array();
 
 	// Callback function list during Importing
 	//var $special_functions = Array('set_import_assigned_user');
 
-	var $default_order_by = 'potentialname';
-	var $default_sort_order = 'ASC';
+	public $default_order_by = 'potentialname';
+	public $default_sort_order = 'ASC';
 	// Used when enabling/disabling the mandatory fields for the module.
 	// Refers to vtiger_field.fieldname values.
-	var $mandatory_fields = Array('assigned_user_id', 'createdtime', 'modifiedtime', 'potentialname', 'related_to');
+	public $mandatory_fields = Array('assigned_user_id', 'createdtime', 'modifiedtime', 'potentialname', 'related_to');
 
-	var $sales_stage = '';
+	public $sales_stage = '';
 
-	function __construct() {
+	public function __construct() {
 		global $log;
 		$this_module = get_class($this);
 		$this->column_fields = getColumnFields($this_module);
@@ -117,7 +117,7 @@ class Potentials extends CRMEntity {
 		}
 	}
 
-	function save($module, $fileid = '') {
+	public function save($module, $fileid = '') {
 		global $adb;
 		if ($this->mode=='edit') {
 			$rs = $adb->pquery('select sales_stage from vtiger_potential where potentialid = ?', array($this->id));
@@ -126,7 +126,7 @@ class Potentials extends CRMEntity {
 		parent::save($module, $fileid);
 	}
 
-	function save_module($module) {
+	public function save_module($module) {
 		global $adb;
 		if ($this->HasDirectImageField) {
 			$this->insertIntoAttachment($this->id,$module);
@@ -170,7 +170,7 @@ class Potentials extends CRMEntity {
 	* @param reference variable - where condition is passed when the query is executed
 	* Returns Export Potentials Query.
 	*/
-	function create_export_query($where)
+	public function create_export_query($where)
 	{
 		global $log;
 		global $current_user;
@@ -208,7 +208,7 @@ class Potentials extends CRMEntity {
 	 * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc..
 	 * All Rights Reserved..
 	 */
-	function get_contacts($id, $cur_tab_id, $rel_tab_id, $actions=false) {
+	public function get_contacts($id, $cur_tab_id, $rel_tab_id, $actions=false) {
 		global $adb,$log, $singlepane_view,$currentModule,$current_user;
 		$log->debug("Entering get_contacts(".$id.") method ...");
 		$this_module = $currentModule;
@@ -290,7 +290,7 @@ class Potentials extends CRMEntity {
 	 * @param  integer   $id  - contactid
 	 * returns related Products record in array format
 	 */
-	function get_products($id, $cur_tab_id, $rel_tab_id, $actions=false) {
+	public function get_products($id, $cur_tab_id, $rel_tab_id, $actions=false) {
 		global $log, $singlepane_view,$currentModule,$current_user;
 		$log->debug("Entering get_products(".$id.") method ...");
 		$this_module = $currentModule;
@@ -347,7 +347,7 @@ class Potentials extends CRMEntity {
 	 *	@param $id - potentialid
 	 *	return $return_data - array with header and the entries in format Array('header'=>$header,'entries'=>$entries_list) where as $header and $entries_list are array which contains all the column values of an row
 	 */
-	function get_stage_history($id) {
+	public function get_stage_history($id) {
 		global $log, $adb, $mod_strings, $app_strings, $current_user;
 		$log->debug("Entering get_stage_history(".$id.") method ...");
 
@@ -398,7 +398,7 @@ class Potentials extends CRMEntity {
 	 * @param  integer   $id  - potentialid
 	 * returns related Quotes record in array format
 	 */
-	function get_quotes($id, $cur_tab_id, $rel_tab_id, $actions=false) {
+	public function get_quotes($id, $cur_tab_id, $rel_tab_id, $actions=false) {
 		global $log, $singlepane_view,$currentModule,$current_user;
 		$log->debug("Entering get_quotes(".$id.") method ...");
 		$this_module = $currentModule;
@@ -454,7 +454,7 @@ class Potentials extends CRMEntity {
  	 * @param  integer   $id  - potentialid
 	 * returns related SalesOrder record in array format
 	 */
-	function get_salesorder($id, $cur_tab_id, $rel_tab_id, $actions=false) {
+	public function get_salesorder($id, $cur_tab_id, $rel_tab_id, $actions=false) {
 		global $log, $singlepane_view,$currentModule,$current_user;
 		$log->debug("Entering get_salesorder(".$id.") method ...");
 		$this_module = $currentModule;
@@ -513,7 +513,7 @@ class Potentials extends CRMEntity {
 	 * @param Array List of Entity Id's from which related records need to be transfered
 	 * @param Integer Id of the the Record to which the related records are to be moved
 	 */
-	function transferRelatedRecords($module, $transferEntityIds, $entityId) {
+	public function transferRelatedRecords($module, $transferEntityIds, $entityId) {
 		global $adb,$log;
 		$log->debug("Entering function transferRelatedRecords ($module, $transferEntityIds, $entityId)");
 
@@ -556,7 +556,7 @@ class Potentials extends CRMEntity {
 	 * @param - $secmodule secondary module name
 	 * returns the query string formed on fetching the related data for report for secondary module
 	 */
-	function generateReportsSecQuery($module,$secmodule){
+	public function generateReportsSecQuery($module, $secmodule){
 		$query = $this->getRelationQuery($module,$secmodule,"vtiger_potential","potentialid");
 		$query .= " left join vtiger_crmentity as vtiger_crmentityPotentials on vtiger_crmentityPotentials.crmid=vtiger_potential.potentialid and vtiger_crmentityPotentials.deleted=0
 		left join vtiger_account as vtiger_accountPotentials on vtiger_potential.related_to = vtiger_accountPotentials.accountid
@@ -574,7 +574,7 @@ class Potentials extends CRMEntity {
 	 * @param - $secmodule secondary module name
 	 * returns the array with table names and fieldnames storing relations between module and this module
 	 */
-	function setRelationTables($secmodule){
+	public function setRelationTables($secmodule){
 		$rel_tables = array (
 			"Calendar" => array("vtiger_seactivityrel"=>array("crmid","activityid"),"vtiger_potential"=>"potentialid"),
 			"Products" => array("vtiger_seproductsrel"=>array("crmid","productid"),"vtiger_potential"=>"potentialid"),
@@ -587,7 +587,7 @@ class Potentials extends CRMEntity {
 	}
 
 	// Function to unlink all the dependent entities of the given Entity by Id
-	function unlinkDependencies($module, $id) {
+	public function unlinkDependencies($module, $id) {
 		global $log;
 		/*//Backup Activity-Potentials Relation
 		$act_q = "select activityid from vtiger_seactivityrel where crmid = ?";
@@ -607,7 +607,7 @@ class Potentials extends CRMEntity {
 	}
 
 	// Function to unlink an entity with given Id from another entity
-	function unlinkRelationship($id, $return_module, $return_id) {
+	public function unlinkRelationship($id, $return_module, $return_id) {
 		global $log;
 		if(empty($return_module) || empty($return_id)) return;
 
@@ -636,7 +636,7 @@ class Potentials extends CRMEntity {
 		}
 	}
 
-	function save_related_module($module, $crmid, $with_module, $with_crmids) {
+	public function save_related_module($module, $crmid, $with_module, $with_crmids) {
 		$adb = PearDatabase::getInstance();
 
 		if(!is_array($with_crmids)) $with_crmids = Array($with_crmids);
@@ -654,7 +654,7 @@ class Potentials extends CRMEntity {
 			}
 		}
 	}
-	function getListButtons($app_strings) {
+	public function getListButtons($app_strings) {
 		$list_buttons = Array ();
 
 		if (isPermitted ( 'Potentials', 'Delete', '' ) == 'yes') {

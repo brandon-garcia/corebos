@@ -164,32 +164,32 @@ class VTQL_Lexer {
 	);
 	public $mandatory;
 	public $current_state;
-	function __construct($data) {
+	public function __construct($data) {
 		$this->index = 0;
 		$this->data = $data;
 		$this->linenum = 1;
 		$this->mandatory = true;
 		$this->current_state = 0;
 	}
-	function __toString() {
+	public function __toString() {
 		return $this->token . "";
 	}
 	private $_yy_state = 1;
 	private $_yy_stack = array ();
-	function yylex() {
+	public function yylex() {
 		return $this->{'yylex' . $this->_yy_state} ();
 	}
-	function yypushstate($state) {
+	public function yypushstate($state) {
 		array_push ( $this->_yy_stack, $this->_yy_state );
 		$this->_yy_state = $state;
 	}
-	function yypopstate() {
+	public function yypopstate() {
 		$this->_yy_state = array_pop ( $this->_yy_stack );
 	}
-	function yybegin($state) {
+	public function yybegin($state) {
 		$this->_yy_state = $state;
 	}
-	function yylex1() {
+	public function yylex1() {
 		$tokenMap = array (
 				1 => 2,
 				4 => 0 
@@ -264,7 +264,7 @@ class VTQL_Lexer {
 		} while ( true );
 	} // end function
 	const INITR = 1;
-	function yy_r1_1($yy_subpatterns) {
+	public function yy_r1_1($yy_subpatterns) {
 		global $orderby;
 		// echo "<br> ql state: ",$this->current_state," ",$this->value,"<br>";
 		if ($this->mandatory) {
@@ -292,7 +292,7 @@ class VTQL_Lexer {
 			$this->token = $handler ( $this, $this->value );
 		} // $this->yypushstate($this->value);
 	}
-	function yy_r1_4($yy_subpatterns) {
+	public function yy_r1_4($yy_subpatterns) {
 		return false;
 	}
 }

@@ -12,19 +12,19 @@
 class crmtogo_UI_FieldModel {
 	private $data; 
 	
-	function initData($fieldData) {
+	public function initData($fieldData) {
 		$this->data = $fieldData;
 	}
 	
-	function uitype() {
+	public function uitype() {
 		return $this->data['uitype'];
 	}
 	
-	function name() {
+	public function name() {
 		return $this->data['name'];
 	}
 	
-	function value() {
+	public function value() {
 		if ($this->data['uitype'] == '15' || $this->data['uitype'] == '33') {  
 			$rawValue = $this->data['type']['value'];
 			if (is_array($rawValue)) {           
@@ -48,7 +48,7 @@ class crmtogo_UI_FieldModel {
 		}	
 	}
 	
-	function valueLabel() {
+	public function valueLabel() {
 		$rawValue = $this->data['value'];
 		if (is_array($rawValue)) {
 			return $rawValue['label'];
@@ -57,11 +57,11 @@ class crmtogo_UI_FieldModel {
 	}
 	
 	
-	function label() {
+	public function label() {
 		return $this->data['label'];
 	}
 	
-	function isReferenceType() {
+	public function isReferenceType() {
 		static $options = array('101', '116', '117', '357',
 			'50', '51', '52', '53', '57', '59', '66',
 			'73', '75', '76', '77', '78', '80', '81'
@@ -82,7 +82,7 @@ class crmtogo_UI_FieldModel {
 		return $this->isMultiReferenceType();
 	}
 	
-	function isMultiReferenceType() {
+	public function isMultiReferenceType() {
 		static $options = array('10', '68');
 		$uitype = $this->data['uitype'];
 		if (in_array($uitype, $options)) {
@@ -91,7 +91,7 @@ class crmtogo_UI_FieldModel {
 		return false;
 	}
 	
-	static function buildModelsFromResponse($fields) {
+	public static function buildModelsFromResponse($fields) {
 		$instances = array();
 		foreach($fields as $fieldData) {
 			$instance = new self();
@@ -101,19 +101,19 @@ class crmtogo_UI_FieldModel {
 		return $instances;
 	}
 
-	function typeofdata() {
+	public function typeofdata() {
 		return $this->data['typeofdata'];
 	}
 	
-	function ismandatory() {
+	public function ismandatory() {
 		return $this->data['mandatory'];
 	}
 
-	function quickcreate() {
+	public function quickcreate() {
 		return $this->data['quickcreate'];
 	}
 
-	function displaytype() {
+	public function displaytype() {
 		return $this->data['displaytype'];
 	}
 }

@@ -13,7 +13,7 @@
  * Contributor(s): ______________________________________.
  ********************************************************************************/
 class UserTimeZones{
-	function __construct(){
+	public function __construct(){
 		$arrayOfSupportedTimeZones = array(
 										'Pacific/Midway',
 										'Pacific/Samoa',

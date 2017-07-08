@@ -13,7 +13,7 @@ include_once 'modules/CustomView/CustomView.php';
 
 class crmtogo_WS_FilterDetailsWithCount extends crmtogo_WS_FetchModuleFilters {
 	
-	function process(crmtogo_API_Request $request) {
+	public function process(crmtogo_API_Request $request) {
 		$response = new crmtogo_API_Response();
 		$filterid = $request->get('filterid');
 		$current_user = $this->getActiveUser();

@@ -18,7 +18,7 @@ class VTEventTrigger{
 
 	const CACHE_LOOKUP_TYPE_ALL = 'ALL';
 
-	static function initCache($name = false, $force = false) {
+	public static function initCache($name = false, $force = false) {
 		global $adb;
 
 		if($name) {
@@ -39,7 +39,7 @@ class VTEventTrigger{
 			}
 		}
 	}
-	static function isCached($name = false) {
+	public static function isCached($name = false) {
 		if($name === false) {
 			if(self::$cacheLookupType == self::CACHE_LOOKUP_TYPE_ALL) {
 				// Was init cache done for ALL earlier?
@@ -50,7 +50,7 @@ class VTEventTrigger{
 		}
 		return false;
 	}
-	static function clearCache($name = false) {
+	public static function clearCache($name = false) {
 		if($name === false) {
 			self::$cache = array();
 			self::$cacheLookupType = '';
@@ -58,7 +58,7 @@ class VTEventTrigger{
 			unset(self::$cache[$name]);
 		}
 	}
-	static function lookupCache($name) {
+	public static function lookupCache($name) {
 		if(self::isCached($name)) {
 			return self::$cache[$name];
 		} else if(self::$cacheLookupType == self::CACHE_LOOKUP_TYPE_ALL) {
@@ -67,7 +67,7 @@ class VTEventTrigger{
 		return false;
 	}
 
-	static function getActiveEventInfos($adb, $name = false) {	
+	public static function getActiveEventInfos($adb, $name = false) {
 		$params = array();
 		$query = "SELECT * FROM vtiger_eventhandlers WHERE is_active=true";
 		if($name !== false) {
@@ -102,12 +102,12 @@ class VTEventTrigger{
 	}
 	/** END **/
 
-	function __construct($adb, $name){
+	public function __construct($adb, $name){
 		$this->name=$name;
 		$this->adb = $adb;
 	}
 
-	function trigger($data){
+	public function trigger($data){
 		$adb = $this->adb;
 
 		$eventInfos = self::lookupCache($this->name);

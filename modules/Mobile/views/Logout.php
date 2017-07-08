@@ -11,15 +11,15 @@
 include_once dirname(__FILE__) . '/../api/ws/Login.php';
 class crmtogo_UI_Logout extends crmtogo_WS_Login {
 
-	function requireLogin() {
+	public function requireLogin() {
 		return false;
 	}
 	
-	function hasActiveUser() {
+	public function hasActiveUser() {
 		return false;
 	}
 	
-	function process(crmtogo_API_Request $request) {
+	public function process(crmtogo_API_Request $request) {
 		$default_config = $this->getConfigDefaults();
 		$default_lang_strings = return_module_language($default_config['language'], 'Mobile');
 

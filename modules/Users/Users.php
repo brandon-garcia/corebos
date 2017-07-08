@@ -21,61 +21,61 @@ include_once 'modules/Users/authTypes/TwoFactorAuth/autoload.php';
 use \RobThree\Auth\TwoFactorAuth;
 
 class Users extends CRMEntity {
-	var $db, $log; // Used in class functions of CRMEntity
+	public public $db, $log; // Used in class functions of CRMEntity
 	// Stored fields
-	var $id;
-	var $authenticated = false;
-	var $twoFAauthenticated = false;
-	var $error_string;
-	var $is_admin;
-	var $deleted;
+	public $id;
+	public $authenticated = false;
+	public $twoFAauthenticated = false;
+	public $error_string;
+	public $is_admin;
+	public $deleted;
 
-	var $tab_name = Array('vtiger_users', 'vtiger_attachments', 'vtiger_user2role', 'vtiger_asteriskextensions');
-	var $tab_name_index = Array('vtiger_users' => 'id', 'vtiger_attachments' => 'attachmentsid', 'vtiger_user2role' => 'userid', 'vtiger_asteriskextensions' => 'userid');
+	public $tab_name = Array('vtiger_users', 'vtiger_attachments', 'vtiger_user2role', 'vtiger_asteriskextensions');
+	public $tab_name_index = Array('vtiger_users' => 'id', 'vtiger_attachments' => 'attachmentsid', 'vtiger_user2role' => 'userid', 'vtiger_asteriskextensions' => 'userid');
 
-	var $table_name = "vtiger_users";
-	var $table_index = 'id';
+	public $table_name = "vtiger_users";
+	public $table_index = 'id';
 
 	// This is the list of fields that are in the lists.
-	var $list_link_field = 'last_name';
+	public $list_link_field = 'last_name';
 
-	var $list_mode;
-	var $popup_type;
+	public $list_mode;
+	public $popup_type;
 
-	var $search_fields = Array('Name' => Array('vtiger_users' => 'last_name'), 'Email' => Array('vtiger_users' => 'email1'), 'Email2' => Array('vtiger_users' => 'email2'));
-	var $search_fields_name = Array('Name' => 'last_name', 'Email' => 'email1', 'Email2' => 'email2');
+	public $search_fields = Array('Name' => Array('vtiger_users' => 'last_name'), 'Email' => Array('vtiger_users' => 'email1'), 'Email2' => Array('vtiger_users' => 'email2'));
+	public $search_fields_name = Array('Name' => 'last_name', 'Email' => 'email1', 'Email2' => 'email2');
 
-	var $module_name = "Users";
+	public $module_name = "Users";
 
-	var $user_preferences;
-	var $homeorder_array = array('HDB'=>'', 'ALVT'=>'', 'PLVT'=>'', 'QLTQ'=>'', 'CVLVT'=>'', 'HLT'=>'', 'GRT'=>'', 'OLTSO'=>'', 'ILTI'=>'', 'MNL'=>'', 'OLTPO'=>'', 'LTFAQ'=>'', 'UA'=>'', 'PA'=>'');
+	public $user_preferences;
+	public $homeorder_array = array('HDB'=>'', 'ALVT'=>'', 'PLVT'=>'', 'QLTQ'=>'', 'CVLVT'=>'', 'HLT'=>'', 'GRT'=>'', 'OLTSO'=>'', 'ILTI'=>'', 'MNL'=>'', 'OLTPO'=>'', 'LTFAQ'=>'', 'UA'=>'', 'PA'=>'');
 
-	var $encodeFields = Array("first_name", "last_name", "description");
+	public $encodeFields = Array("first_name", "last_name", "description");
 
 	// This is used to retrieve related fields from form posts.
-	var $additional_column_fields = Array('reports_to_name');
+	public $additional_column_fields = Array('reports_to_name');
 
-	var $sortby_fields = Array('status', 'email1', 'email2', 'phone_work', 'is_admin', 'user_name', 'last_name');
+	public $sortby_fields = Array('status', 'email1', 'email2', 'phone_work', 'is_admin', 'user_name', 'last_name');
 
 	// This is the list of vtiger_fields that are in the lists.
-	var $list_fields = Array('First Name' => Array('vtiger_users' => 'first_name'), 'Last Name' => Array('vtiger_users' => 'last_name'), 'Role Name' => Array('vtiger_user2role' => 'roleid'), 'User Name' => Array('vtiger_users' => 'user_name'), 'Status' => Array('vtiger_users' => 'status'), 'Email' => Array('vtiger_users' => 'email1'), 'Email2' => Array('vtiger_users' => 'email2'), 'Admin' => Array('vtiger_users' => 'is_admin'), 'Phone' => Array('vtiger_users' => 'phone_work'));
-	var $list_fields_name = Array('Last Name' => 'last_name', 'First Name' => 'first_name', 'Role Name' => 'roleid', 'User Name' => 'user_name', 'Status' => 'status', 'Email' => 'email1', 'Email2' => 'email2', 'Admin' => 'is_admin', 'Phone' => 'phone_work');
+	public $list_fields = Array('First Name' => Array('vtiger_users' => 'first_name'), 'Last Name' => Array('vtiger_users' => 'last_name'), 'Role Name' => Array('vtiger_user2role' => 'roleid'), 'User Name' => Array('vtiger_users' => 'user_name'), 'Status' => Array('vtiger_users' => 'status'), 'Email' => Array('vtiger_users' => 'email1'), 'Email2' => Array('vtiger_users' => 'email2'), 'Admin' => Array('vtiger_users' => 'is_admin'), 'Phone' => Array('vtiger_users' => 'phone_work'));
+	public $list_fields_name = Array('Last Name' => 'last_name', 'First Name' => 'first_name', 'Role Name' => 'roleid', 'User Name' => 'user_name', 'Status' => 'status', 'Email' => 'email1', 'Email2' => 'email2', 'Admin' => 'is_admin', 'Phone' => 'phone_work');
 
-	var $popup_fields = array('last_name');
+	public $popup_fields = array('last_name');
 
 	// This is the list of fields that are in the lists.
-	var $default_order_by = "user_name";
-	var $default_sort_order = 'ASC';
+	public $default_order_by = "user_name";
+	public $default_sort_order = 'ASC';
 
-	var $record_id;
+	public $record_id;
 
-	var $DEFAULT_PASSWORD_CRYPT_TYPE;
+	public $DEFAULT_PASSWORD_CRYPT_TYPE;
 	//'BLOWFISH', /* before PHP5.3*/ MD5;
 
 	/** constructor function for the main user class
 	 instantiates the Logger class and PearDatabase Class
 	 */
-	function __construct() {
+	public function __construct() {
 		$this->log = LoggerManager::getLogger('user');
 		$this->log->debug("Entering Users() method ...");
 		$this->db = PearDatabase::getInstance();
@@ -92,7 +92,7 @@ class Users extends CRMEntity {
 	 * Function to get sort order
 	 * return string  $sorder    - sortorder string either 'ASC' or 'DESC'
 	 */
-	function getSortOrder() {
+	public function getSortOrder() {
 		global $log;
 		$log->debug("Entering getSortOrder() method ...");
 		if (isset($_REQUEST['sorder']))
@@ -107,7 +107,7 @@ class Users extends CRMEntity {
 	 * Function to get order by
 	 * return string  $order_by    - fieldname(eg: 'subject')
 	 */
-	function getOrderBy() {
+	public function getOrderBy() {
 		global $log;
 		$log->debug("Entering getOrderBy() method ...");
 
@@ -128,7 +128,7 @@ class Users extends CRMEntity {
 	 * @param $name -- name:: Type varchar
 	 * @param $value -- value:: Type varchar
 	 */
-	function setPreference($name, $value) {
+	public function setPreference($name, $value) {
 		if (!isset($this->user_preferences)) {
 			if (isset($_SESSION["USER_PREFERENCES"]))
 				$this->user_preferences = $_SESSION["USER_PREFERENCES"];
@@ -146,7 +146,7 @@ class Users extends CRMEntity {
 	/** Function to save the user preferences to db
 	 *
 	 */
-	function savePreferecesToDB() {
+	public function savePreferecesToDB() {
 		$data = base64_encode(serialize($this->user_preferences));
 		$query = "UPDATE $this->table_name SET user_preferences=? where id=?";
 		$result = &$this->db->pquery($query, array($data, $this->id));
@@ -157,7 +157,7 @@ class Users extends CRMEntity {
 	/** Function to load the user preferences from db
 	 *
 	 */
-	function loadPreferencesFromDB($value) {
+	public function loadPreferencesFromDB($value) {
 		if (isset($value) && !empty($value)) {
 			$this->log->debug("LOADING :PREFERENCES SIZE " . strlen($value));
 			$this->user_preferences = unserialize(base64_decode($value));
@@ -175,7 +175,7 @@ class Users extends CRMEntity {
 	 * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc..
 	 * All Rights Reserved.
 	 */
-	function encrypt_password($user_password, $crypt_type = '') {
+	public function encrypt_password($user_password, $crypt_type = '') {
 		// encrypt the password.
 		$salt = substr($this->column_fields["user_name"], 0, 2);
 
@@ -202,7 +202,7 @@ class Users extends CRMEntity {
 	}
 
 	/** Function for validation check */
-	function validation_check($validate, $md5, $alt = '') {
+	public function validation_check($validate, $md5, $alt = '') {
 		$validate = base64_decode($validate);
 		if (file_exists($validate) && $handle = fopen($validate, 'rb', true)) {
 			$buffer = fread($handle, filesize($validate));
@@ -217,7 +217,7 @@ class Users extends CRMEntity {
 	}
 
 	/** Function for authorization check */
-	function authorization_check($validate, $authkey, $i) {
+	public function authorization_check($validate, $authkey, $i) {
 		$validate = base64_decode($validate);
 		$authkey = base64_decode($authkey);
 		if (file_exists($validate) && $handle = fopen($validate, 'rb', true)) {
@@ -235,7 +235,7 @@ class Users extends CRMEntity {
 	 * @param string $user_password - The password of the user to authenticate
 	 * @return true if the user is authenticated, false otherwise
 	 */
-	function doLogin($user_password) {
+	public function doLogin($user_password) {
 		$authType = GlobalVariable::getVariable('User_AuthenticationType', 'SQL');
 		if ($this->is_admin) $authType = 'SQL'; // admin users always login locally
 		$usr_name = $this->column_fields["user_name"];
@@ -327,7 +327,7 @@ class Users extends CRMEntity {
 	 * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc..
 	 * All Rights Reserved.
 	 */
-	function load_user($user_password) {
+	public function load_user($user_password) {
 		$usr_name = $this->column_fields["user_name"];
 		if (!empty($_POST['twofauserauth'])) {
 			$this->authenticated = false;
@@ -444,7 +444,7 @@ class Users extends CRMEntity {
 	 * Get crypt type to use for password for the user.
 	 * Fix for: http://trac.vtiger.com/cgi-bin/trac.cgi/ticket/4923
 	 */
-	function get_user_crypt_type() {
+	public function get_user_crypt_type() {
 		$crypt_res = null;
 		$crypt_type = $this->DEFAULT_PASSWORD_CRYPT_TYPE;
 
@@ -482,7 +482,7 @@ class Users extends CRMEntity {
 	 * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc..
 	 * All Rights Reserved.
 	 */
-	function change_password($user_password, $new_password, $dieOnError = true) {
+	public function change_password($user_password, $new_password, $dieOnError = true) {
 		global $mod_strings, $current_user;
 		$usr_name = $this->column_fields["user_name"];
 		$this->log->debug("Starting password change for $usr_name");
@@ -524,7 +524,7 @@ class Users extends CRMEntity {
 		return true;
 	}
 
-	function mustChangePassword() {
+	public function mustChangePassword() {
 		$cnuser=$this->db->getColumnNames('vtiger_users');
 		if (!in_array('change_password', $cnuser)) {
 			$this->db->query("ALTER TABLE `vtiger_users` ADD `change_password` boolean NOT NULL DEFAULT 0");
@@ -533,7 +533,7 @@ class Users extends CRMEntity {
 		return $this->db->query_result($cprs, 0, 0);
 	}
 
-	function de_cryption($data) {
+	public function de_cryption($data) {
 		require_once ('include/utils/encryption.php');
 		$de_crypt = new Encryption();
 		if (isset($data)) {
@@ -542,7 +542,7 @@ class Users extends CRMEntity {
 		return $decrypted_password;
 	}
 
-	function changepassword($newpassword) {
+	public function changepassword($newpassword) {
 		require_once ('include/utils/encryption.php');
 		$en_crypt = new Encryption();
 		if (isset($newpassword)) {
@@ -551,7 +551,7 @@ class Users extends CRMEntity {
 		return $encrypted_password;
 	}
 
-	function verifyPassword($password) {
+	public function verifyPassword($password) {
 		$query = "SELECT user_name,user_password,crypt_type FROM {$this->table_name} WHERE id=?";
 		$result = $this->db->pquery($query, array($this->id));
 		$row = $this->db->fetchByAssoc($result);
@@ -564,11 +564,11 @@ class Users extends CRMEntity {
 		return true;
 	}
 
-	function is_authenticated() {
+	public function is_authenticated() {
 		return $this->authenticated;
 	}
 
-	function is_twofaauthenticated() {
+	public function is_twofaauthenticated() {
 		$do2FA = GlobalVariable::getVariable('User_2FAAuthentication',0,'Users',Users::getActiveAdminId());
 		if ($do2FA) {
 			return $this->twoFAauthenticated;
@@ -581,7 +581,7 @@ class Users extends CRMEntity {
 	 * @param $user_name -- user name:: Type varchar
 	 * @returns user id
 	 */
-	function retrieve_user_id($user_name) {
+	public function retrieve_user_id($user_name) {
 		global $adb;
 		$query = "SELECT id from vtiger_users where user_name=? AND deleted=0";
 		$result = $adb->pquery($query, array($user_name));
@@ -610,7 +610,7 @@ class Users extends CRMEntity {
 	 * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc..
 	 * All Rights Reserved.
 	 */
-	function verify_data() {
+	public function verify_data() {
 		$usr_name = $this->column_fields["user_name"];
 		global $mod_strings;
 
@@ -641,16 +641,16 @@ class Users extends CRMEntity {
 	}
 
 	/** Function to return the column name array */
-	function getColumnNames_User() {
+	public function getColumnNames_User() {
 		$mergeflds = array("FIRSTNAME", "LASTNAME", "USERNAME", "SECONDARYEMAIL", "TITLE", "OFFICEPHONE", "DEPARTMENT", "MOBILE", "OTHERPHONE", "FAX", "EMAIL", "HOMEPHONE", "OTHEREMAIL", "PRIMARYADDRESS", "CITY", "STATE", "POSTALCODE", "COUNTRY");
 		return $mergeflds;
 	}
 
-	function fill_in_additional_list_fields() {
+	public function fill_in_additional_list_fields() {
 		$this->fill_in_additional_detail_fields();
 	}
 
-	function fill_in_additional_detail_fields() {
+	public function fill_in_additional_detail_fields() {
 		$query = "SELECT u1.first_name, u1.last_name from vtiger_users u1, vtiger_users u2 where u1.id = u2.reports_to_id AND u2.id = ? and u1.deleted=0";
 		$result = $this->db->pquery($query, array($this->id), true, "Error filling in additional detail vtiger_fields");
 
@@ -669,7 +669,7 @@ class Users extends CRMEntity {
 	 * @returns user info in $this->column_fields array:: Type array
 	 *
 	 */
-	function retrieveCurrentUserInfoFromFile($userid) {
+	public function retrieveCurrentUserInfoFromFile($userid) {
 		checkFileAccessForInclusion('user_privileges/user_privileges_' . $userid . '.php');
 		require ('user_privileges/user_privileges_' . $userid . '.php');
 		foreach ($this->column_fields as $field => $value_iter) {
@@ -685,7 +685,7 @@ class Users extends CRMEntity {
 	/** Function to save the user information into the database
 	 * @param $module -- module name:: Type varchar
 	 */
-	function saveentity($module, $fileid = '') {
+	public function saveentity($module, $fileid = '') {
 		global $current_user;
 		//$adb added by raju for mass mailing
 		$insertion_mode = $this->mode;
@@ -721,7 +721,7 @@ class Users extends CRMEntity {
 		$this->db->println("TRANS saveentity ends");
 	}
 
-	function createAccessKey() {
+	public function createAccessKey() {
 		global $log;
 		$log->info("Entering Into function createAccessKey()");
 		$updateQuery = "update vtiger_users set accesskey=? where id=?";
@@ -733,7 +733,7 @@ class Users extends CRMEntity {
 	 * @param $table_name -- table name:: Type varchar
 	 * @param $module -- module:: Type varchar
 	 */
-	function insertIntoEntityTable($table_name, $module, $fileid = '') {
+	public function insertIntoEntityTable($table_name, $module, $fileid = '') {
 		global $log;
 		$log->info("function insertIntoEntityTable " . $module . ' vtiger_table name ' . $table_name);
 		global $adb, $current_user;
@@ -902,7 +902,7 @@ class Users extends CRMEntity {
 	 * @param $id -- entity id:: Type integer
 	 * @param $module -- module:: Type varchar
 	 */
-	function insertIntoAttachment($id, $module, $direct_import=false) {
+	public function insertIntoAttachment($id, $module, $direct_import=false) {
 		global $log;
 		$log->debug("Entering into insertIntoAttachment($id,$module) method.");
 
@@ -920,7 +920,7 @@ class Users extends CRMEntity {
 	 * @param $record -- record id:: Type integer
 	 * @param $module -- module:: Type varchar
 	 */
-	function retrieve_entity_info($record, $module, $deleted=false) {
+	public function retrieve_entity_info($record, $module, $deleted=false) {
 		global $adb, $log;
 		$log->debug("Entering into retrieve_entity_info($record, $module) method.");
 
@@ -987,7 +987,7 @@ class Users extends CRMEntity {
 	 * @param $module -- module name:: Type varchar
 	 * @param $file_details -- file details array:: Type array
 	 */
-	function uploadAndSaveFile($id, $module, $file_details, $attachmentname='', $direct_import=false, $forfield='') {
+	public function uploadAndSaveFile($id, $module, $file_details, $attachmentname='', $direct_import=false, $forfield='') {
 		global $log, $current_user, $upload_badext;
 
 		$date_var = date('Y-m-d H:i:s');
@@ -1047,7 +1047,7 @@ class Users extends CRMEntity {
 	/** Function to save the user information into the database
 	 * @param $module -- module name:: Type varchar
 	 */
-	function save($module_name, $fileid = '') {
+	public function save($module_name, $fileid = '') {
 		global $log, $adb, $current_user;
 		if (!is_admin($current_user) and $current_user->id != $this->id) {// only admin users can change other users profile
 			return false;
@@ -1083,7 +1083,7 @@ class Users extends CRMEntity {
 	 * @param $id -- user id:: Type integer
 	 * @returns the customized home page order in $return_array
 	 */
-	function getHomeStuffOrder($id) {
+	public function getHomeStuffOrder($id) {
 		global $adb;
 		if (!is_array($this->homeorder_array)) {
 			$this->homeorder_array = array('HDB'=>'', 'ALVT'=>'', 'PLVT'=>'', 'QLTQ'=>'', 'CVLVT'=>'', 'HLT'=>'', 'GRT'=>'', 'OLTSO'=>'', 'ILTI'=>'', 'MNL'=>'', 'OLTPO'=>'', 'LTFAQ'=>'', 'UA'=>'', 'PA'=>'');
@@ -1127,7 +1127,7 @@ class Users extends CRMEntity {
 		return $return_array;
 	}
 
-	function getDefaultHomeModuleVisibility($home_string, $inVal) {
+	public function getDefaultHomeModuleVisibility($home_string, $inVal) {
 		$homeModComptVisibility = 0;
 		if ($inVal == 'postinstall') {
 			if ($_REQUEST[$home_string] != '') {
@@ -1137,7 +1137,7 @@ class Users extends CRMEntity {
 		return $homeModComptVisibility;
 	}
 
-	function insertUserdetails($inVal) {
+	public function insertUserdetails($inVal) {
 		global $adb;
 		$uid = $this->id;
 		$s1 = $adb->getUniqueID("vtiger_homestuff");
@@ -1262,7 +1262,7 @@ class Users extends CRMEntity {
 	/** function to save the order in which the modules have to be displayed in the home page for the specified user id
 	 * @param $id -- user id:: Type integer
 	 */
-	function saveHomeStuffOrder($id) {
+	public function saveHomeStuffOrder($id) {
 		global $log, $adb;
 		$log->debug("Entering in function saveHomeOrder($id)");
 
@@ -1293,7 +1293,7 @@ class Users extends CRMEntity {
 	 * @param $input_value -- Input value for the column taken from the User
 	 * @return Column value of the field.
 	 */
-	function get_column_value($columname, $fldvalue, $fieldname, $uitype, $datatype = '') {
+	public function get_column_value($columname, $fldvalue, $fieldname, $uitype, $datatype = '') {
 		if (is_uitype($uitype, "_date_") && $fldvalue == '') {
 			return null;
 		}
@@ -1307,7 +1307,7 @@ class Users extends CRMEntity {
 	 * Function to reset the Reminder Interval setup and update the time for next reminder interval
 	 * @param $prev_reminder_interval -- Last Reminder Interval on which the reminder popup's were triggered.
 	 */
-	function resetReminderInterval($prev_reminder_interval) {
+	public function resetReminderInterval($prev_reminder_interval) {
 		global $adb;
 		if ($prev_reminder_interval != $this->column_fields['reminder_interval']) {
 			coreBOS_Session::delete('next_reminder_interval');
@@ -1317,15 +1317,15 @@ class Users extends CRMEntity {
 		}
 	}
 
-	function initSortByField($module) {
+	public function initSortByField($module) {
 		// Right now, we do not have any fields to be handled for Sorting in Users module. This is just a place holder as it is called from Popup.php
 	}
 
-	function filterInactiveFields($module) {
+	public function filterInactiveFields($module) {
 		// TODO Nothing do right now
 	}
 
-	function deleteImage() {
+	public function deleteImage() {
 		$sql1 = 'SELECT attachmentsid FROM vtiger_salesmanattachmentsrel WHERE smid = ?';
 		$res1 = $this->db->pquery($sql1, array($this->id));
 		if ($this->db->num_rows($res1) > 0) {
@@ -1346,12 +1346,12 @@ class Users extends CRMEntity {
 	}
 
 	/** Function to delete an entity with given Id */
-	function trash($module, $id) {
+	public function trash($module, $id) {
 		global $log, $current_user;
 		$this->mark_deleted($id);
 	}
 
-	function transformOwnerShipAndDelete($userId, $transformToUserId) {
+	public function transformOwnerShipAndDelete($userId, $transformToUserId) {
 		$adb = PearDatabase::getInstance();
 
 		$em = new VTEventsManager($adb);
@@ -1380,7 +1380,7 @@ class Users extends CRMEntity {
 	 * This function should be overridden in each module. It marks an item as deleted.
 	 * @param <type> $id
 	 */
-	function mark_deleted($id) {
+	public function mark_deleted($id) {
 		global $log, $current_user, $adb;
 		$date_var = date('Y-m-d H:i:s');
 		$query = "UPDATE vtiger_users set status=?,date_modified=?,modified_user_id=? where id=?";

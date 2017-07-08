@@ -367,11 +367,11 @@ class crxml implements arrayAccess, iterator
 			}
 		}
 	}
-	function nodeValue()
+	public function nodeValue()
 	{
 		return (string)$this;
 	}
-	function __toString()
+	public function __toString()
 	{
 		if($node=$this->_getNode()) {
 			$count = 0;	
@@ -402,12 +402,12 @@ class crxml implements arrayAccess, iterator
 			return '';
 		}
 	}
-	function loadXML($xmlString)
+	public function loadXML($xmlString)
 	{
 		$this->node->loadXML($xmlString);
 		$this->parent=null;
 	}
-	function attributes()
+	public function attributes()
 	{
 		$return = array();
 		for($i=0;($attributeNode = $this->_getNode()->attributes->item($i));$i++) {
@@ -416,13 +416,13 @@ class crxml implements arrayAccess, iterator
 		return $return;
 	}
 
-	function xml()
+	public function xml()
 	{
 		$node=$this->_getNode();
 		$this->root->_getNode()->formatOutput = true;
 		return $this->root->_getNode()->saveXML($node);
 	}
-	function _getNode()
+	public function _getNode()
 	{
 		if($this->offset==0) {
 			return $this->node;
@@ -440,7 +440,7 @@ class crxml implements arrayAccess, iterator
 		}
 		return null;
 	}
-	function count($name='')
+	public function count($name='')
 	{
 		if(!is_null($this->node)) {
 			if($name) {
@@ -451,7 +451,7 @@ class crxml implements arrayAccess, iterator
 			}
 		} else  return 0;
 	}
-	function addNameSpaceDefNode($prefix,$nodeName,$nameSpaceURI)
+	public function addNameSpaceDefNode($prefix, $nodeName, $nameSpaceURI)
 	{
 		if(is_null($this->node)) {
 			$this->node=$this->connectToParent();
@@ -461,7 +461,7 @@ class crxml implements arrayAccess, iterator
 		$fullName = "$nameSpaceURI|$nodeName";
 		return $this->$fullName;
 	}
-	function addNameSpace($nameSpaces)
+	public function addNameSpace($nameSpaces)
 	{
 		if(is_null($this->node)) {
 			$this->node=$this->connectToParent();
@@ -471,7 +471,7 @@ class crxml implements arrayAccess, iterator
 		}
 		return $this;
 	}
-	function _getNewElement($name,$value=null)
+	public function _getNewElement($name, $value=null)
 	{
 		if(strpos($name,"|")!==false) {
 			$fragments = explode('|',$name);
@@ -505,7 +505,7 @@ class crxml implements arrayAccess, iterator
 			return new DOMElement($name,$value);
 		}
 	}
-	function _getChildrenForNode($node,$name)
+	public function _getChildrenForNode($node, $name)
 	{
 		if(strpos($name,"|")!==false) {
 			list($nameSpaceURI,$localName)=explode('|',$name);
@@ -664,18 +664,18 @@ class crxml implements arrayAccess, iterator
 			$node->nodeValue=$value;
 		}
 	}
-	function remove()
+	public function remove()
 	{
 		if($this->parent) {
 			$this->parent->_getNode()->removeChild($this->_getNode());
 		}
 	}
-	function emptyNode()
+	public function emptyNode()
 	{
 		$node = $this->_getNode();
 		while ($node->childNodes->length) $node->removeChild($node->firstChild);
 	}
-	function fullNode()
+	public function fullNode()
 	{
 		$temp = new crxml($this->version,$this->encoding);
 		if($node = $this->_getNode()) {
@@ -704,7 +704,7 @@ class crxml implements arrayAccess, iterator
 		}
 	}
 	//Iterator Interface
-	function current()
+	public function current()
 	{
 		$childNodes=$this->_getChildrenForNode($this->_getNode(),'*');
 		if($node=$childNodes->item($this->current)) {
@@ -714,7 +714,7 @@ class crxml implements arrayAccess, iterator
 			return $return;
 		}
 	}
-	function key()
+	public function key()
 	{
 		$childNodes=$this->_getChildrenForNode($this->_getNode(),'*');
 		if($node=$childNodes->item($this->current)) {
@@ -723,15 +723,15 @@ class crxml implements arrayAccess, iterator
 			return false;
 		}
 	}
-	function next()
+	public function next()
 	{
 		$this->current++;
 	}
-	function rewind()
+	public function rewind()
 	{
 		$this->current=0;
 	}
-	function valid()
+	public function valid()
 	{
 		$childNodes=$this->_getChildrenForNode($this->_getNode(),'*');
 		if($node=$childNodes->item($this->current)) {
@@ -777,7 +777,7 @@ class crxml implements arrayAccess, iterator
 		return array_reverse($path);
 	}
 
-	function search($nodeName,$relative = false)
+	public function search($nodeName, $relative = false)
 	{
 		$return = array();
 		if($thisNode = $node = $this->_getNode()) {
@@ -803,7 +803,7 @@ class crxml implements arrayAccess, iterator
 		}
 		return $return;
 	}
-	function dump($nodeName='*',$relative=false)
+	public function dump($nodeName='*', $relative=false)
 	{
 		echo "<pre>".print_r($this->search($nodeName,$relative),true)."</pre>";
 	}

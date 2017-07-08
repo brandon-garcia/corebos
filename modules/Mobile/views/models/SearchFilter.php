@@ -11,7 +11,7 @@ include_once dirname(__FILE__) . '/../../api/ws/models/SearchFilter.php';
 
 class crmtogo_UI_SearchFilterModel extends crmtogo_WS_SearchFilterModel {
 
-	function execute($fieldnames, $paging = false, $calwhere ='') {
+	public function execute($fieldnames, $paging = false, $calwhere ='') {
 		global $current_user;
 		if ($this->moduleName == 'Project') {
 			// Custom View

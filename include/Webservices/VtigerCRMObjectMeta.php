@@ -19,7 +19,7 @@ class VtigerCRMObjectMeta extends EntityMeta {
 	private $hasDeleteAccess;
 	private $assignUsers;
 
-	function __construct($webserviceObject,$user){
+	public function __construct($webserviceObject, $user){
 		parent::__construct($webserviceObject,$user);
 		$this->columnTableMapping = null;
 		$this->fieldColumnMapping = null;
@@ -162,35 +162,35 @@ class VtigerCRMObjectMeta extends EntityMeta {
 		}
 	}
 
-	function hasAccess(){
+	public function hasAccess(){
 		if(!$this->meta){
 			$this->retrieveMeta();
 		}
 		return $this->hasAccess;
 	}
 
-	function hasWriteAccess(){
+	public function hasWriteAccess(){
 		if(!$this->meta){
 			$this->retrieveMeta();
 		}
 		return $this->hasWriteAccess;
 	}
 
-	function hasReadAccess(){
+	public function hasReadAccess(){
 		if(!$this->meta){
 			$this->retrieveMeta();
 		}
 		return $this->hasReadAccess;
 	}
 
-	function hasDeleteAccess(){
+	public function hasDeleteAccess(){
 		if(!$this->meta){
 			$this->retrieveMeta();
 		}
 		return $this->hasDeleteAccess;
 	}
 
-	function hasPermission($operation,$webserviceId){
+	public function hasPermission($operation, $webserviceId){
 		if (empty($webserviceId)) {
 			$id = '';
 		} else {
@@ -208,7 +208,7 @@ class VtigerCRMObjectMeta extends EntityMeta {
 		return false;
 	}
 
-	function hasAssignPrivilege($webserviceId){
+	public function hasAssignPrivilege($webserviceId){
 		global $adb;
 
 		// administrator's have assign privilege
@@ -246,7 +246,7 @@ class VtigerCRMObjectMeta extends EntityMeta {
 		}
 	}
 
-	function getUserAccessibleColumns(){
+	public function getUserAccessibleColumns(){
 		if(!$this->meta){
 			$this->retrieveMeta();
 		}
@@ -260,14 +260,14 @@ class VtigerCRMObjectMeta extends EntityMeta {
 		return parent::getModuleFields();
 	}
 
-	function getColumnTableMapping(){
+	public function getColumnTableMapping(){
 		if(!$this->meta){
 			$this->retrieveMeta();
 		}
 		return parent::getColumnTableMapping();
 	}
 
-	function getFieldColumnMapping(){
+	public function getFieldColumnMapping(){
 		if(!$this->meta){
 			$this->retrieveMeta();
 		}
@@ -283,43 +283,43 @@ class VtigerCRMObjectMeta extends EntityMeta {
 		return $this->fieldColumnMapping;
 	}
 
-	function getMandatoryFields(){
+	public function getMandatoryFields(){
 		if(!$this->meta){
 			$this->retrieveMeta();
 		}
 		return parent::getMandatoryFields();
 	}
 
-	function getReferenceFieldDetails(){
+	public function getReferenceFieldDetails(){
 		if(!$this->meta){
 			$this->retrieveMeta();
 		}
 		return parent::getReferenceFieldDetails();
 	}
 
-	function getOwnerFields(){
+	public function getOwnerFields(){
 		if(!$this->meta){
 			$this->retrieveMeta();
 		}
 		return parent::getOwnerFields();
 	}
 
-	function getEntityName(){
+	public function getEntityName(){
 		return $this->objectName;
 	}
 
-	function getEntityId(){
+	public function getEntityId(){
 		return $this->objectId;
 	}
 
-	function getEmailFields(){
+	public function getEmailFields(){
 		if(!$this->meta){
 			$this->retrieveMeta();
 		}
 		return parent::getEmailFields();
 	}
 
-	function getFieldIdFromFieldName($fieldName){
+	public function getFieldIdFromFieldName($fieldName){
 		if(!$this->meta){
 			$this->retrieveMeta();
 		}
@@ -330,7 +330,7 @@ class VtigerCRMObjectMeta extends EntityMeta {
 		return null;
 	}
 
-	function getFieldUItypeFromFieldName($fieldName){
+	public function getFieldUItypeFromFieldName($fieldName){
 		if(!$this->meta){
 			$this->retrieveMeta();
 		}
@@ -341,7 +341,7 @@ class VtigerCRMObjectMeta extends EntityMeta {
 		return null;
 	}
 
-	function retrieveMeta(){
+	public function retrieveMeta(){
 		require_once('modules/CustomView/CustomView.php');
 		$current_user = vtws_preserveGlobal('current_user',$this->user);
 		$theme = vtws_preserveGlobal('theme',$this->user->theme);
@@ -419,15 +419,15 @@ class VtigerCRMObjectMeta extends EntityMeta {
 		}
 	}
 
-	function getObjectEntityName($webserviceId){
+	public function getObjectEntityName($webserviceId){
 		return $this->getObjectEntityNameWithDelete($webserviceId,0);
 	}
 
-	function getObjectEntityNameDeleted($webserviceId){
+	public function getObjectEntityNameDeleted($webserviceId){
 		return $this->getObjectEntityNameWithDelete($webserviceId,1);
 	}
 
-	function getObjectEntityNameWithDelete($webserviceId,$deleted){
+	public function getObjectEntityNameWithDelete($webserviceId, $deleted){
 		global $adb;
 
 		$idComponents = vtws_getIdComponents($webserviceId);
@@ -457,7 +457,7 @@ class VtigerCRMObjectMeta extends EntityMeta {
 		return $seType;
 	}
 
-	function exists($recordId){
+	public function exists($recordId){
 		global $adb;
 
 		// Caching user existence value for optimizing repeated reads.

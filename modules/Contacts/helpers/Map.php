@@ -15,7 +15,7 @@ class Google_Map_Helper {
      * @param type $request
      * @return type
      */
-    static function getLocation($request) {
+    public static function getLocation($request) {
         $recordId = $request->get('recordid');
         $module = $request->get('source_module');
         $locationFields = self::getLocationFields($module);
@@ -35,7 +35,7 @@ class Google_Map_Helper {
      * @param type $module
      * @return type
      */
-    static function getLocationFields($module) {
+    public static function getLocationFields($module) {
         switch ($module) {
             case 'Contacts': return array('street' => 'mailingstreet', 'city' => 'mailingcity', 'country' => 'mailingcountry');
                 break;

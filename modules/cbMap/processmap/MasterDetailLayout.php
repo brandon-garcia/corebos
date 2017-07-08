@@ -93,13 +93,13 @@ class MasterDetailLayout extends processcbMap {
 	private $relatedfieldsinfo = array();
 	private $detailModule = '';
 
-	function processMap($arguments) {
+	public function processMap($arguments) {
 		global $adb, $current_user;
 		$this->mapping=$this->convertMap2Array();
 		return $this->mapping;
 	}
 
-	function convertMap2Array() {
+	public function convertMap2Array() {
 		$xml = $this->getXMLContent();
 		$mapping=array();
 		$mapping['originmodule'] = (String)$xml->originmodule;
@@ -205,7 +205,7 @@ class MasterDetailLayout extends processcbMap {
 		return $mapping;
 	}
 
-	function getFieldInfo($fieldname) {
+	public function getFieldInfo($fieldname) {
 		global $current_user;
 		if (count($this->fieldsinfo)==0) {
 			$wsfieldsinfo = vtws_describe($this->detailModule, $current_user);
@@ -228,7 +228,7 @@ class MasterDetailLayout extends processcbMap {
 		return $this->fieldsinfo[$ret];
 	}
 
-	function getRelatedFieldInfo($fieldname) {
+	public function getRelatedFieldInfo($fieldname) {
 		global $current_user;
 		list($module,$fieldname) = explode('.', $fieldname);
 		if (count($this->relatedfieldsinfo)==0 or !isset($this->relatedfieldsinfo[$module])) {

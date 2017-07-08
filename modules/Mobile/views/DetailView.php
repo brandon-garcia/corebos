@@ -11,7 +11,7 @@
 include_once dirname(__FILE__) . '/../api/ws/FetchRecordDetails.php';
 
 class crmtogo_UI_DetailView extends crmtogo_WS_FetchRecordDetails {
-	function cachedModuleLookupWithRecordId($recordId) {
+	public function cachedModuleLookupWithRecordId($recordId) {
 		$recordIdComponents = explode('x', $recordId);
 		$modules = $this->sessionGet('_MODULES');
 		foreach($modules as $module) {
@@ -22,7 +22,7 @@ class crmtogo_UI_DetailView extends crmtogo_WS_FetchRecordDetails {
 		return false;
 	}
 	
-	function process(crmtogo_API_Request $request) {
+	public function process(crmtogo_API_Request $request) {
 		global $adb;
 		$wsResponse = parent::process($request);
 		$modules_with_comments = $this->getConfigSettingsComments();

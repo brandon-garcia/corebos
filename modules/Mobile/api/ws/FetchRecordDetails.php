@@ -41,7 +41,7 @@ class crmtogo_WS_FetchRecordDetails extends crmtogo_WS_FetchRecord {
 		return false;
 	}
 	
-	function process(crmtogo_API_Request $request) {
+	public function process(crmtogo_API_Request $request) {
 		$operation = $request->getOperation();
 		if ($operation =='create') {
 			$newrecord = crmtogo_WS_Describe::process($request);

@@ -22,7 +22,7 @@ class crmtogo_WS_Describe extends crmtogo_WS_Controller {
 		}
 	}
 	
-	function process(crmtogo_API_Request $request) {
+	public function process(crmtogo_API_Request $request) {
 		global $current_user;
 		$module = $request->get('module');
 		$newrecord = self::transformToBlocks($module);

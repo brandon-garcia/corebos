@@ -14,7 +14,7 @@ class Import_VCard_Reader extends Import_File_Reader {
 
 	protected $vCardPattern = '/BEGIN:VCARD.*?END:VCARD/si';
 	protected $skipLabels = array('BEGIN', 'END', 'VERSION');
-	static $fileContents = null;
+	public static $fileContents = null;
 
 	public function hasHeader() {
 		return true;

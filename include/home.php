@@ -14,21 +14,21 @@ require_once('include/DatabaseUtil.php');
 require_once('include/utils/CommonUtils.php');
 
 class Homestuff{
-	var $userid;
-	var $dashdetails=array();
-	var $reportdetails=array();
+	public $userid;
+	public $dashdetails=array();
+	public $reportdetails=array();
 
 	/**
 	 * this is the constructor for the class
 	 */
-	function __construct(){
+	public function __construct(){
 
 	}
 
 	/**
 	 * this function adds a new widget information to the database
 	 */
-	function addStuff(){
+	public function addStuff(){
 		global $adb, $current_user, $current_language;
 		$dashbd_strings = return_module_language($current_language, "Dashboard");
 		$stuffid=$adb->getUniqueId('vtiger_homestuff');
@@ -114,7 +114,7 @@ class Homestuff{
 	 * this function returns the information about a widget in an array
 	 * @return array(stuffid=>"id", stufftype=>"type", stufftitle=>"title")
 	 */
-	function getHomePageFrame(){
+	public function getHomePageFrame(){
 		global $adb, $current_user;
 		$querystuff ="select vtiger_homestuff.stuffid,stufftype,stufftitle,setype from vtiger_homestuff
 						left join vtiger_homedefault on vtiger_homedefault.stuffid=vtiger_homestuff.stuffid
@@ -203,7 +203,7 @@ class Homestuff{
 	 * this function returns information about the given widget in an array format
 	 * @return array(stuffid=>"id", stufftype=>"type", stufftitle=>"title")
 	 */
-	function getSelectedStuff($sid,$stuffType){
+	public function getSelectedStuff($sid, $stuffType){
 		global $adb, $current_user;
 		$querystuff="select stufftitle from vtiger_homestuff where visible=0 and stuffid=?";
 		$resultstuff=$adb->pquery($querystuff, array($sid));
@@ -214,7 +214,7 @@ class Homestuff{
 	/**
 	 * this function only returns the widget contents for a given widget
 	 */
-	function getHomePageStuff($sid,$stuffType){
+	public function getHomePageStuff($sid, $stuffType){
 		global $adb, $current_user;
 		$header=Array();
 		$details='';
@@ -361,7 +361,7 @@ class Homestuff{
 	/**
 	 * this function gets the detailed information of the dashboard widget
 	 */
-	function getDashDetails($did,$chart=''){
+	public function getDashDetails($did, $chart=''){
 		global $adb;
 		$qry="select * from vtiger_homedashbd where stuffid=?";
 		$result=$adb->pquery($qry, array($did));
@@ -386,7 +386,7 @@ class Homestuff{
 		return $return_dash;
 	}
 
-	function getReportChartDetails($stuffId,$skipChart=''){
+	public function getReportChartDetails($stuffId, $skipChart=''){
 		global $adb;
 		$qry="select * from vtiger_homereportchart where stuffid=?";
 		$result=$adb->pquery($qry, array($stuffId));
@@ -401,7 +401,7 @@ class Homestuff{
 		}
 	}
 
-	function getDisplayReportChart($reportId, $chartType) {
+	public function getDisplayReportChart($reportId, $chartType) {
 		require_once('modules/Reports/CustomReportUtils.php');
 		return CustomReportUtils::getReportChart($reportId,$chartType);
 	}
@@ -499,7 +499,7 @@ class Homestuff{
 	 * @param integer $notebookid - the notebookid
 	 * @return - contents of the notebook for a user
 	 */
-	function getNotebookContents($notebookid){
+	public function getNotebookContents($notebookid){
 		global $adb, $current_user;
 
 		$sql = "select * from vtiger_notebook_contents where notebookid=? and userid=?";
@@ -517,7 +517,7 @@ class Homestuff{
 	 * @param integer $widgetid - the notebookid
 	 * @return $url - the url for the widget
 	 */
-	function getWidgetURL($widgetid){
+	public function getWidgetURL($widgetid){
 		global $adb, $current_user;
 
 		$sql = "select * from vtiger_homewidget_url where widgetid=?";

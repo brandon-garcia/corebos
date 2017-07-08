@@ -48,7 +48,7 @@ include_once('vtlib/Vtiger/Link.php');
 
 class RelatedPanes extends processcbMap {
 
-	function getRelationIds($origintab,$mlist) {
+	public function getRelationIds($origintab, $mlist) {
 		global $adb;
 		if (!is_array($mlist)) $mlist = array($mlist);
 		$mlist_ids=array();
@@ -67,11 +67,11 @@ class RelatedPanes extends processcbMap {
 		return $mlist_ids;
 	}
 
-	function processMap($arguments) {
+	public function processMap($arguments) {
 		return $this->convertMap2Array($arguments[0]);
 	}
 
-	function convertMap2Array($crmid) {
+	public function convertMap2Array($crmid) {
 		global $current_user;
 		$xml = $this->getXMLContent();
 		$mapping=array();

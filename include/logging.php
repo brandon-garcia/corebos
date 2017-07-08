@@ -21,7 +21,7 @@ if (!empty($LOG4PHP_DEBUG)) {
 	require_once(LOG4PHP_DIR.'/Logger.php');
 	Logger::configure('log4php.properties');
 	class LoggerManager {
-		static function getlogger($name = 'ROOT') {
+		public static function getlogger($name = 'ROOT') {
 			return Logger::getLogger($name);
 		}
 	}

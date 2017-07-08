@@ -12,9 +12,9 @@ include_once 'include/smarty/function.process_widget.php';
 class vtigerCRM_Smarty extends Smarty{
 
 	/** Cache the tag cloud display information for re-use */
-	static $_tagcloud_display_cache = array();
+	public static $_tagcloud_display_cache = array();
 
-	static function lookupTagCloudView($userid) {
+	public static function lookupTagCloudView($userid) {
 		if(!isset(self::$_tagcloud_display_cache[$userid])) {
 			self::$_tagcloud_display_cache[$userid] = getTagCloudView($userid);
 		}
@@ -22,7 +22,7 @@ class vtigerCRM_Smarty extends Smarty{
 	}
 
 	/** This function sets the smarty directory path for the member variables */
-	function __construct()
+	public function __construct()
 	{
 		global $current_user, $currentModule;
 

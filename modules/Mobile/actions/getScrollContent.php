@@ -12,7 +12,7 @@ include_once dirname(__FILE__) . '/../api/ws/getScrollContent.php';
 
 //get new content for scrolling
 class crmtogo_UI_GetScrollRecords extends crmtogo_WS_getScrollContent{
-	function process(crmtogo_API_Request $request) {
+	public function process(crmtogo_API_Request $request) {
 		require_once 'include/utils/utils.php';
 		global $adb;
 		//get scroll parameter

@@ -13,7 +13,7 @@ include_once dirname(__FILE__) . '/Utils.php';
 
 class crmtogo_WS_Controller  {
 	
-	function requireLogin() {
+	public function requireLogin() {
 		return true;
 	}
 	
@@ -45,7 +45,7 @@ class crmtogo_WS_Controller  {
 		return $this->activeUser;
 	}
 	
-	function hasActiveUser() {
+	public function hasActiveUser() {
 		$user = $this->getActiveUser();
 		return ($user !== false);
 	}
@@ -54,11 +54,11 @@ class crmtogo_WS_Controller  {
 		return coreBOS_Session::get($key, $defvalue);
 	}
 
-	function sessionSet($key, $value) {
+	public function sessionSet($key, $value) {
 		coreBOS_Session::set($key, $value);
 	}
 
-	function getLanguage() {
+	public function getLanguage() {
 		//cache language
 		static $used_language = NULL;
 		if(is_null($used_language)) {
@@ -76,7 +76,7 @@ class crmtogo_WS_Controller  {
 		return $used_language;
 	}
 	
-	function getConfigDefaults() {
+	public function getConfigDefaults() {
 		//cache config information
 		static $crmtogoDefaultsConfigCache = NULL;
 		if (is_null($crmtogoDefaultsConfigCache)) {
@@ -94,7 +94,7 @@ class crmtogo_WS_Controller  {
 		return $crmtogoConfigCache;
 	}
 
-	function getUserConfigModuleSettings() {
+	public function getUserConfigModuleSettings() {
 		//cache config information
 		static $crmtogoModuleConfigCache = NULL;
 		if (is_null($crmtogoModuleConfigCache)) {
@@ -103,7 +103,7 @@ class crmtogo_WS_Controller  {
 		return $crmtogoModuleConfigCache;
 	}
 	
-	function getConfigSettingsComments() {
+	public function getConfigSettingsComments() {
 		//cache config information
 		static $crmtogoCommentsConfigCache = NULL;
 		if (is_null($crmtogoCommentsConfigCache)) {
@@ -112,7 +112,7 @@ class crmtogo_WS_Controller  {
 		return $crmtogoCommentsConfigCache;
 	}
 
-	function getUserModule() {
+	public function getUserModule() {
 		global $current_user,$current_language;
 		if(empty($current_language))
 			$current_language = self::sessionGet('language');
@@ -135,7 +135,7 @@ class crmtogo_WS_Controller  {
 		}
 		return $userModule;
 	}
-	function getUsersLanguage() {
+	public function getUsersLanguage() {
 		//cache config information
 		static $user_lang_strings = NULL;
 		if (is_null($user_lang_strings)) {

@@ -41,7 +41,7 @@ class crmtogo_WS_FetchRecord extends crmtogo_WS_Controller {
 		return $record;
 	}
 	
-	function process(crmtogo_API_Request $request) {
+	public function process(crmtogo_API_Request $request) {
 		$response = new crmtogo_API_Response();
 		$current_user = $this->getActiveUser();
 		//$module = $request->get('module');
@@ -99,7 +99,7 @@ class crmtogo_WS_FetchRecord extends crmtogo_WS_Controller {
 		return $response;
 	}
 	
-	function resolveRecordValues(&$record, $user, $ignoreUnsetFields=false) {
+	public function resolveRecordValues(&$record, $user, $ignoreUnsetFields=false) {
 		if(empty($record)) {
 			return $record;
 		}
@@ -117,7 +117,7 @@ class crmtogo_WS_FetchRecord extends crmtogo_WS_Controller {
 		}
 	}
 	
-	function fetchRecordLabelForId($id, $user) {
+	public function fetchRecordLabelForId($id, $user) {
 		$value = null;
 		
 		if (isset($this->resolvedValueCache[$id])) {

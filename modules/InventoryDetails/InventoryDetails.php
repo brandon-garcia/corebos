@@ -12,31 +12,31 @@ require_once('data/Tracker.php');
 
 class InventoryDetails extends CRMEntity {
 
-	var $db, $log; // Used in class functions of CRMEntity
+	public public $db, $log; // Used in class functions of CRMEntity
 
-	var $table_name = 'vtiger_inventorydetails';
-	var $table_index= 'inventorydetailsid';
-	var $column_fields = Array();
+	public $table_name = 'vtiger_inventorydetails';
+	public $table_index= 'inventorydetailsid';
+	public $column_fields = Array();
 
 	/** Indicator if this is a custom module or standard module */
-	var $IsCustomModule = true;
-	var $HasDirectImageField = false;
+	public $IsCustomModule = true;
+	public $HasDirectImageField = false;
 	/**
 	 * Mandatory table for supporting custom fields.
 	 */
-	var $customFieldTable = Array('vtiger_inventorydetailscf', 'inventorydetailsid');
+	public $customFieldTable = Array('vtiger_inventorydetailscf', 'inventorydetailsid');
 	// Uncomment the line below to support custom field columns on related lists
 	// var $related_tables = Array('vtiger_inventorydetailscf'=>array('inventorydetailsid','vtiger_inventorydetails', 'inventorydetailsid'));
 
 	/**
 	 * Mandatory for Saving, Include tables related to this module.
 	 */
-	var $tab_name = Array('vtiger_crmentity', 'vtiger_inventorydetails', 'vtiger_inventorydetailscf');
+	public $tab_name = Array('vtiger_crmentity', 'vtiger_inventorydetails', 'vtiger_inventorydetailscf');
 
 	/**
 	 * Mandatory for Saving, Include tablename and tablekey columnname here.
 	 */
-	var $tab_name_index = Array(
+	public $tab_name_index = Array(
 		'vtiger_crmentity' => 'crmid',
 		'vtiger_inventorydetails'   => 'inventorydetailsid',
 	    'vtiger_inventorydetailscf' => 'inventorydetailsid');
@@ -44,7 +44,7 @@ class InventoryDetails extends CRMEntity {
 	/**
 	 * Mandatory for Listing (Related listview)
 	 */
-	var $list_fields = Array (
+	public $list_fields = Array (
 		/* Format: Field Label => Array(tablename => columnname) */
 		// tablename should not have prefix 'vtiger_'
 		'Inventory Details No'=> Array('inventorydetails' => 'inventorydetails_no'),
@@ -58,7 +58,7 @@ class InventoryDetails extends CRMEntity {
 		'Line Total'=> Array('inventorydetails' => 'linetotal'),
 		'Assigned To' => Array('crmentity' =>'smownerid')
 	);
-	var $list_fields_name = Array(
+	public $list_fields_name = Array(
 		/* Format: Field Label => fieldname */
 		'Inventory Details No'=> 'inventorydetails_no',
 		'Products'=> 'productid',
@@ -73,10 +73,10 @@ class InventoryDetails extends CRMEntity {
 	);
 
 	// Make the field link to detail view from list view (Fieldname)
-	var $list_link_field = 'inventorydetails_no';
+	public $list_link_field = 'inventorydetails_no';
 
 	// For Popup listview and UI type support
-	var $search_fields = Array(
+	public $search_fields = Array(
 		/* Format: Field Label => Array(tablename => columnname) */
 		// tablename should not have prefix 'vtiger_'
 		'Inventory Details No'=> Array('inventorydetails' => 'inventorydetails_no'),
@@ -89,7 +89,7 @@ class InventoryDetails extends CRMEntity {
 		'Listprice'=> Array('inventorydetails' => 'listprice'),
 		'Line Total'=> Array('inventorydetails' => 'linetotal'),
 	);
-	var $search_fields_name = Array(
+	public $search_fields_name = Array(
 		/* Format: Field Label => fieldname */
 		'Inventory Details No'=> 'inventorydetails_no',
 		'Products'=> 'productid',
@@ -103,30 +103,30 @@ class InventoryDetails extends CRMEntity {
 	);
 
 	// For Popup window record selection
-	var $popup_fields = Array('inventorydetails_no');
+	public $popup_fields = Array('inventorydetails_no');
 
 	// Placeholder for sort fields - All the fields will be initialized for Sorting through initSortFields
-	var $sortby_fields = Array();
+	public $sortby_fields = Array();
 
 	// For Alphabetical search
-	var $def_basicsearch_col = 'inventorydetails_no';
+	public $def_basicsearch_col = 'inventorydetails_no';
 
 	// Column value to use on detail view record text display
-	var $def_detailview_recname = 'inventorydetails_no';
+	public $def_detailview_recname = 'inventorydetails_no';
 
 	// Required Information for enabling Import feature
-	var $required_fields = Array('inventorydetails_no'=>1);
+	public $required_fields = Array('inventorydetails_no'=>1);
 
 	// Callback function list during Importing
-	var $special_functions = Array('set_import_assigned_user');
+	public $special_functions = Array('set_import_assigned_user');
 
-	var $default_order_by = 'inventorydetails_no';
-	var $default_sort_order='ASC';
+	public $default_order_by = 'inventorydetails_no';
+	public $default_sort_order='ASC';
 	// Used when enabling/disabling the mandatory fields for the module.
 	// Refers to vtiger_field.fieldname values.
-	var $mandatory_fields = Array('createdtime', 'modifiedtime', 'inventorydetails_no');
+	public $mandatory_fields = Array('createdtime', 'modifiedtime', 'inventorydetails_no');
 
-	function save_module($module) {
+	public function save_module($module) {
 		global $adb;
 		if ($this->HasDirectImageField) {
 			$this->insertIntoAttachment($this->id,$module);
@@ -144,7 +144,7 @@ class InventoryDetails extends CRMEntity {
 	 * @param String Module name
 	 * @param String Event Type (module.postinstall, module.disabled, module.enabled, module.preuninstall)
 	 */
-	function vtlib_handler($modulename, $event_type) {
+	public function vtlib_handler($modulename, $event_type) {
 		if($event_type == 'module.postinstall') {
 			//Handle post installation actions
 			

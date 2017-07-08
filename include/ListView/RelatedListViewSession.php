@@ -13,13 +13,13 @@ require_once('include/ListView/ListViewSession.php');
 /**initializes Related ListViewSession */
 class RelatedListViewSession {
 
-	var $module = null;
-	var $relstart = null;
-	var $sorder = null;
-	var $sortby = null;
-	var $page_view = null;
+	public $module = null;
+	public $relstart = null;
+	public $sorder = null;
+	public $sortby = null;
+	public $page_view = null;
 
-	function __construct() {
+	public function __construct() {
 		global $log,$currentModule;
 		$log->debug("Entering RelatedListViewSession() method ...");
 		$this->module = $currentModule;

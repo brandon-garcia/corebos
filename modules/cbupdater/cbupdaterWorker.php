@@ -50,24 +50,24 @@ if (empty($current_language)) {
 if (empty($app_strings)) $app_strings = return_application_language($current_language);
 
 class cbupdaterWorker {
-	var $cbupdid;
-	var $cbupd_no;
-	var $author = '';
-	var $filename;
-	var $classname;
-	var $execstate = false;
-	var $systemupdate = false;
-	var $perspective = false;
-	var $blocked = false;
-	var $execdate;
-	var $updError = false;
-	var $query_count=0;
-	var $success_query_count=0;
-	var $failure_query_count=0;
-	var $success_query_array=array();
-	var $failure_query_array=array();
+	public $cbupdid;
+	public $cbupd_no;
+	public $author = '';
+	public $filename;
+	public $classname;
+	public $execstate = false;
+	public $systemupdate = false;
+	public $perspective = false;
+	public $blocked = false;
+	public $execdate;
+	public $updError = false;
+	public $query_count=0;
+	public $success_query_count=0;
+	public $failure_query_count=0;
+	public $success_query_array=array();
+	public $failure_query_array=array();
 
-	function __construct() {
+	public function __construct() {
 		global $adb,$log,$current_user;
 		echo "<table width=80% align=center border=1>";
 		$reflector = new ReflectionClass(get_class($this));
@@ -92,7 +92,7 @@ class cbupdaterWorker {
 		}
 	}
 
-	function applyChange() {
+	public function applyChange() {
 		if ($this->isBlocked()) return true;
 		if ($this->hasError()) $this->sendError();
 		if ($this->isApplied()) {
@@ -105,7 +105,7 @@ class cbupdaterWorker {
 		$this->finishExecution();
 	}
 
-	function undoChange() {
+	public function undoChange() {
 		if ($this->isBlocked()) return true;
 		if ($this->hasError()) $this->sendError();
 		if ($this->isSystemUpdate()) {
@@ -122,27 +122,27 @@ class cbupdaterWorker {
 		$this->finishExecution();
 	}
 
-	function isApplied() {
+	public function isApplied() {
 		return ($this->execstate=='Executed');
 	}
 
-	function isSystemUpdate() {
+	public function isSystemUpdate() {
 		return $this->systemupdate;
 	}
 
-	function isBlocked() {
+	public function isBlocked() {
 		return $this->blocked;
 	}
 
-	function isContinuous() {
+	public function isContinuous() {
 		return ($this->execstate=='Continuous');
 	}
 
-	function hasError() {
+	public function hasError() {
 		return ($this->updError or empty($this->cbupdid));
 	}
 
-	function markApplied($stoponerror=true) {
+	public function markApplied($stoponerror=true) {
 		if ($this->isBlocked()) return true;
 		if ($this->hasError() and $stoponerror) $this->sendError();
 		global $adb,$log;
@@ -154,7 +154,7 @@ class cbupdaterWorker {
 		$this->execstate = 'Executed';
 	}
 
-	function markUndone($stoponerror=true) {
+	public function markUndone($stoponerror=true) {
 		if ($this->isBlocked() or $this->isContinuous()) return true;
 		if ($this->hasError() and $stoponerror) $this->sendError();
 		global $adb,$log;
@@ -162,7 +162,7 @@ class cbupdaterWorker {
 		$this->execstate = 'Pending';
 	}
 
-	function ExecuteQuery($query,$params=array()) {
+	public function ExecuteQuery($query, $params=array()) {
 		global $adb,$log;
 		$paramstring = (count($params)>0 ? '&nbsp;&nbsp;'.print_r($params,true) : '');
 		$status = $adb->pquery($query,$params);
@@ -189,7 +189,7 @@ class cbupdaterWorker {
 		}
 	}
 
-	function deleteWorkflow($wfid) {
+	public function deleteWorkflow($wfid) {
 		$this->ExecuteQuery("DELETE FROM com_vtiger_workflowtasks WHERE workflow_id=?",array($wfid));
 		$this->ExecuteQuery("DELETE FROM com_vtiger_workflows WHERE workflow_id=?", array($wfid));
 	}
@@ -212,7 +212,7 @@ class cbupdaterWorker {
 				)),
 	* See changeset addLeadEmailOptOutAndConversionRelatedFields for an example
 	*/
-	function massCreateFields($fieldLayout) {
+	public function massCreateFields($fieldLayout) {
 		global $adb;
 		foreach ($fieldLayout as $mod => $blocks) {
 			$moduleInstance = Vtiger_Module::getInstance($mod);
@@ -256,7 +256,7 @@ class cbupdaterWorker {
 		}
 	}
 
-	function installManifestModule($module) {
+	public function installManifestModule($module) {
 		$package = new Vtiger_Package();
 		ob_start();
 		$rdo = $package->importManifest("modules/$module/manifest.xml");
@@ -267,28 +267,28 @@ class cbupdaterWorker {
 		else $this->sendMsgError("ERROR installing $module!");
 	}
 
-	function isModuleInstalled($module) {
+	public function isModuleInstalled($module) {
 		global $adb;
 		$tabrs = $adb->pquery('select count(*) from vtiger_tab where name=?',array($module));
 		return ($tabrs and $adb->query_result($tabrs, 0,0)==1);
 	}
 
-	function sendMsg($msg) {
+	public function sendMsg($msg) {
 		echo '<tr width="100%"><td colspan=3>'.$msg.'</td></tr>';
 	}
 
-	function sendMsgError($msg) {
+	public function sendMsgError($msg) {
 		echo '<tr width="100%"><td colspan=3><span style="color:red">'.$msg.'</span></td></tr>';
 		$this->updError = true;
 	}
 
-	function sendError() {
+	public function sendError() {
 		$this->updError = true;
 		echo '<tr width="100%"><td colspan=3<span style="color:red">ERROR: Class called without update record in application!!</span></td></tr></table>';
 		die();
 	}
 
-	function finishExecution() {
+	public function finishExecution() {
 		echo '</table>';
 		if (count($this->failure_query_array)>0) {
 			echo <<<EOT

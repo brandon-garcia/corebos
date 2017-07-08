@@ -13,23 +13,23 @@ include_once dirname(__FILE__) . '/Filter.php';
 class crmtogo_WS_SearchFilterModel extends crmtogo_WS_FilterModel {
 	protected $criterias;
 	
-	function __construct($moduleName) {
+	public function __construct($moduleName) {
 		$this->moduleName = $moduleName;
 	}
 	
-	function query() {
+	public function query() {
 		return false;
 	}
 	
-	function queryParameters() {
+	public function queryParameters() {
 		return false;
 	}
 	
-	function setCriterias($criterias) {
+	public function setCriterias($criterias) {
 		$this->criterias = $criterias;
 	}
 	
-	function execute($fieldnames, $paging = false, $calwhere ='') {
+	public function execute($fieldnames, $paging = false, $calwhere ='') {
 		$selectClause = sprintf("SELECT %s", implode(',', $fieldnames));
 		$fromClause = sprintf("FROM %s", $this->moduleName);
 		if (($this->moduleName = 'Calendar' || $this->moduleName = 'Events') and $calwhere !='') {
@@ -55,7 +55,7 @@ class crmtogo_WS_SearchFilterModel extends crmtogo_WS_FilterModel {
 		return vtws_query($query, $this->getUser()); 
 	}
 	
-	static function modelWithCriterias($moduleName, $criterias = false) {
+	public static function modelWithCriterias($moduleName, $criterias = false) {
 		$model = new crmtogo_WS_SearchFilterModel($moduleName);
 		$model->setCriterias($criterias);
 		return $model;

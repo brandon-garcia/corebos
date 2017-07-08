@@ -11,14 +11,14 @@ require_once('include/database/PearDatabase.php');
 require_once('include/logging.php');
 
 class Asterisk {
-	var $address;
-	var $port;
-	var $userName;
-	var $password;
-	var $sock;
-	var $db;
-	var $log;
-	var $queue;
+	public $address;
+	public $port;
+	public $userName;
+	public $password;
+	public $sock;
+	public $db;
+	public $log;
+	public $queue;
 
 	/**
 	 * this is the constructor of the class, it initializes the parameters of the class
@@ -26,7 +26,7 @@ class Asterisk {
 	 * @param string $server - the asterisk server address
 	 * @param integer $port - the port number where to connect to the asterisk server
 	 */
-	function __construct( $sock, $server, $port) {
+	public function __construct($sock, $server, $port) {
 		$this->sock = $sock;
 		$this->address = $server;
 		$this->port = $port;
@@ -40,7 +40,7 @@ class Asterisk {
 	 * @param string $userName - asterisk username
 	 * @param string $password - password for the user
 	 */
-	function setUserInfo($userName, $password){
+	public function setUserInfo($userName, $password){
 		$this->userName = $userName;
 		$this->password = $password;
 	}
@@ -49,7 +49,7 @@ class Asterisk {
 	 * this function authenticates the user
 	 * @return - true on success else false
 	 */
-	function authenticateUser(){
+	public function authenticateUser(){
 		$request = "Action: Login\r\n".
 					"Username: ".$this->userName."\r\n".
 					"Secret: ".$this->password.
@@ -77,7 +77,7 @@ class Asterisk {
 	 * @param sring $to - the to number
 	 * this function prepares the parameter $context and calls the createCall() function
 	 */
-	function transfer($from,$to){
+	public function transfer($from, $to){
 		$this->log->debug("in function transfer($from, $to)");
 		if(empty($from) || empty($to)) {
 			echo getTranslatedString('ERR_Numbers','PBXManager');
@@ -116,7 +116,7 @@ class Asterisk {
 	 * @param string $to - the number to which to call
 	 * @param string $context - the context of the call (e.g. local-extensions for local calls)
 	 */
-	function createCall($from, $to, $context){
+	public function createCall($from, $to, $context){
 		$arr = explode("/", $from);
 		$request = "Action: Originate\r\n".
 					"Channel: $from\r\n".
@@ -135,7 +135,7 @@ class Asterisk {
 	/**
 	 * this is the destructor for the class :: it closes the opened socket
 	 */
-	function __destruct(){
+	public function __destruct(){
 		fclose($this->sock);
 	}
 
@@ -146,7 +146,7 @@ class Asterisk {
 	 * @return 	the event array present in the queue
 	 * 			if no array is present it returns a null
 	 */
-	function getAsteriskResponse($echoFlag = true){
+	public function getAsteriskResponse($echoFlag = true){
 		if(sizeof($this->queue)==0){
 			$this->strData.=fread($this->sock, 4096);
 

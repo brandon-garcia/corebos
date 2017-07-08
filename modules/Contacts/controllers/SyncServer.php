@@ -10,7 +10,7 @@
 require_once 'modules/WSAPP/SyncServer.php';
 
 class Google_SyncServer_Controller extends SyncServer{
-	function getDestinationHandleDetails(){
+	public function getDestinationHandleDetails(){
 		return wsapp_getHandler('Google_vtigerHandler');
 	}
 }

@@ -13,46 +13,46 @@
  */
 class Vtiger_MailRecord {
 	// FROM address(es) list
-	var $_from;
+	public $_from;
 	// TO address(es) list
-	var $_to;
+	public $_to;
 	//var $_replyto;
 
 	// CC address(es) list
-	var $_cc;
+	public $_cc;
 	// BCC address(es) list
-	var $_bcc;
+	public $_bcc;
 	// Reply To address(es) list
-	var $_reply_to;
+	public $_reply_to;
 	// DATE
-	var $_date;
+	public $_date;
 	// SUBJECT
-	var $_subject;
+	public $_subject;
 	// BODY (either HTML / PLAIN message)
-	var $_body;
+	public $_body;
 	// CHARSET of the body content
-	var $_charset;
+	public $_charset;
 	// If HTML message was set as body content
-	var $_isbodyhtml;
+	public $_isbodyhtml;
 	// PLAIN message of the original email
-	var $_plainmessage = false;
+	public $_plainmessage = false;
 	// HTML message of the original email
-	var $_htmlmessage = false;
+	public $_htmlmessage = false;
 	// ATTACHMENTS list of the email
-	var $_attachments = false;
+	public $_attachments = false;
 	// UNIQUEID associated with the email
-	var $_uniqueid = false;
+	public $_uniqueid = false;
 	// Flags Array
-	var $_flags = array();
+	public $_flags = array();
 	//Force Assign to user/group
-	var $_assign_to = false;
+	public $_assign_to = false;
 
 	// Flag to avoid re-parsing the email body.
-	var $_bodyparsed = false;
+	public $_bodyparsed = false;
 
 	/** DEBUG Functionality. */
-	var $debug = false;
-	function log($message=false) {
+	public $debug = false;
+	public function log($message=false) {
 		if(!$message) $message = $this->__toString();
 
 		global $log;
@@ -65,7 +65,7 @@ class Vtiger_MailRecord {
 	/**
 	 * String representation of the object.
 	 */
-	function __toString() {
+	public function __toString() {
 		$tostring = '';
 		$tostring .= 'FROM: ['. implode(',', $this->_from) . ']';
 		$tostring .= ',TO: [' . implode(',', $this->_to) .   ']';
@@ -79,7 +79,7 @@ class Vtiger_MailRecord {
 	/**
 	 * Constructor.
 	 */
-	function __construct($imap, $messageid, $fetchbody=true) {
+	public function __construct($imap, $messageid, $fetchbody=true) {
 		$this->__parseHeader($imap, $messageid);
 		if($fetchbody) $this->__parseBody($imap, $messageid);
 	}
@@ -87,7 +87,7 @@ class Vtiger_MailRecord {
 	/**
 	 * Get body content as Text.
 	 */
-	function getBodyText($striptags=true) {
+	public function getBodyText($striptags=true) {
 		$bodytext = $this->_body;
 
 		if($this->_plainmessage) {
@@ -104,7 +104,7 @@ class Vtiger_MailRecord {
 	/**
 	 * Get body content as HTML.
 	 */
-	function getBodyHTML() {
+	public function getBodyHTML() {
 		$bodyhtml = $this->_body;
 		if(!$this->_isbodyhtml) {
 			$bodyhtml = preg_replace( Array("/\r\n/", "/\n/"), Array('<br>','<br>'), $bodyhtml );
@@ -115,7 +115,7 @@ class Vtiger_MailRecord {
 	/**
 	 * Fetch the mail body from server.
 	 */
-	function fetchBody($imap, $messageid) {
+	public function fetchBody($imap, $messageid) {
 		if(!$this->_bodyparsed) $this->__parseBody($imap, $messageid);
 	}
 
@@ -123,7 +123,7 @@ class Vtiger_MailRecord {
 	 * Parse the email id from the mail header text.
 	 * @access private
 	 */
-	function __getEmailIdList($inarray) {
+	public function __getEmailIdList($inarray) {
 		if(empty($inarray)) return Array();
 		$emails = Array();
 		foreach($inarray as $emailinfo) {
@@ -135,7 +135,7 @@ class Vtiger_MailRecord {
 	/**
 	 * Helper function to convert the encoding of input to target charset.
 	 */
-	static function __convert_encoding($input, $to, $from = false) {
+	public static function __convert_encoding($input, $to, $from = false) {
 		if(function_exists('mb_convert_encoding')) {
 			if(!$from) $from = mb_detect_encoding($input);
 
@@ -151,7 +151,7 @@ class Vtiger_MailRecord {
 	/**
 	 * MIME decode function to parse IMAP header or mail information
 	 */
-	static function __mime_decode($input, &$words=null, $targetEncoding='UTF-8') {
+	public static function __mime_decode($input, &$words=null, $targetEncoding='UTF-8') {
 		if(is_null($words)) $words = array();
 		$returnvalue = $input;
 
@@ -179,7 +179,7 @@ class Vtiger_MailRecord {
 	/**
 	 * MIME encode function to prepare input to target charset supported by normal IMAP clients.
 	 */
-	static function __mime_encode($input, $encoding='Q', $charset='iso-8859-1') {
+	public static function __mime_encode($input, $encoding='Q', $charset='iso-8859-1') {
 		$returnvalue = $input;
 		$encoded = false;
 
@@ -206,7 +206,7 @@ class Vtiger_MailRecord {
 	 * Parse header of the email.
 	 * @access private
 	 */
-	function __parseHeader($imap, $messageid) {
+	public function __parseHeader($imap, $messageid) {
 		$this->_from = Array();
 		$this->_to = Array();
 
@@ -232,7 +232,7 @@ class Vtiger_MailRecord {
 		if(!$this->_subject) $this->_subject = 'Untitled';
 	}
 	// Modified: http://in2.php.net/manual/en/function.imap-fetchstructure.php#85685
-	function __parseBody($imap, $messageid) {
+	public function __parseBody($imap, $messageid) {
 		$structure = imap_fetchstructure($imap, $messageid);
 
 		$this->_plainmessage = '';
@@ -264,7 +264,7 @@ class Vtiger_MailRecord {
 		$this->_bodyparsed = true;
 	}
 	// Modified: http://in2.php.net/manual/en/function.imap-fetchstructure.php#85685
-	function __getpart($imap, $messageid, $p, $partno) {
+	public function __getpart($imap, $messageid, $p, $partno) {
 		// $partno = '1', '2', '2.1', '2.1.3', etc if multipart, 0 if not multipart
 		// DECODE DATA
 		$data = ($partno)?

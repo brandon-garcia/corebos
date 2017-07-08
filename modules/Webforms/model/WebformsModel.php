@@ -14,7 +14,7 @@ class Webforms_Model {
 	public $data;
 	protected $fields = array();
 
-	function __construct($values = array()) {
+	public function __construct($values = array()) {
 		$this->setData($values);
 	}
 
@@ -22,7 +22,7 @@ class Webforms_Model {
 		$this->fields[] = $field;
 	}
 
-	function setData($data) {
+	public function setData($data) {
 		$this->data = $data;
 		if (isset($data["fields"])) {
 			$this->setFields(vtlib_purify($data["fields"]), vtlib_purify($data["required"]), vtlib_purify($data["value"]));
@@ -38,19 +38,19 @@ class Webforms_Model {
 		}
 	}
 
-	function hasId() {
+	public function hasId() {
 		return!empty($this->data['id']);
 	}
 
-	function setId($id) {
+	public function setId($id) {
 		$this->data["id"] = $id;
 	}
 
-	function setName($name) {
+	public function setName($name) {
 		$this->data["name"] = $name;
 	}
 
-	function setTargetModule($module) {
+	public function setTargetModule($module) {
 		$this->data["targetmodule"] = $module;
 	}
 
@@ -58,27 +58,27 @@ class Webforms_Model {
 		$this->data["publicid"] = $publicid;
 	}
 
-	function setEnabled($enabled) {
+	public function setEnabled($enabled) {
 		$this->data["enabled"] = $enabled;
 	}
 
-	function setDescription($description) {
+	public function setDescription($description) {
 		$this->data["description"] = $description;
 	}
 
-	function setReturnUrl($returnurl) {
+	public function setReturnUrl($returnurl) {
 		$this->data["returnurl"] = $returnurl;
 	}
 
-	function setWebDomain($web_domain) {
+	public function setWebDomain($web_domain) {
 		$this->data["web_domain"] = $web_domain;
 	}
 
-	function setOwnerId($ownerid) {
+	public function setOwnerId($ownerid) {
 		$this->data["ownerid"];
 	}
 
-	function setFields(array $fieldNames, $required, $value) {
+	public function setFields(array $fieldNames, $required, $value) {
 		require_once 'include/fields/DateTimeField.php';
 		foreach ($fieldNames as $ind => $fieldname) {
 			$fieldInfo = Webforms::getFieldInfo($this->getTargetModule(), $fieldname);
@@ -112,55 +112,55 @@ class Webforms_Model {
 		}
 	}
 
-	function getId() {
+	public function getId() {
 		return (isset($this->data['id']) ? vtlib_purify($this->data['id']) : '');
 	}
 
-	function getName() {
+	public function getName() {
 		return (isset($this->data['name']) ? html_entity_decode(vtlib_purify($this->data['name'])) : '');
 	}
 
-	function getTargetModule() {
+	public function getTargetModule() {
 		return (isset($this->data['targetmodule']) ? vtlib_purify($this->data['targetmodule']) : '');
 	}
 
-	function getPublicId() {
+	public function getPublicId() {
 		return (isset($this->data['publicid']) ? vtlib_purify($this->data['publicid']) : '');
 	}
 
-	function getEnabled() {
+	public function getEnabled() {
 		return (isset($this->data['enabled']) ? vtlib_purify($this->data['enabled']) : '');
 	}
 
-	function getDescription() {
+	public function getDescription() {
 		return (isset($this->data['description']) ? vtlib_purify($this->data['description']) : '');
 	}
 
-	function getReturnUrl() {
+	public function getReturnUrl() {
 		return (isset($this->data['returnurl']) ? vtlib_purify($this->data['returnurl']) : '');
 	}
 
-	function getWebDomain() {
+	public function getWebDomain() {
 		return (isset($this->data['web_domain']) ? vtlib_purify($this->data['web_domain']) : '');
 	}
 
-	function getOwnerId() {
+	public function getOwnerId() {
 		require_once 'modules/Users/Users.php';
 		$return = (isset($this->data['ownerid']) ? vtlib_purify($this->data['ownerid']) : '');
 		return (empty($return) ? Users::getActiveAdminId() : $return);
 	}
 
-	function getFields() {
+	public function getFields() {
 		return $this->fields;
 	}
 
-	function generatePublicId($name) {
+	public function generatePublicId($name) {
 		global $adb, $log;
 		$uid = md5(microtime(true) + $name);
 		return $uid;
 	}
 
-	function retrieveFields() {
+	public function retrieveFields() {
 		global $adb;
 		$fieldsResult = $adb->pquery("SELECT * FROM vtiger_webforms_field WHERE webformid=?", array($this->getId()));
 		while ($fieldRow = $adb->fetch_array($fieldsResult)) {
@@ -169,7 +169,7 @@ class Webforms_Model {
 		return $this;
 	}
 
-	function save() {
+	public function save() {
 		global $adb, $log;
 
 		$isNew = !$this->hasId();
@@ -204,7 +204,7 @@ class Webforms_Model {
 		return true;
 	}
 
-	function delete() {
+	public function delete() {
 		global $adb, $log;
 
 		$adb->pquery("DELETE from vtiger_webforms_field where webformid=?", array($this->getId()));
@@ -212,7 +212,7 @@ class Webforms_Model {
 		return true;
 	}
 
-	static function retrieveWithPublicId($publicid) {
+	public static function retrieveWithPublicId($publicid) {
 		global $adb, $log;
 
 		$model = false;
@@ -225,7 +225,7 @@ class Webforms_Model {
 		return $model;
 	}
 
-	static function retrieveWithId($data) {
+	public static function retrieveWithId($data) {
 		global $adb, $log;
 
 		$id = $data;
@@ -239,7 +239,7 @@ class Webforms_Model {
 		return $model;
 	}
 
-	static function listAll() {
+	public static function listAll() {
 		global $adb, $log;
 		$webforms = array();
 
@@ -254,7 +254,7 @@ class Webforms_Model {
 		return $webforms;
 	}
 
-	static function isWebformField($webformid, $fieldname) {
+	public static function isWebformField($webformid, $fieldname) {
 		global $adb, $log;
 
 		$checkSQL = "SELECT 1 from vtiger_webforms_field where webformid=? AND fieldname=?";
@@ -262,14 +262,14 @@ class Webforms_Model {
 		return (($adb->num_rows($result)) ? true : false);
 	}
 
-	static function isCustomField($fieldname) {
+	public static function isCustomField($fieldname) {
 		if (substr($fieldname, 0, 3) === "cf_") {
 			return true;
 		}
 		return false;
 	}
 
-	static function isRequired($webformid, $fieldname) {
+	public static function isRequired($webformid, $fieldname) {
 		global $adb;
 		$sql = "SELECT required FROM vtiger_webforms_field where webformid=? AND fieldname=?";
 		$result = $adb->pquery($sql, array($webformid, $fieldname));
@@ -280,7 +280,7 @@ class Webforms_Model {
 		return $required;
 	}
 
-	static function retrieveDefaultValue($webformid, $fieldname) {
+	public static function retrieveDefaultValue($webformid, $fieldname) {
 		require_once 'include/fields/DateTimeField.php';
 		global $adb,$current_user,$current_;
 		$dateformat=$current_user->date_format;
@@ -301,7 +301,7 @@ class Webforms_Model {
 		return $defaultvalue;
 	}
 
-	static function existWebformWithName($name) {
+	public static function existWebformWithName($name) {
 		global $adb;
 		$checkSQL = "SELECT 1 FROM vtiger_webforms WHERE name=?";
 		$check = $adb->pquery($checkSQL, array($name));
@@ -311,7 +311,7 @@ class Webforms_Model {
 		return false;
 	}
 
-	static function isActive($field, $mod) {
+	public static function isActive($field, $mod) {
 		global $adb;
 		$tabid = getTabid($mod);
 		$query = 'SELECT 1 FROM vtiger_field WHERE fieldname = ? AND tabid = ? AND presence IN (0,2)';

@@ -16,35 +16,35 @@ require_once('modules/Emails/Emails.php');
 require('user_privileges/default_module_view.php');
 
 class Leads extends CRMEntity {
-	var $db, $log; // Used in class functions of CRMEntity
+	public public $db, $log; // Used in class functions of CRMEntity
 
-	var $table_name = 'vtiger_leaddetails';
-	var $table_index= 'leadid';
-	var $column_fields = Array();
+	public $table_name = 'vtiger_leaddetails';
+	public $table_index= 'leadid';
+	public $column_fields = Array();
 
 	/** Indicator if this is a custom module or standard module */
-	var $IsCustomModule = false;
-	var $HasDirectImageField = false;
+	public $IsCustomModule = false;
+	public $HasDirectImageField = false;
 
-	var $tab_name = Array('vtiger_crmentity','vtiger_leaddetails','vtiger_leadsubdetails','vtiger_leadaddress','vtiger_leadscf');
-	var $tab_name_index = Array('vtiger_crmentity'=>'crmid','vtiger_leaddetails'=>'leadid','vtiger_leadsubdetails'=>'leadsubscriptionid','vtiger_leadaddress'=>'leadaddressid','vtiger_leadscf'=>'leadid');
+	public $tab_name = Array('vtiger_crmentity','vtiger_leaddetails','vtiger_leadsubdetails','vtiger_leadaddress','vtiger_leadscf');
+	public $tab_name_index = Array('vtiger_crmentity'=>'crmid','vtiger_leaddetails'=>'leadid','vtiger_leadsubdetails'=>'leadsubscriptionid','vtiger_leadaddress'=>'leadaddressid','vtiger_leadscf'=>'leadid');
 
 	/**
 	 * Mandatory table for supporting custom fields.
 	 */
-	var $customFieldTable = Array('vtiger_leadscf', 'leadid');
-	var $related_tables = Array (
+	public $customFieldTable = Array('vtiger_leadscf', 'leadid');
+	public $related_tables = Array (
 		'vtiger_leadsubdetails' => Array('leadsubscriptionid', 'vtiger_leaddetails', 'leadid'),
 		'vtiger_leadaddress'    => Array('leadaddressid', 'vtiger_leaddetails', 'leadid'),
 	);
 
-	var $sortby_fields = Array('lastname','firstname','email','phone','company','smownerid','website');
+	public $sortby_fields = Array('lastname','firstname','email','phone','company','smownerid','website');
 
 	// This is used to retrieve related vtiger_fields from form posts.
-	var $additional_column_fields = Array('smcreatorid', 'smownerid', 'contactid','potentialid' ,'crmid');
+	public $additional_column_fields = Array('smcreatorid', 'smownerid', 'contactid','potentialid' ,'crmid');
 
 	// This is the list of vtiger_fields that are in the lists.
-	var $list_fields = Array(
+	public $list_fields = Array(
 		'Last Name'=>Array('leaddetails'=>'lastname'),
 		'First Name'=>Array('leaddetails'=>'firstname'),
 		'Company'=>Array('leaddetails'=>'company'),
@@ -53,7 +53,7 @@ class Leads extends CRMEntity {
 		'Email'=>Array('leaddetails'=>'email'),
 		'Assigned To'=>Array('crmentity'=>'smownerid')
 	);
-	var $list_fields_name = Array(
+	public $list_fields_name = Array(
 		'Last Name'=>'lastname',
 		'First Name'=>'firstname',
 		'Company'=>'company',
@@ -64,37 +64,37 @@ class Leads extends CRMEntity {
 	);
 
 	// Make the field link to detail view from list view (Fieldname)
-	var $list_link_field = 'lastname';
+	public $list_link_field = 'lastname';
 
 	// For Popup listview and UI type support
-	var $search_fields = Array(
+	public $search_fields = Array(
 		'Name'=>Array('leaddetails'=>'lastname'),
 		'Company'=>Array('leaddetails'=>'company')
 	);
-	var $search_fields_name = Array(
+	public $search_fields_name = Array(
 		'Name'=>'lastname',
 		'Company'=>'company'
 	);
 
 	// For Popup window record selection
-	var $popup_fields = Array('lastname');
+	public $popup_fields = Array('lastname');
 
-	var $required_fields = array();
+	public $required_fields = array();
 
 	// Used when enabling/disabling the mandatory fields for the module.
 	// Refers to vtiger_field.fieldname values.
-	var $mandatory_fields = Array('assigned_user_id', 'lastname', 'createdtime' ,'modifiedtime');
+	public $mandatory_fields = Array('assigned_user_id', 'lastname', 'createdtime' ,'modifiedtime');
 
 	//Added these variables which are used as default order by and sortorder in ListView
-	var $default_order_by = 'lastname';
-	var $default_sort_order='ASC';
+	public $default_order_by = 'lastname';
+	public $default_sort_order='ASC';
 
 	// For Alphabetical search
-	var $def_basicsearch_col = 'lastname';
+	public $def_basicsearch_col = 'lastname';
 
 	//var $groupTable = Array('vtiger_leadgrouprelation','leadid');
 
-	function __construct() {
+	public function __construct() {
 		global $log;
 		$this_module = get_class($this);
 		$this->column_fields = getColumnFields($this_module);
@@ -108,7 +108,7 @@ class Leads extends CRMEntity {
 		}
 	}
 
-	function save_module($module) {
+	public function save_module($module) {
 		if ($this->HasDirectImageField) {
 			$this->insertIntoAttachment($this->id,$module);
 		}
@@ -120,7 +120,7 @@ class Leads extends CRMEntity {
 	* @param reference variable - where condition is passed when the query is executed
 	* Returns Export Leads Query.
 	*/
-	function create_export_query($where)
+	public function create_export_query($where)
 	{
 		global $log, $current_user;
 		$log->debug("Entering create_export_query(".$where.") method ...");
@@ -159,7 +159,7 @@ class Leads extends CRMEntity {
 	 * @param $id -- campaign id :: Type Integer
 	 * @returns list of campaigns in array format
 	 */
-	function get_campaigns($id, $cur_tab_id, $rel_tab_id, $actions=false) {
+	public function get_campaigns($id, $cur_tab_id, $rel_tab_id, $actions=false) {
 		global $log, $singlepane_view,$currentModule,$current_user;
 		$log->debug("Entering get_campaigns(".$id.") method ...");
 		$this_module = $currentModule;
@@ -213,7 +213,7 @@ class Leads extends CRMEntity {
 	* @param  integer   $id      - leadid
 	* returns related Products record in array format
 	*/
-	function get_products($id, $cur_tab_id, $rel_tab_id, $actions=false) {
+	public function get_products($id, $cur_tab_id, $rel_tab_id, $actions=false) {
 		global $log, $singlepane_view,$currentModule,$current_user;
 		$log->debug("Entering get_products(".$id.") method ...");
 		$this_module = $currentModule;
@@ -267,7 +267,7 @@ class Leads extends CRMEntity {
 	 * @param string $list_option
 	 * Returns Combo List Options
 	*/
-	function get_lead_field_options($list_option)
+	public function get_lead_field_options($list_option)
 	{
 		global $log;
 		$log->debug("Entering get_lead_field_options(".$list_option.") method ...");
@@ -280,7 +280,7 @@ class Leads extends CRMEntity {
 	* Used By vtigerCRM Word Plugin
 	* Returns the Merge Fields for Word Plugin
 	*/
-	function getColumnNames_Lead()
+	public function getColumnNames_Lead()
 	{
 		global $log,$current_user;
 		$log->debug("Entering getColumnNames_Lead() method ...");
@@ -319,7 +319,7 @@ class Leads extends CRMEntity {
 	 * @param Array List of Entity Id's from which related records need to be transfered
 	 * @param Integer Id of the the Record to which the related records are to be moved
 	 */
-	function transferRelatedRecords($module, $transferEntityIds, $entityId) {
+	public function transferRelatedRecords($module, $transferEntityIds, $entityId) {
 		global $adb,$log;
 		$log->debug("Entering function transferRelatedRecords ($module, $transferEntityIds, $entityId)");
 
@@ -359,7 +359,7 @@ class Leads extends CRMEntity {
 	 * @param - $secmodule secondary module name
 	 * returns the query string formed on fetching the related data for report for secondary module
 	 */
-	function generateReportsSecQuery($module,$secmodule){
+	public function generateReportsSecQuery($module, $secmodule){
 		$query = $this->getRelationQuery($module,$secmodule,"vtiger_leaddetails","leadid");
 		$query .= " left join vtiger_crmentity as vtiger_crmentityLeads on vtiger_crmentityLeads.crmid = vtiger_leaddetails.leadid and vtiger_crmentityLeads.deleted=0
 			left join vtiger_leadaddress on vtiger_leaddetails.leadid = vtiger_leadaddress.leadaddressid
@@ -376,7 +376,7 @@ class Leads extends CRMEntity {
 	 * @param - $secmodule secondary module name
 	 * returns the array with table names and fieldnames storing relations between module and this module
 	 */
-	function setRelationTables($secmodule){
+	public function setRelationTables($secmodule){
 		$rel_tables = array (
 			"Calendar" => array("vtiger_seactivityrel"=>array("crmid","activityid"),"vtiger_leaddetails"=>"leadid"),
 			"Products" => array("vtiger_seproductsrel"=>array("crmid","productid"),"vtiger_leaddetails"=>"leadid"),
@@ -388,7 +388,7 @@ class Leads extends CRMEntity {
 	}
 
 	// Function to unlink an entity with given Id from another entity
-	function unlinkRelationship($id, $return_module, $return_id) {
+	public function unlinkRelationship($id, $return_module, $return_id) {
 		global $log;
 		if(empty($return_module) || empty($return_id)) return;
 
@@ -406,7 +406,7 @@ class Leads extends CRMEntity {
 		}
 	}
 
-	function getListButtons($app_strings) {
+	public function getListButtons($app_strings) {
 		$list_buttons = Array();
 
 		if(isPermitted('Leads','Delete','') == 'yes') {
@@ -421,7 +421,7 @@ class Leads extends CRMEntity {
 		return $list_buttons;
 	}
 
-	function save_related_module($module, $crmid, $with_module, $with_crmids) {
+	public function save_related_module($module, $crmid, $with_module, $with_crmids) {
 		$adb = PearDatabase::getInstance();
 
 		if(!is_array($with_crmids)) $with_crmids = Array($with_crmids);
@@ -436,7 +436,7 @@ class Leads extends CRMEntity {
 		}
 	}
 	
-	function get_searchbyemailid($username,$emailaddress)
+	public function get_searchbyemailid($username, $emailaddress)
 	{
 		//crm-now added $adb to provide db access
 		global $log, $adb;
@@ -487,7 +487,7 @@ class Leads extends CRMEntity {
 		return $this->plugin_process_list_query($query);
 	}
 	
-	function plugin_process_list_query($query)
+	public function plugin_process_list_query($query)
 	{
 		global $log,$adb,$current_user;
 		$log->debug("Entering process_list_query1(".$query.") method ...");

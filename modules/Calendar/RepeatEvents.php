@@ -16,7 +16,7 @@ class Calendar_RepeatEvents {
 	/**
 	 * Get timing using YYYY-MM-DD HH:MM:SS input string.
 	 */
-	static function mktime($fulldateString) {
+	public static function mktime($fulldateString) {
 		$splitpart = self::splittime($fulldateString);
 		$datepart = explode('-', $splitpart[0]);
 		$timepart = explode(':', $splitpart[1]);
@@ -25,13 +25,13 @@ class Calendar_RepeatEvents {
 	/**
 	 * Increment the time by interval and return value in YYYY-MM-DD HH:MM format.
 	 */
-	static function nexttime($basetiming, $interval) {
+	public static function nexttime($basetiming, $interval) {
 		return date('Y-m-d H:i', strtotime($interval, $basetiming));
 	}
 	/**
 	 * Based on user time format convert the YYYY-MM-DD HH:MM value.
 	 */
-	static function formattime($timeInYMDHIS) {
+	public static function formattime($timeInYMDHIS) {
 		global $current_user;
 		$format_string = 'Y-m-d H:i';
 		switch($current_user->date_format) {
@@ -44,13 +44,13 @@ class Calendar_RepeatEvents {
 	/**
 	 * Split full timing into date and time part.
 	 */
-	static function splittime($fulltiming) {
+	public static function splittime($fulltiming) {
 		return explode(' ', $fulltiming);
 	}
 	/**
 	 * Calculate the time interval to create repeated event entries.
 	 */
-	static function getRepeatInterval($type, $frequency, $recurringInfo, $start_date, $limit_date) {
+	public static function getRepeatInterval($type, $frequency, $recurringInfo, $start_date, $limit_date) {
 		$repeatInterval = Array();
 		$starting = self::mktime($start_date);
 		$limiting = self::mktime($limit_date);
@@ -121,7 +121,7 @@ class Calendar_RepeatEvents {
 	/**
 	 * Repeat Activity instance till given limit.
 	 */
-	static function repeat($focus, $recurObj) {
+	public static function repeat($focus, $recurObj) {
 		$frequency = $recurObj->recur_freq;
 		$repeattype= $recurObj->recur_type;
 		
@@ -167,7 +167,7 @@ class Calendar_RepeatEvents {
 		}
 	}
 
-	static function repeatFromRequest($focus) {
+	public static function repeatFromRequest($focus) {
 		global $log, $default_charset, $current_user;
 		$recurObj = getrecurringObjValue();
 		self::repeat($focus, $recurObj);

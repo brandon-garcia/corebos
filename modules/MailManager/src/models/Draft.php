@@ -17,17 +17,17 @@ include_once dirname(__FILE__).'/DraftFolder.php';
 
 class MailManager_Model_DraftEmail {
 
-	static $totalDraftCount;
+	public static $totalDraftCount;
 
-	static function getInstance() {
+	public static function getInstance() {
 		return new self();
 	}
 
-	function folderInstance() {
+	public function folderInstance() {
 		return new MailManager_Model_DraftFolder();
 	}
 
-	function searchDraftMails($q, $type, $page, $limit, $folder) {
+	public function searchDraftMails($q, $type, $page, $limit, $folder) {
 		if($type == "all") {
 			$where = $this->constructAllClause($q);
 		} else {
@@ -38,7 +38,7 @@ class MailManager_Model_DraftEmail {
 		return $draftMails;
 	}
 
-	function constructAllClause($query) {
+	public function constructAllClause($query) {
 		$fields = array('bccmail','ccmail','subject','saved_toid','description');
 		for($i=0; $i<count($fields); $i++) {
 			if($i == count($fields)-1) {
@@ -50,7 +50,7 @@ class MailManager_Model_DraftEmail {
 		return $clause;
 	}
 
-	function getDrafts($page, $limit, $folder, $where = null) {
+	public function getDrafts($page, $limit, $folder, $where = null) {
 		global $current_user;
 		$handler = vtws_getModuleHandlerFromName('Emails', $current_user);
 		$meta = $handler->getMeta();
@@ -92,7 +92,7 @@ class MailManager_Model_DraftEmail {
 		return $draftMails ;
 	}
 
-	function getTotalDraftCount() {
+	public function getTotalDraftCount() {
 		global $adb, $current_user;
 		if(empty(self::$totalDraftCount)) {
 			$DraftRes = $query = "SELECT * FROM Emails where email_flag='SAVED';";
@@ -104,7 +104,7 @@ class MailManager_Model_DraftEmail {
 		}
 	}
 
-	function getDraftMail($request) {
+	public function getDraftMail($request) {
 		global $adb, $current_user;
 		$handler = vtws_getModuleHandlerFromName('Emails', $current_user);
 		$meta = $handler->getMeta();
@@ -119,7 +119,7 @@ class MailManager_Model_DraftEmail {
 		return $draftMail;
 	}
 
-	function getAttachmentDetails($crmid) {
+	public function getAttachmentDetails($crmid) {
 		global $adb;
 		// FIX: Validate the incoming ID
 		if(empty($crmid)) return false;
@@ -143,7 +143,7 @@ class MailManager_Model_DraftEmail {
 		return $draftMail;
 	}
 
-	function saveDraft($request) {
+	public function saveDraft($request) {
 		global $current_user, $adb;
 
 		if(!MailManager::checkModuleWriteAccessForCurrentUser('Emails')) {
@@ -188,7 +188,7 @@ class MailManager_Model_DraftEmail {
 		return $email->id;
 	}
 
-	function saveEmailParentRel($emailId, $parentIds) {
+	public function saveEmailParentRel($emailId, $parentIds) {
 		global $adb;
 		$myids = explode("|", $parentIds);  //2@71|
 		if(!empty($emailId))  {
@@ -207,7 +207,7 @@ class MailManager_Model_DraftEmail {
 	}
 
 
-	function getFromEmailAddress() {
+	public function getFromEmailAddress() {
 		global $adb, $current_user;
 		$fromEmail = false;
 		$smtpFromResult = $adb->pquery('SELECT from_email_field FROM vtiger_systems WHERE server_type=?', array('email'));
@@ -218,7 +218,7 @@ class MailManager_Model_DraftEmail {
 		return $fromEmail;
 	}
 
-	function saveAttachment($request) {
+	public function saveAttachment($request) {
 		global $current_user, $adb;
 
 		//need to handle earlier as Emails save will save the uploaded files from $_FILES
@@ -240,7 +240,7 @@ class MailManager_Model_DraftEmail {
 		return $uploadResponse;
 	}
 
-	function getParentFromEmails($to_string) {
+	public function getParentFromEmails($to_string) {
 		global $current_user;
 		$parentIds = '';
 		if (!empty($to_string)) {
@@ -258,7 +258,7 @@ class MailManager_Model_DraftEmail {
 		return $parentIds;
 	}
 
-	function handleUpload() {
+	public function handleUpload() {
 		$allowedFileExtension = array();
 		$upload_maxsize = GlobalVariable::getVariable('Application_Upload_MaxSize',3000000,'Emails');
 		$uploadLimit = ConfigPrefs::get('MAXUPLOADLIMIT', $upload_maxsize);
@@ -269,7 +269,7 @@ class MailManager_Model_DraftEmail {
 		return $upload->handleUpload($filePath, false);
 	}
 
-	function saveEmailDocumentRel($emailId, $documentId) {
+	public function saveEmailDocumentRel($emailId, $documentId) {
 		global $adb;
 		if(!empty($emailId) && !empty($documentId)) {
 		$adb->pquery("INSERT INTO vtiger_senotesrel(crmid, notesid) VALUES(?,?)",
@@ -277,7 +277,7 @@ class MailManager_Model_DraftEmail {
 		}
 	}
 
-	function saveAttachmentRel($crmid, $attachId) {
+	public function saveAttachmentRel($crmid, $attachId) {
 		global $adb;
 		if(!empty($crmid) && !empty($attachId)) {
 			$adb->pquery("INSERT INTO vtiger_seattachmentsrel(crmid, attachmentsid) VALUES(?,?)",
@@ -285,7 +285,7 @@ class MailManager_Model_DraftEmail {
 		}
 	}
 
-	function deleteMail($ids) {
+	public function deleteMail($ids) {
 		global $current_user;
 		$focus = CRMEntity::getInstance('Emails');
 		$idList = explode(',', $ids);
@@ -294,7 +294,7 @@ class MailManager_Model_DraftEmail {
 		}
 	}
 
-	function deleteAttachment($request) {
+	public function deleteAttachment($request) {
 		global $adb;
 		$emailid = $request->get('emailid');
 		$docid = $request->get('docid');
@@ -305,7 +305,7 @@ class MailManager_Model_DraftEmail {
 		return false;
 	}
 
-	function getFormattedFileSize($filesize) {
+	public function getFormattedFileSize($filesize) {
 		if($filesize < 1024)
 			$filesize = sprintf("%0.2f",round($filesize, 2)).'b';
 		elseif($filesize > 1024 && $filesize < 1048576)

@@ -21,7 +21,7 @@ class MailManager_SearchController extends MailManager_RelationController {
      * @param MailManager_Request $request
      * @return boolean
      */
-	function process(MailManager_Request $request) {
+	public function process(MailManager_Request $request) {
 	
 		$response = new MailManager_Response(true);
 		$viewer = $this->getViewer();

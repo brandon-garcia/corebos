@@ -8,7 +8,7 @@
  * All Rights Reserved.
  ******************************************************************************/
 interface VTEnv{
-	function get($var);
+	public function get($var);
 }
 
 function _vt_add($arr){
@@ -96,7 +96,7 @@ function _vt_time_diffdays($arr) {
 }
 
 class VTExpressionEvaluater{
-	function __construct($expr){
+	public function __construct($expr){
 		$this->operators = array(
 				'+'  => '_vt_add',
 				'-'  => '_vt_sub',
@@ -117,12 +117,12 @@ class VTExpressionEvaluater{
 		$this->expr = $expr;
 	}
 
-	function evaluate($env){
+	public function evaluate($env){
 		$this->env = $env;
 		return $this->exec($this->expr);
 	}
 
-	function exec($expr){
+	public function exec($expr){
 		if($expr instanceof Symbol){
 			return $this->env($expr);
 		}else if($expr instanceof VTTreeNode){
@@ -145,7 +145,7 @@ class VTExpressionEvaluater{
 		}
 	}
 
-	function env($sym){
+	public function env($sym){
 		return $this->env->get($sym->value);
 	}
 }

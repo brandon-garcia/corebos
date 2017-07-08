@@ -13,7 +13,7 @@ include_once dirname(__FILE__) . '/../api/ws/editConfiguration.php';
 
 class crmtogo_UI_Configuration extends crmtogo_WS_Configuration {
 	
-	function process(crmtogo_API_Request $request) {
+	public function process(crmtogo_API_Request $request) {
 		$wsResponse = parent::process($request);
 		$response = new crmtogo_API_Response();
 		$wsResponseResult = $wsResponse->getResult();

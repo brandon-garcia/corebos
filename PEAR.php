@@ -89,7 +89,7 @@ class PEAR
      * @var     bool
      * @access  private
      */
-    var $_debug = false;
+    public $_debug = false;
 
     /**
      * Default error mode for this object.
@@ -97,7 +97,7 @@ class PEAR
      * @var     int
      * @access  private
      */
-    var $_default_error_mode = null;
+    public $_default_error_mode = null;
 
     /**
      * Default error options used for this object when error mode
@@ -106,7 +106,7 @@ class PEAR
      * @var     int
      * @access  private
      */
-    var $_default_error_options = null;
+    public $_default_error_options = null;
 
     /**
      * Default error handler (callback) for this object, if error mode is
@@ -115,7 +115,7 @@ class PEAR
      * @var     string
      * @access  private
      */
-    var $_default_error_handler = '';
+    public $_default_error_handler = '';
 
     /**
      * Which class to use for error objects.
@@ -123,7 +123,7 @@ class PEAR
      * @var     string
      * @access  private
      */
-    var $_error_class = 'PEAR_Error';
+    public $_error_class = 'PEAR_Error';
 
     /**
      * An array of expected errors.
@@ -131,7 +131,7 @@ class PEAR
      * @var     array
      * @access  private
      */
-    var $_expected_errors = array();
+    public $_expected_errors = array();
 
     /**
      * List of methods that can be called both statically and non-statically.
@@ -155,7 +155,7 @@ class PEAR
      * @access public
      * @return void
      */
-    function __construct($error_class = null)
+    public function __construct($error_class = null)
     {
         $classname = strtolower(get_class($this));
         if ($this->_debug) {
@@ -205,7 +205,7 @@ class PEAR
      * @access public
      * @return void
      */
-    function _PEAR() {
+    public function _PEAR() {
         if ($this->_debug) {
             printf("PEAR destructor called, class=%s\n", strtolower(get_class($this)));
         }
@@ -402,7 +402,7 @@ class PEAR
      * @return int     the new depth of the "expected errors" stack
      * @access public
      */
-    function expectError($code = '*')
+    public function expectError($code = '*')
     {
         if (is_array($code)) {
             array_push($this->_expected_errors, $code);
@@ -418,7 +418,7 @@ class PEAR
      *
      * @return array   the list of error codes that were popped
      */
-    function popExpect()
+    public function popExpect()
     {
         return array_pop($this->_expected_errors);
     }
@@ -431,7 +431,7 @@ class PEAR
      * @access private
      * @since PHP 4.3.0
      */
-    function _checkDelExpect($error_code)
+    public function _checkDelExpect($error_code)
     {
         $deleted = false;
         foreach ($this->_expected_errors as $key => $error_array) {
@@ -458,7 +458,7 @@ class PEAR
      * @access public
      * @since PHP 4.3.0
      */
-    function delExpect($error_code)
+    public function delExpect($error_code)
     {
         $deleted = false;
         if ((is_array($error_code) && (0 != count($error_code)))) {
@@ -830,13 +830,13 @@ function _PEAR_call_destructors()
  */
 class PEAR_Error
 {
-    var $error_message_prefix = '';
-    var $mode                 = PEAR_ERROR_RETURN;
-    var $level                = E_USER_NOTICE;
-    var $code                 = -1;
-    var $message              = '';
-    var $userinfo             = '';
-    var $backtrace            = null;
+    public $error_message_prefix = '';
+    public $mode                 = PEAR_ERROR_RETURN;
+    public $level                = E_USER_NOTICE;
+    public $code                 = -1;
+    public $message              = '';
+    public $userinfo             = '';
+    public $backtrace            = null;
 
     /**
      * PEAR_Error constructor
@@ -858,8 +858,8 @@ class PEAR_Error
      * @access public
      *
      */
-    function __construct($message = 'unknown error', $code = null,
-                        $mode = null, $options = null, $userinfo = null)
+    public function __construct($message = 'unknown error', $code = null,
+                                $mode = null, $options = null, $userinfo = null)
     {
         if ($mode === null) {
             $mode = PEAR_ERROR_RETURN;
@@ -951,7 +951,7 @@ class PEAR_Error
      * @return int error mode
      * @access public
      */
-    function getMode()
+    public function getMode()
     {
         return $this->mode;
     }
@@ -962,7 +962,7 @@ class PEAR_Error
      * @return mixed callback function or object/method array
      * @access public
      */
-    function getCallback()
+    public function getCallback()
     {
         return $this->callback;
     }
@@ -973,7 +973,7 @@ class PEAR_Error
      * @return  string  full error message
      * @access public
      */
-    function getMessage()
+    public function getMessage()
     {
         return ($this->error_message_prefix . $this->message);
     }
@@ -984,7 +984,7 @@ class PEAR_Error
      * @return int error code
      * @access public
      */
-     function getCode()
+     public function getCode()
      {
         return $this->code;
      }
@@ -995,7 +995,7 @@ class PEAR_Error
      * @return string error/exception name (type)
      * @access public
      */
-    function getType()
+    public function getType()
     {
         return get_class($this);
     }
@@ -1006,7 +1006,7 @@ class PEAR_Error
      * @return string user-supplied information
      * @access public
      */
-    function getUserInfo()
+    public function getUserInfo()
     {
         return $this->userinfo;
     }
@@ -1017,7 +1017,7 @@ class PEAR_Error
      * @return string debug information
      * @access public
      */
-    function getDebugInfo()
+    public function getDebugInfo()
     {
         return $this->getUserInfo();
     }
@@ -1030,7 +1030,7 @@ class PEAR_Error
      * @return array Backtrace, or NULL if not available.
      * @access public
      */
-    function getBacktrace($frame = null)
+    public function getBacktrace($frame = null)
     {
         if (defined('PEAR_IGNORE_BACKTRACE')) {
             return null;
@@ -1041,7 +1041,7 @@ class PEAR_Error
         return $this->backtrace[$frame];
     }
 
-    function addUserInfo($info)
+    public function addUserInfo($info)
     {
         if (empty($this->userinfo)) {
             $this->userinfo = $info;
@@ -1050,7 +1050,7 @@ class PEAR_Error
         }
     }
 
-    function __toString()
+    public function __toString()
     {
         return $this->getMessage();
     }
@@ -1061,7 +1061,7 @@ class PEAR_Error
      * @return string a string with an object summary
      * @access public
      */
-    function toString()
+    public function toString()
     {
         $modes = array();
         $levels = array(E_USER_NOTICE  => 'notice',

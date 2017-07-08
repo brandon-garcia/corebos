@@ -29,7 +29,7 @@ class ConfigPrefs {
 	/**
 	 * Get configuration parameter configured value or default one
 	 */
-	static function get($key, $defvalue=false) {
+	public static function get($key, $defvalue=false) {
 		global $MAILMANAGER_CONFIG;
 		if(isset($MAILMANAGER_CONFIG)){
 			if(isset($MAILMANAGER_CONFIG[$key])) {

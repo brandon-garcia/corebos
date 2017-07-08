@@ -18,7 +18,7 @@ class MailManager_FolderController extends MailManager_Controller {
      * @param MailManager_Request $request
      * @return MailManager_Response
      */
-	function process(MailManager_Request $request) {
+	public function process(MailManager_Request $request) {
 		$list_max_entries_per_page = GlobalVariable::getVariable('Application_ListView_PageSize',20,'Emails');
 		$response = new MailManager_Response();
 
@@ -78,7 +78,7 @@ class MailManager_FolderController extends MailManager_Controller {
      * Returns the List of search string on the MailBox
      * @return string
      */
-	static function getSearchOptions(){
+	public static function getSearchOptions(){
 		$options = array('SUBJECT','TO','BODY','BCC','CC','FROM');
 		return $options;
 	}

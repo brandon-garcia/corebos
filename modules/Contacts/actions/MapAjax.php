@@ -23,7 +23,7 @@ class Google_MapAjax_Action extends Vtiger_BasicAjax_Action {
 	* @param Vtiger_Request $request
 	* @return type
 	*/
-	function getLocation(Vtiger_Request $request) {
+	public function getLocation(Vtiger_Request $request) {
 		$address = Google_Map_Helper::getLocation($request);
 		return empty($address) ? "" : array("address" => join(",", $address));
 	}

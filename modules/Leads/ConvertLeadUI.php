@@ -13,20 +13,20 @@
  */
 class ConvertLeadUI {
 
-	var $current_user;
-	var $leadid;
-	var $row;
-	var $leadowner = '';
-	var $userselected = '';
-	var $userdisplay = 'none';
-	var $groupselected = '';
-	var $groupdisplay = 'none';
-	var $account_fields;
-	var $contact_fields;
-	var $potential_fields;
-	static $industry = false;
+	public $current_user;
+	public $leadid;
+	public $row;
+	public $leadowner = '';
+	public $userselected = '';
+	public $userdisplay = 'none';
+	public $groupselected = '';
+	public $groupdisplay = 'none';
+	public $account_fields;
+	public $contact_fields;
+	public $potential_fields;
+	public static $industry = false;
 
-	function __construct($leadid, $current_user) {
+	public function __construct($leadid, $current_user) {
 		global $adb;
 		$this->leadid = $leadid;
 		$this->current_user = $current_user;
@@ -42,7 +42,7 @@ class ConvertLeadUI {
 		$this->setAssignedToInfo();
 	}
 
-	function isModuleActive($module) {
+	public function isModuleActive($module) {
 		include_once 'include/utils/VtlibUtils.php';
 		if (vtlib_isModuleActive($module) && ((isPermitted($module, 'EditView') == 'yes'))) {
 			return true;
@@ -50,7 +50,7 @@ class ConvertLeadUI {
 		return false;
 	}
 
-	function isActive($field, $mod) {
+	public function isActive($field, $mod) {
 		global $adb;
 		$tabid = getTabid($mod);
 		$query = 'select * from vtiger_field where fieldname = ? and tabid = ? and presence in (0,2)';
@@ -62,7 +62,7 @@ class ConvertLeadUI {
 			return false;
 	}
 
-	function isMandatory($module, $fieldname) {
+	public function isMandatory($module, $fieldname) {
 		$fieldInfo = $this->getFieldInfo($module, $fieldname);
 		if ($fieldInfo['mandatory']) {
 			return true;
@@ -70,7 +70,7 @@ class ConvertLeadUI {
 		return false;
 	}
 
-	function getFieldInfo($module, $fieldname) {
+	public function getFieldInfo($module, $fieldname) {
 		global $current_user;
 		$describe = vtws_describe($module, $current_user);
 		foreach ($describe['fields'] as $index => $fieldInfo) {
@@ -81,7 +81,7 @@ class ConvertLeadUI {
 		return false;
 	}
 
-	function setAssignedToInfo() {
+	public function setAssignedToInfo() {
 		$userid = $this->row["smownerid"];
 		//Retreiving the current user id
 		if ($userid != '') {
@@ -104,42 +104,42 @@ class ConvertLeadUI {
 		}
 	}
 
-	function getUserSelected() {
+	public function getUserSelected() {
 		return $this->userselected;
 	}
 
-	function getUserDisplay() {
+	public function getUserDisplay() {
 		return $this->userdisplay;
 	}
 
-	function getGroupSelected() {
+	public function getGroupSelected() {
 		return $this->groupselected;
 	}
 
-	function getGroupDisplay() {
+	public function getGroupDisplay() {
 		return $this->groupdisplay;
 	}
 
-	function getLeadInfo() {
+	public function getLeadInfo() {
 		//Retreive lead details from database
 		return $this->row;
 	}
 
-	function getDateFormat() {
+	public function getDateFormat() {
 		return $this->current_user->date_format;
 	}
 
-	function getleadId() {
+	public function getleadId() {
 		return $this->leadid;
 	}
 
-	function getCompany() {
+	public function getCompany() {
 		global $default_charset;
 		$value = html_entity_decode($this->row['company'], ENT_QUOTES, $default_charset);
 		return htmlentities($value, ENT_QUOTES, $default_charset);
 	}
 
-	function getIndustryList() {
+	public function getIndustryList() {
 		global $adb;
 		require_once 'modules/PickList/PickListUtils.php';
 
@@ -155,7 +155,7 @@ class ConvertLeadUI {
 		return $industry_list;
 	}
 
-	function getSalesStageList() {
+	public function getSalesStageList() {
 		global $adb;
 		require_once 'modules/PickList/PickListUtils.php';
 
@@ -171,7 +171,7 @@ class ConvertLeadUI {
 		return $sales_stage_list;
 	}
 
-	function getUserId() {
+	public function getUserId() {
 		return $this->current_user->id;
 	}
 
@@ -183,7 +183,7 @@ class ConvertLeadUI {
 	 * 		[<user/group>name]=>
 	 * )
 	 */
-	function getOwnerList($type) {
+	public function getOwnerList($type) {
 		$private = self::checkOwnership($this->current_user);
 		if ($type === 'user')
 			$owner = get_user_array(false, "Active", $this->row["smownerid"], $private);
@@ -199,7 +199,7 @@ class ConvertLeadUI {
 		return $owner_list;
 	}
 
-	static function checkOwnership($user) {
+	public static function checkOwnership($user) {
 		$private = '';
 		if ($user->id != 1) {
 			include 'user_privileges/sharing_privileges_' . $user->id . '.php';
@@ -214,7 +214,7 @@ class ConvertLeadUI {
 		return $private;
 	}
 
-	function getMappedFieldValue($module, $fieldName, $editable) {
+	public function getMappedFieldValue($module, $fieldName, $editable) {
 		global $adb,$default_charset;
 
 		$fieldid = getFieldid(getTabid($module), $fieldName);

@@ -19,7 +19,7 @@ class MailManager_MainUIController extends MailManager_Controller {
      * @param MailManager_Request $request
      * @return MailManager_Response
      */
-	function process(MailManager_Request $request) {
+	public function process(MailManager_Request $request) {
 		global $currentModule;
 		$response = new MailManager_Response(true);
 		$viewer = $this->getViewer();

@@ -13,33 +13,33 @@ require('user_privileges/default_module_view.php');
 require_once('modules/InventoryDetails/InventoryDetails.php');
 
 class SalesOrder extends CRMEntity {
-	var $db, $log; // Used in class functions of CRMEntity
+	public public $db, $log; // Used in class functions of CRMEntity
 
-	var $table_name = 'vtiger_salesorder';
-	var $table_index= 'salesorderid';
-	var $column_fields = Array();
+	public $table_name = 'vtiger_salesorder';
+	public $table_index= 'salesorderid';
+	public $column_fields = Array();
 
 	/** Indicator if this is a custom module or standard module */
-	var $IsCustomModule = false;
-	var $HasDirectImageField = false;
-	var $tab_name = Array('vtiger_crmentity','vtiger_salesorder','vtiger_sobillads','vtiger_soshipads','vtiger_salesordercf','vtiger_invoice_recurring_info');
-	var $tab_name_index = Array('vtiger_crmentity'=>'crmid','vtiger_salesorder'=>'salesorderid','vtiger_sobillads'=>'sobilladdressid','vtiger_soshipads'=>'soshipaddressid','vtiger_salesordercf'=>'salesorderid','vtiger_invoice_recurring_info'=>'salesorderid');
+	public $IsCustomModule = false;
+	public $HasDirectImageField = false;
+	public $tab_name = Array('vtiger_crmentity','vtiger_salesorder','vtiger_sobillads','vtiger_soshipads','vtiger_salesordercf','vtiger_invoice_recurring_info');
+	public $tab_name_index = Array('vtiger_crmentity'=>'crmid','vtiger_salesorder'=>'salesorderid','vtiger_sobillads'=>'sobilladdressid','vtiger_soshipads'=>'soshipaddressid','vtiger_salesordercf'=>'salesorderid','vtiger_invoice_recurring_info'=>'salesorderid');
 	/**
 	 * Mandatory table for supporting custom fields.
 	 */
-	var $customFieldTable = Array('vtiger_salesordercf', 'salesorderid');
+	public $customFieldTable = Array('vtiger_salesordercf', 'salesorderid');
 	// Uncomment the line below to support custom field columns on related lists
-	var $related_tables = Array('vtiger_account'=>array('accountid'));
+	public $related_tables = Array('vtiger_account'=>array('accountid'));
 
-	var $update_product_array = Array();
+	public $update_product_array = Array();
 
-	var $sortby_fields = Array('subject','smownerid','accountname','lastname');
+	public $sortby_fields = Array('subject','smownerid','accountname','lastname');
 
 	// This is used to retrieve related vtiger_fields from form posts.
-	var $additional_column_fields = Array('assigned_user_name', 'smownerid', 'opportunity_id', 'case_id', 'contact_id', 'task_id', 'note_id', 'meeting_id', 'call_id', 'email_id', 'parent_name', 'member_id' );
+	public $additional_column_fields = Array('assigned_user_name', 'smownerid', 'opportunity_id', 'case_id', 'contact_id', 'task_id', 'note_id', 'meeting_id', 'call_id', 'email_id', 'parent_name', 'member_id' );
 
 	// This is the list of vtiger_fields that are in the lists.
-	var $list_fields = Array(
+	public $list_fields = Array(
 		'Order No'=>Array('salesorder' => 'salesorder_no'),
 		'Subject'=>Array('salesorder'=>'subject'),
 		'Account Name'=>Array('account'=>'accountid'),
@@ -47,7 +47,7 @@ class SalesOrder extends CRMEntity {
 		'Total'=>Array('salesorder'=>'total'),
 		'Assigned To'=>Array('crmentity'=>'smownerid')
 	);
-	var $list_fields_name = Array(
+	public $list_fields_name = Array(
 		'Order No'=>'salesorder_no',
 		'Subject'=>'subject',
 		'Account Name'=>'account_id',
@@ -55,15 +55,15 @@ class SalesOrder extends CRMEntity {
 		'Total'=>'hdnGrandTotal',
 		'Assigned To'=>'assigned_user_id'
 	);
-	var $list_link_field = 'subject';
+	public $list_link_field = 'subject';
 
-	var $search_fields = Array(
+	public $search_fields = Array(
 		'Order No'=>Array('salesorder'=>'salesorder_no'),
 		'Subject'=>Array('salesorder'=>'subject'),
 		'Account Name'=>Array('account'=>'accountid'),
 		'Quote Name'=>Array('salesorder'=>'quoteid')
 	);
-	var $search_fields_name = Array(
+	public $search_fields_name = Array(
 		'Order No'=>'salesorder_no',
 		'Subject'=>'subject',
 		'Account Name'=>'account_id',
@@ -71,25 +71,25 @@ class SalesOrder extends CRMEntity {
 	);
 
 	// For Popup window record selection
-	var $popup_fields = Array('subject');
+	public $popup_fields = Array('subject');
 
 	// For Alphabetical search
-	var $def_basicsearch_col = 'subject';
+	public $def_basicsearch_col = 'subject';
 
 	// Column value to use on detail view record text display
-	var $def_detailview_recname = 'subject';
+	public $def_detailview_recname = 'subject';
 
 	// This is the list of vtiger_fields that are required.
-	var $required_fields = array("accountname"=>1);
+	public $required_fields = array("accountname"=>1);
 
 	//Added these variables which are used as default order by and sortorder in ListView
-	var $default_order_by = 'subject';
-	var $default_sort_order = 'ASC';
+	public $default_order_by = 'subject';
+	public $default_sort_order = 'ASC';
 
-	var $mandatory_fields = Array('subject','createdtime' ,'modifiedtime');
-	var $record_status = '';
+	public $mandatory_fields = Array('subject','createdtime' ,'modifiedtime');
+	public $record_status = '';
 
-	function __construct() {
+	public function __construct() {
 		global $log;
 		$this_module = get_class($this);
 		$this->column_fields = getColumnFields($this_module);
@@ -103,14 +103,14 @@ class SalesOrder extends CRMEntity {
 		}
 	}
 
-	function save($module, $fileid = '') {
+	public function save($module, $fileid = '') {
 		if ($this->mode=='edit') {
 			$this->record_status = getSingleFieldValue($this->table_name, 'sostatus', $this->table_index, $this->id);
 		}
 		parent::save($module, $fileid);
 	}
 
-	function save_module($module) {
+	public function save_module($module) {
 		global $updateInventoryProductRel_deduct_stock;
 		if ($this->HasDirectImageField) {
 			$this->insertIntoAttachment($this->id,$module);
@@ -145,7 +145,7 @@ class SalesOrder extends CRMEntity {
 		$this->db->pquery($update_query, $update_params);
 	}
 
-	function registerInventoryHistory() {
+	public function registerInventoryHistory() {
 		global $app_strings;
 		if (isset($_REQUEST['ajxaction']) and $_REQUEST['ajxaction'] == 'DETAILVIEW') { //if we use ajax edit
 			if (GlobalVariable::getVariable('Application_B2B', '1')) {
@@ -174,7 +174,7 @@ class SalesOrder extends CRMEntity {
 	/**
 	 * Customizing the restore procedure.
 	 */
-	function restore($module, $id) {
+	public function restore($module, $id) {
 		global $adb, $updateInventoryProductRel_deduct_stock;
 		$result = $adb->pquery("SELECT sostatus FROM vtiger_salesorder where salesorderid=?", array($id));
 		$soStatus = $adb->query_result($result,0,'sostatus');
@@ -187,7 +187,7 @@ class SalesOrder extends CRMEntity {
 	/**
 	 * Customizing the Delete procedure.
 	 */
-	function trash($module, $recordId) {
+	public function trash($module, $recordId) {
 		global $adb;
 		$result = $adb->pquery("SELECT sostatus FROM vtiger_salesorder where salesorderid=?", array($recordId));
 		$soStatus = $adb->query_result($result,0,'sostatus');
@@ -201,7 +201,7 @@ class SalesOrder extends CRMEntity {
 	 *  This function accepts the id as arguments and execute the MySQL query using the id
 	 *  and sends the query and the id as arguments to renderRelatedInvoices() method.
 	 */
-	function get_invoices($id)
+	public function get_invoices($id)
 	{
 		global $log,$singlepane_view;
 		$log->debug("Entering get_invoices(".$id.") method ...");
@@ -239,7 +239,7 @@ class SalesOrder extends CRMEntity {
 	 *	@param $id - salesorder id
 	 *	@return $return_data - array with header and the entries in format Array('header'=>$header,'entries'=>$entries_list) where as $header and $entries_list are arrays which contains header values and all column values of all entries
 	 */
-	function get_sostatushistory($id) {
+	public function get_sostatushistory($id) {
 		global $log, $adb, $mod_strings, $app_strings, $current_user;
 		$log->debug("Entering get_sostatushistory(".$id.") method ...");
 
@@ -290,7 +290,7 @@ class SalesOrder extends CRMEntity {
 	 * @param - $secmodule secondary module name
 	 * returns the query string formed on fetching the related data for report for secondary module
 	 */
-	function generateReportsSecQuery($module,$secmodule,$type = '',$where_condition = ''){
+	public function generateReportsSecQuery($module, $secmodule, $type = '', $where_condition = ''){
 		$query = $this->getRelationQuery($module,$secmodule,"vtiger_salesorder","salesorderid");
 		$query .= " left join vtiger_crmentity as vtiger_crmentitySalesOrder on vtiger_crmentitySalesOrder.crmid=vtiger_salesorder.salesorderid and vtiger_crmentitySalesOrder.deleted=0
 			left join vtiger_salesordercf on vtiger_salesorder.salesorderid = vtiger_salesordercf.salesorderid
@@ -325,7 +325,7 @@ class SalesOrder extends CRMEntity {
 	 * @param - $secmodule secondary module name
 	 * returns the array with table names and fieldnames storing relations between module and this module
 	 */
-	function setRelationTables($secmodule){
+	public function setRelationTables($secmodule){
 		$rel_tables = array (
 			"Calendar" =>array("vtiger_seactivityrel"=>array("crmid","activityid"),"vtiger_salesorder"=>"salesorderid"),
 			"Invoice" =>array("vtiger_invoice"=>array("salesorderid","invoiceid"),"vtiger_salesorder"=>"salesorderid"),
@@ -339,7 +339,7 @@ class SalesOrder extends CRMEntity {
 	}
 
 	// Function to unlink an entity with given Id from another entity
-	function unlinkRelationship($id, $return_module, $return_id) {
+	public function unlinkRelationship($id, $return_module, $return_id) {
 		global $log;
 		if(empty($return_module) || empty($return_id)) return;
 
@@ -373,26 +373,26 @@ class SalesOrder extends CRMEntity {
 
 	/*Function to create records in current module.
 	**This function called while importing records to this module*/
-	function createRecords($obj) {
+	public function createRecords($obj) {
 		$createRecords = createRecords($obj);
 		return $createRecords;
 	}
 
 	/*Function returns the record information which means whether the record is imported or not
 	**This function called while importing records to this module*/
-	function importRecord($obj, $inventoryFieldData, $lineItemDetails) {
+	public function importRecord($obj, $inventoryFieldData, $lineItemDetails) {
 		$entityInfo = importRecord($obj, $inventoryFieldData, $lineItemDetails);
 		return $entityInfo;
 	}
 
 	/*Function to return the status count of imported records in current module.
 	**This function called while importing records to this module*/
-	function getImportStatusCount($obj) {
+	public function getImportStatusCount($obj) {
 		$statusCount = getImportStatusCount($obj);
 		return $statusCount;
 	}
 
-	function undoLastImport($obj, $user) {
+	public function undoLastImport($obj, $user) {
 		$undoLastImport = undoLastImport($obj, $user);
 	}
 
@@ -400,7 +400,7 @@ class SalesOrder extends CRMEntity {
 	* @param reference variable - where condition is passed when the query is executed
 	* Returns Export SalesOrder Query.
 	*/
-	function create_export_query($where) {
+	public function create_export_query($where) {
 		global $log, $current_user;
 		$log->debug("Entering create_export_query(".$where.") method ...");
 

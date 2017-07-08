@@ -12,11 +12,11 @@ require_once 'modules/Import/resources/Utils.php';
 
 class Import_File_Reader {
 
-	var $status='success';
-	var $numberOfRecordsRead = 0;
-	var $errorMessage='';
-	var $user;
-	var $userInputObject;
+	public $status='success';
+	public $numberOfRecordsRead = 0;
+	public $errorMessage='';
+	public $user;
+	public $userInputObject;
 
 	public function  __construct($userInputObject, $user) {
 		$this->userInputObject = $userInputObject;

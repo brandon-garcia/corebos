@@ -15,41 +15,41 @@ require_once('modules/Settings/MailScanner/core/MailScannerAction.php');
  */
 class Vtiger_MailScannerRule {
 	// id of this instance
-	var $ruleid    = false;
+	public $ruleid    = false;
 	// scanner to which this rule is linked
-	var $scannerid = false;
+	public $scannerid = false;
 	// from address criteria
-	var $fromaddress= false;
+	public $fromaddress= false;
 	// to address criteria
-	var $toaddress  = false;
+	public $toaddress  = false;
 	// subject criteria operator
-	var $subjectop = false;
+	public $subjectop = false;
 	// subject criteria
-	var $subject   = false;
+	public $subject   = false;
 	// body criteria operator
-	var $bodyop    = false;
+	public $bodyop    = false;
 	// body criteria
-	var $body      = false;
+	public $body      = false;
 	// order of this rule
-	var $sequence  = false;
+	public $sequence  = false;
 	// is this action valid
-	var $isvalid   = false;
+	public $isvalid   = false;
 	// match criteria ALL or ANY
-	var $matchusing = false;
+	public $matchusing = false;
 	// Assign (Ticket) to user or groups
-	var $assign_to = false;
-	var $assign_to_type = false;
-	var $assign_to_name = false;
+	public $assign_to = false;
+	public $assign_to_type = false;
+	public $assign_to_name = false;
 
 
 	// associated actions for this rule
-	var $actions  = false;
+	public $actions  = false;
 	// TODO we are restricting one action for one rule right now
-	var $useaction= false;
+	public $useaction= false;
 
 	/** DEBUG functionality **/
-	var $debug     = false;
-	function log($message) {
+	public $debug     = false;
+	public function log($message) {
 		global $log;
 		if($log && $this->debug) { $log->debug($message); }
 		else if($this->debug) echo "$message\n";
@@ -58,14 +58,14 @@ class Vtiger_MailScannerRule {
 	/**
 	 * Constructor
 	 */
-	function __construct($forruleid) {
+	public function __construct($forruleid) {
 		$this->initialize($forruleid);
 	}
 
 	/**
 	 * String representation of this instance
 	 */
-	function __toString() {
+	public function __toString() {
 		$tostring = '';
 		$tostring .= "FROM $this->fromaddress, TO $this->toaddress";
 		$tostring .= ",SUBJECT $this->subjectop $this->subject, BODY $this->bodyop $this->body, MATCH USING, $this->matchusing";
@@ -75,7 +75,7 @@ class Vtiger_MailScannerRule {
 	/**
 	 * Initialize this instance
 	 */
-	function initialize($forruleid) {
+	public function initialize($forruleid) {
 		global $adb;
 		$result = $adb->pquery("SELECT * FROM vtiger_mailscanner_rules WHERE ruleid=? ORDER BY sequence", Array($forruleid));
 
@@ -112,7 +112,7 @@ class Vtiger_MailScannerRule {
 	/**
 	 * Initialize the actions
 	 */
-	function initializeActions() {
+	public function initializeActions() {
 		global $adb;
 		if($this->ruleid) {
 			$this->actions = Array();
@@ -132,14 +132,14 @@ class Vtiger_MailScannerRule {
 	/**
 	 * Is body rule defined?
 	 */
-	function hasBodyRule() {
+	public function hasBodyRule() {
 		return (!empty($this->bodyop));
 	}
 
 	/**
 	 * Check if the rule criteria is matching
 	 */
-	function isMatching($matchfound1, $matchfound2=null) {
+	public function isMatching($matchfound1, $matchfound2=null) {
 		if($matchfound2 === null) return $matchfound1;
 
 		if($this->matchusing== 'AND') return ($matchfound1 && $matchfound2);
@@ -153,7 +153,7 @@ class Vtiger_MailScannerRule {
 	 * @param $includingBody
 	 * @returns false if not match is found or else all matching result found
 	 */
-	function applyAll($mailrecord, $includingBody=true) {
+	public function applyAll($mailrecord, $includingBody=true) {
 		$matchresults = Array();
 		$matchfound = null;
 
@@ -183,7 +183,7 @@ class Vtiger_MailScannerRule {
 	/**
 	 * Check if at least one condition is set for this rule.
 	 */
-	function hasACondition() {
+	public function hasACondition() {
 		$hasFromAddress = $this->fromaddress? true: false;
 		$hasToAddress   = $this->toaddress? true : false;
 		$hasSubjectOp   = $this->subjectop? true : false;
@@ -194,7 +194,7 @@ class Vtiger_MailScannerRule {
 	/**
 	 * Apply required condition on the mail record.
 	 */
-	function apply($subrule, $mailrecord) {
+	public function apply($subrule, $mailrecord) {
 		$matchfound = false;
 		if($this->isvalid) {
 			switch(strtoupper($subrule)) {
@@ -237,7 +237,7 @@ class Vtiger_MailScannerRule {
 	/**
 	 * Find if the rule matches based on condition and parameters
 	 */
-	function find($subrule, $condition, $input, $searchfor) {
+	public function find($subrule, $condition, $input, $searchfor) {
 		if(!$input) return false;
 
 		$matchfound = false;
@@ -292,14 +292,14 @@ class Vtiger_MailScannerRule {
 	/**
 	 * Create matching result for the subrule.
 	 */
-	function __CreateMatchResult($subrule, $condition, $searchfor, $matches) {
+	public function __CreateMatchResult($subrule, $condition, $searchfor, $matches) {
 		return Array( 'subrule' => $subrule, 'condition' => $condition, 'searchfor' => $searchfor, 'matches' => $matches);
 	}
 
 	/**
 	 * Create default success matching result
 	 */
-	function __CreateDefaultMatchResult($subrule) {
+	public function __CreateDefaultMatchResult($subrule) {
 		if($this->matchusing == 'OR') return false;
 		if($this->matchusing == 'AND') return $this->__CreateMatchResult($subrule, 'Contains', '', '');
 	}
@@ -309,7 +309,7 @@ class Vtiger_MailScannerRule {
 	 * @param $matchresult result of apply obtained earlier
 	 * @returns matchinfo if Regex match is found, false otherwise
 	 */
-	function hasRegexMatch($matchresult) {
+	public function hasRegexMatch($matchresult) {
 		foreach($matchresult as $matchinfo) {
 			$match_condition = $matchinfo['condition'];
 			$match_string = $matchinfo['matches'];
@@ -322,7 +322,7 @@ class Vtiger_MailScannerRule {
 	/**
 	 * Swap (reset) sequence of two rules.
 	 */
-	static function resetSequence($ruleid1, $ruleid2) {
+	public static function resetSequence($ruleid1, $ruleid2) {
 		global $adb;
 		$ruleresult = $adb->pquery("SELECT ruleid, sequence FROM vtiger_mailscanner_rules WHERE ruleid = ? or ruleid = ?",
 			Array($ruleid1, $ruleid2));
@@ -340,7 +340,7 @@ class Vtiger_MailScannerRule {
 	/**
 	 * Update rule information in database.
 	 */
-	function update() {
+	public function update() {
 		global $adb;
 		if($this->ruleid) {
 			$adb->pquery("UPDATE vtiger_mailscanner_rules SET scannerid=?,fromaddress=?,toaddress=?,subjectop=?,subject=?,bodyop=?,body=?,matchusing=?,assign_to=?
@@ -359,7 +359,7 @@ class Vtiger_MailScannerRule {
 	/**
 	 * Get next sequence to use
 	 */
-	function __nextsequence() {
+	public function __nextsequence() {
 		global $adb;
 		$seqres = $adb->pquery("SELECT max(sequence) AS max_sequence FROM vtiger_mailscanner_rules", Array());
 		$maxsequence = 0;
@@ -373,7 +373,7 @@ class Vtiger_MailScannerRule {
 	/**
 	 * Delete the rule and associated information.
 	 */
-	function delete() {
+	public function delete() {
 		global $adb;
 		// Delete dependencies
 		if(!empty($this->actions)) {
@@ -390,7 +390,7 @@ class Vtiger_MailScannerRule {
 	/**
 	 * Update action linked to the rule.
 	 */
-	function updateAction($actionid, $actiontext) {
+	public function updateAction($actionid, $actiontext) {
 		$action = $this->useaction;
 
 		if($actionid != '' && $actiontext == '') {
@@ -407,7 +407,7 @@ class Vtiger_MailScannerRule {
 	/**
 	 * Take action on mail record
 	 */
-	function takeAction($mailscanner, $mailrecord, $matchresult) {
+	public function takeAction($mailscanner, $mailrecord, $matchresult) {
 		if(empty($this->actions)) return false;
 
 		$action = $this->useaction; // Action is limited to One right now

@@ -12,7 +12,7 @@ include_once dirname(__FILE__) . '/../api/ws/Controller.php';
 
 class crmtogo_UI_ChangeSettings extends crmtogo_WS_Controller{
 
-	function process(crmtogo_API_Request $request) {
+	public function process(crmtogo_API_Request $request) {
 		global $current_user,$adb;
 		$adb = PearDatabase::getInstance();
 		$response = new crmtogo_API_Response();

@@ -14,35 +14,35 @@ require_once('include/database/PearDatabase.php');
 require_once('modules/Calendar/Activity.php');
 class Appointment
 {
-	var $start_time;
-	var $end_time;
-	var $subject;
-	var $participant;
-	var $participant_state;
-	var $contact_name;
-	var $account_id;
-	var $account_name;
-	var $creatorid;
-	var $creator;
-	var $owner;
-	var $ownerid;
-	var $assignedto;
-	var $eventstatus;
-	var $priority;
-	var $activity_type;
-	var $description;
-	var $record;
-	var $temphour;
-	var $tempmin;
-	var $image_name;
-	var $formatted_datetime;
-	var $duration_min;
-	var $duration_hour;
-	var $shared = false;
-	var $recurring;
-	var $dur_hour;
+	public $start_time;
+	public $end_time;
+	public $subject;
+	public $participant;
+	public $participant_state;
+	public $contact_name;
+	public $account_id;
+	public $account_name;
+	public $creatorid;
+	public $creator;
+	public $owner;
+	public $ownerid;
+	public $assignedto;
+	public $eventstatus;
+	public $priority;
+	public $activity_type;
+	public $description;
+	public $record;
+	public $temphour;
+	public $tempmin;
+	public $image_name;
+	public $formatted_datetime;
+	public $duration_min;
+	public $duration_hour;
+	public $shared = false;
+	public $recurring;
+	public $dur_hour;
 
-	function __construct() {
+	public function __construct() {
 		$this->participant = Array();
 		$this->participant_state = Array();
 		$this->description = "";
@@ -56,7 +56,7 @@ class Appointment
 	  * @returns $list :: Type Array
 	 */
 	
-	function readAppointment($userid, &$from_datetime, &$to_datetime, $view)
+	public function readAppointment($userid, &$from_datetime, &$to_datetime, $view)
 	{
 		global $current_user,$adb;
 		require('user_privileges/user_privileges_'.$current_user->id.'.php');
@@ -203,7 +203,7 @@ class Appointment
           * @param $act_array -- The vtiger_activity array :: Type Array
           * @param $view -- The calendar view :: Type String
          */
-	function readResult($act_array, $view)
+	public function readResult($act_array, $view)
 	{
 		global $adb,$current_user,$app_strings;
 		$format_sthour='';

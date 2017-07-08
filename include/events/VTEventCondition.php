@@ -9,7 +9,7 @@
  *************************************************************************************/
 
 	class VTEventCondition{
-		function __construct($expr){
+		public function __construct($expr){
 			if($expr!=''){
 				$parser = $this->getParser($expr);
 				$this->expr = $parser->statement();
@@ -19,7 +19,7 @@
 		}
 		
 		
-		function test($obj){
+		public function test($obj){
 			$this->data = $obj;
 			if($this->expr==null){
 				return true;

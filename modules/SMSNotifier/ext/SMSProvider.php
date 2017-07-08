@@ -9,7 +9,7 @@
  ************************************************************************************/
 class SMSProvider {
 
-	static function getInstance($providername) {
+	public static function getInstance($providername) {
 		if(!empty($providername)) {
 			$providername = trim($providername);
 
@@ -24,7 +24,7 @@ class SMSProvider {
 		return false;
 	}
 
-	static function listAll() {
+	public static function listAll() {
 		$providers = array();
 		if ($handle = opendir( dirname(__FILE__) . '/providers')){
 			while (false !== ($file = readdir($handle))) {

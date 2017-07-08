@@ -12,31 +12,31 @@ require_once('data/Tracker.php');
 require_once('modules/Invoice/Invoice.php');
 
 class CobroPago extends CRMEntity {
-	var $db, $log; // Used in class functions of CRMEntity
+	public public $db, $log; // Used in class functions of CRMEntity
 
-	var $table_name = 'vtiger_cobropago';
-	var $table_index= 'cobropagoid';
-	var $column_fields = Array();
+	public $table_name = 'vtiger_cobropago';
+	public $table_index= 'cobropagoid';
+	public $column_fields = Array();
 
 	/** Indicator if this is a custom module or standard module */
-	var $IsCustomModule = true;
-	var $HasDirectImageField = false;
+	public $IsCustomModule = true;
+	public $HasDirectImageField = false;
 	/**
 	 * Mandatory table for supporting custom fields.
 	 */
-	var $customFieldTable = Array('vtiger_cobropagocf', 'cobropagoid');
+	public $customFieldTable = Array('vtiger_cobropagocf', 'cobropagoid');
 	// Uncomment the line below to support custom field columns on related lists
-	var $related_tables = Array('vtiger_cobropagocf'=>array('cobropagoid','vtiger_cobropago', 'cobropagoid'));
+	public $related_tables = Array('vtiger_cobropagocf'=>array('cobropagoid','vtiger_cobropago', 'cobropagoid'));
 
 	/**
 	 * Mandatory for Saving, Include tables related to this module.
 	 */
-	var $tab_name = Array('vtiger_crmentity', 'vtiger_cobropago', 'vtiger_cobropagocf');
+	public $tab_name = Array('vtiger_crmentity', 'vtiger_cobropago', 'vtiger_cobropagocf');
 
 	/**
 	 * Mandatory for Saving, Include tablename and tablekey columnname here.
 	 */
-	var $tab_name_index = Array(
+	public $tab_name_index = Array(
 		'vtiger_crmentity' => 'crmid',
 		'vtiger_cobropago'   => 'cobropagoid',
 		'vtiger_cobropagocf' => 'cobropagoid');
@@ -44,7 +44,7 @@ class CobroPago extends CRMEntity {
 	/**
 	 * Mandatory for Listing (Related listview)
 	 */
-	var $list_fields = Array (
+	public $list_fields = Array (
 		'CyP No'=>Array('cobropago'=>'cyp_no'),
 		'Reference'=>Array('cobropago'=>'reference'),
 		'PaymentMode'=>Array('cobropago'=>'paymentmode'),
@@ -52,7 +52,7 @@ class CobroPago extends CRMEntity {
 		'DueDate'=>Array('cobropago'=>'duedate'),
 		'Assigned To' => Array('crmentity' => 'smownerid')
 	);
-	var $list_fields_name = Array(
+	public $list_fields_name = Array(
 		'CyP No'=>'cyp_no',
 		'Reference'=>'reference',
 		'PaymentMode'=>'paymentmode',
@@ -62,17 +62,17 @@ class CobroPago extends CRMEntity {
 	);
 
 	// Make the field link to detail view from list view (Fieldname)
-	var $list_link_field = 'cyp_no';
+	public $list_link_field = 'cyp_no';
 
 	// For Popup listview and UI type support
-	var $search_fields = Array(
+	public $search_fields = Array(
 		'CyP No'=>Array('cobropago'=>'cyp_no'),
 		'Reference'=>Array('cobropago'=>'reference'),
 		'PaymentMode'=>Array('cobropago'=>'paymentmode'),
 		'Amount'=>Array('cobropago'=>'amount'),
 		'DueDate'=>Array('cobropago'=>'duedate')
 	);
-	var $search_fields_name = Array(
+	public $search_fields_name = Array(
 		'CyP No'=>'cyp_no',
 		'Reference'=>'reference',
 		'PaymentMode'=>'paymentmode',
@@ -81,30 +81,30 @@ class CobroPago extends CRMEntity {
 	);
 
 	// For Popup window record selection
-	var $popup_fields = Array('cyp_no');
+	public $popup_fields = Array('cyp_no');
 
 	// Placeholder for sort fields - All the fields will be initialized for Sorting through initSortFields
-	var $sortby_fields = Array();
+	public $sortby_fields = Array();
 
 	// For Alphabetical search
-	var $def_basicsearch_col = 'reference';
+	public $def_basicsearch_col = 'reference';
 
 	// Column value to use on detail view record text display
-	var $def_detailview_recname = 'cyp_no';
+	public $def_detailview_recname = 'cyp_no';
 
 	// Required Information for enabling Import feature
-	var $required_fields = Array('reference'=>1);
+	public $required_fields = Array('reference'=>1);
 
 	// Callback function list during Importing
-	var $special_functions = Array('set_import_assigned_user');
+	public $special_functions = Array('set_import_assigned_user');
 
-	var $default_order_by = 'cyp_no';
-	var $default_sort_order='ASC';
+	public $default_order_by = 'cyp_no';
+	public $default_sort_order='ASC';
 	// Used when enabling/disabling the mandatory fields for the module.
 	// Refers to vtiger_field.fieldname values.
-	var $mandatory_fields = Array('createdtime', 'modifiedtime','cyp_no');
+	public $mandatory_fields = Array('createdtime', 'modifiedtime','cyp_no');
 
-	function save($module, $fileid = '') {
+	public function save($module, $fileid = '') {
 		global $adb, $mod_strings, $current_user;
 		$update_after = false;
 		if ($this->column_fields['paid'] == 'on' or $this->column_fields['paid'] == '1'){
@@ -129,7 +129,7 @@ class CobroPago extends CRMEntity {
 		}
 	}
 
-	function save_module($module) {
+	public function save_module($module) {
 		global $current_user,$log,$adb;
 		if ($this->HasDirectImageField) {
 			$this->insertIntoAttachment($this->id,$module);
@@ -206,7 +206,7 @@ class CobroPago extends CRMEntity {
 	  }
 	}
 
-	function trash($module,$record) {
+	public function trash($module, $record) {
 		global $adb;
 		parent::trash($module,$record);
 		$rs = $adb->pquery("select related_id,parent_id from vtiger_cobropago where cobropagoid=?",array($record));
@@ -221,7 +221,7 @@ class CobroPago extends CRMEntity {
 		}
 	}
 
-	function unlinkRelationship($id, $return_module, $return_id) {
+	public function unlinkRelationship($id, $return_module, $return_id) {
 		global $adb;
 		parent::unlinkRelationship($id, $return_module, $return_id);
 		$rs = $adb->pquery("select related_id,parent_id from vtiger_cobropago where cobropagoid=?",array($id));
@@ -274,7 +274,7 @@ class CobroPago extends CRMEntity {
 	 * @param String Module name
 	 * @param String Event Type (module.postinstall, module.disabled, module.enabled, module.preuninstall)
 	 */
-	function vtlib_handler($modulename, $event_type) {
+	public function vtlib_handler($modulename, $event_type) {
 		if($event_type == 'module.postinstall') {
 			// TODO Handle post installation actions
 			$modAccounts=Vtiger_Module::getInstance('Accounts');
@@ -353,7 +353,7 @@ class CobroPago extends CRMEntity {
 	 *	@param $id - cobropagoid
 	 *	return $return_data - array with header and the entries in format Array('header'=>$header,'entries'=>$entries_list) where as $header and $entries_list are array which contains all the column values of an row
 	 */
-	function get_payment_history($id)
+	public function get_payment_history($id)
 	{
 		global $log, $adb, $app_strings;
 		$log->debug("Entering get_stage_history(".$id.") method ...");
@@ -401,7 +401,7 @@ class CobroPago extends CRMEntity {
 		return $return_data;
 	}
 
-	function get_history_cobropago($cobropagoid){
+	public function get_history_cobropago($cobropagoid){
 		global $log, $adb;
 		$log->debug("Entering into get_history_cobropago($cobropagoid) method ...");
 
@@ -423,7 +423,7 @@ class CobroPago extends CRMEntity {
 	/**
 	 *	This function check is this payment is paid or not, to haver permission to edit
 	**/
-	function permissiontoedit()
+	public function permissiontoedit()
 	{
 		global $log,$current_user,$adb;
 		$log->debug("Entering permissiontoedit() method ...");

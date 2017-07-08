@@ -25,7 +25,7 @@ class PopulateComboValues
 	 * @param $values -- values:: Type string array
 	 * @param $tableName -- tablename:: Type string
 	 */
-	function insertComboValues($values, $tableName,$picklistid) {
+	public function insertComboValues($values, $tableName, $picklistid) {
 		global $log, $adb;
 		$log->debug("Entering insertComboValues(".$values.", ".$tableName.") method ...");
 		//inserting the value in the vtiger_picklistvalues_seq for the getting uniqueID for each picklist values...
@@ -66,7 +66,7 @@ class PopulateComboValues
 	/**
 	 * To populate the combo vtiger_tables at startup time
 	 */
-	function create_tables () {
+	public function create_tables () {
 		global $log, $adb, $combo_strings;
 		$log->debug("Entering create_tables () method ...");
 		$comboRes = $adb->query("SELECT distinct fieldname FROM vtiger_field WHERE uitype IN ('15') OR fieldname = 'salutationtype' and vtiger_field.presence in (0,2)");
@@ -102,7 +102,7 @@ class PopulateComboValues
 		$log->debug("Exiting create_tables () method ...");
 	}
 
-	function create_nonpicklist_tables () {
+	public function create_nonpicklist_tables () {
 		global $log, $adb, $combo_strings;
 		$log->debug("Entering create_nonpicklist_tables () method ...");
 		// uitype -> 16 - Non standard picklist, 115 - User status, 83 - Tax Class
@@ -116,7 +116,7 @@ class PopulateComboValues
 		$log->debug("Exiting create_tables () method ...");
 	}
 
-	function insertNonPicklistValues($values, $tableName) {
+	public function insertNonPicklistValues($values, $tableName) {
 		global $log, $adb;
 		$log->debug("Entering insertNonPicklistValues(".$values.", ".$tableName.") method ...");
 		$i=0;

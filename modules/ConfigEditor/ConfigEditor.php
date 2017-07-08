@@ -15,7 +15,7 @@ class ConfigEditor {
 	 * @param String Module name
 	 * @param String Event Type (module.postinstall, module.disabled, module.enabled, module.preuninstall)
 	 */
-	function vtlib_handler($modulename, $event_type) {
+	public function vtlib_handler($modulename, $event_type) {
 		
 		$registerLink = false; 
 		

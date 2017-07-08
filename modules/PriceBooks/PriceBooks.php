@@ -11,66 +11,66 @@ require_once('data/CRMEntity.php');
 require_once('data/Tracker.php');
 
 class PriceBooks extends CRMEntity {
-	var $db, $log; // Used in class functions of CRMEntity
+	public public $db, $log; // Used in class functions of CRMEntity
 
-	var $table_name = 'vtiger_pricebook';
-	var $table_index= 'pricebookid';
-	var $column_fields = Array();
+	public $table_name = 'vtiger_pricebook';
+	public $table_index= 'pricebookid';
+	public $column_fields = Array();
 
 	/** Indicator if this is a custom module or standard module */
-	var $IsCustomModule = false;
-	var $HasDirectImageField = false;
-	var $tab_name = Array('vtiger_crmentity','vtiger_pricebook','vtiger_pricebookcf');
-	var $tab_name_index = Array('vtiger_crmentity'=>'crmid','vtiger_pricebook'=>'pricebookid','vtiger_pricebookcf'=>'pricebookid');
+	public $IsCustomModule = false;
+	public $HasDirectImageField = false;
+	public $tab_name = Array('vtiger_crmentity','vtiger_pricebook','vtiger_pricebookcf');
+	public $tab_name_index = Array('vtiger_crmentity'=>'crmid','vtiger_pricebook'=>'pricebookid','vtiger_pricebookcf'=>'pricebookid');
 	/**
 	 * Mandatory table for supporting custom fields.
 	 */
-	var $customFieldTable = Array('vtiger_pricebookcf', 'pricebookid');
+	public $customFieldTable = Array('vtiger_pricebookcf', 'pricebookid');
 
 	// This is the list of fields that are in the lists.
-	var $list_fields = Array(
+	public $list_fields = Array(
 		'Price Book Name'=>Array('pricebook'=>'bookname'),
 		'Price'=>Array('pricebookproductrel'=>'listprice'),
 		'Currency'=>Array('pricebook'=>'currency_id'),
 		'Active'=>Array('pricebook'=>'active')
 	);
-	var $list_fields_name = Array(
+	public $list_fields_name = Array(
 		'Price Book Name'=>'bookname',
 		'Price'=>'listprice',
 		'Currency'=>'currency_id',
 		'Active'=>'active'
 	);
-	var $list_link_field= 'bookname';
+	public $list_link_field= 'bookname';
 
-	var $search_fields = Array(
+	public $search_fields = Array(
 		'Price Book Name'=>Array('pricebook'=>'bookname'),
 		'Currency'=>Array('pricebook'=>'currency_id'),
 		'Active'=>Array('pricebook'=>'active')
 	);
-	var $search_fields_name = Array(
+	public $search_fields_name = Array(
 		'Price Book Name'=>'bookname',
 		'Currency'=>'currency_id',
 		'Active'=>'active'
 	);
 
 	// For Popup window record selection
-	var $popup_fields = Array('bookname');
+	public $popup_fields = Array('bookname');
 
 	// Placeholder for sort fields - All the fields will be initialized for Sorting through initSortFields
-	var $sortby_fields = Array('bookname');
+	public $sortby_fields = Array('bookname');
 
 	// For Alphabetical search
-	var $def_basicsearch_col = 'bookname';
+	public $def_basicsearch_col = 'bookname';
 
 	// Column value to use on detail view record text display
-	var $def_detailview_recname = 'bookname';
+	public $def_detailview_recname = 'bookname';
 
-	var $default_order_by = 'bookname';
-	var $default_sort_order = 'ASC';
+	public $default_order_by = 'bookname';
+	public $default_sort_order = 'ASC';
 
-	var $mandatory_fields = Array('bookname','currency_id','pricebook_no','createdtime' ,'modifiedtime');
+	public $mandatory_fields = Array('bookname','currency_id','pricebook_no','createdtime' ,'modifiedtime');
 
-	function save_module($module) {
+	public function save_module($module) {
 		if ($this->HasDirectImageField) {
 			$this->insertIntoAttachment($this->id,$module);
 		}
@@ -80,7 +80,7 @@ class PriceBooks extends CRMEntity {
 
 	/* Function to Update the List prices for all the products of a current price book
 	   with its Unit price, if the Currency for Price book has changed. */
-	function updateListPrices() {
+	public function updateListPrices() {
 		global $log, $adb;
 		$log->debug("Entering function updateListPrices...");
 		$pricebook_currency = $this->column_fields['currency_id'];
@@ -110,7 +110,7 @@ class PriceBooks extends CRMEntity {
 	 *	@param int $id - pricebook id
 	 *	@return array - return an array which will be returned from the function getPriceBookRelatedProducts
 	 **/
-	function get_pricebook_products($id, $cur_tab_id, $rel_tab_id, $actions=false) {
+	public function get_pricebook_products($id, $cur_tab_id, $rel_tab_id, $actions=false) {
 		global $log, $singlepane_view,$currentModule,$current_user;
 		$log->debug("Entering get_pricebook_products(".$id.") method ...");
 		$this_module = $currentModule;
@@ -162,7 +162,7 @@ class PriceBooks extends CRMEntity {
 	 *	@param int $id - pricebook id
 	 *	@return array - return an array which will be returned from the function getPriceBookRelatedServices
 	 **/
-	function get_pricebook_services($id, $cur_tab_id, $rel_tab_id, $actions=false) {
+	public function get_pricebook_services($id, $cur_tab_id, $rel_tab_id, $actions=false) {
 		global $log, $singlepane_view,$currentModule,$current_user;
 		$log->debug("Entering get_pricebook_services(".$id.") method ...");
 		$this_module = $currentModule;
@@ -214,7 +214,7 @@ class PriceBooks extends CRMEntity {
 	 *	@param int $id - product id
 	 *	@return true or false - if there are no pricebooks available or associated pricebooks for the product is equal to total number of pricebooks then return false, else return true
 	 */
-	function get_pricebook_noproduct($id)
+	public function get_pricebook_noproduct($id)
 	{
 		global $log;
 		$log->debug("Entering get_pricebook_noproduct(".$id.") method ...");
@@ -254,7 +254,7 @@ class PriceBooks extends CRMEntity {
 	 * @param - $module Primary module name
 	 * returns the query string formed on fetching the related data for report for primary module
 	 */
-	function generateReportsQuery($module){
+	public function generateReportsQuery($module){
 		$moduletable = $this->table_name;
 		$moduleindex = $this->table_index;
 		$modulecftable = $this->customFieldTable[0];
@@ -282,7 +282,7 @@ class PriceBooks extends CRMEntity {
 	 * @param - $secmodule secondary module name
 	 * returns the query string formed on fetching the related data for report for secondary module
 	 */
-	function generateReportsSecQuery($module,$secmodule){
+	public function generateReportsSecQuery($module, $secmodule){
 		$query = $this->getRelationQuery($module,$secmodule,"vtiger_pricebook","pricebookid");
 		$query .=" left join vtiger_crmentity as vtiger_crmentityPriceBooks on vtiger_crmentityPriceBooks.crmid=vtiger_pricebook.pricebookid and vtiger_crmentityPriceBooks.deleted=0
 				left join vtiger_currency_info as vtiger_currency_infoPriceBooks on vtiger_currency_infoPriceBooks.id = vtiger_pricebook.currency_id
@@ -296,7 +296,7 @@ class PriceBooks extends CRMEntity {
 	 * @param - $secmodule secondary module name
 	 * returns the array with table names and fieldnames storing relations between module and this module
 	 */
-	function setRelationTables($secmodule){
+	public function setRelationTables($secmodule){
 		$rel_tables = array (
 			"Products" => array("vtiger_pricebookproductrel"=>array("pricebookid","productid"),"vtiger_pricebook"=>"pricebookid"),
 			"Services" => array("vtiger_pricebookproductrel"=>array("pricebookid","productid"),"vtiger_pricebook"=>"pricebookid"),

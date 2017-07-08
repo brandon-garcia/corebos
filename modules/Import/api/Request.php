@@ -12,7 +12,7 @@ require_once 'modules/Import/api/UserInput.php';
 
 class Import_API_Request extends Import_API_UserInput {
 
-	function get($key) {
+	public function get($key) {
 		if(isset($this->valuemap[$key])) {
 			$value = $this->valuemap[$key];
 			if(json_decode($value) != null) {
@@ -32,7 +32,7 @@ class Import_API_Request extends Import_API_UserInput {
 		return '';
 	}
 
-	function getString($key) {
+	public function getString($key) {
 		if(isset($this->valuemap[$key])) {
 			$value = $this->valuemap[$key];
 			if(json_decode($value) != null) {

@@ -28,11 +28,11 @@ class Calendar4You extends CRMEntity {
     
     private $modulename = "Calendar4You"; 
     
-    var $log;
-    var $db;
+    public $log;
+    public $db;
 
   	// constructor of Calendar4You class
-  	function __construct() {
+  	public function __construct() {
         $this->log =LoggerManager::getLogger('account');
         $this->db = PearDatabase::getInstance();
 
@@ -203,7 +203,7 @@ public function setgoogleaccessparams($userid){
      * @param string $modulename
      * @param type $event_type
      */
-    function vtlib_handler($modulename, $event_type) {
+    public function vtlib_handler($modulename, $event_type) {
         if ($modulename == '')
             $modulename = self::MODULE_NAME;
         switch ($event_type) {
@@ -232,7 +232,7 @@ public function setgoogleaccessparams($userid){
         }
     }
     
-    function actualizeOrgShareAction2Tab() {
+    public function actualizeOrgShareAction2Tab() {
         global $adb;
         
         if (empty($this->tabid)) $this->tabid = getTabid("Calendar4You");
@@ -251,19 +251,19 @@ public function setgoogleaccessparams($userid){
 		}
     }
 
-	function actualizeRegister() {
+	public function actualizeRegister() {
 		$moduleInstance = Vtiger_Module::getInstance('Calendar4You');
 		Vtiger_Event::register($moduleInstance,'vtiger.entity.aftersave','GoogleSync4YouHandler','modules/Calendar4You/GoogleSync4YouHandler.php');
 		Vtiger_Event::register($moduleInstance,'vtiger.entity.beforedelete','GoogleSync4YouHandler','modules/Calendar4You/GoogleSync4YouHandler.php');
 	}
 
-    function deleteRegister() {
+    public function deleteRegister() {
         global $adb;
         $sql = "DELETE FROM vtiger_eventhandlers WHERE handler_path = ?";
         $adb->pquery($sql,array('modules/Calendar4You/GoogleSync4YouHandler.php'));
     }
 
-    function actualizeDocRel() {
+    public function actualizeDocRel() {
         global $adb;
         
         $e_tabid = getTabid("Events");
@@ -440,7 +440,7 @@ public function setgoogleaccessparams($userid){
         return false;
     }
     
-    function isUserCalendarPermittedByInviti($recordId) {
+    public function isUserCalendarPermittedByInviti($recordId) {
     	global $adb;
     	global $current_user;
 
@@ -452,7 +452,7 @@ public function setgoogleaccessparams($userid){
     	return false;
     }
     
-    function getActStatusFieldValues($fieldname,$tablename) {
+    public function getActStatusFieldValues($fieldname, $tablename) {
     	global $adb, $mod_strings,$current_user,$default_charset;
     	require('user_privileges/user_privileges_'.$current_user->id.'.php');
 
@@ -514,7 +514,7 @@ public function setgoogleaccessparams($userid){
 	 * @param  integer   $id      - activityid
 	 * returns related Contacts record in array format
 	 */
-	function get_contacts($id, $cur_tab_id, $rel_tab_id, $actions=false) {
+	public function get_contacts($id, $cur_tab_id, $rel_tab_id, $actions=false) {
 		global $log, $singlepane_view,$currentModule,$current_user;
 		$log->debug("Entering get_contacts(".$id.") method ...");
 		$this_module = $currentModule;
@@ -551,7 +551,7 @@ public function setgoogleaccessparams($userid){
 	 * @param  integer   $id      - activityid
 	 * returns related Users record in array format
 	 */
-	function get_users($id) {
+	public function get_users($id) {
 		global $log, $app_strings;
 		$log->debug("Entering get_contacts(".$id.") method ...");
 
@@ -574,7 +574,7 @@ public function setgoogleaccessparams($userid){
 		return $return_data;
 	}
 
-    function SaveView($Type_Ids, $Users_Ids, $all_users, $Load_Event_Status, $Load_Task_Status, $Load_Task_Priority) {
+    public function SaveView($Type_Ids, $Users_Ids, $all_users, $Load_Event_Status, $Load_Task_Status, $Load_Task_Priority) {
         global $adb,$current_user;
         
         $Save = array("1" => $Type_Ids, "2" => $Users_Ids, "3" => $Load_Event_Status, "4" => $Load_Task_Status, "5" => $Load_Task_Priority);
@@ -595,7 +595,7 @@ public function setgoogleaccessparams($userid){
 
     }
 
-    function GetView() {
+    public function GetView() {
         global $adb,$current_user;
         
         $View = array();

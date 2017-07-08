@@ -11,7 +11,7 @@
 
 	class SalesOrderPDFHeaderViewer extends Vtiger_PDF_InventoryHeaderViewer {
 
-		function display($parent) {
+		public function display($parent) {
 			$pdf = $parent->getPDF();
 			$headerFrame = $parent->getHeaderFrame();
 			if($this->model) {

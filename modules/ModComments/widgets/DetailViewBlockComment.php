@@ -17,11 +17,11 @@ class ModComments_DetailViewBlockCommentWidget {
 	protected $context = false;
 	protected $criteria= false;
 	
-	function __construct() {
+	public function __construct() {
 		$this->defaultCriteria = GlobalVariable::getVariable('ModComments_DefaultCriteria',$this->defaultCriteria);
 	}
 	
-	function getFromContext($key, $purify=false) {
+	public function getFromContext($key, $purify=false) {
 		if ($this->context) {
 			$value = $this->context[$key];
 			if ($purify && !empty($value)) {
@@ -32,23 +32,23 @@ class ModComments_DetailViewBlockCommentWidget {
 		return false;
 	}
 	
-	function title() {
+	public function title() {
 		return getTranslatedString('LBL_MODCOMMENTS_INFORMATION', 'ModComments');
 	}
 	
-	function name() {
+	public function name() {
 		return $this->_name;
 	}
 	
-	function uikey() {
+	public function uikey() {
 		return "ModCommentsDetailViewBlockCommentWidget";
 	}
 	
-	function setCriteria($newCriteria) {
+	public function setCriteria($newCriteria) {
 		$this->criteria = $newCriteria;
 	}
 	
-	function getViewer() {
+	public function getViewer() {
 		global $theme, $app_strings, $current_language;
 		
 		$smarty = new vtigerCRM_Smarty();
@@ -91,13 +91,13 @@ class ModComments_DetailViewBlockCommentWidget {
 		return $instances;
 	}
 	
-	function processItem($model) {
+	public function processItem($model) {
 		$viewer = $this->getViewer();
 		$viewer->assign('COMMENTMODEL', $model);
 		return $viewer->fetch(vtlib_getModuleTemplate("ModComments","widgets/DetailViewBlockCommentItem.tpl"));
 	}
 	
-	function process($context = false) {
+	public function process($context = false) {
 		$this->context = $context;
 		$sourceRecordId =  $this->getFromContext('ID', true);
 		$usecriteria = ($this->criteria === false)? $this->defaultCriteria : $this->criteria;

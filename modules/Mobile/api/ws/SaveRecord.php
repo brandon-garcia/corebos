@@ -20,7 +20,7 @@ class crmtogo_WS_SaveRecord extends crmtogo_WS_FetchRecord {
 		return $this->recordValues;
 	}
 
-	function process(crmtogo_API_Request $request) {
+	public function process(crmtogo_API_Request $request) {
 		$current_user = $this->getActiveUser();
 		$module = $request->get('module');
 		//update if recordid exist

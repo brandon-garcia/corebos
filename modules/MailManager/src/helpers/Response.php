@@ -13,40 +13,40 @@ class MailManager_Response {
 	private $result = NULL;
 	private $json = false;
 	
-	function __construct($isjson=false) {
+	public function __construct($isjson=false) {
 		$this->json = $isjson;
 	}
 	
-	function isJson($flag) {
+	public function isJson($flag) {
 		$this->json = $flag;
 	}
 	
-	function setError($code, $message) {
+	public function setError($code, $message) {
 		$error = array('code' => $code, 'message' => $message);
 		$this->error = $error;
 	}
 	
-	function getError() {
+	public function getError() {
 		return $this->error;
 	}
 	
-	function hasError() {
+	public function hasError() {
 		return !is_null($this->error);
 	}
 	
-	function setResult($result) {
+	public function setResult($result) {
 		$this->result = $result;
 	}
 	
-	function getResult() {
+	public function getResult() {
 		return $this->result;
 	}
 	
-	function addToResult($key, $value) {
+	public function addToResult($key, $value) {
 		$this->result[$key] = $value;
 	}
 	
-	function prepareResponse() {
+	public function prepareResponse() {
 		$response = array();
 		if($this->result === NULL) {
 			$response['success'] = false;
@@ -58,19 +58,19 @@ class MailManager_Response {
 		return $response;
 	}
 	
-	function emit() {
+	public function emit() {
 		if ($this->json)
 			echo $this->emitJSON();
 		else
 			echo $this->emitHTML();
 	}
 	
-	function emitJSON() {
+	public function emitJSON() {
 		$response = json_encode($this->prepareResponse());
 		return $response;
 	}
 	
-	function emitHTML() {
+	public function emitHTML() {
 		if($this->result === NULL) return (is_string($this->error))? $this->error : var_export($this->error, true);
 		return $this->result;
 	}

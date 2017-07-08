@@ -12,7 +12,7 @@ include_once dirname(__FILE__) . '/../api/ws/SaveRecord.php';
 
 class crmtogo_UI_ProcessRecordCreation  extends crmtogo_WS_SaveRecord {
 	
-	function process(crmtogo_API_Request $request) {
+	public function process(crmtogo_API_Request $request) {
 		$wsResponse = parent::process($request);
 		$response = false;
 		if($wsResponse->hasError()) {

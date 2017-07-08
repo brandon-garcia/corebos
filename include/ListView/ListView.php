@@ -15,30 +15,30 @@ require_once('include/logging.php');
 require_once('include/ListView/ListViewSession.php');
 
 class ListView {
-	var $local_theme = null;
-	var $local_app_strings= null;
-	var $local_image_path = null;
-	var $local_current_module = null;
-	var $local_mod_strings = null;
-	var $records_per_page = 20;
-	var $xTemplate = null;
-	var $xTemplatePath = null;
-	var $seed_data = null;
-	var $query_where = null;
-	var $query_limit = -1;
-	var $query_orderby = null;
-	var $header_title = "";
-	var $header_text = "";
-	var $log = null;
-	var $initialized = false;
-	var $querey_where_has_changed = false;
-	var $display_header_and_footer = true;
+	public $local_theme = null;
+	public $local_app_strings= null;
+	public $local_image_path = null;
+	public $local_current_module = null;
+	public $local_mod_strings = null;
+	public $records_per_page = 20;
+	public $xTemplate = null;
+	public $xTemplatePath = null;
+	public $seed_data = null;
+	public $query_where = null;
+	public $query_limit = -1;
+	public $query_orderby = null;
+	public $header_title = "";
+	public $header_text = "";
+	public $log = null;
+	public $initialized = false;
+	public $querey_where_has_changed = false;
+	public $display_header_and_footer = true;
 
 /**initializes ListView
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
 */
-function __construct(){
+public function __construct(){
 	global $log;
 	$log->debug("Entering ListView() method ...");
 	if(!$this->initialized){
@@ -60,7 +60,7 @@ function __construct(){
 }
 
 /**sets the header title */
-function setHeaderTitle($value){
+public function setHeaderTitle($value){
 	global $log;
 	$log->debug("Entering setHeaderTitle(".$value.") method ...");
 	$this->header_title = $value;
@@ -71,7 +71,7 @@ function setHeaderTitle($value){
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
 */
-function setHeaderText($value){
+public function setHeaderText($value){
 	global $log;
 	$log->debug("Entering setHeaderText(".$value.") method ...");
 	$this->header_text = $value;
@@ -82,7 +82,7 @@ function setHeaderText($value){
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
 */
-function setQuery($where, $limit, $orderBy, $varName, $allowOrderByOveride= true){
+public function setQuery($where, $limit, $orderBy, $varName, $allowOrderByOveride= true){
 	global $log;
 	$log->debug("Entering setQuery(".$where.",". $limit.",". $orderBy.",". $varName.",". $allowOrderByOveride.") method ...");
 	$this->query_where = $where;
@@ -141,7 +141,7 @@ function setQuery($where, $limit, $orderBy, $varName, $allowOrderByOveride= true
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
 */
-function setTheme($theme){
+public function setTheme($theme){
 	global $log;
 	$log->debug("Entering setTheme(".$theme.") method ...");
 	$this->local_theme = $theme;
@@ -153,7 +153,7 @@ function setTheme($theme){
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
 */
-function setAppStrings(&$app_strings){
+public function setAppStrings(&$app_strings){
 	global $log;
 	$log->debug("Entering setAppStrings(".$app_strings.") method ...");
 	unset($this->local_app_strings);
@@ -166,7 +166,7 @@ function setAppStrings(&$app_strings){
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
 */
-function setModStrings(&$mod_strings){
+public function setModStrings(&$mod_strings){
 	global $log;
 	$log->debug("Entering setModStrings(".$mod_strings.") method ...");
 	unset($this->local_module_strings);
@@ -179,7 +179,7 @@ function setModStrings(&$mod_strings){
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
 */
-function setImagePath($image_path){
+public function setImagePath($image_path){
 	global $log;
 	$log->debug("Entering setImagePath(".$image_path.") method ...");
 	$this->local_image_path = $image_path;
@@ -194,7 +194,7 @@ function setImagePath($image_path){
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
 */
-function setCurrentModule($currentModule){
+public function setCurrentModule($currentModule){
 	global $log;
 	$log->debug("Entering setCurrentModule(".$currentModule.") method ...");
 	unset($this->local_current_module);
@@ -208,14 +208,14 @@ function setCurrentModule($currentModule){
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
 */
-function setSessionVariable($localVarName,$varName, $value){
+public function setSessionVariable($localVarName, $varName, $value){
 	global $log;
 	$log->debug("Entering setSessionVariable(".$localVarName.",".$varName.",". $value.") method ...");
 	coreBOS_Session::set($this->local_current_module.'_'.$localVarName.'_'.$varName, $value);
 	$log->debug("Exiting setSessionVariable method ...");
 }
 
-function setUserVariable($localVarName,$varName, $value){
+public function setUserVariable($localVarName, $varName, $value){
 	global $log;
 	$log->debug("Entering setUserVariable(".$localVarName.",".$varName.",". $value.") method ...");
 	global $current_user;
@@ -227,7 +227,7 @@ function setUserVariable($localVarName,$varName, $value){
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
 */
-function getSessionVariable($localVarName,$varName){
+public function getSessionVariable($localVarName, $varName){
 	global $log;
 	$log->debug("Entering getSessionVariable(".$localVarName.",".$varName.") method ...");
 	if(isset($_REQUEST[$this->getSessionVariableName($localVarName, $varName)])){
@@ -249,7 +249,7 @@ function getSessionVariable($localVarName,$varName){
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
  */
-function getSessionVariableName($localVarName,$varName){
+public function getSessionVariableName($localVarName, $varName){
 	global $log;
 	$log->debug("Entering getSessionVariableName(".$localVarName.",".$varName.") method ...");
 	$log->debug("Exiting getSessionVariableName method ...");

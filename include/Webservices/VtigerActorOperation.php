@@ -238,7 +238,7 @@ class VtigerActorOperation extends WebserviceEntityOperation {
 				"idPrefix"=>$this->meta->getEntityId(),'isEntity'=>$this->isEntity,'labelFields'=>$this->meta->getNameFields());
 	}
 
-	function getModuleFields() {
+	public function getModuleFields() {
 		if ($this->moduleFields === null) {
 			$fields = array();
 			$moduleFields = $this->meta->getModuleFields();
@@ -250,7 +250,7 @@ class VtigerActorOperation extends WebserviceEntityOperation {
 		return $this->moduleFields;
 	}
 
-	function getDescribeFieldArray($webserviceField) {
+	public function getDescribeFieldArray($webserviceField) {
 		$app_strings = VTWS_PreserveGlobal::getGlobal('app_strings');
 		$fieldLabel = $webserviceField->getFieldLabelKey();
 		if (isset($app_strings[$fieldLabel])) {

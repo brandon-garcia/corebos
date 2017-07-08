@@ -27,7 +27,7 @@ class SMSMasivos implements ISMSProvider {
 	const SERVICE_URI = 'http://www.smasivos.com';
 	private static $REQUIRED_PARAMETERS = array();
 
-	function __construct() {
+	public function __construct() {
 	}
 
 	/**

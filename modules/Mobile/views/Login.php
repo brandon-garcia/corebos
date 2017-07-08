@@ -12,7 +12,7 @@ include_once dirname(__FILE__) . '/../api/ws/Login.php';
 
 class crmtogo_UI_Login  extends crmtogo_WS_Login {
 
-	function process(crmtogo_API_Request $request) {
+	public function process(crmtogo_API_Request $request) {
 		$default_config = $this->getConfigDefaults();
 		$default_lang_strings = return_module_language($default_config['language'], 'Mobile');
 		$viewer= new crmtogo_UI_Viewer();

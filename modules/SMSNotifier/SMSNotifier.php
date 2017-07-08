@@ -17,7 +17,7 @@ class SMSNotifier extends SMSNotifierBase {
 	 *
 	 * @return true if activer server is found, false otherwise.
 	 */
-	static function checkServer() {
+	public static function checkServer() {
 		$provider = SMSNotifierManager::getActiveProviderInstance();
 		return ($provider !== false);
 	}
@@ -31,7 +31,7 @@ class SMSNotifier extends SMSNotifierBase {
 	 * @param mixed $linktoids List of CRM record id to link SMS record
 	 * @param String $linktoModule Modulename of CRM record to link with (if not provided lookup it will be calculated)
 	 */
-	static function sendsms($message, $tonumbers, $ownerid = false, $linktoids = false, $linktoModule = false) {
+	public static function sendsms($message, $tonumbers, $ownerid = false, $linktoids = false, $linktoModule = false) {
 		global $current_user, $adb;
 
 		if($ownerid === false) {
@@ -70,7 +70,7 @@ class SMSNotifier extends SMSNotifierBase {
 	/**
 	 * Detect the related modules based on the entity relation information for this instance.
 	 */
-	function detectRelatedModules() {
+	public function detectRelatedModules() {
 		global $adb, $current_user;
 
 		// Pick the distinct modulenames based on related records.
@@ -116,7 +116,7 @@ class SMSNotifier extends SMSNotifierBase {
 		}
 	}
 
-	function save_module($module) {
+	public function save_module($module) {
 		$this->smsAssignedTo();
 		parent::save_module($module);
 	}
@@ -186,7 +186,7 @@ class SMSNotifier extends SMSNotifierBase {
 		}
 	}
 
-	static function smsquery($record) {
+	public static function smsquery($record) {
 		global $adb;
 		$result = $adb->pquery("SELECT * FROM vtiger_smsnotifier_status WHERE smsnotifierid = ? AND needlookup = 1", array($record));
 		if($result && $adb->num_rows($result)) {
@@ -217,7 +217,7 @@ class SMSNotifier extends SMSNotifierBase {
 		}
 	}
 
-	static function fireSendSMS($message, $tonumbers) {
+	public static function fireSendSMS($message, $tonumbers) {
 		global $log;
 		$provider = SMSNotifierManager::getActiveProviderInstance();
 		if($provider) {
@@ -225,7 +225,7 @@ class SMSNotifier extends SMSNotifierBase {
 		}
 	}
 
-	static function getSMSStatusInfo($record) {
+	public static function getSMSStatusInfo($record) {
 		global $adb;
 		$results = array();
 		$qresult = $adb->pquery("SELECT * FROM vtiger_smsnotifier_status WHERE smsnotifierid=?", array($record));
@@ -241,11 +241,11 @@ class SMSNotifier extends SMSNotifierBase {
 class SMSNotifierManager {
 
 	/** Server configuration management */
-	static function listAvailableProviders() {
+	public static function listAvailableProviders() {
 		return SMSProvider::listAll();
 	}
 
-	static function getActiveProviderInstance() {
+	public static function getActiveProviderInstance() {
 		global $adb;
 		$result = $adb->pquery("SELECT * FROM vtiger_smsnotifier_servers WHERE isactive = 1 LIMIT 1", array());
 		if($result && $adb->num_rows($result)) {
@@ -263,7 +263,7 @@ class SMSNotifierManager {
 		return false;
 	}
 
-	static function listConfiguredServer($id) {
+	public static function listConfiguredServer($id) {
 		global $adb;
 		$result = $adb->pquery("SELECT * FROM vtiger_smsnotifier_servers WHERE id=?", array($id));
 		if($result) {
@@ -271,7 +271,7 @@ class SMSNotifierManager {
 		}
 		return false;
 	}
-	static function listConfiguredServers() {
+	public static function listConfiguredServers() {
 		global $adb;
 		$result = $adb->pquery("SELECT * FROM vtiger_smsnotifier_servers", array());
 		$servers = array();
@@ -282,7 +282,7 @@ class SMSNotifierManager {
 		}
 		return $servers;
 	}
-	static function updateConfiguredServer($id, $frmvalues) {
+	public static function updateConfiguredServer($id, $frmvalues) {
 		global $adb;
 		$providertype = vtlib_purify($frmvalues['smsserver_provider']);
 		$username     = vtlib_purify($frmvalues['smsserver_username']);
@@ -312,7 +312,7 @@ class SMSNotifierManager {
 				array($username, $password, $isactive, $providertype, $parameters, $id));
 		}
 	}
-	static function deleteConfiguredServer($id) {
+	public static function deleteConfiguredServer($id) {
 		global $adb;
 		$adb->pquery("DELETE FROM vtiger_smsnotifier_servers WHERE id=?", array($id));
 	}

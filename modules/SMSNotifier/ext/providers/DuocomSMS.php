@@ -21,7 +21,7 @@ class DuocomSMS implements ISMSProvider {
 	const SERVICE_URI = 'https://scgi.duocom.es/cgi-bin/telefacil2/apisms';
 	private static $REQUIRED_PARAMETERS = array('mascara');
 
-	function __construct() {
+	public function __construct() {
 	}
 
 	/**

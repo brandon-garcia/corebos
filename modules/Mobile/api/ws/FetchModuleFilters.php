@@ -9,7 +9,7 @@
  ************************************************************************************/
 class crmtogo_WS_FetchModuleFilters extends crmtogo_WS_Controller {
 	
-	function process(crmtogo_API_Request $request) {
+	public function process(crmtogo_API_Request $request) {
 		$response = new crmtogo_API_Response();
 
 		$module = $request->get('module');

@@ -54,7 +54,7 @@ class Google_Module_Model   {
     /*
      * Function to get supported utility actions for a module
      */
-    function getUtilityActionsNames() {
+    public function getUtilityActionsNames() {
         return array();
     }
 }

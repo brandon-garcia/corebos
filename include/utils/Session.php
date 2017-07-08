@@ -17,7 +17,7 @@
  * Session class
  */
 class coreBOS_Session {
-		static $session_name = '';
+		public static $session_name = '';
 	/**
 	 * Constructor
 	 * Avoid creation of instances.
@@ -28,7 +28,7 @@ class coreBOS_Session {
 	/**
 	 * Destroy session
 	 */
-	static function destroy() {
+	public static function destroy() {
 		self::init();
 		session_regenerate_id(true);
 		session_unset();
@@ -38,7 +38,7 @@ class coreBOS_Session {
 	/**
 	 * Initialize session
 	 */
-	static function init($setKCFinder=false) {
+	public static function init($setKCFinder=false) {
 		session_name(self::getSessionName());
 		@session_start();
 		if ($setKCFinder) self::setKCFinderVariables();
@@ -47,7 +47,7 @@ class coreBOS_Session {
 	/**
 	 * create session name from given URL or $site_URL
 	 */
-	static function getSessionName($URL='',$force=false) {
+	public static function getSessionName($URL='', $force=false) {
 		global $site_URL;
 		static $session_name = '';
 		if (self::$session_name!='' and !$force) return self::$session_name;
@@ -72,13 +72,13 @@ class coreBOS_Session {
 	/**
 	* set session name
 	*/
-	static function setSessionName($session_name) {
+	public static function setSessionName($session_name) {
 		self::$session_name = $session_name;
 	}
 	/**
 	 * set KCFinder session variables
 	 */
-	static function setKCFinderVariables() {
+	public static function setKCFinderVariables() {
 		global $upload_badext, $site_URL, $root_directory;
 		if (empty($site_URL)) return false;
 		self::init();
@@ -100,7 +100,7 @@ class coreBOS_Session {
 	/**
 	 * set global User session variables
 	 */
-	static function setUserGlobalSessionVariables() {
+	public static function setUserGlobalSessionVariables() {
 		if (empty($_SESSION['__UnifiedSearch_SelectedModules__'])) {
 			$appSearchModules = GlobalVariable::getVariable('Application_Global_Search_SelectedModules', '');
 			if (!empty($appSearchModules)) {
@@ -116,7 +116,7 @@ class coreBOS_Session {
 	 * Is key defined in session?
 	 * Array elements can be specified by separating them with a caret ^
 	 */
-	static function has($key,$sespos=null) {
+	public static function has($key, $sespos=null) {
 		$keyparts = explode('^', $key);
 		if (count($keyparts)==1) {
 			if (is_null($sespos)) {
@@ -141,7 +141,7 @@ class coreBOS_Session {
 	 * Get value for the key.
 	 * Array elements can be specified by separating them with a caret ^
 	 */
-	static function get($key, $defvalue = '') {
+	public static function get($key, $defvalue = '') {
 		$keyparts = explode('^', $key);
 		if (count($keyparts)==1) {
 			return (isset($_SESSION[$key]) ? $_SESSION[$key] : $defvalue);
@@ -159,7 +159,7 @@ class coreBOS_Session {
 	 * Set value for the key.
 	 * Array elements can be specified by separating them with a caret ^
 	 */
-	static function set($key, $value,&$sespos=null) {
+	public static function set($key, $value, &$sespos=null) {
 		$keyparts = explode('^', $key);
 		self::init();
 		if (count($keyparts)==1) {
@@ -187,7 +187,7 @@ class coreBOS_Session {
 	 * @param Array of key=>value to add to the SESSION
 	 * @param boolean, if true array values have precedence, else the existing SESSION values have precedence
 	 */
-	static function merge($values,$overwrite_session=false) {
+	public static function merge($values, $overwrite_session=false) {
 		self::init();
 		if ($overwrite_session) {
 			$_SESSION = array_merge($_SESSION, $values);
@@ -201,7 +201,7 @@ class coreBOS_Session {
 	 * Delete value for the key.
 	 * Array elements can be specified by separating them with a caret ^
 	 */
-	static function delete($key,&$sespos=null) {
+	public static function delete($key, &$sespos=null) {
 		$keyparts = explode('^', $key);
 		self::init();
 		if (count($keyparts)==1) {

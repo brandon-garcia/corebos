@@ -14,9 +14,9 @@ require_once 'include/QueryGenerator/QueryGenerator.php';
 
 class Import_ListView_Controller {
 
-	var $user;
-	var $module;
-	static $_cached_module_meta;
+	public $user;
+	public $module;
+	public static $_cached_module_meta;
 
 	public function  __construct() {
 	}

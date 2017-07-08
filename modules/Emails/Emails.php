@@ -17,25 +17,25 @@ require_once('modules/Potentials/Potentials.php');
 require_once('modules/Users/Users.php');
 
 class Emails extends CRMEntity {
-	var $db, $log; // Used in class functions of CRMEntity
+	public public $db, $log; // Used in class functions of CRMEntity
 
-	var $table_name = 'vtiger_activity';
-	var $table_index = 'activityid';
-	var $column_fields = Array();
+	public $table_name = 'vtiger_activity';
+	public $table_index = 'activityid';
+	public $column_fields = Array();
 
 	/** Indicator if this is a custom module or standard module */
-	var $IsCustomModule = false;
+	public $IsCustomModule = false;
 
 	// added to check email save from plugin or not
-	var $plugin_save = false;
-	var $rel_users_table = "vtiger_salesmanactivityrel";
-	var $rel_contacts_table = "vtiger_cntactivityrel";
-	var $rel_serel_table = "vtiger_seactivityrel";
-	var $tab_name = Array('vtiger_crmentity', 'vtiger_activity', 'vtiger_emaildetails');
-	var $tab_name_index = Array('vtiger_crmentity' => 'crmid', 'vtiger_activity' => 'activityid',
+	public $plugin_save = false;
+	public $rel_users_table = "vtiger_salesmanactivityrel";
+	public $rel_contacts_table = "vtiger_cntactivityrel";
+	public $rel_serel_table = "vtiger_seactivityrel";
+	public $tab_name = Array('vtiger_crmentity', 'vtiger_activity', 'vtiger_emaildetails');
+	public $tab_name_index = Array('vtiger_crmentity' => 'crmid', 'vtiger_activity' => 'activityid',
 		'vtiger_seactivityrel' => 'activityid', 'vtiger_cntactivityrel' => 'activityid', 'vtiger_email_track' => 'mailid', 'vtiger_emaildetails' => 'emailid');
 	// This is the list of vtiger_fields that are in the lists.
-	var $list_fields = Array(
+	public $list_fields = Array(
 		'Subject' => Array('activity' => 'subject'),
 		'Related to' => Array('seactivityrel' => 'parent_id'),
 		'Date Sent' => Array('activity' => 'date_start'),
@@ -43,7 +43,7 @@ class Emails extends CRMEntity {
 		'Assigned To' => Array('crmentity' => 'smownerid'),
 		'Access Count' => Array('email_track' => 'access_count')
 	);
-	var $list_fields_name = Array(
+	public $list_fields_name = Array(
 		'Subject' => 'subject',
 		'Related to' => 'parent_id',
 		'Date Sent' => 'date_start',
@@ -51,22 +51,22 @@ class Emails extends CRMEntity {
 		'Assigned To' => 'assigned_user_id',
 		'Access Count' => 'access_count'
 	);
-	var $list_link_field = 'subject';
-	var $sortby_fields = Array('subject', 'date_start', 'saved_toid');
+	public $list_link_field = 'subject';
+	public $sortby_fields = Array('subject', 'date_start', 'saved_toid');
 
 	// For Alphabetical search
-	var $def_basicsearch_col = 'subject';
+	public $def_basicsearch_col = 'subject';
 
 	// Column value to use on detail view record text display
-	var $def_detailview_recname = 'subject';
+	public $def_detailview_recname = 'subject';
 
-	var $default_order_by = 'date_start';
-	var $default_sort_order = 'DESC';
+	public $default_order_by = 'date_start';
+	public $default_sort_order = 'DESC';
 	// Used when enabling/disabling the mandatory fields for the module.
 	// Refers to vtiger_field.fieldname values.
-	var $mandatory_fields = Array('subject', 'assigned_user_id');
+	public $mandatory_fields = Array('subject', 'assigned_user_id');
 
-	function __construct() {
+	public function __construct() {
 		global $log;
 		$this_module = get_class($this);
 		$this->column_fields = getColumnFields($this_module);
@@ -74,7 +74,7 @@ class Emails extends CRMEntity {
 		$this->log = $log;
 	}
 
-	function save_module($module) {
+	public function save_module($module) {
 		global $adb;
 		//Inserting into seactivityrel
 		if ($_REQUEST['module'] == "Emails" && (!$this->plugin_save)) {
@@ -134,7 +134,7 @@ class Emails extends CRMEntity {
 		$this->insertIntoAttachment($this->id, $module);
 	}
 
-	function insertIntoAttachment($id, $module, $direct_import=false) {
+	public function insertIntoAttachment($id, $module, $direct_import=false) {
 		global $log, $adb;
 		$log->debug("Entering into insertIntoAttachment($id,$module) method.");
 
@@ -207,7 +207,7 @@ class Emails extends CRMEntity {
 		return  ($email_flag != 'SAVED');
 	}
 
-	function saveForwardAttachments($id, $module, $file_details) {
+	public function saveForwardAttachments($id, $module, $file_details) {
 		global $log;
 		$log->debug("Entering into saveForwardAttachments($id,$module,$file_details) method.");
 		global $adb, $current_user;
@@ -262,7 +262,7 @@ class Emails extends CRMEntity {
 	* @param - $secmodule secondary module name
 	* returns the query string formed on fetching the related data for report for secondary module
 	*/
-	function generateReportsSecQuery($module, $secmodule){
+	public function generateReportsSecQuery($module, $secmodule){
 		$query = " LEFT JOIN vtiger_seactivityrel ON vtiger_crmentity.crmid=vtiger_seactivityrel.crmid";
 		$query .= " LEFT JOIN vtiger_activity ON vtiger_seactivityrel.activityid=vtiger_activity.activityid and vtiger_activity.activitytype = 'Emails'";
 		$query .= " LEFT JOIN vtiger_crmentity as vtiger_crmentityEmails ON vtiger_crmentityEmails.crmid=vtiger_activity.activityid and vtiger_crmentityEmails.deleted = 0";
@@ -276,7 +276,7 @@ class Emails extends CRMEntity {
 	* @param - $secmodule secondary module name
 	* returns the array with table names and fieldnames storing relations between module and this module
 	*/
-	function setRelationTables($secmodule) {
+	public function setRelationTables($secmodule) {
 		$rel_tables = array (
 			"Leads" => array("vtiger_seactivityrel" => array("activityid", "crmid"), "vtiger_activity" => "activityid"),
 			"Vendors" => array("vtiger_seactivityrel" => array("activityid", "crmid"), "vtiger_activity" => "activityid"),
@@ -287,7 +287,7 @@ class Emails extends CRMEntity {
 	}
 
 	/** Returns a list of the associated contacts */
-	function get_contacts($id, $cur_tab_id, $rel_tab_id, $actions=false) {
+	public function get_contacts($id, $cur_tab_id, $rel_tab_id, $actions=false) {
 		global $log, $singlepane_view, $currentModule, $current_user;
 		$log->debug("Entering get_contacts(" . $id . ") method ...");
 		$this_module = $currentModule;
@@ -333,7 +333,7 @@ class Emails extends CRMEntity {
 	 * All Rights Reserved..
 	 * Contributor(s): Mike Crowe
 	 */
-	function getSortOrder() {
+	public function getSortOrder() {
 		global $log;
 		$log->debug("Entering getSortOrder() method ...");
 		if (isset($_REQUEST['sorder']))
@@ -350,7 +350,7 @@ class Emails extends CRMEntity {
 	 * All Rights Reserved..
 	 * Contributor(s): Mike Crowe
 	 */
-	function getOrderBy() {
+	public function getOrderBy() {
 		global $log;
 		$log->debug("Entering getOrderBy() method ...");
 
@@ -369,7 +369,7 @@ class Emails extends CRMEntity {
 	}
 
 	/** Returns a list of the associated users */
-	function get_users($id) {
+	public function get_users($id) {
 		global $log;
 		$log->debug("Entering get_users(" . $id . ") method ...");
 		global $adb;
@@ -445,7 +445,7 @@ class Emails extends CRMEntity {
 	/**
 	 * Returns a list of the Emails to be exported
 	 */
-	function create_export_query($where) {
+	public function create_export_query($where) {
 		global $log, $current_user;
 		$log->debug("Entering create_export_query( $where ) method ...");
 
@@ -478,7 +478,7 @@ class Emails extends CRMEntity {
 	/**
 	 * Used to releate email and contacts -- Outlook Plugin
 	 */
-	function set_emails_contact_invitee_relationship($email_id, $contact_id) {
+	public function set_emails_contact_invitee_relationship($email_id, $contact_id) {
 		global $log;
 		$log->debug("Entering set_emails_contact_invitee_relationship(" . $email_id . "," . $contact_id . ") method ...");
 		$query = "insert into $this->rel_contacts_table (contactid,activityid) values(?,?)";
@@ -489,7 +489,7 @@ class Emails extends CRMEntity {
 	/**
 	 * Used to releate email and salesentity -- Outlook Plugin
 	 */
-	function set_emails_se_invitee_relationship($email_id, $contact_id) {
+	public function set_emails_se_invitee_relationship($email_id, $contact_id) {
 		global $log;
 		$log->debug("Entering set_emails_se_invitee_relationship(" . $email_id . "," . $contact_id . ") method ...");
 		$query = "insert into $this->rel_serel_table (crmid,activityid) values(?,?)";
@@ -500,7 +500,7 @@ class Emails extends CRMEntity {
 	/**
 	 * Used to releate email and Users -- Outlook Plugin
 	 */
-	function set_emails_user_invitee_relationship($email_id, $user_id) {
+	public function set_emails_user_invitee_relationship($email_id, $user_id) {
 		global $log;
 		$log->debug("Entering set_emails_user_invitee_relationship(" . $email_id . "," . $user_id . ") method ...");
 		$query = "insert into $this->rel_users_table (smid,activityid) values (?,?)";
@@ -509,7 +509,7 @@ class Emails extends CRMEntity {
 	}
 
 	// Function to unlink an entity with given Id from another entity
-	function unlinkRelationship($id, $return_module, $return_id) {
+	public function unlinkRelationship($id, $return_module, $return_id) {
 		global $log;
 
 		$sql = 'DELETE FROM vtiger_seactivityrel WHERE activityid=? AND crmid = ?';

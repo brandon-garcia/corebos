@@ -12,35 +12,35 @@ require_once('data/Tracker.php');
 require_once('modules/cbMap/crXml.php');
 include_once('include/utils/VTCacheUtils.php');
 class cbMap extends CRMEntity {
-       function getMapTargetModule(){
+       public function getMapTargetModule(){
            $map=htmlspecialchars_decode($this->column_fields['content']);
            $x = new crXml();
            $x->loadXML($map);
            $originmodule=(string)$x->map->targetmodule[0]->targetname;
            return $originmodule;
         }
-       function getMapOriginModule(){
+       public function getMapOriginModule(){
            $map=htmlspecialchars_decode($this->column_fields['content']);
            $x = new crXml();
            $x->loadXML($map);
            $return_module=(string)$x->map->originmodule[0]->originname;
            return $return_module;
         }
-         function getMapOriginTable(){
+         public function getMapOriginTable(){
            $map=htmlspecialchars_decode($this->column_fields['content']);
            $x = new crXml();
            $x->loadXML($map);
            $originmodule=(string)$x->map->table[0]->tablename;
            return $originmodule;
         }
-        function getMapPointingFieldUpdate(){
+        public function getMapPointingFieldUpdate(){
            $map=htmlspecialchars_decode($this->column_fields['content']);
            $x = new crXml();
            $x->loadXML($map);
            $originmodule=(string)$x->map->pointingfield[0]->originname;
            return $originmodule;
         }
-       function getMapTargetFields(){
+       public function getMapTargetFields(){
             $map=htmlspecialchars_decode($this->column_fields['content']);
             $x = new crXml();
             $x->loadXML($map);
@@ -63,7 +63,7 @@ class cbMap extends CRMEntity {
            }
            return $target_fields;
         }
-         function readMappingType() {
+         public function readMappingType() {
         $map = htmlspecialchars_decode($this->column_fields['content']);
         $x = new crXml();
         $x->loadXML($map);
@@ -112,7 +112,7 @@ class cbMap extends CRMEntity {
         }
         return $target_fields;
     }
-        function readTableMappingType() {
+        public function readTableMappingType() {
         $map = htmlspecialchars_decode($this->column_fields['content']);
         $x = new crXml();
         $x->loadXML($map);
@@ -128,7 +128,7 @@ class cbMap extends CRMEntity {
         }
         return array('target' => $target_fields);
     }
-    function readImportType() {
+    public function readImportType() {
     $map = htmlspecialchars_decode($this->column_fields['content']);
         $x = new crXml();
         $x->loadXML($map);
@@ -176,7 +176,7 @@ class cbMap extends CRMEntity {
 
         return array('target' => $target_fields, 'match' => $match_fields,'options'=>$update_rules);
     }
-       function getMapOriginEmail_table(){
+       public function getMapOriginEmail_table(){
            $map=htmlspecialchars_decode($this->column_fields['content']);
            $x = new crXml();
            $x->loadXML($map);
@@ -185,7 +185,7 @@ class cbMap extends CRMEntity {
            return $return_module;
         }
 
-       function getMapSendEmails(){
+       public function getMapSendEmails(){
             $map=htmlspecialchars_decode($this->column_fields['content']);
             $x = new crXml();
             $x->loadXML($map);
@@ -202,7 +202,7 @@ class cbMap extends CRMEntity {
            return $target_fields;
         }
 
-function getMapFieldDependency(){
+public function getMapFieldDependency(){
             $map=htmlspecialchars_decode($this->column_fields['content']);
             $x = new crXml();
             $x->loadXML($map);
@@ -229,7 +229,7 @@ function getMapFieldDependency(){
            return $target_fields;
         }
 
-         function getMapMessageMailer(){
+         public function getMapMessageMailer(){
             $map=htmlspecialchars_decode($this->column_fields['content']);
             $x = new crXml();
             $x->loadXML($map);
@@ -265,7 +265,7 @@ function getMapFieldDependency(){
            return $target_fields;
        }
 
-       function getMapCustomerTypes(){
+       public function getMapCustomerTypes(){
             $map=htmlspecialchars_decode($this->column_fields['content']);
             $x = new crXml();
             $x->loadXML($map);
@@ -296,7 +296,7 @@ function getMapFieldDependency(){
            return $target_fields;
        }
 
-       function getMapMenuStructure(){
+       public function getMapMenuStructure(){
             $default_language = 'it_it';
             global $current_language,$adb; 
             $current_language = $default_language; 
@@ -337,7 +337,7 @@ function getMapFieldDependency(){
             return $res;
         }
         
-       function getMapPortalDvBlocks(){
+       public function getMapPortalDvBlocks(){
             $map=htmlspecialchars_decode($this->column_fields['content']);
             $x = new crXml();
             $x->loadXML($map);
@@ -368,7 +368,7 @@ function getMapFieldDependency(){
           return $target_fields;
         }
            
-       function getMapSQL(){
+       public function getMapSQL(){
            $map= htmlspecialchars_decode($this->column_fields['content']);
            $x = new crXml();
            $x->loadXML($map);
@@ -377,7 +377,7 @@ function getMapFieldDependency(){
            return $sqlString;
         }
 
-     function initListOfModules(){
+     public function initListOfModules(){
             global $adb;
             $restricted_modules = array('Emails','Events','Webmails');
             $restricted_blocks = array('LBL_IMAGE_INFORMATION','LBL_COMMENTS','LBL_COMMENT_INFORMATION');
@@ -491,14 +491,14 @@ function getMapFieldDependency(){
             }
         }
 
-     function getFieldName($fieldid){
+     public function getFieldName($fieldid){
         global $adb;
         $result = $adb->pquery("Select fieldname from vtiger_field where fieldid = ?",array($fieldid));
         $fieldname = $adb->query_result($result,0,'fieldname');
         return $fieldname;
     }
 
-    function getPriModuleFieldsList($module,$modtype,$mode='')
+    public function getPriModuleFieldsList($module, $modtype, $mode='')
     {
         global $log;
         $log->debug("Entering getPriModuleFieldsList method moduleID=".$module);
@@ -546,7 +546,7 @@ function getMapFieldDependency(){
     return true;
 }
 
-function getPrimaryFieldHTML($module,$modtype)
+public function getPrimaryFieldHTML($module, $modtype)
 {
     global $app_strings;
     global $current_language;
@@ -606,7 +606,7 @@ function getPrimaryFieldHTML($module,$modtype)
  }
     return $shtml;
 }
-function getFieldListbyBlock($module,$block,$type)
+public function getFieldListbyBlock($module, $block, $type)
 {
         global $adb;
         global $log;
@@ -690,7 +690,7 @@ function getFieldListbyBlock($module,$block,$type)
         $log->info("Map :: FieldColumns->Successfully returned FieldlistbyBlock".$module.$block);
         return $module_columnlist;
 }
-function getBlockInfo($modId)
+public function getBlockInfo($modId)
 {
     global $adb , $log;
     $moduleName = getTabModuleName($modId);
@@ -715,7 +715,7 @@ function getBlockInfo($modId)
     }
     return $blockinfo;
 }
-function getBlockHTML($blocks,$module)
+public function getBlockHTML($blocks, $module)
 {
     global $log;
     global $app_strings;
@@ -736,7 +736,7 @@ function getBlockHTML($blocks,$module)
     }
   return $shtml;
 }
-function getBlockAccessBlockInfo() {
+public function getBlockAccessBlockInfo() {
 	global $log,$adb;
 	$map = htmlspecialchars_decode($this->column_fields['content']);
 	$x = new crXml();
@@ -751,7 +751,7 @@ function getBlockAccessBlockInfo() {
 	}
 	return $blockinfo;
 }
-function readInputFields() {
+public function readInputFields() {
         $map = htmlspecialchars_decode($this->column_fields['content']);
         $x = new crXml();
         $x->loadXML($map);
@@ -763,7 +763,7 @@ function readInputFields() {
         return $input_fields;
     }
 
-    function readOutputFields() {
+    public function readOutputFields() {
         $map = htmlspecialchars_decode($this->column_fields['content']);
         $x = new crXml();
         $x->loadXML($map);
@@ -774,7 +774,7 @@ function readInputFields() {
         }
         return $output_fields;
     }
-        function getEntityFieldNamesByTablename($tablename) {
+        public function getEntityFieldNamesByTablename($tablename) {
 	$adb = PearDatabase::getInstance();
 	$data = array();
 	if (!empty($tablename)) {
@@ -791,7 +791,7 @@ function readInputFields() {
 	$data = array("tablename" => $tableName, "modulename" => $moduleName, "fieldname" => $fieldsName, "entityidfield" => $entityIdField);
 	return $data;
 }
-    function create_query(){
+    public function create_query(){
         global $log,$adb;
         $content=html_entity_decode($this->column_fields['content']);
         $isxml=$this->isXML($content);
@@ -973,7 +973,7 @@ function readInputFields() {
         }else
             return false;
      }
-     function generate_subquery($fieldname,$expectedvalue,$uniquesearch,$expected_table_name,$searched_field_table_name,$i,$j){
+     public function generate_subquery($fieldname, $expectedvalue, $uniquesearch, $expected_table_name, $searched_field_table_name, $i, $j){
        global $adb,$currentModule,$log;
             
        $expected_module=$this->getEntityFieldNamesByTablename($expected_table_name);
@@ -1075,7 +1075,7 @@ if(!empty($expectedvalue_array)){
       return $expectedvalue;
      }
      
-     function generate_sub_subquery($expectedvalue_base,$uniquesearch,$searched_module,$expected_module,$i,$j){
+     public function generate_sub_subquery($expectedvalue_base, $uniquesearch, $searched_module, $expected_module, $i, $j){
          global $adb;
          if(stristr($uniquesearch,'=')!=''){
                       $uniquesearch_array=explode('=',$uniquesearch);
@@ -1166,7 +1166,7 @@ if(!empty($expectedvalue_array)){
 
                   return $result;
      }
-     function search_update_fields(){
+     public function search_update_fields(){
          global $adb,$log;
          
         $content=html_entity_decode($this->column_fields['content']);
@@ -1230,7 +1230,7 @@ if(!empty($expectedvalue_array)){
             return false;
    }
    
-   function search_query($result){
+   public function search_query($result){
      global $log;
     require_once('include/utils/CommonUtils.php');
     
@@ -1278,7 +1278,7 @@ if(!empty($expectedvalue_array)){
     }
    return $sql_array;
    }
-function getBlocksPortal1($module, $disp_view, $mode, $col_fields = '', $info_type = '',$profile) {
+public function getBlocksPortal1($module, $disp_view, $mode, $col_fields = '', $info_type = '', $profile) {
 	global $log;
 	$log->debug("Entering getBlocks(" . $module . "," . $disp_view . "," . $mode . "," . $col_fields . "," . $info_type . ") method ...");
 	global $adb, $current_user;

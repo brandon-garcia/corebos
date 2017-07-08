@@ -17,7 +17,7 @@ class crmtogo_UI_LoginAndFetchModules extends crmtogo_WS_LoginAndFetchModules {
 		$this->sessionSet("_MODULES", $modules);
 	}
 	
-	function process(crmtogo_API_Request $request) {
+	public function process(crmtogo_API_Request $request) {
 		$wsResponse = parent::process($request);
 		
 		$response = false;

@@ -13,17 +13,17 @@ global $app_strings;
 
 class RecurringType {
 
-	var $recur_type;
-	var $startdate;
-	var $enddate;
-	var $recur_freq;
-	var $dayofweek_to_rpt = array();
-	var $repeat_monthby;
-	var $rptmonth_datevalue;
-	var $rptmonth_daytype;
-	var $recurringdates = array();
-	var $reminder;
-	var $cal_month_long = array(
+	public $recur_type;
+	public $startdate;
+	public $enddate;
+	public $recur_freq;
+	public $dayofweek_to_rpt = array();
+	public $repeat_monthby;
+	public $rptmonth_datevalue;
+	public $rptmonth_daytype;
+	public $recurringdates = array();
+	public $reminder;
+	public $cal_month_long = array(
 		1=>'January',
 		2=>'February',
 		3=>'March',
@@ -37,7 +37,7 @@ class RecurringType {
 		11=>'November',
 		12=>'December',
 	);
-	var $cal_weekdays_short = array(
+	public $cal_weekdays_short = array(
 		1=>'Mon',
 		2=>'Tue',
 		3=>'Wed',
@@ -51,7 +51,7 @@ class RecurringType {
 	 * Constructor for class RecurringType
 	 * @param array  $repeat_arr - array contains recurring info
 	 */
-	function __construct($repeat_arr) {
+	public function __construct($repeat_arr) {
 
 		$st_date = explode("-", $repeat_arr["startdate"]);
 		$st_time = explode(":", $repeat_arr["starttime"]);
@@ -209,15 +209,15 @@ class RecurringType {
 		return new RecurringType($repeatInfo);
 	}
 
-	function getRecurringType() {
+	public function getRecurringType() {
 		return $this->recur_type;
 	}
 
-	function getRecurringFrequency() {
+	public function getRecurringFrequency() {
 		return $this->recur_freq;
 	}
 
-	function getDBRecurringInfoString() {
+	public function getDBRecurringInfoString() {
 		$recurringType = $this->getRecurringType();
 		$recurringInfo = '';
 		if ($recurringType == 'Daily' || $recurringType == 'Yearly') {
@@ -240,7 +240,7 @@ class RecurringType {
 		return $recurringInfo;
 	}
 
-	function getUserRecurringInfo() {
+	public function getUserRecurringInfo() {
 		$recurringType = $this->getRecurringType();
 		$recurringInfo = array();
 
@@ -298,7 +298,7 @@ class RecurringType {
 		return $recurringInfo;
 	}
 
-	function getDisplayRecurringInfo() {
+	public function getDisplayRecurringInfo() {
 		$i18nModule = 'Calendar';
 
 		$displayRecurringData = array();
@@ -349,7 +349,7 @@ class RecurringType {
 	 *  return  array   $recurringDates     -  Recurring Dates in format
 	 * 	Recurring date will be returned in DB Time Zone, as well as DB format
 	 */
-	function _getRecurringDates() {
+	public function _getRecurringDates() {
 		$startdateObj = $this->startdate;
 		$startdate = $startdateObj->get_DB_formatted_date();
 		$recurringDates[] = $startdate;
@@ -522,7 +522,7 @@ class RecurringType {
 	 *  @param $dateObj     -- date object  :: Type vt_DateTime Object
 	 *  return $dateObj -- the date object on which the event repeats :: Type vt_DateTime Object
 	 */
-	function getFistdayofmonth($dayofweek, & $dateObj) {
+	public function getFistdayofmonth($dayofweek, & $dateObj) {
 		if ($dayofweek < $dateObj->dayofweek) {
 			$index = (7 - $dateObj->dayofweek) + $dayofweek;
 			$day = 1 + $index;
@@ -544,7 +544,7 @@ class RecurringType {
 	 *  @param $dateObj     -- date object  :: Type vt_DateTime Object
 	 *  return $dateObj -- the date object on which the event repeats :: Type vt_DateTime Object
 	 */
-	function getLastdayofmonth($dayofweek, & $dateObj) {
+	public function getLastdayofmonth($dayofweek, & $dateObj) {
 		if ($dayofweek == $dateObj->dayofweek) {
 			return $dateObj;
 		} else {
@@ -560,7 +560,7 @@ class RecurringType {
 		}
 	}
 
-	function getDayOfWeekPerWeekPositionInMonth($dow, $year, $month, $position) {
+	public function getDayOfWeekPerWeekPositionInMonth($dow, $year, $month, $position) {
 		$list = array(1=>'first',2=>'second',3=>'third',4=>'last');
 		return date('j', strtotime($list[$position] .' '.$this->cal_weekdays_short[$dow] . ' of ' . $this->cal_month_long[$month] . ' ' . $year));
 	}

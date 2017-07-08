@@ -12,30 +12,30 @@ require_once('data/Tracker.php');
 require_once('modules/InventoryDetails/InventoryDetails.php');
 
 class Invoice extends CRMEntity {
-	var $db, $log; // Used in class functions of CRMEntity
+	public public $db, $log; // Used in class functions of CRMEntity
 
-	var $table_name = 'vtiger_invoice';
-	var $table_index= 'invoiceid';
-	var $column_fields = Array();
+	public $table_name = 'vtiger_invoice';
+	public $table_index= 'invoiceid';
+	public $column_fields = Array();
 
 	/** Indicator if this is a custom module or standard module */
-	var $IsCustomModule = false;
-	var $HasDirectImageField = false;
-	var $tab_name = Array('vtiger_crmentity','vtiger_invoice','vtiger_invoicebillads','vtiger_invoiceshipads','vtiger_invoicecf');
-	var $tab_name_index = Array('vtiger_crmentity'=>'crmid','vtiger_invoice'=>'invoiceid','vtiger_invoicebillads'=>'invoicebilladdressid','vtiger_invoiceshipads'=>'invoiceshipaddressid','vtiger_invoicecf'=>'invoiceid');
+	public $IsCustomModule = false;
+	public $HasDirectImageField = false;
+	public $tab_name = Array('vtiger_crmentity','vtiger_invoice','vtiger_invoicebillads','vtiger_invoiceshipads','vtiger_invoicecf');
+	public $tab_name_index = Array('vtiger_crmentity'=>'crmid','vtiger_invoice'=>'invoiceid','vtiger_invoicebillads'=>'invoicebilladdressid','vtiger_invoiceshipads'=>'invoiceshipaddressid','vtiger_invoicecf'=>'invoiceid');
 
 	/**
 	 * Mandatory table for supporting custom fields.
 	 */
-	var $customFieldTable = Array('vtiger_invoicecf', 'invoiceid');
+	public $customFieldTable = Array('vtiger_invoicecf', 'invoiceid');
 
-	var $update_product_array = Array();
+	public $update_product_array = Array();
 
 	// This is used to retrieve related vtiger_fields from form posts.
-	var $additional_column_fields = Array('assigned_user_name', 'smownerid', 'opportunity_id', 'case_id', 'contact_id', 'task_id', 'note_id', 'meeting_id', 'call_id', 'email_id', 'parent_name', 'member_id' );
+	public $additional_column_fields = Array('assigned_user_name', 'smownerid', 'opportunity_id', 'case_id', 'contact_id', 'task_id', 'note_id', 'meeting_id', 'call_id', 'email_id', 'parent_name', 'member_id' );
 
 	// This is the list of vtiger_fields that are in the lists.
-	var $list_fields = Array(
+	public $list_fields = Array(
 		//'Invoice No'=>Array('crmentity'=>'crmid'),
 		'Invoice No'=>Array('invoice'=>'invoice_no'),
 		'Subject'=>Array('invoice'=>'subject'),
@@ -45,7 +45,7 @@ class Invoice extends CRMEntity {
 		'Account Name'=>Array('invoice'=>'account_id'),
 		'Assigned To'=>Array('crmentity'=>'smownerid')
 	);
-	var $list_fields_name = Array(
+	public $list_fields_name = Array(
 		'Invoice No'=>'invoice_no',
 		'Subject'=>'subject',
 		'Sales Order'=>'salesorder_id',
@@ -54,44 +54,44 @@ class Invoice extends CRMEntity {
 		'Account Name'=>'account_id',
 		'Assigned To'=>'assigned_user_id'
 	);
-	var $list_link_field= 'subject';
+	public $list_link_field= 'subject';
 
-	var $search_fields = Array(
+	public $search_fields = Array(
 		//'Invoice No'=>Array('crmentity'=>'crmid'),
 		'Invoice No'=>Array('invoice'=>'invoice_no'),
 		'Subject'=>Array('purchaseorder'=>'subject'),
 		'Account Name'=>Array('invoice'=>'account_id'),
 	);
-	var $search_fields_name = Array(
+	public $search_fields_name = Array(
 		'Invoice No'=>'invoice_no',
 		'Subject'=>'subject',
 		'Account Name'=>'account_id',
 	);
 
 	// For Popup window record selection
-	var $popup_fields = Array('subject');
+	public $popup_fields = Array('subject');
 
 	// Placeholder for sort fields - All the fields will be initialized for Sorting through initSortFields
-	var $sortby_fields = Array('subject','invoice_no','invoicestatus','smownerid','accountname','lastname');
+	public $sortby_fields = Array('subject','invoice_no','invoicestatus','smownerid','accountname','lastname');
 
 	// For Alphabetical search
-	var $def_basicsearch_col = 'subject';
+	public $def_basicsearch_col = 'subject';
 
 	// Column value to use on detail view record text display
-	var $def_detailview_recname = 'subject';
+	public $def_detailview_recname = 'subject';
 
 	// This is the list of vtiger_fields that are required.
-	var $required_fields = array("accountname"=>1);
+	public $required_fields = array("accountname"=>1);
 
 	//Added these variables which are used as default order by and sortorder in ListView
-	var $default_order_by = 'crmid';
-	var $default_sort_order = 'ASC';
-	var $mandatory_fields = Array('subject','createdtime' ,'modifiedtime');
-	var $_salesorderid;
-	var $_recurring_mode;
-	var $record_status = '';
+	public $default_order_by = 'crmid';
+	public $default_sort_order = 'ASC';
+	public $mandatory_fields = Array('subject','createdtime' ,'modifiedtime');
+	public $_salesorderid;
+	public $_recurring_mode;
+	public $record_status = '';
 
-	function __construct() {
+	public function __construct() {
 		global $log;
 		$this_module = get_class($this);
 		$this->column_fields = getColumnFields($this_module);
@@ -105,14 +105,14 @@ class Invoice extends CRMEntity {
 		}
 	}
 
-	function save($module, $fileid = '') {
+	public function save($module, $fileid = '') {
 		if ($this->mode=='edit') {
 			$this->record_status = getSingleFieldValue($this->table_name, 'invoicestatus', $this->table_index, $this->id);
 		}
 		parent::save($module, $fileid);
 	}
 
-	function save_module($module) {
+	public function save_module($module) {
 		global $updateInventoryProductRel_deduct_stock;
 		$updateInventoryProductRel_deduct_stock = true;
 		if ($this->mode=='edit' and !empty($this->record_status) and $this->record_status != $this->column_fields['invoicestatus'] && $this->column_fields['invoicestatus'] != '') {
@@ -153,7 +153,7 @@ class Invoice extends CRMEntity {
 		$this->db->pquery($update_query, $update_params);
 	}
 
-	function registerInventoryHistory() {
+	public function registerInventoryHistory() {
 		global $app_strings;
 		if (isset($_REQUEST['ajxaction']) and $_REQUEST['ajxaction'] == 'DETAILVIEW') { //if we use ajax edit
 			if (GlobalVariable::getVariable('Application_B2B', '1')) {
@@ -182,7 +182,7 @@ class Invoice extends CRMEntity {
 	/**
 	 * Customizing the restore procedure.
 	 */
-	function restore($module, $id) {
+	public function restore($module, $id) {
 		global $adb, $updateInventoryProductRel_deduct_stock;
 		$result = $adb->pquery("SELECT invoicestatus FROM vtiger_invoice where invoiceid=?", array($id));
 		$invoiceStatus = $adb->query_result($result,0,'invoicestatus');
@@ -195,7 +195,7 @@ class Invoice extends CRMEntity {
 	/**
 	 * Customizing the Delete procedure.
 	 */
-	function trash($module, $recordId) {
+	public function trash($module, $recordId) {
 		global $adb;
 		$result = $adb->pquery("SELECT invoicestatus FROM vtiger_invoice where invoiceid=?", array($recordId));
 		$invoiceStatus = $adb->query_result($result,0,'invoicestatus');
@@ -209,7 +209,7 @@ class Invoice extends CRMEntity {
 	 *	@param $id - invoice id
 	 *	@return $return_data - array with header and the entries in format Array('header'=>$header,'entries'=>$entries_list) where as $header and $entries_list are arrays which contains header values and all column values of all entries
 	 */
-	function get_invoicestatushistory($id) {
+	public function get_invoicestatushistory($id) {
 		global $log, $adb, $mod_strings, $app_strings, $current_user;
 		$log->debug("Entering get_invoicestatushistory(".$id.") method ...");
 
@@ -254,7 +254,7 @@ class Invoice extends CRMEntity {
 	}
 
 	// Function to get column name - Overriding function of base class
-	function get_column_value($columname, $fldvalue, $fieldname, $uitype, $datatype = '') {
+	public function get_column_value($columname, $fldvalue, $fieldname, $uitype, $datatype = '') {
 		if ($columname == 'salesorderid') {
 			if ($fldvalue == '') return null;
 		}
@@ -267,7 +267,7 @@ class Invoice extends CRMEntity {
 	 * @param - $secmodule secondary module name
 	 * returns the query string formed on fetching the related data for report for secondary module
 	 */
-	function generateReportsSecQuery($module,$secmodule,$type = '',$where_condition = ''){
+	public function generateReportsSecQuery($module, $secmodule, $type = '', $where_condition = ''){
 		$query = $this->getRelationQuery($module,$secmodule,"vtiger_invoice","invoiceid");
 		$query .= " left join vtiger_crmentity as vtiger_crmentityInvoice on vtiger_crmentityInvoice.crmid=vtiger_invoice.invoiceid and vtiger_crmentityInvoice.deleted=0
 			left join vtiger_invoicecf on vtiger_invoice.invoiceid = vtiger_invoicecf.invoiceid
@@ -299,7 +299,7 @@ class Invoice extends CRMEntity {
 	 * @param - $secmodule secondary module name
 	 * returns the array with table names and fieldnames storing relations between module and this module
 	 */
-	function setRelationTables($secmodule){
+	public function setRelationTables($secmodule){
 		$rel_tables = array (
 			"Calendar" =>array("vtiger_seactivityrel"=>array("crmid","activityid"),"vtiger_invoice"=>"invoiceid"),
 			"Documents" => array("vtiger_senotesrel"=>array("crmid","notesid"),"vtiger_invoice"=>"invoiceid"),
@@ -310,7 +310,7 @@ class Invoice extends CRMEntity {
 	}
 
 	// Function to unlink an entity with given Id from another entity
-	function unlinkRelationship($id, $return_module, $return_id) {
+	public function unlinkRelationship($id, $return_module, $return_id) {
 		global $log;
 		if(empty($return_module) || empty($return_id)) return;
 
@@ -330,7 +330,7 @@ class Invoice extends CRMEntity {
 	 * Function to get the relations of salesorder to invoice for recurring invoice procedure
 	 * @param - $salesorder_id Salesorder ID
 	 */
-	function createRecurringInvoiceFromSO(){
+	public function createRecurringInvoiceFromSO(){
 		global $adb;
 		$salesorder_id = $this->_salesorderid;
 		$query1 = "SELECT * FROM vtiger_inventoryproductrel WHERE id=?";
@@ -437,26 +437,26 @@ class Invoice extends CRMEntity {
 
 	/*Function to create records in current module.
 	**This function called while importing records to this module*/
-	function createRecords($obj) {
+	public function createRecords($obj) {
 		$createRecords = createRecords($obj);
 		return $createRecords;
 	}
 
 	/*Function returns the record information which means whether the record is imported or not
 	**This function called while importing records to this module*/
-	function importRecord($obj, $inventoryFieldData, $lineItemDetails) {
+	public function importRecord($obj, $inventoryFieldData, $lineItemDetails) {
 		$entityInfo = importRecord($obj, $inventoryFieldData, $lineItemDetails);
 		return $entityInfo;
 	}
 
 	/*Function to return the status count of imported records in current module.
 	**This function called while importing records to this module*/
-	function getImportStatusCount($obj) {
+	public function getImportStatusCount($obj) {
 		$statusCount = getImportStatusCount($obj);
 		return $statusCount;
 	}
 
-	function undoLastImport($obj, $user) {
+	public function undoLastImport($obj, $user) {
 		$undoLastImport = undoLastImport($obj, $user);
 	}
 
@@ -464,7 +464,7 @@ class Invoice extends CRMEntity {
 	* @param reference variable - where condition is passed when the query is executed
 	* Returns Export Invoice Query.
 	*/
-	function create_export_query($where) {
+	public function create_export_query($where) {
 		global $log, $current_user;
 		$log->debug("Entering create_export_query(".$where.") method ...");
 
@@ -509,7 +509,7 @@ class Invoice extends CRMEntity {
 	 * NOTE: This function has been added to CRMEntity (base class).
 	 * You can override the behavior by re-defining it here.
 	 */
-	function save_related_module($module, $crmid, $with_module, $with_crmid) {
+	public function save_related_module($module, $crmid, $with_module, $with_crmid) {
 		global $adb;
 		if($module == 'Invoice' && $with_module == 'Assets')
 			$adb->pquery("UPDATE vtiger_assets SET invoiceid = ? WHERE assetsid = ?",array($crmid,$with_crmid));

@@ -21,7 +21,7 @@ class TwoFactorAuth
     private static $_base32lookup = array();
     private static $_supportedalgos = array('sha1', 'sha256', 'sha512', 'md5');
 
-    function __construct($issuer = null, $digits = 6, $period = 30, $algorithm = 'sha1', IQRCodeProvider $qrcodeprovider = null, IRNGProvider $rngprovider = null, ITimeProvider $timeprovider = null)
+    public function __construct($issuer = null, $digits = 6, $period = 30, $algorithm = 'sha1', IQRCodeProvider $qrcodeprovider = null, IRNGProvider $rngprovider = null, ITimeProvider $timeprovider = null)
     {
         $this->issuer = $issuer;
         if (!is_int($digits) || $digits <= 0)

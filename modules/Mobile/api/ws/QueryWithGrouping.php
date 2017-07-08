@@ -15,7 +15,7 @@ class crmtogo_WS_QueryWithGrouping extends crmtogo_WS_Query {
 	
 	private $queryModule;
 	
-	function processQueryResultRecord(&$record, $user) {
+	public function processQueryResultRecord(&$record, $user) {
 		parent::processQueryResultRecord($record, $user);
 
 		if ($this->cachedDescribeInfo() === false) {
@@ -28,7 +28,7 @@ class crmtogo_WS_QueryWithGrouping extends crmtogo_WS_Query {
 		return $transformedRecord;
 	}
 	
-	function process(crmtogo_API_Request $request) {
+	public function process(crmtogo_API_Request $request) {
 		$this->queryModule = $request->get('module');
 		return parent::process($request);
 	}

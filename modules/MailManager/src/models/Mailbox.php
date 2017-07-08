@@ -19,92 +19,92 @@ class MailManager_Model_Mailbox {
 	protected $mId;
     protected $mServerName;
 	
-	function exists() {
+	public function exists() {
 		return !empty($this->mId);
 	}
 	
-	function decrypt($value) {
+	public function decrypt($value) {
 		require_once('include/utils/encryption.php');
 		$e = new Encryption();
 		return $e->decrypt($value);
 	}
 	
-	function encrypt($value) {
+	public function encrypt($value) {
 		require_once('include/utils/encryption.php');
 		$e = new Encryption();
 		return $e->encrypt($value);
 	}
 	
-	function server() {
+	public function server() {
 		return $this->mServer;
 	}
 
-	function setServer($server) {
+	public function setServer($server) {
 		$this->mServer = trim($server);
 	}
 
-    function serverName() {
+    public function serverName() {
         return $this->mServerName;
     }
 
-	function username() {
+	public function username() {
 		return $this->mUsername;
 	}
 	
-	function setUsername($username) {
+	public function setUsername($username) {
 		$this->mUsername = trim($username);
 	}
 	
-	function password($decrypt=true) {
+	public function password($decrypt=true) {
 		if ($decrypt) return $this->decrypt($this->mPassword);
 		return $this->mPassword;
 	}
 	
-	function setPassword($password) {
+	public function setPassword($password) {
 		$this->mPassword = $this->encrypt(trim($password));
 	}
 	
-	function protocol() {
+	public function protocol() {
 		return $this->mProtocol;
 	}
 	
-	function setProtocol($protocol) {
+	public function setProtocol($protocol) {
 		$this->mProtocol = trim($protocol);
 	}
 	
-	function ssltype() {
+	public function ssltype() {
 		if (strcasecmp($this->mSSLType, 'ssl') === 0) {
 			return $this->mSSLType;
 		}
 		return $this->mSSLType;
 	}
 	
-	function setSSLType($ssltype) {
+	public function setSSLType($ssltype) {
 		$this->mSSLType = trim($ssltype);
 	}
 	
-	function certvalidate() {
+	public function certvalidate() {
 		return $this->mCertValidate;
 	}
 	
-	function setCertValidate($certvalidate) {
+	public function setCertValidate($certvalidate) {
 		$this->mCertValidate = trim($certvalidate);
 	}
 
-	function setRefreshTimeOut($value) {
+	public function setRefreshTimeOut($value) {
 		$this->mRefreshTimeOut = $value;
 	}
 	
-	function refreshTimeOut() {
+	public function refreshTimeOut() {
 		return (empty($this->mRefreshTimeOut) ? 0 : $this->mRefreshTimeOut);
 	}
 
-	function delete() {
+	public function delete() {
 		global $adb, $current_user;
 		$adb->pquery("DELETE FROM vtiger_mail_accounts WHERE user_id = ? AND account_id = ?", array($current_user->id, $this->mId));
 	}
 	
-	function save() {
+	public function save() {
 		global $adb, $current_user;
 		$list_max_entries_per_page = GlobalVariable::getVariable('Application_ListView_PageSize',20,'Emails');
 		$account_id = 1;
@@ -133,7 +133,7 @@ class MailManager_Model_Mailbox {
 		}
 	}
 
-	static function activeInstance() {
+	public static function activeInstance() {
 		global $adb, $current_user;
 		$instance = new MailManager_Model_Mailbox();
 		
@@ -152,7 +152,7 @@ class MailManager_Model_Mailbox {
 		return $instance;
 	}
 
-    static function setServerName($mServer) {
+    public static function setServerName($mServer) {
         if($mServer == 'imap.gmail.com') {
             $mServerName = 'gmail';
         } else if($mServer == 'imap.mail.yahoo.com') {

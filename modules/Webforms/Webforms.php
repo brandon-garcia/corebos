@@ -12,12 +12,12 @@ require_once 'include/Webservices/DescribeObject.php';
 
 class Webforms {
 
-	var $LBL_WEBFORMS='Webforms';
+	public $LBL_WEBFORMS='Webforms';
 
 	// Cache to speed up describe information store
 	protected static $moduleDescribeCache = array();
 
-	function vtlib_handler($moduleName, $eventType) {
+	public function vtlib_handler($moduleName, $eventType) {
 		require_once('include/utils/utils.php');
 		global $adb;
 
@@ -44,7 +44,7 @@ class Webforms {
 			}
 	}
 
-	function updateSettings(){
+	public function updateSettings(){
 			global $adb;
 
 			$fieldid = $adb->getUniqueID('vtiger_settings_field');
@@ -62,7 +62,7 @@ class Webforms {
 			}
 		}
 
-	static function checkAdminAccess($user) {
+	public static function checkAdminAccess($user) {
 		if (is_admin($user) or isPermitted('Webforms','')=='yes')
 			return;
 		require_once('Smarty_setup.php');
@@ -73,7 +73,7 @@ class Webforms {
 		exit;
 	}
 
-	static function getModuleDescribe($module) {
+	public static function getModuleDescribe($module) {
 		if (!isset(self::$moduleDescribeCache[$module])) {
 			global $adb, $log, $current_user;
 			self::$moduleDescribeCache[$module] = vtws_describe($module, $current_user);
@@ -81,7 +81,7 @@ class Webforms {
 		return self::$moduleDescribeCache[$module];
 	}
 
-	static function getFieldInfo($module, $fieldname) {
+	public static function getFieldInfo($module, $fieldname) {
 		$describe = self::getModuleDescribe($module);
 		foreach ($describe['fields'] as $index => $fieldInfo) {
 			if ($fieldInfo['name'] == $fieldname) {
@@ -91,7 +91,7 @@ class Webforms {
 		return false;
 	}
 
-	static function getFieldInfos($module) {
+	public static function getFieldInfos($module) {
 		$describe = self::getModuleDescribe($module);
 		foreach ($describe['fields'] as $index => $fieldInfo) {
 			if ($fieldInfo['name'] == 'id') {

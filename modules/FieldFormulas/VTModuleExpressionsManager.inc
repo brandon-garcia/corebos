@@ -9,24 +9,24 @@
  ******************************************************************************/
 require_once("include/events/SqlResultIterator.inc");
 class VTModuleExpressionsManager{
-	function __construct($adb){
+	public function __construct($adb){
 		$this->adb = $adb;
 	}
 
 	/** Caching logic **/
 	private static $cache = array();
-	static function addToCache($key, $value) {
+	public static function addToCache($key, $value) {
 		 self::$cache[$key] = $value;
 	}
-	static function fromCache($key) {
+	public static function fromCache($key) {
 		if(isset(self::$cache[$key])) return self::$cache[$key];
 		return false;
 	}
-	static function clearCache() {
+	public static function clearCache() {
 		self::$cache = array();
 	}
 
-	function retrieve($moduleName){
+	public function retrieve($moduleName){
 		$adb = $this->adb;
 
 		// Look at cache if we have the information
@@ -52,7 +52,7 @@ class VTModuleExpressionsManager{
 		return $me;
 	}
 
-	function save($moduleExpressions){
+	public function save($moduleExpressions){
 		$adb = $this->adb;
 		if(isset($moduleExpressions->id)){
 			$adb->pquery('update vtiger_fieldformulas set expression_engine=? where expressionid=?',
@@ -69,7 +69,7 @@ class VTModuleExpressionsManager{
 	}
 
 
-	function expressionFields($moduleName){
+	public function expressionFields($moduleName){
 		global $current_user;
 		$result = vtws_describe($moduleName, $current_user);
 		$fields = $result['fields'];
@@ -84,7 +84,7 @@ class VTModuleExpressionsManager{
 		return $arr;
 	}
 
-	function fields($moduleName){
+	public function fields($moduleName){
 		global $current_user;
 		$result = vtws_describe($moduleName, $current_user);
 		$fields = $result['fields'];
@@ -95,7 +95,7 @@ class VTModuleExpressionsManager{
 		return $arr;
 	}
 
-	function expressionFunctions(){
+	public function expressionFunctions(){
 		return array('concat' => 'concat(a,b)', 'time_diffdays' => 'time_diffdays(a,b)', 'time_diff' => 'time_diff(a,b)');
 	}
 
@@ -110,18 +110,18 @@ class VTModuleExpressionsManager{
 		return $arr;
 	}
 
-	function expressionsForModule($moduleName){
+	public function expressionsForModule($moduleName){
 		return $this->retrieve($moduleName)->asArray();
 	}
 }
 
 class VTModuleExpressions{
-	function __construct($moduleName, $expressionEngine){
+	public function __construct($moduleName, $expressionEngine){
 		$this->moduleName=$moduleName;
 		$this->expressionEngine=$expressionEngine;
 	}
 
-	function add($fieldName, $expression){
+	public function add($fieldName, $expression){
 		try{
 			$this->expressionEngine->loadExpressions(array($fieldName=>$expression));
 			$this->state='savable';
@@ -131,27 +131,27 @@ class VTModuleExpressions{
 		}
 	}
 
-	function remove($fieldName){
+	public function remove($fieldName){
 		$this->expressionEngine->removeExpression($fieldName);
 	}
 
-	function asArray(){
+	public function asArray(){
 		return $this->expressionEngine->unparsedExpressions;
 	}
 
-	function parseExpression($expr){
+	public function parseExpression($expr){
 		$parser = new VTParser(new SpaceFilter(new VTTokenizer($expr)));
 		return $parser->expression();
 	}
 
-	function update($entity){
+	public function update($entity){
 		$bound = $this->expressionEngine->evaluate($entity->getData());
 		foreach($bound as $field => $value){
 			$entity->set($field, $value);
 		}
 	}
 
-	function getFieldsFromExpr($expr){
+	public function getFieldsFromExpr($expr){
 		function __getFieldsFromExpr($expr, &$arr){
 			switch(get_class($expr)){
 				case 'VTTreeNode':

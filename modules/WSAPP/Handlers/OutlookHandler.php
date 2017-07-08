@@ -37,12 +37,12 @@ Class OutlookHandler extends SyncHandler {
         }
         return $this->syncServer->put($this->key,$element,$user);
     }
-    function map($olMapElement,$user){
+    public function map($olMapElement, $user){
         $this->user = $user;
         $element = $this->convertMapRecordsToSyncFormat($olMapElement);
         return $this->syncServer->map($this->key,$element, $user);
     }
-    function nativeToSyncFormat($element){
+    public function nativeToSyncFormat($element){
         $syncFormatElementList = array();
         foreach($element as $recordDetails){
             if(!empty($recordDetails['values'])){
@@ -52,7 +52,7 @@ Class OutlookHandler extends SyncHandler {
         }
         return $syncFormatElementList;
     }
-    function syncToNativeFormat($recordList){
+    public function syncToNativeFormat($recordList){
         $nativeFormatRecordList = array();
         foreach($recordList as $record){
             $nativeFormatRecordList[] = $this->convertRecordToNativeFormat($this->syncModule, $record);

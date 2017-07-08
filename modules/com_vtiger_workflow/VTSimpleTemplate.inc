@@ -9,11 +9,11 @@
  ************************************************************************************/
 class VTSimpleTemplate{
 
-	function __construct($templateString){
+	public function __construct($templateString){
 		$this->template = $templateString;
 	}
 
-	function render($entityCache, $entityId, $void=array()) {
+	public function render($entityCache, $entityId, $void=array()) {
 		$this->cache = $entityCache;
 		$this->parent = $this->cache->forId($entityId);
 		return $this->parseTemplate();
@@ -104,7 +104,7 @@ class VTSimpleTemplate{
 
 	}
 
-	function getComments($num,$sort,$format,$field) {
+	public function getComments($num, $sort, $format, $field) {
 		global $adb, $log, $current_user;
 		$wsId = $this->parent->getId();
 		if (empty($wsId)) return '';
@@ -214,7 +214,7 @@ class VTSimpleTemplate{
 		return $retcm;
 	}
 
-	function getinvitedUsersList($recid) {
+	public function getinvitedUsersList($recid) {
 		global $adb;
 		$modulename = $this->parent->getModuleName();
 		if ($modulename!='Events') return '';
@@ -233,7 +233,7 @@ class VTSimpleTemplate{
 		return '';
 	}
 
-	function getGroupFieldList($groupref,$fieldname) {
+	public function getGroupFieldList($groupref, $fieldname) {
 		require_once('include/utils/GetGroupUsers.php');
 		$groupId = getGrpId($groupref);
 		if ($groupId==0) {
@@ -264,7 +264,7 @@ class VTSimpleTemplate{
 		return !empty($data[$fieldname]);
 	}
 
-	function parseTemplate(){
+	public function parseTemplate(){
 		global $current_user;
 		$data = $this->parent->getData();
 		$backCurrentUser = $current_user;
@@ -287,7 +287,7 @@ class VTSimpleTemplate{
 		return $return;
 	}
 
-	function getMetaValue($fieldname){
+	public function getMetaValue($fieldname){
 		require_once 'config.inc.php';
 		global $site_URL, $current_user;
 		$fieldname = trim($fieldname);
@@ -362,7 +362,7 @@ class VTSimpleTemplate{
 		}
 	}
 
-	function getWorkflowFunctionValue($tplexpression) {
+	public function getWorkflowFunctionValue($tplexpression) {
 		$parser = new VTExpressionParser(new VTExpressionSpaceFilter(new VTExpressionTokenizer($tplexpression)));
 		$expression = $parser->expression();
 		$exprEvaluater = new VTFieldExpressionEvaluater($expression);

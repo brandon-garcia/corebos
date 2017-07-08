@@ -11,27 +11,27 @@ require_once('data/CRMEntity.php');
 require_once('data/Tracker.php');
 
 class PBXManager extends CRMEntity {
-	var $db, $log; // Used in class functions of CRMEntity
+	public public $db, $log; // Used in class functions of CRMEntity
 
-	var $table_name = 'vtiger_pbxmanager';
-	var $table_index= 'pbxmanagerid';
-	var $column_fields = Array();
+	public $table_name = 'vtiger_pbxmanager';
+	public $table_index= 'pbxmanagerid';
+	public $column_fields = Array();
 
 	/** Indicator if this is a custom module or standard module */
-	var $IsCustomModule = false;
-	var $HasDirectImageField = false;
+	public $IsCustomModule = false;
+	public $HasDirectImageField = false;
 	// Mandatory for function getGroupName
 	// Array(groupTableName, groupColumnId)
 	// groupTableName should have (groupname column)
 	//var $groupTable = Array('vtiger_pbxmanagergrouprel','pbxmanagerid');
 
 	// Mandatory table for supporting custom fields
-	var $customFieldTable = Array();
+	public $customFieldTable = Array();
 
 	// Mandatory for Saving, Include tables related to this module.
-	var $tab_name = Array('vtiger_crmentity', 'vtiger_pbxmanager');
+	public $tab_name = Array('vtiger_crmentity', 'vtiger_pbxmanager');
 	// Mandatory for Saving, Include the table name and index column mapping here.
-	var $tab_name_index = Array(
+	public $tab_name_index = Array(
 		'vtiger_crmentity' => 'crmid',
 		'vtiger_pbxmanager' => 'pbxmanagerid',
 	);
@@ -39,52 +39,52 @@ class PBXManager extends CRMEntity {
 	/**
 	 * Mandatory for Listing (Related listview)
 	 */
-	var $list_fields = Array (
+	public $list_fields = Array (
 		/* Format: Field Label => Array(tablename => columnname) */
 		'Call To'=> Array('pbxmanager' => 'callto'),
 		'Call From'=>Array('pbxmanager' => 'callfrom'),
 	);
-	var $list_fields_name = Array(
+	public $list_fields_name = Array(
 		/* Format: Field Label => fieldname */
 		'Call To'=> 'callto',
 		'Call From' => 'callfrom'
 	);
-	var $sortby_fields = Array('callto', 'callfrom', 'callid', 'timeofcall', 'status');
+	public $sortby_fields = Array('callto', 'callfrom', 'callid', 'timeofcall', 'status');
 	// Should contain field labels
-	var $detailview_links = Array();
+	public $detailview_links = Array();
 
 	// Make the field link to detail view from list view (Fieldname)
-	var $list_link_field = 'callfrom';
+	public $list_link_field = 'callfrom';
 
 	// Column value to use on detail view record text display.
-	var $def_detailview_recname = '';
+	public $def_detailview_recname = '';
 
 	// Required information for enabling Import feature
-	var $required_fields = Array();
+	public $required_fields = Array();
 
 	// Callback function list during Importing
-	var $special_functions = array();
+	public $special_functions = array();
 
 	// For Alphabetical search
-	var $def_basicsearch_col = 'callid';
+	public $def_basicsearch_col = 'callid';
 
-	var $default_order_by = 'timeofcall';
-	var $default_sort_order='DESC';
+	public $default_order_by = 'timeofcall';
+	public $default_sort_order='DESC';
 
-	function __construct() {
+	public function __construct() {
 		global $log, $currentModule;
 		$this->column_fields = getColumnFields($currentModule);
 		$this->db = PearDatabase::getInstance();
 		$this->log = $log;
 	}
 
-	function save_module($module) {
+	public function save_module($module) {
 	}
 
 	/**
 	 * Get list view query.
 	 */
-	function getListQuery($module, $usewhere='') {
+	public function getListQuery($module, $usewhere='') {
 		$query = "SELECT $this->table_name.*, vtiger_crmentity.*";
 		$query .= " FROM $this->table_name";
 
@@ -106,7 +106,7 @@ class PBXManager extends CRMEntity {
 	/**
 	 * Apply security restriction (sharing privilege) query part for List view.
 	 */
-	function getListViewSecurityParameter($module) {
+	public function getListViewSecurityParameter($module) {
 		global $current_user;
 		require('user_privileges/user_privileges_'.$current_user->id.'.php');
 		require('user_privileges/sharing_privileges_'.$current_user->id.'.php');
@@ -155,7 +155,7 @@ class PBXManager extends CRMEntity {
 	/**
 	 * Create query to export the records.
 	 */
-	function create_export_query($where)
+	public function create_export_query($where)
 	{
 		global $current_user;
 		$thismodule = $_REQUEST['module'];
@@ -217,7 +217,7 @@ class PBXManager extends CRMEntity {
 	* @param String Module name
 	* @param String Event Type
 	*/
-	function vtlib_handler($moduleName, $eventType) {
+	public function vtlib_handler($moduleName, $eventType) {
 		require_once('include/utils/utils.php');
 		global $adb;
 		$tabid = getTabid("Users");
@@ -256,7 +256,7 @@ class PBXManager extends CRMEntity {
 		}
 	}
 
-	function getListButtons($app_strings) {
+	public function getListButtons($app_strings) {
 		$list_buttons = Array();
 		if(isPermitted('PBXManager','Delete','') == 'yes') $list_buttons['del'] = $app_strings['LBL_MASS_DELETE'];
 		return $list_buttons;

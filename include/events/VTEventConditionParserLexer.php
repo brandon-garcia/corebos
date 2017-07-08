@@ -83,20 +83,20 @@ class VTEventConditionParserLexer_DFA9 extends DFA {
  
 
 class VTEventConditionParserLexer extends AntlrLexer {
-    static $INTEGER=8;
-    static $T__16=16;
-    static $IN=5;
-    static $T__15=15;
-    static $SYMBOL=4;
-    static $T__14=14;
-    static $LETTER=9;
-    static $T__13=13;
-    static $WHITESPACE=12;
-    static $DIGIT=7;
-    static $DOT=10;
-    static $EOF=-1;
-    static $ELEMENT_ID=11;
-    static $STRING=6;
+    public static $INTEGER=8;
+    public static $T__16=16;
+    public static $IN=5;
+    public static $T__15=15;
+    public static $SYMBOL=4;
+    public static $T__14=14;
+    public static $LETTER=9;
+    public static $T__13=13;
+    public static $WHITESPACE=12;
+    public static $DIGIT=7;
+    public static $DOT=10;
+    public static $EOF=-1;
+    public static $ELEMENT_ID=11;
+    public static $STRING=6;
 
         public function reportError($e) {
             print_r($e);
@@ -107,16 +107,16 @@ class VTEventConditionParserLexer extends AntlrLexer {
     // delegates
     // delegators
 
-    function __construct($input, $state=null){
+    public function __construct($input, $state=null){
         parent::__construct($input,$state);
 
         
             $this->dfa9 = new VTEventConditionParserLexer_DFA9($this);
     }
-    function getGrammarFileName() { return "VTEventConditionParser.g"; }
+    public function getGrammarFileName() { return "VTEventConditionParser.g"; }
 
     // $ANTLR start "T__13"
-    function mT__13(){
+    public function mT__13(){
         try {
             $_type = VTEventConditionParserLexer::$T__13;
             $_channel = VTEventConditionParserLexer::$DEFAULT_TOKEN_CHANNEL;
@@ -136,7 +136,7 @@ class VTEventConditionParserLexer extends AntlrLexer {
     // $ANTLR end "T__13"
 
     // $ANTLR start "T__14"
-    function mT__14(){
+    public function mT__14(){
         try {
             $_type = VTEventConditionParserLexer::$T__14;
             $_channel = VTEventConditionParserLexer::$DEFAULT_TOKEN_CHANNEL;
@@ -155,7 +155,7 @@ class VTEventConditionParserLexer extends AntlrLexer {
     // $ANTLR end "T__14"
 
     // $ANTLR start "T__15"
-    function mT__15(){
+    public function mT__15(){
         try {
             $_type = VTEventConditionParserLexer::$T__15;
             $_channel = VTEventConditionParserLexer::$DEFAULT_TOKEN_CHANNEL;
@@ -174,7 +174,7 @@ class VTEventConditionParserLexer extends AntlrLexer {
     // $ANTLR end "T__15"
 
     // $ANTLR start "T__16"
-    function mT__16(){
+    public function mT__16(){
         try {
             $_type = VTEventConditionParserLexer::$T__16;
             $_channel = VTEventConditionParserLexer::$DEFAULT_TOKEN_CHANNEL;
@@ -193,7 +193,7 @@ class VTEventConditionParserLexer extends AntlrLexer {
     // $ANTLR end "T__16"
 
     // $ANTLR start "IN"
-    function mIN(){
+    public function mIN(){
         try {
             $_type = VTEventConditionParserLexer::$IN;
             $_channel = VTEventConditionParserLexer::$DEFAULT_TOKEN_CHANNEL;
@@ -229,7 +229,7 @@ class VTEventConditionParserLexer extends AntlrLexer {
     // $ANTLR end "IN"
 
     // $ANTLR start "INTEGER"
-    function mINTEGER(){
+    public function mINTEGER(){
         try {
             $_type = VTEventConditionParserLexer::$INTEGER;
             $_channel = VTEventConditionParserLexer::$DEFAULT_TOKEN_CHANNEL;
@@ -275,7 +275,7 @@ class VTEventConditionParserLexer extends AntlrLexer {
     // $ANTLR end "INTEGER"
 
     // $ANTLR start "STRING"
-    function mSTRING(){
+    public function mSTRING(){
         try {
             $_type = VTEventConditionParserLexer::$STRING;
             $_channel = VTEventConditionParserLexer::$DEFAULT_TOKEN_CHANNEL;
@@ -347,7 +347,7 @@ class VTEventConditionParserLexer extends AntlrLexer {
     // $ANTLR end "STRING"
 
     // $ANTLR start "SYMBOL"
-    function mSYMBOL(){
+    public function mSYMBOL(){
         try {
             $_type = VTEventConditionParserLexer::$SYMBOL;
             $_channel = VTEventConditionParserLexer::$DEFAULT_TOKEN_CHANNEL;
@@ -462,7 +462,7 @@ class VTEventConditionParserLexer extends AntlrLexer {
     // $ANTLR end "SYMBOL"
 
     // $ANTLR start "DOT"
-    function mDOT(){
+    public function mDOT(){
         try {
             $_type = VTEventConditionParserLexer::$DOT;
             $_channel = VTEventConditionParserLexer::$DEFAULT_TOKEN_CHANNEL;
@@ -481,7 +481,7 @@ class VTEventConditionParserLexer extends AntlrLexer {
     // $ANTLR end "DOT"
 
     // $ANTLR start "ELEMENT_ID"
-    function mELEMENT_ID(){
+    public function mELEMENT_ID(){
         try {
             $_type = VTEventConditionParserLexer::$ELEMENT_ID;
             $_channel = VTEventConditionParserLexer::$DEFAULT_TOKEN_CHANNEL;
@@ -556,7 +556,7 @@ class VTEventConditionParserLexer extends AntlrLexer {
     // $ANTLR end "ELEMENT_ID"
 
     // $ANTLR start "LETTER"
-    function mLETTER(){
+    public function mLETTER(){
         try {
             {
             if ( ($this->input->LA(1)>=$this->getToken('65') && $this->input->LA(1)<=$this->getToken('90'))||($this->input->LA(1)>=$this->getToken('97') && $this->input->LA(1)<=$this->getToken('122')) ) {
@@ -579,7 +579,7 @@ class VTEventConditionParserLexer extends AntlrLexer {
     // $ANTLR end "LETTER"
 
     // $ANTLR start "DIGIT"
-    function mDIGIT(){
+    public function mDIGIT(){
         try {
             {
             $this->matchRange(48,57); 
@@ -594,7 +594,7 @@ class VTEventConditionParserLexer extends AntlrLexer {
     // $ANTLR end "DIGIT"
 
     // $ANTLR start "WHITESPACE"
-    function mWHITESPACE(){
+    public function mWHITESPACE(){
         try {
             $_type = VTEventConditionParserLexer::$WHITESPACE;
             $_channel = VTEventConditionParserLexer::$DEFAULT_TOKEN_CHANNEL;
@@ -648,7 +648,7 @@ class VTEventConditionParserLexer extends AntlrLexer {
     }
     // $ANTLR end "WHITESPACE"
 
-    function mTokens(){
+    public function mTokens(){
         $alt9=11;
         $alt9 = $this->dfa9->predict($this->input);
         switch ($alt9) {

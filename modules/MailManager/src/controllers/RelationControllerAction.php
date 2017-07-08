@@ -16,7 +16,7 @@ require_once 'include/utils/utils.php';
  */
 class MailManager_RelationControllerAction extends Vtiger_MailScannerAction {
 
-	function __construct() {
+	public function __construct() {
 	}
 
 	/**
@@ -28,7 +28,7 @@ class MailManager_RelationControllerAction extends Vtiger_MailScannerAction {
      * @param CRMEntity $linkfocus
      * @return Integer
      */
-	function __CreateNewEmail($mailrecord, $module, $linkfocus) {
+	public function __CreateNewEmail($mailrecord, $module, $linkfocus) {
 		global $current_user, $adb;
 		if(!$current_user) {
 			$current_user = Users::getActiveAdminUser();
@@ -79,7 +79,7 @@ class MailManager_RelationControllerAction extends Vtiger_MailScannerAction {
      * @param String $basemodule
      * @param CRMEntity $basefocus
      */
-	function __SaveAttachements($mailrecord, $basemodule, $basefocus, $relate2module='', $relate2focus='') {
+	public function __SaveAttachements($mailrecord, $basemodule, $basefocus, $relate2module='', $relate2focus='') {
 		global $adb, $root_directory;
 
 		// If there is no attachments return
@@ -151,7 +151,7 @@ class MailManager_RelationControllerAction extends Vtiger_MailScannerAction {
      * @param Array $info
      * @return Integer
      */
-	function createDocument($info) {
+	public function createDocument($info) {
 		global $current_user;
 		$handler = vtws_getModuleHandlerFromName('Documents', $current_user);
 		$meta = $handler->getMeta();
@@ -178,7 +178,7 @@ class MailManager_RelationControllerAction extends Vtiger_MailScannerAction {
      * @param Integer $linkto
      * @return Array
      */
-	static function associate($mailrecord, $linkto) {
+	public static function associate($mailrecord, $linkto) {
 		global $current_user;
 		$instance = new self();
 
@@ -205,7 +205,7 @@ class MailManager_RelationControllerAction extends Vtiger_MailScannerAction {
      * @param String $label
      * @return Array
      */
-	static function buildDetailViewLink($module, $record, $label) {
+	public static function buildDetailViewLink($module, $record, $label) {
 		$detailViewLink = sprintf("<a target='_blank' href='index.php?module=%s&action=DetailView&record=%s'>%s</a>", $module, $record, textlength_check($label));
 		return array('record'=>$record, 'module'=>$module, 'label'=>$label, 'detailviewlink'=> $detailViewLink);
 	}
@@ -216,7 +216,7 @@ class MailManager_RelationControllerAction extends Vtiger_MailScannerAction {
      * @param integer $mailuid - Mail Number
      * @return Array
      */
-	static function associatedLink($mailuid) {
+	public static function associatedLink($mailuid) {
 		global $adb;
 
 		$info = MailManager::lookupMailAssociation($mailuid);
@@ -232,7 +232,7 @@ class MailManager_RelationControllerAction extends Vtiger_MailScannerAction {
      * @param Integer $crmid
      * @return Array
      */
-	static function getSalesEntityInfo($crmid){
+	public static function getSalesEntityInfo($crmid){
 		global $adb;
 		$result = $adb->pquery("SELECT setype FROM vtiger_crmentity WHERE crmid=? AND deleted=0", array($crmid));
 		if ($adb->num_rows($result)) {
@@ -248,7 +248,7 @@ class MailManager_RelationControllerAction extends Vtiger_MailScannerAction {
      * @param <type> $modulewsid
      * @return <type> 
      */
-	static function ws_modulename($modulewsid) {
+	public static function ws_modulename($modulewsid) {
 		global $adb;
 		$result = $adb->pquery("SELECT name FROM vtiger_ws_entity WHERE id=?", array($modulewsid));
 		if ($adb->num_rows($result)) return $adb->query_result($result, 0, 'name');
@@ -261,7 +261,7 @@ class MailManager_RelationControllerAction extends Vtiger_MailScannerAction {
      * @param Integer $crmId
      * @param Integer $attachId
      */
-	function relateAttachment($crmId, $attachId) {
+	public function relateAttachment($crmId, $attachId) {
 		global $adb;
 		$adb->pquery("INSERT INTO vtiger_seattachmentsrel(crmid, attachmentsid) VALUES(?,?)",
 			array($crmId, $attachId));
@@ -273,7 +273,7 @@ class MailManager_RelationControllerAction extends Vtiger_MailScannerAction {
      * @param Integer $crmId
      * @param Integer $docId
      */
-	function relatedDocument($crmId, $docId) {
+	public function relatedDocument($crmId, $docId) {
 		global $adb;
 		$adb->pquery("INSERT INTO vtiger_senotesrel(crmid, notesid) VALUES(?,?)",
 					Array($crmId, $docId));

@@ -12,7 +12,7 @@ class QRicketProvider extends BaseHTTPQRCodeProvider
     public $color;
     public $format;
 
-    function __construct($errorcorrectionlevel = 'L', $bgcolor = 'ffffff', $color = '000000', $format = 'p') 
+    public function __construct($errorcorrectionlevel = 'L', $bgcolor = 'ffffff', $color = '000000', $format = 'p')
     {
         $this->verifyssl = false;
         

@@ -10,13 +10,13 @@
 class ModComments_CommentsModel {
 	private $data;
 
-	static $ownerNamesCache = array();
+	public static $ownerNamesCache = array();
 	
-	function __construct($datarow) {
+	public function __construct($datarow) {
 		$this->data = $datarow;
 	}
 
-	function author() {
+	public function author() {
 		$authorid = $this->data['smcreatorid'];
 		if(!isset(self::$ownerNamesCache[$authorid])) {
 			self::$ownerNamesCache[$authorid] = getOwnerName($authorid);
@@ -24,12 +24,12 @@ class ModComments_CommentsModel {
 		return self::$ownerNamesCache[$authorid];
 	}
 
-	function timestamp(){
+	public function timestamp(){
 		$date = new DateTimeField($this->data['modifiedtime']);
 		return $date->getDisplayDateTimeValue();
 	}
 
-	function content() {
+	public function content() {
 		return decode_html($this->data['commentcontent']);
 	}
 }

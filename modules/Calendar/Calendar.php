@@ -12,26 +12,26 @@ require_once('modules/Calendar/Appointment.php');
 require_once('modules/Calendar/Date.php');
 class Calendar 
 {
-	var $view='day';
-	var $date_time;
-	var $hour_format = 'am/pm';
-	var $day_slice;
-	var $week_slice;
-	var $week_array;
-	var $month_array;
-	var $week_hour_slices = Array();
-	var $slices = Array();
+	public $view='day';
+	public $date_time;
+	public $hour_format = 'am/pm';
+	public $day_slice;
+	public $week_slice;
+	public $week_array;
+	public $month_array;
+	public $week_hour_slices = Array();
+	public $slices = Array();
 	/* for dayview */
-	var $day_start_hour=0;
-	var $day_end_hour=23;
-	var $sharedusers=Array();
-	var $list_link_field = 'subject';
-	var $table_name = 'vtiger_activity';
+	public $day_start_hour=0;
+	public $day_end_hour=23;
+	public $sharedusers=Array();
+	public $list_link_field = 'subject';
+	public $table_name = 'vtiger_activity';
 	/*
 	constructor
 	*/
 	//var $groupTable = Array('vtiger_activitygrouprelation','activityid');
-	function __construct($view='',$data=Array()) {
+	public function __construct($view='', $data=Array()) {
 		$this->view = $view;
 		$this->date_time = new vt_DateTime($data,true);
 		$this->constructLayout();
@@ -42,7 +42,7 @@ class Calendar
 	 * @param string  $view   - calendarview
 	 * return string  - calendarview Label 
 	*/
-	function getCalendarView($view)
+	public function getCalendarView($view)
 	{
 		switch($view) {
 			case 'day':
@@ -59,7 +59,7 @@ class Calendar
 	/**
 	 * Function to set values for calendar object depends on calendar view
 	*/
-	function constructLayout()
+	public function constructLayout()
 	{
 		global $current_user;
 		switch($this->view)
@@ -135,7 +135,7 @@ class Calendar
 	 * @param  string   $type  - string 'increment' or 'decrment'
 	 */
 
-	function get_datechange_info($type)
+	public function get_datechange_info($type)
 	{
 		if($type == 'next')
 			$mode = 'increment';	
@@ -166,7 +166,7 @@ class Calendar
 	 * @param  array $current_user  - user data
 	 * @param  string $free_busy    - 
 	 */
-	function add_Activities($current_user,$free_busy='')
+	public function add_Activities($current_user, $free_busy='')
 	{
 		if(isset($current_user->start_hour) && $current_user->start_hour !='')
 		{
@@ -246,17 +246,17 @@ class Calendar
 }
 
 class Layout {
-	var $view = 'day';
-	var $start_time;
-	var $end_time;
-	var $activities = Array();
+	public $view = 'day';
+	public $start_time;
+	public $end_time;
+	public $activities = Array();
 
 	/**
 	* Constructor for Layout class
 	* @param  string   $view - calendarview
 	* @param  string   $time - time string 
 	*/
-	function __construct($view,$time) {
+	public function __construct($view, $time) {
 		$this->view = $view;
 		$this->start_time = $time;
 		if ( $view == 'month')
@@ -272,7 +272,7 @@ class Layout {
 	* return currentview
 	*/
 
-	function getView()
+	public function getView()
 	{
 		return $this->view;
 	}

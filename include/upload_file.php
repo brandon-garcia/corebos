@@ -15,10 +15,10 @@
 require_once('config.php');
 
 class UploadFile {
-	var $field_name;
-	var $stored_file_name;
+	public $field_name;
+	public $stored_file_name;
 
-	function __construct($field_name) {
+	public function __construct($field_name) {
 		global $log;
 		$log->debug("Entering UploadFile (".$field_name.") method ...");
 		$this->field_name = $field_name;
@@ -30,7 +30,7 @@ class UploadFile {
 	  * @param $bean_id -- bean_id:: Type integer
 	  * @returns urlstring -- urlstring:: Type string
 	  */
-	function get_url($stored_file_name,$bean_id)
+	public function get_url($stored_file_name, $bean_id)
 	{
 		global $log, $site_URL, $upload_dir;
 		$log->debug("Entering get_url(".$stored_file_name.",".$bean_id.") method ...");
@@ -46,7 +46,7 @@ class UploadFile {
 	  * @param $new_id -- new_id:: Type integer
 	  * @param $file_name -- filename:: Type string
 	  */
-	function duplicate_file($old_id, $new_id, $file_name)
+	public function duplicate_file($old_id, $new_id, $file_name)
 	{
 		global $log, $root_directory, $upload_dir;
 		$log->debug("Entering duplicate_file(".$old_id.", ".$new_id.", ".$file_name.") method ...");
@@ -59,7 +59,7 @@ class UploadFile {
 	/** Function to get the status of the file upload
 	 * @returns boolean
 	 */
-	function confirm_upload()
+	public function confirm_upload()
 	{
 		global $log, $root_directory, $upload_dir, $upload_badext;
 		$log->debug("Eentering confirm_upload() method ...");
@@ -88,7 +88,7 @@ class UploadFile {
 
 	/** Function to get the stored file name
 	  */
-	function get_stored_file_name()
+	public function get_stored_file_name()
 	{
 		global $log;
 		$log->debug("Entering get_stored_file_name() method ...");
@@ -100,7 +100,7 @@ class UploadFile {
 	  * @param $bean_id -- $bean_id:: Type integer
 	  * @returns boolean
 	  */
-	function final_move($bean_id)
+	public function final_move($bean_id)
 	{
 		global $log, $root_directory, $upload_dir;
 		$log->debug("Entering final_move(".$bean_id.") method ...");
@@ -120,7 +120,7 @@ class UploadFile {
 	  * @param $file_name -- file name:: Type string
 	  * @returns boolean
 	  */
-	function unlink_file($bean_id,$file_name) {
+	public function unlink_file($bean_id, $file_name) {
 		global $log, $root_directory, $upload_dir;
 		$log->debug("Entering unlink_file(".$bean_id.",".$file_name.") method ...");
 		$log->debug("Exiting unlink_file method ...");

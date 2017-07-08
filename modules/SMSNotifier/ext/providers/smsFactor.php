@@ -21,7 +21,7 @@ class smsFactor implements ISMSProvider
 	const SERVICE_URI = 'http://gateway.oms-smsfactor.com/httpservice.aspx';
 	private static $REQUIRED_PARAMETERS = array('Originator');
 
-	function __construct() {
+	public function __construct() {
 	}
 
 	/**

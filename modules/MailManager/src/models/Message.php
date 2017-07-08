@@ -43,7 +43,7 @@ class MailManager_Model_Message extends Vtiger_MailRecord {
 	 * @param Integer $msgno - Mail Message Number
 	 * @param Boolean $fetchbody - Used to save the mail information to DB
 	 */
-	function __construct($mBox=false, $msgno=false, $fetchbody=false) {
+	public function __construct($mBox=false, $msgno=false, $fetchbody=false) {
 		if ($mBox && $msgno) {
 
 			$this->mBox = $mBox;
@@ -78,7 +78,7 @@ class MailManager_Model_Message extends Vtiger_MailRecord {
 	 * @param Integer $partno
 	 */
 	// Modified: http://in2.php.net/manual/en/function.imap-fetchstructure.php#85685
-	function __getpart($imap, $messageid, $p, $partno) {
+	public function __getpart($imap, $messageid, $p, $partno) {
 		// $partno = '1', '2', '2.1', '2.1.3', etc if multipart, 0 if not multipart
 
 		if($partno) {
@@ -151,7 +151,7 @@ class MailManager_Model_Message extends Vtiger_MailRecord {
 	 * @global Users Instance $current_user
 	 * @param Integer $waybacktime
 	 */
-	static function pruneOlderInDB($waybacktime) {
+	public static function pruneOlderInDB($waybacktime) {
 		global $adb, $current_user;
 
 		//remove the saved attachments
@@ -169,7 +169,7 @@ class MailManager_Model_Message extends Vtiger_MailRecord {
 	 * @global PearDataBase Instance $adb
 	 * @param Integer $waybacktime - timestamp
 	 */
-	static function removeSavedAttachmentFiles($waybacktime) {
+	public static function removeSavedAttachmentFiles($waybacktime) {
 		global $current_user, $adb;
 
 		$mailManagerAttachments = $adb->pquery("SELECT attachid, aname, path FROM vtiger_mailmanager_mailattachments
@@ -195,7 +195,7 @@ class MailManager_Model_Message extends Vtiger_MailRecord {
 	 * @return Boolean
 	 */
 
-	function readFromDB($uid) {
+	public function readFromDB($uid) {
 		global $adb, $current_user;
 		$result = $adb->pquery("SELECT * FROM vtiger_mailmanager_mailrecord WHERE userid=? AND muid=?", array($current_user->id, $uid));
 		if ($adb->num_rows($result)) {
@@ -328,7 +328,7 @@ class MailManager_Model_Message extends Vtiger_MailRecord {
 	 * @param Text $filecontent
 	 * @return Array with attachment information
 	 */
-	function __SaveAttachmentFile($filename, $filecontent) {
+	public function __SaveAttachmentFile($filename, $filecontent) {
 		require_once 'modules/Settings/MailScanner/core/MailAttachmentMIME.php';
 
 		global $adb, $current_user, $upload_badext;
@@ -365,7 +365,7 @@ class MailManager_Model_Message extends Vtiger_MailRecord {
 	 * @param String $aName
 	 * @return List of Attachments
 	 */
-	function attachments($withContent=true, $aName=false) {
+	public function attachments($withContent=true, $aName=false) {
 		$this->loadAttachmentsFromDB($withContent, $aName);
 		return $this->_attachments;
 	}
@@ -375,7 +375,7 @@ class MailManager_Model_Message extends Vtiger_MailRecord {
 	 * @param Boolean $safehtml
 	 * @return String
 	 */
-	function subject($safehtml=true) {
+	public function subject($safehtml=true) {
 		if ($safehtml==true) {
 			return MailManager_Utils::safe_html_string($this->_subject);
 		}
@@ -386,7 +386,7 @@ class MailManager_Model_Message extends Vtiger_MailRecord {
 	 * Sets the Mail Subject
 	 * @param String $subject
 	 */
-	function setSubject($subject) {
+	public function setSubject($subject) {
 		$mailSubject = str_replace("_", " ", $subject);
 		$this->_subject = @self::__mime_decode($subject);
 	}
@@ -396,7 +396,7 @@ class MailManager_Model_Message extends Vtiger_MailRecord {
 	 * @param Boolean $safehtml
 	 * @return String
 	 */
-	function body($safehtml=true) {
+	public function body($safehtml=true) {
 		return $this->getBodyHTML($safehtml);
 	}
 
@@ -405,7 +405,7 @@ class MailManager_Model_Message extends Vtiger_MailRecord {
 	 * @param Boolean $safehtml
 	 * @return String
 	 */
-	function getBodyHTML($safehtml=true) {
+	public function getBodyHTML($safehtml=true) {
 		$bodyhtml = parent::getBodyHTML();
 		if ($safehtml) {
 			$bodyhtml = MailManager_Utils::safe_html_string($bodyhtml);
@@ -418,7 +418,7 @@ class MailManager_Model_Message extends Vtiger_MailRecord {
 	 * @param Integer $maxlen
 	 * @return string
 	 */
-	function from($maxlen = 0) {
+	public function from($maxlen = 0) {
 		$fromString = $this->_from;
 		if ($maxlen && strlen($fromString) > $maxlen) {
 			$fromString = substr($fromString, 0, $maxlen-3).'...';
@@ -430,7 +430,7 @@ class MailManager_Model_Message extends Vtiger_MailRecord {
 	 * Sets the Mail From Email Address
 	 * @param Email $from
 	 */
-	function setFrom($from) {
+	public function setFrom($from) {
 		$mailFrom = str_replace("_", " ", $from);
 		$this->_from = @self::__mime_decode($mailFrom);
 	}
@@ -439,7 +439,7 @@ class MailManager_Model_Message extends Vtiger_MailRecord {
 	 * Gets the Mail To Email Addresses
 	 * @return Email(s)
 	 */
-	function to() {
+	public function to() {
 		return $this->_to;
 	}
 
@@ -447,7 +447,7 @@ class MailManager_Model_Message extends Vtiger_MailRecord {
 	 * Gets the Mail CC Email Addresses
 	 * @return Email(s)
 	 */
-	function cc() {
+	public function cc() {
 		return $this->_cc;
 	}
 
@@ -455,7 +455,7 @@ class MailManager_Model_Message extends Vtiger_MailRecord {
 	 * Gets the Mail BCC Email Addresses
 	 * @return Email(s)
 	 */
-	function bcc() {
+	public function bcc() {
 		return $this->_bcc;
 	}
 
@@ -463,7 +463,7 @@ class MailManager_Model_Message extends Vtiger_MailRecord {
 	 * Gets the Mail Unique Identifier
 	 * @return String
 	 */
-	function uniqueid() {
+	public function uniqueid() {
 		return $this->_uniqueid;
 	}
 
@@ -471,7 +471,7 @@ class MailManager_Model_Message extends Vtiger_MailRecord {
 	 * Gets the Mail Unique Number
 	 * @return Integer
 	 */
-	function muid() {
+	public function muid() {
 		// unique message sequence id = imap_uid($msgno)
 		return $this->mUid;
 	}
@@ -481,7 +481,7 @@ class MailManager_Model_Message extends Vtiger_MailRecord {
 	 * @param Boolean $format
 	 * @return Date
 	 */
-	function date($format = false) {
+	public function date($format = false) {
 		$date = $this->_date;
 		if (preg_match('#[^0-9\-\/]#',$date)) {
 			// date is in textual format we try to put it into ISO
@@ -506,7 +506,7 @@ class MailManager_Model_Message extends Vtiger_MailRecord {
 	 * Sets the Mail Date
 	 * @param Date $date
 	 */
-	function setDate($date) {
+	public function setDate($date) {
 		$this->_date = $date;
 	}
 
@@ -514,7 +514,7 @@ class MailManager_Model_Message extends Vtiger_MailRecord {
 	 * Checks if the Mail is read
 	 * @return Boolean
 	 */
-	function isRead() {
+	public function isRead() {
 		return $this->mRead;
 	}
 
@@ -522,7 +522,7 @@ class MailManager_Model_Message extends Vtiger_MailRecord {
 	 * Sets if the Mail is read
 	 * @param Boolean $read
 	 */
-	function setRead($read) {
+	public function setRead($read) {
 		$this->mRead = $read;
 	}
 
@@ -531,7 +531,7 @@ class MailManager_Model_Message extends Vtiger_MailRecord {
 	 * @param Integer $offset
 	 * @return Integer
 	 */
-	function msgNo($offset=0) {
+	public function msgNo($offset=0) {
 		return $this->mMsgNo + $offset;
 	}
 
@@ -539,7 +539,7 @@ class MailManager_Model_Message extends Vtiger_MailRecord {
 	 * Sets the Mail Message Number
 	 * @param Integer $msgno
 	 */
-	function setMsgNo($msgno) {
+	public function setMsgNo($msgno) {
 		$this->mMsgNo = $msgno;
 	}
 
@@ -548,7 +548,7 @@ class MailManager_Model_Message extends Vtiger_MailRecord {
 	 * @param Object $result
 	 * @return self
 	 */
-	static function parseOverview($result) {
+	public static function parseOverview($result) {
 		$instance = new self();
 		$instance->setSubject($result->subject);
 		$instance->setFrom((isset($result->from) ? $result->from : ''));

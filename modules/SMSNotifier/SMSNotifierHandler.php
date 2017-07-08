@@ -9,7 +9,7 @@
  ************************************************************************************/
 class SMSNotifierHandler extends VTEventHandler {
 
-	function handleEvent($eventName, $data) {
+	public function handleEvent($eventName, $data) {
 
 		if($eventName == 'vtiger.entity.beforesave') {
 			// Entity is about to be saved, take required action

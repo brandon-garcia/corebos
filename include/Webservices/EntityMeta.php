@@ -138,11 +138,11 @@ abstract class EntityMeta{
 		return $this->columnTableMapping;
 	}
 	
-	function getUser(){
+	public function getUser(){
 		return $this->user;
 	}
 	
-	function hasMandatoryFields($row){
+	public function hasMandatoryFields($row){
 		
 		$mandatoryFields = $this->getMandatoryFields();
 		$hasMandatory = true;
@@ -242,16 +242,16 @@ abstract class EntityMeta{
 		return "vtiger_users.status='Active'";
 	}
 
-	abstract function hasPermission($operation,$webserviceId);
-	abstract function hasAssignPrivilege($ownerWebserviceId);
-	abstract function hasDeleteAccess();
-	abstract function hasAccess();
-	abstract function hasReadAccess();
-	abstract function hasWriteAccess();
-	abstract function getEntityName();
-	abstract function getEntityId();
-	abstract function exists($recordId);
-	abstract function getObjectEntityName($webserviceId);
+	public abstract function hasPermission($operation, $webserviceId);
+	public abstract function hasAssignPrivilege($ownerWebserviceId);
+	public abstract function hasDeleteAccess();
+	public abstract function hasAccess();
+	public abstract function hasReadAccess();
+	public abstract function hasWriteAccess();
+	public abstract function getEntityName();
+	public abstract function getEntityId();
+	public abstract function exists($recordId);
+	public abstract function getObjectEntityName($webserviceId);
 	abstract public function getNameFields();
 	abstract public function getName($webserviceId);
 	abstract public function isModuleEntity();

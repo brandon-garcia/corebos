@@ -9,12 +9,12 @@
  ******************************************************************************/
 
 interface VTExpressionEnv{
-	function get($var);
+	public function get($var);
 }
 
 class VTFieldExpressionEvaluater{
 
-	function __construct($expr) {
+	public function __construct($expr) {
 		global $adb;
 		$this->debug = array();
 		$this->operators = array(
@@ -74,12 +74,12 @@ class VTFieldExpressionEvaluater{
 		$this->expr = $expr;
 	}
 
-	function evaluate($env){
+	public function evaluate($env){
 		$this->env = $env;
 		return $this->exec($this->expr);
 	}
 
-	function exec($expr){
+	public function exec($expr){
 		global $logbg;
 		if($expr instanceof VTExpressionSymbol){
 			$loginfo = print_r($expr,true);
@@ -129,7 +129,7 @@ class VTFieldExpressionEvaluater{
 		}
 	}
 
-	function env($sym,$raw=false){
+	public function env($sym, $raw=false){
 		if($this->env) {
 			$val = $this->env->get($sym->value);
 			$module = Vtiger_Module::getInstance($this->env->moduleName);

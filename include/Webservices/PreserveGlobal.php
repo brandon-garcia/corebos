@@ -12,7 +12,7 @@ class VTWS_PreserveGlobal{
 
 	private static $globalData = array();
 
-	static function preserveGlobal($name,$value){
+	public static function preserveGlobal($name, $value){
 		//$name store the name of the global.
 		global ${$name};
 
@@ -26,7 +26,7 @@ class VTWS_PreserveGlobal{
 		return $$name;
 	}
 
-	static function restore($name){
+	public static function restore($name){
 		//$name store the name of the global.
 		global ${$name};
 
@@ -36,16 +36,16 @@ class VTWS_PreserveGlobal{
 		}
 	}
 
-	static function getGlobal($name){
+	public static function getGlobal($name){
 		global ${$name};
 		return VTWS_PreserveGlobal::preserveGlobal($name,$$name);
 	}
 
-	static function getGlobalData(){
+	public static function getGlobalData(){
 		return VTWS_PreserveGlobal::$globalData;
 	}
 
-	static function flush(){
+	public static function flush(){
 		foreach (VTWS_PreserveGlobal::$globalData as $name => $detail) {
 			//$name store the name of the global.
 			global ${$name};

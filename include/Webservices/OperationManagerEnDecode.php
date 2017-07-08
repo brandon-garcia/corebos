@@ -18,11 +18,11 @@
  */
 class OperationManagerEnDecode {
 
-	function encode($param) {
+	public function encode($param) {
 		return json_encode($param);
 	}
 
-	function decode($param) {
+	public function decode($param) {
 		return json_decode($param,true);
 	}
 }

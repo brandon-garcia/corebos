@@ -19,7 +19,7 @@ class MailManager_SettingsController extends MailManager_MainUIController {
      * @param MailManager_Request $request
      * @return MailManager_Response
      */
-	function process(MailManager_Request $request) {
+	public function process(MailManager_Request $request) {
 		
 		$response = new MailManager_Response();
 		if ('edit' == $request->getOperationArg()) {

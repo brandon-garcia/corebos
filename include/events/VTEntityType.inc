@@ -11,7 +11,7 @@
 require_once('include/events/SqlResultIterator.inc');
 
 class VTEntityType{
-	function __construct($adb, $setype){
+	public function __construct($adb, $setype){
 		$this->moduleName=$setype;
 		require_once("modules/".$setype."/".$setype.".php"); 
 		$result = $adb->pquery("select tabid from vtiger_tab where name=?", 
@@ -21,15 +21,15 @@ class VTEntityType{
 		$this->adb = $adb;
 	}
 	
-	function getTabId(){
+	public function getTabId(){
 		return $this->tabId;
 	}
 	
-	function getModuleName(){
+	public function getModuleName(){
 		return $this->moduleName;
 	}
 
-	function getFieldNames(){
+	public function getFieldNames(){
 		$adb = $this->adb;
 		$arr = array();
 		$result = $adb->pquery("select fieldname from vtiger_field where tabid=? and vtiger_field.presence in (0,2)", 
@@ -41,7 +41,7 @@ class VTEntityType{
 		return $arr;
 	}
 	
-	function getFieldType($fieldName){
+	public function getFieldType($fieldName){
 		$adb = $this->adb;
 		$result = $adb->pquery("select * from vtiger_field where fieldname=? and tabid=? and vtiger_field.presence in (0,2)", 
 			array($fieldName, $this->tabId));
@@ -58,7 +58,7 @@ class VTEntityType{
 		return $fieldType;
 	}
 	
-	function getFieldTypes(){
+	public function getFieldTypes(){
 		$adb = $this->adb;
 		$fieldNames = $this->getFieldNames();
 		$fieldTypes = array();
@@ -72,7 +72,7 @@ class VTEntityType{
 }
 
 class VTFieldType{
-	function toArray(){
+	public function toArray(){
 		$ro = new ReflectionObject($this);
 		$props = $ro->getProperties();
 		$arr = array();

@@ -14,44 +14,44 @@ require_once('modules/Settings/MailScanner/core/MailScannerRule.php');
  */
 class Vtiger_MailScannerInfo {
 	// id of this scanner record
-	var $scannerid = false;
+	public $scannerid = false;
 	// name of this scanner
-	var $scannername=false;
+	public $scannername=false;
 	// mail server to connect to
-	var $server    = false;
+	public $server    = false;
 	// mail protocol to use
-	var $protocol  = false;
+	public $protocol  = false;
 	// username to use
-	var $username  = false;
+	public $username  = false;
 	// password to use
-	var $password  = false;
+	public $password  = false;
 	// notls/tls/ssl
-	var $ssltype   = false;
+	public $ssltype   = false;
 	// validate-certificate or novalidate-certificate
-	var $sslmethod = false;
+	public $sslmethod = false;
 	// last successful connection url to use
-	var $connecturl= false;
+	public $connecturl= false;
 	// search for type
-	var $searchfor = false;
+	public $searchfor = false;
 	// post scan mark record as
-	var $markas = false;
+	public $markas = false;
 
 	// is the scannered enabled?
-	var $isvalid   = false;
+	public $isvalid   = false;
 
 	// Last scan on the folders.
-	var $lastscan  = false;
+	public $lastscan  = false;
 
 	// Need rescan on the folders?
-	var $rescan    = false;
+	public $rescan    = false;
 
 	// Rules associated with this mail scanner
-	var $rules = false;
+	public $rules = false;
 
 	/**
 	 * Constructor
 	 */
-	function __construct($scannername, $initialize=true) {
+	public function __construct($scannername, $initialize=true) {
 		if($initialize && $scannername) $this->initialize($scannername);
 	}
 
@@ -59,7 +59,7 @@ class Vtiger_MailScannerInfo {
 	 * Encrypt/Decrypt input.
 	 * @access private
 	 */
-	function __crypt($password, $encrypt=true) {
+	public function __crypt($password, $encrypt=true) {
 		require_once('include/utils/encryption.php');
 		$cryptobj = new Encryption();
 		if($encrypt) return $cryptobj->encrypt(trim($password));
@@ -69,7 +69,7 @@ class Vtiger_MailScannerInfo {
 	/**
 	 * Initialize this instance.
 	 */
-	function initialize($scannername) {
+	public function initialize($scannername) {
 		global $adb;
 		$result = $adb->pquery("SELECT * FROM vtiger_mailscanner WHERE scannername=?", Array($scannername));
 
@@ -96,7 +96,7 @@ class Vtiger_MailScannerInfo {
 	/**
 	 * Initialize the folder details
 	 */
-	function initializeFolderInfo() {
+	public function initializeFolderInfo() {
 		global $adb;
 		if($this->scannerid) {
 			$this->lastscan = Array();
@@ -118,7 +118,7 @@ class Vtiger_MailScannerInfo {
 	/**
 	 * Delete lastscan details with this scanner
 	 */
-	function clearLastscan() {
+	public function clearLastscan() {
 		global $adb;
 		$adb->pquery("DELETE FROM vtiger_mailscanner_folders WHERE scannerid=?", Array($this->scannerid));
 		$this->lastscan = false;
@@ -127,7 +127,7 @@ class Vtiger_MailScannerInfo {
 	/**
 	 * Update rescan flag on all folders
 	 */
-	function updateAllFolderRescan($rescanFlag=false) {
+	public function updateAllFolderRescan($rescanFlag=false) {
 		global $adb;
 		$useRescanFlag = $rescanFlag? 1 : 0;
 		$adb->pquery("UPDATE vtiger_mailscanner_folders set rescan=? WHERE scannerid=?",
@@ -142,7 +142,7 @@ class Vtiger_MailScannerInfo {
 	/**
 	 * Update lastscan information on folder (or set for rescan next)
 	 */
-	function updateLastscan($folderName, $rescanFolder=false) {
+	public function updateLastscan($folderName, $rescanFolder=false) {
 		global $adb;
 
 		$scannedOn = date('d-M-Y');
@@ -170,7 +170,7 @@ class Vtiger_MailScannerInfo {
 	/**
 	 * Get lastscan of the folder.
 	 */
-	function getLastscan($folderName) {
+	public function getLastscan($folderName) {
 		if($this->lastscan) return $this->lastscan[$folderName];
 		else return false;
 	}
@@ -178,7 +178,7 @@ class Vtiger_MailScannerInfo {
 	/**
 	 * Does the folder need message rescan?
 	 */
-	function needRescan($folderName) {
+	public function needRescan($folderName) {
 		if($this->rescan && isset($this->rescan[$folderName])) {
 			return $this->rescan[$folderName];
 		}
@@ -189,7 +189,7 @@ class Vtiger_MailScannerInfo {
 	/**
 	 * Check if rescan is required atleast on a folder?
 	 */
-	function checkRescan() {
+	public function checkRescan() {
 		$rescanRequired = false;
 		if($this->rescan) {
 			foreach($this->rescan as $folderName=>$rescan) {
@@ -205,7 +205,7 @@ class Vtiger_MailScannerInfo {
 	/**
 	 * Get the folder information that has been scanned
 	 */
-	function getFolderInfo() {
+	public function getFolderInfo() {
 		$folderinfo = false;
 		if($this->scannerid) {
 			global $adb;
@@ -229,7 +229,7 @@ class Vtiger_MailScannerInfo {
 	/**
 	 * Update the folder information with given folder names
 	 */
-	function updateFolderInfo($foldernames, $rescanFolder=false) {
+	public function updateFolderInfo($foldernames, $rescanFolder=false) {
 		if($this->scannerid && !empty($foldernames)) {
 			global $adb;
 			$qmarks = Array();
@@ -246,7 +246,7 @@ class Vtiger_MailScannerInfo {
 	/**
 	 * Enable only given folders for scanning
 	 */
-	function enableFoldersForScan($folderinfo) {
+	public function enableFoldersForScan($folderinfo) {
 		if($this->scannerid) {
 			global $adb;
 			$adb->pquery("UPDATE vtiger_mailscanner_folders set enabled=0 WHERE scannerid=?", Array($this->scannerid));
@@ -262,7 +262,7 @@ class Vtiger_MailScannerInfo {
 	/**
 	 * Initialize scanner rule information
 	 */
-	function initializeRules() {
+	public function initializeRules() {
 		global $adb;
 		if($this->scannerid) {
 			$this->rules = Array();
@@ -282,7 +282,7 @@ class Vtiger_MailScannerInfo {
 	/**
 	 * Get scanner information as map
 	 */
-	function getAsMap() {
+	public function getAsMap() {
 		$infomap = Array();
 		$keys = Array('scannerid', 'scannername', 'server', 'protocol', 'username', 'password', 'ssltype',
 			'sslmethod', 'connecturl', 'searchfor', 'markas', 'isvalid', 'rules');
@@ -296,7 +296,7 @@ class Vtiger_MailScannerInfo {
 	/**
 	 * Compare this instance with give instance
 	 */
-	function compare($otherInstance) {
+	public function compare($otherInstance) {
 		$checkkeys = Array('server', 'scannername', 'protocol', 'username', 'password', 'ssltype', 'sslmethod', 'searchfor', 'markas');
 		foreach($checkkeys as $key) {
 			if($this->$key != $otherInstance->$key) return false;
@@ -307,7 +307,7 @@ class Vtiger_MailScannerInfo {
 	/**
 	 * Create/Update the scanner information in database
 	 */
-	function update($otherInstance) {
+	public function update($otherInstance) {
 		$mailServerChanged = false;
 
 		// Is there is change in server setup?
@@ -352,7 +352,7 @@ class Vtiger_MailScannerInfo {
 	/**
 	 * Delete the scanner information from database
 	 */
-	function delete() {
+	public function delete() {
 		global $adb;
 
 		// Delete dependencies
@@ -380,7 +380,7 @@ class Vtiger_MailScannerInfo {
 	/**
 	 * List all the mail-scanners configured.
 	 */
-	static function listAll() {
+	public static function listAll() {
 		$scanners = array();
 		global $adb;
 		$result = $adb->pquery("SELECT scannername FROM vtiger_mailscanner", array());

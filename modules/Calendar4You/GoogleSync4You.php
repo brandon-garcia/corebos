@@ -24,7 +24,7 @@ class GoogleSync4You {
     public $selected_calendar = "";
     
       
-    function __construct() {
+    public function __construct() {
         global $root_directory, $current_language, $mod_strings;	    
         $this->db = PearDatabase::getInstance();
         $this->root_directory = $root_directory;
@@ -271,7 +271,7 @@ class GoogleSync4You {
         }
     }
     
-    function getEvent($eventURL) {
+    public function getEvent($eventURL) {
 		
         set_include_path($this->root_directory. "modules/Calendar4You/");
         try {
@@ -335,7 +335,7 @@ catch(Exception $e){
         return $eventid;
 	}
     
-    function updateEvent($recordid, $eventOld, $Data, $tzOffset = '+00:00') {
+    public function updateEvent($recordid, $eventOld, $Data, $tzOffset = '+00:00') {
         set_include_path($this->root_directory. "modules/Calendar4You/");
         $startDate = $Data["date_start"];
         $endDate = $Data["due_date"];
@@ -453,7 +453,7 @@ catch(Exception $e){
         
 	}
     
-    function insertIntoEvents($recordid, $geventid, $event) {
+    public function insertIntoEvents($recordid, $geventid, $event) {
         
         $p = array($recordid, $geventid, $this->user_id, $event);
         
@@ -468,7 +468,7 @@ catch(Exception $e){
         }
 	}
     
-    function getGoogleCalEvents($CALENDAR_ID,$synctoken,$pagetoken=null) {
+    public function getGoogleCalEvents($CALENDAR_ID, $synctoken, $pagetoken=null) {
     set_include_path($this->root_directory. "modules/Calendar4You/");
     try{
        
@@ -520,7 +520,7 @@ catch(Exception $e){
         return $events;  
     }
     
-    function getGoogleCalEvent($event_id) {
+    public function getGoogleCalEvent($event_id) {
         set_include_path($this->root_directory. "modules/Calendar4You/");
        
         try {
@@ -535,7 +535,7 @@ catch(Exception $e){
         return $event;  
     }
 
-  function getGoogleCalEventfromcron($event_id,$cal) {
+  public function getGoogleCalEventfromcron($event_id, $cal) {
         set_include_path($this->root_directory. "modules/Calendar4You/");
                try {
             $event = $this->gService->events->get($cal,$event_id);

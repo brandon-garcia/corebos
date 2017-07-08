@@ -20,37 +20,37 @@ include_once("include/fields/InventoryLineField.php");
 
 class ReportRun extends CRMEntity {
 
-	var $primarymodule;
-	var $secondarymodule;
-	var $orderbylistsql;
-	var $orderbylistcolumns;
+	public $primarymodule;
+	public $secondarymodule;
+	public $orderbylistsql;
+	public $orderbylistcolumns;
 
-	var $selectcolumns;
-	var $groupbylist;
-	var $reporttype;
-	var $reportname;
-	var $totallist;
-	var $number_of_rows;
-	var $page = 1;
-	var $islastpage = false;
+	public $selectcolumns;
+	public $groupbylist;
+	public $reporttype;
+	public $reportname;
+	public $totallist;
+	public $number_of_rows;
+	public $page = 1;
+	public $islastpage = false;
 
-	var $_groupinglist  = false;
-	var $_columnslist    = false;
-	var $_stdfilterlist = false;
-	var $_columnstotallist = false;
-	var $_columnstotallistaddtoselect = false;
-	var $_advfiltersql = false;
+	public $_groupinglist  = false;
+	public $_columnslist    = false;
+	public $_stdfilterlist = false;
+	public $_columnstotallist = false;
+	public $_columnstotallistaddtoselect = false;
+	public $_advfiltersql = false;
 
-	var $append_currency_symbol_to_value = array('Products_Unit_Price','Services_Price',
+	public $append_currency_symbol_to_value = array('Products_Unit_Price','Services_Price',
 						'Invoice_Total', 'Invoice_Sub_Total', 'Invoice_S&H_Amount', 'Invoice_Discount_Amount', 'Invoice_Adjustment',
 						'Quotes_Total', 'Quotes_Sub_Total', 'Quotes_S&H_Amount', 'Quotes_Discount_Amount', 'Quotes_Adjustment',
 						'SalesOrder_Total', 'SalesOrder_Sub_Total', 'SalesOrder_S&H_Amount', 'SalesOrder_Discount_Amount', 'SalesOrder_Adjustment',
 						'PurchaseOrder_Total', 'PurchaseOrder_Sub_Total', 'PurchaseOrder_S&H_Amount', 'PurchaseOrder_Discount_Amount', 'PurchaseOrder_Adjustment',
 						'Issuecards_Total', 'Issuecards_Sub_Total', 'Issuecards_S&H_Amount', 'Issuecards_Discount_Amount', 'Issuecards_Adjustment',
 						);
-	var $ui10_fields = array();
-	var $ui101_fields = array();
-	var $groupByTimeParent = array(
+	public $ui10_fields = array();
+	public $ui101_fields = array();
+	public $groupByTimeParent = array(
 		'Quarter'=>array('Year'),
 		'Month'=>array('Year'),
 		'Day'=>array('Year','Month')
@@ -60,7 +60,7 @@ class ReportRun extends CRMEntity {
 	 *  This function accepts the $reportid as argument
 	 *  It sets reportid,primarymodule,secondarymodule,reporttype,reportname for the given reportid
 	 */
-	function __construct($reportid) {
+	public function __construct($reportid) {
 		$oReport = new Reports($reportid);
 		$this->reportid = $reportid;
 		$this->primarymodule = $oReport->primodule;
@@ -76,7 +76,7 @@ class ReportRun extends CRMEntity {
 	 *					|
 	 *					$tablenamen:$columnnamen:$fieldlabeln:$fieldnamen:$typeofdatan=>$tablenamen.$columnnamen As Header value
 	 */
-	function getQueryColumnsList($reportid,$outputformat='')
+	public function getQueryColumnsList($reportid, $outputformat='')
 	{
 		// Have we initialized information already?
 		if($this->_columnslist !== false) {
@@ -268,7 +268,7 @@ class ReportRun extends CRMEntity {
 	 *  @ param $module : Type string
 	 *  returns permitted fields in array format
 	 */
-	function getaccesfield($module) {
+	public function getaccesfield($module) {
 		global $current_user;
 		global $adb;
 		$access_fields = Array();
@@ -315,7 +315,7 @@ class ReportRun extends CRMEntity {
 	 *  @ param $selectedfields : Type Array
 	 *  returns the case query for the escaped columns
 	 */
-	function getEscapedColumns($selectedfields) {
+	public function getEscapedColumns($selectedfields) {
 		$tableName = $selectedfields[0];
 		$columnName = $selectedfields[1];
 		$moduleFieldLabel = $selectedfields[2];
@@ -345,7 +345,7 @@ class ReportRun extends CRMEntity {
 	 *  @ param $reportid : Type Integer
 	 *  returns the query of columnlist for the selected columns
 	 */
-	function getSelectedColumnsList($reportid)
+	public function getSelectedColumnsList($reportid)
 	{
 		global $adb, $modules, $log;
 
@@ -398,7 +398,7 @@ class ReportRun extends CRMEntity {
 	 *  @ param $value : Type String
 	 *  returns the check query for the comparator
 	 */
-	function getAdvComparator($comparator,$value,$datatype="")
+	public function getAdvComparator($comparator, $value, $datatype="")
 	{
 
 		global $log,$adb,$default_charset,$ogReport;
@@ -498,7 +498,7 @@ class ReportRun extends CRMEntity {
 	 *  @ param $field : field
 	 *  returns the value for the comparator
 	 */
-	function getFilterComparedField($field){
+	public function getFilterComparedField($field){
 		global $adb,$ogReport;
 			$field = explode('#',$field);
 			$module = $field[0];
@@ -554,7 +554,7 @@ class ReportRun extends CRMEntity {
 	 *					|
 	 *					$tablenamen:$columnnamen:$fieldlabeln:$fieldnamen:$typeofdatan=>$tablenamen.$columnnamen filtercriteria
 	 */
-	function getAdvFilterList($reportid) {
+	public function getAdvFilterList($reportid) {
 		global $adb, $log;
 
 		$advft_criteria = array();
@@ -608,7 +608,7 @@ class ReportRun extends CRMEntity {
 		return $advft_criteria;
 	}
 
-	function generateAdvFilterSql($advfilterlist) {
+	public function generateAdvFilterSql($advfilterlist) {
 		global $adb;
 
 		$advfiltersql = "";
@@ -766,7 +766,7 @@ class ReportRun extends CRMEntity {
 		return $advfiltersql;
 	}
 
-	function getAdvFilterSql($reportid) {
+	public function getAdvFilterSql($reportid) {
 		// Have we initialized information already?
 		if($this->_advfiltersql !== false) {
 			return $this->_advfiltersql;
@@ -788,7 +788,7 @@ class ReportRun extends CRMEntity {
 	 *  This function returns  $stdfilterlist Array: $columnname => $tablename:$columnname:$fieldlabel:$fieldname:$typeofdata=>$tablename.$columnname filtercriteria,
 	 *					$tablename1:$columnname1:$fieldlabel1:$fieldname1:$typeofdata1=>$tablename1.$columnname1 filtercriteria,
 	 */
-	function getStdFilterList($reportid)
+	public function getStdFilterList($reportid)
 	{
 		// Have we initialized information already?
 		if($this->_stdfilterlist !== false) {
@@ -882,7 +882,7 @@ class ReportRun extends CRMEntity {
 	 *  This function returns  $stdfilterlist Array($columnname => $tablename:$columnname:$fieldlabel=>$tablename.$columnname 'between' $startdate 'and' $enddate)
 	 *
 	 */
-	function RunTimeFilter($filtercolumn,$filter,$startdate,$enddate)
+	public function RunTimeFilter($filtercolumn, $filter, $startdate, $enddate)
 	{
 		if($filtercolumn != "none")
 		{
@@ -916,7 +916,7 @@ class ReportRun extends CRMEntity {
 	 *  @ param $advft_criteria_groups : Type Array
 	 *  This function returns  $advfiltersql
 	 */
-	function RunTimeAdvFilter($advft_criteria,$advft_criteria_groups) {
+	public function RunTimeAdvFilter($advft_criteria, $advft_criteria_groups) {
 		$adb = PearDatabase::getInstance();
 
 		$advfilterlist = array();
@@ -1008,7 +1008,7 @@ class ReportRun extends CRMEntity {
 	 *  @ param $reportid : Type Integer
 	 *  returns the query of columnlist for the selected columns
 	 */
-	function getStandardCriterialSql($reportid)
+	public function getStandardCriterialSql($reportid)
 	{
 		global $adb, $modules, $log;
 
@@ -1065,7 +1065,7 @@ class ReportRun extends CRMEntity {
 	 *  returns the $datevalue Array in the given format
 	 * 		$datevalue = Array(0=>$startdate,1=>$enddate)
 	 */
-	function getStandarFiltersStartAndEndDate($type)
+	public function getStandarFiltersStartAndEndDate($type)
 	{
 		$today = date("Y-m-d",mktime(0, 0, 0, date("m")  , date("d"), date("Y")));
 		$tomorrow  = date("Y-m-d",mktime(0, 0, 0, date("m")  , date("d")+1, date("Y")));
@@ -1309,7 +1309,7 @@ class ReportRun extends CRMEntity {
 	 *				   $tablename2:$columnname2:$fieldlabel2:fieldname2:typeofdata2=>$tablename2:$columnname2 $sorder)
 	 * This function also sets the return value in the class variable $this->groupbylist
 	 */
-	function getGroupingList($reportid)
+	public function getGroupingList($reportid)
 	{
 		global $adb, $modules, $log;
 
@@ -1397,7 +1397,7 @@ class ReportRun extends CRMEntity {
 	 *  this returns the columns query for the sortorder columns
 	 *  this function also sets the return value in the class variable $this->orderbylistsql
 	 */
-	function getSelectedOrderbyList($reportid)
+	public function getSelectedOrderbyList($reportid)
 	{
 		global $adb, $modules, $log;
 
@@ -1447,7 +1447,7 @@ class ReportRun extends CRMEntity {
 	 *  @ param $secmodule : type String
 	 *  this returns join query for the given secondary module
 	 */
-	function getRelatedModulesQuery($module,$secmodule,$type = '',$where_condition = '')
+	public function getRelatedModulesQuery($module, $secmodule, $type = '', $where_condition = '')
 	{
 		global $log,$current_user;
 		$query = '';
@@ -1467,7 +1467,7 @@ class ReportRun extends CRMEntity {
 	 *  @ param $module : type String
 	 *  this returns join query for the given module
 	 */
-	function getReportsQuery($module, $type='', $where_condition = '')
+	public function getReportsQuery($module, $type='', $where_condition = '')
 	{
 		global $log, $current_user;
 		$secondary_module ="'";
@@ -1802,7 +1802,7 @@ class ReportRun extends CRMEntity {
 	 * @param $chartReport : boolean
 	 *  this returns join query for the report
 	 */
-	function sGetSQLforReport($reportid,$filtersql,$type='',$chartReport=false)
+	public function sGetSQLforReport($reportid, $filtersql, $type='', $chartReport=false)
 	{
 		global $log;
 		$groupsquery = '';
@@ -1983,7 +1983,7 @@ class ReportRun extends CRMEntity {
 	 */
 
 	// Performance Optimization: Added parameter directOutput to avoid building big-string!
-	function GenerateReport($outputformat,$filtersql, $directOutput=false, &$returnfieldinfo=array())
+	public function GenerateReport($outputformat, $filtersql, $directOutput=false, &$returnfieldinfo=array())
 	{
 		global $adb,$current_user,$php_max_execution_time;
 		global $modules,$app_strings, $mod_strings,$current_language;
@@ -3004,7 +3004,7 @@ class ReportRun extends CRMEntity {
 		}
 	}
 
-	function getColumnsTotal($reportid,$selectlist='')
+	public function getColumnsTotal($reportid, $selectlist='')
 	{
 		// Have we initialized it already?
 		if($this->_columnstotallist !== false) {
@@ -3132,7 +3132,7 @@ class ReportRun extends CRMEntity {
 	 *  @ param $reportid : Type integer
 	 *  This returns columnstoTotal query for the reportid
 	 */
-	function getColumnsToTotalColumns($reportid)
+	public function getColumnsToTotalColumns($reportid)
 	{
 		global $adb, $modules, $log;
 
@@ -3177,7 +3177,7 @@ class ReportRun extends CRMEntity {
 	}
 
 	/** Function to get picklist value array based on profile returns permitted fields in array format */
-	function getAccessPickListValues()
+	public function getAccessPickListValues()
 	{
 		global $adb, $current_user;
 		$id = array(getTabid($this->primarymodule));
@@ -3249,7 +3249,7 @@ class ReportRun extends CRMEntity {
 		return $fieldlists;
 	}
 
-	function getReportPDF($filterlist=false) {
+	public function getReportPDF($filterlist=false) {
 		require_once 'include/tcpdf/tcpdf.php';
 
 		$arr_val = $this->GenerateReport("PDF",$filterlist);
@@ -3364,7 +3364,7 @@ class ReportRun extends CRMEntity {
 		return $pdf;
 	}
 
-	function writeReportToExcelFile($fileName, $filterlist='') {
+	public function writeReportToExcelFile($fileName, $filterlist='') {
 		global $currentModule, $current_language, $current_user;
 		$mod_strings = return_module_language($current_language, $currentModule);
 
@@ -3530,7 +3530,7 @@ class ReportRun extends CRMEntity {
 		$workbookWriter->save($fileName);
 	}
 
-	function writeReportToCSVFile($fileName, $filterlist='') {
+	public function writeReportToCSVFile($fileName, $filterlist='') {
 		global $currentModule, $current_language;
 		$mod_strings = return_module_language($current_language, $currentModule);
 
@@ -3551,7 +3551,7 @@ class ReportRun extends CRMEntity {
 		fclose($fp);
 	}
 
-	function getGroupByTimeList($reportId){
+	public function getGroupByTimeList($reportId){
 		global $adb;
 		$groupByTimeQuery = 'SELECT * FROM vtiger_reportgroupbycolumn WHERE reportid=?';
 		$groupByTimeRes = $adb->pquery($groupByTimeQuery,array($reportId));
@@ -3573,7 +3573,7 @@ class ReportRun extends CRMEntity {
 		return $groupByCondition;
 	}
 
-	function GetTimeCriteriaCondition($criteria,$dateField){
+	public function GetTimeCriteriaCondition($criteria, $dateField){
 		$condition = '';
 		if(strtolower($criteria)=='year'){
 			$condition = "DATE_FORMAT($dateField, '%Y' )";
@@ -3590,7 +3590,7 @@ class ReportRun extends CRMEntity {
 		return $condition;
 	}
 
-	function GetFirstSortByField($reportid)
+	public function GetFirstSortByField($reportid)
 	{
 		global $adb;
 		$groupByField = '';
@@ -3624,7 +3624,7 @@ class ReportRun extends CRMEntity {
 		return $groupByField;
 	}
 
-	function getReferenceFieldColumnList($moduleName, $fieldInfo) {
+	public function getReferenceFieldColumnList($moduleName, $fieldInfo) {
 		$adb = PearDatabase::getInstance();
 
 		$columnsSqlList = array();

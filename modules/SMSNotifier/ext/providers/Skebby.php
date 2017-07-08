@@ -46,7 +46,7 @@ class Skebby implements ISMSProvider {
 	const SERVICE_URI = 'http://gateway.skebby.it/'; 
 	private static $REQUIRED_PARAMETERS = array('Type','From','Prefix'); // parameters specific of Skebby
 
-	function __construct() {
+	public function __construct() {
 	}
 
 	/**
@@ -166,7 +166,7 @@ class Skebby implements ISMSProvider {
 		return $result;
 	}
 
-	function do_post_request($url, $data, $optional_headers = null){
+	public function do_post_request($url, $data, $optional_headers = null){
 		if(!function_exists('curl_init')) {
 			$params = array(
 					'http' => array(
@@ -209,7 +209,7 @@ class Skebby implements ISMSProvider {
 		}
 	}
 
-	function skebbyGatewaySendSMS($username,$password,$recipients,$text,$sms_type=SMS_TYPE_CLASSIC,$sender_number='',$sender_string='',$user_reference='',$charset='',$optional_headers=null) {
+	public function skebbyGatewaySendSMS($username, $password, $recipients, $text, $sms_type=SMS_TYPE_CLASSIC, $sender_number='', $sender_string='', $user_reference='', $charset='', $optional_headers=null) {
 		$url = $this->getServiceUrl(self::SERVICE_SEND);
 
 		switch($sms_type) {
@@ -258,7 +258,7 @@ class Skebby implements ISMSProvider {
 		return $result;
 	}
 
-	function skebbyGatewayGetCredit($username,$password,$charset=''){
+	public function skebbyGatewayGetCredit($username, $password, $charset=''){
 		$url = $this->getServiceUrl(self::SERVICE_SEND);
 		$method = 'get_credit';
 	
@@ -277,7 +277,7 @@ class Skebby implements ISMSProvider {
 		return $result;
 	}
 
-	function log($text){
+	public function log($text){
 		if($this->enableLogging){
 			$fileName = '/tmp/skebby_logging.txt';
 			$fp = fopen($fileName, 'a+');

@@ -83,7 +83,7 @@ class GoogleSync4YouHandler extends VTEventHandler {
 		}
 	}
 
-	function AddIntoCalendar($id, $save_user_id, $event, $Data) {
+	public function AddIntoCalendar($id, $save_user_id, $event, $Data) {
 		try {
 			if ($GoogleSync4You = $this->getGoogleSyncClass($save_user_id,$event)) {
 				$GoogleSync4You->saveEvent($id, $event, $Data);
@@ -92,7 +92,7 @@ class GoogleSync4YouHandler extends VTEventHandler {
 		}
 	}
 
-	function DeleteGCalendarEvent($id, $save_user_id, $eventURL, $event) {
+	public function DeleteGCalendarEvent($id, $save_user_id, $eventURL, $event) {
 		global $adb;
 		try {
 			if ($GoogleSync4You = $this->getGoogleSyncClass($save_user_id,$event,'skip')) {
@@ -104,7 +104,7 @@ class GoogleSync4YouHandler extends VTEventHandler {
 		}
 	}
 
-	function getGoogleSyncClass($save_user_id,$event,$selected_calendar = '') {
+	public function getGoogleSyncClass($save_user_id, $event, $selected_calendar = '') {
 		global $adb;
 		$GoogleSync4You = new GoogleSync4You();
 		$have_access_data = $GoogleSync4You->setAccessDataForUser($save_user_id,true);

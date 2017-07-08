@@ -10,7 +10,7 @@
 
 class PBXManagerAfterSaveCreateActivity extends VTEventHandler {
 
-	function handleEvent($eventName, $entityData) {
+	public function handleEvent($eventName, $entityData) {
 		global $log, $adb, $current_user;
 		$moduleName = $entityData->getModuleName();
 		if($eventName == 'vtiger.entity.aftersave' and isset($_REQUEST['cbcustominfo1']) and

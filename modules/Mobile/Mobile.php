@@ -13,7 +13,7 @@ class Mobile {
 	/**
 	 * Detect if request is from IPhone
 	 */
-	static function isSafari() {
+	public static function isSafari() {
 		if(isset($_SERVER['HTTP_USER_AGENT'])) {
 			$ua = $_SERVER['HTTP_USER_AGENT'];
 			if(preg_match("/safari/i", $ua)) return true;
@@ -21,11 +21,11 @@ class Mobile {
 		return false;
 	}
 	
-	static function templatePath($filename) {
+	public static function templatePath($filename) {
 		return vtlib_getModuleTemplate('Mobile',"generic/$filename");
 	}
 	
-	static function config($key, $defvalue = false) {
+	public static function config($key, $defvalue = false) {
 		// Defined in the configuration file
 		global $Module_crmtogo_Configuration;
 		if(isset($Module_crmtogo_Configuration) && isset($Module_crmtogo_Configuration[$key])) {
@@ -39,7 +39,7 @@ class Mobile {
 	 * @param String Module name
 	 * @param String Event Type (module.postinstall, module.disabled, module.enabled, module.preuninstall)
 	 */
-	function vtlib_handler($modulename, $event_type) {
+	public function vtlib_handler($modulename, $event_type) {
 		global $log;
 		if($event_type == 'module.postinstall') {
 			$db = PearDatabase::getInstance();

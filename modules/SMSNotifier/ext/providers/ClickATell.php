@@ -21,7 +21,7 @@ class ClickATell implements ISMSProvider {
 	const SERVICE_URI = 'http://api.clickatell.com';
 	private static $REQUIRED_PARAMETERS = array('api_id', 'from', 'mo');
 
-	function __construct() {
+	public function __construct() {
 	}
 
 	/**

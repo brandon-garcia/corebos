@@ -12,7 +12,7 @@ include_once dirname(__FILE__) . '/../api/ws/Controller.php';
 
 class crmtogo_UI_DownLoadFile extends crmtogo_WS_Controller {
 
-	function process(crmtogo_API_Request $request) {
+	public function process(crmtogo_API_Request $request) {
 		$record = $request->get('record');
 		$response = new crmtogo_API_Response();
 		$operation = $request->getOperation();
@@ -25,7 +25,7 @@ class crmtogo_UI_DownLoadFile extends crmtogo_WS_Controller {
 		}
 		return $response;
 	}
-	function downloadFile($recordid) {
+	public function downloadFile($recordid) {
 		$fileDetails = $this->getFileDetails($recordid);
 		$fileContent = false;
 
@@ -48,7 +48,7 @@ class crmtogo_UI_DownLoadFile extends crmtogo_WS_Controller {
 		}
 		echo $fileContent;
 	}
-	function getFileDetails($recordid) {
+	public function getFileDetails($recordid) {
 		$file ['id'] = $recordid;
 		$fieleinfos = crmtogo_WS_Utils::getDetailedDocumentInformation($file);
 		$filedetails['path'] = $fieleinfos['attachmentinfo']['path'];
@@ -58,7 +58,7 @@ class crmtogo_UI_DownLoadFile extends crmtogo_WS_Controller {
 		return $filedetails;
 	}
 	
-	function updateDownloadCount($documentid) {
+	public function updateDownloadCount($documentid) {
 		$db = PearDatabase::getInstance();
 		$documentid = explode ('x',$documentid);
 		$notesId = $documentid[1];

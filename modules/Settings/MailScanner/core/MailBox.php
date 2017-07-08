@@ -16,22 +16,22 @@ require_once('modules/Settings/MailScanner/core/MailRecord.php');
  */
 class Vtiger_MailBox {
 	// Mailbox credential information
-	var $_scannerinfo = false;
+	public $_scannerinfo = false;
 	// IMAP connection instance
-	var $_imap = false;
+	public $_imap = false;
 	// IMAP url to use for connecting
-	var $_imapurl = false;
+	public $_imapurl = false;
 	// IMAP folder currently opened
-	var $_imapfolder = false;
+	public $_imapfolder = false;
 	// Should we need to expunge while closing imap connection?
-	var $_needExpunge = false;
+	public $_needExpunge = false;
 
 	// Mailbox crendential information (as a map)
-	var $_mailboxsettings = false;
+	public $_mailboxsettings = false;
 
 	/** DEBUG functionality. */
-	var $debug = false;
-	function log($message, $force=false) {
+	public $debug = false;
+	public function log($message, $force=false) {
 		global $log;
 		if($log && ($force || $this->debug)) { $log->debug($message); }
 		else if( ($force || $this->debug) ) echo vtlib_purify($message) . "\n";
@@ -40,7 +40,7 @@ class Vtiger_MailBox {
 	/**
 	 * Constructor
 	 */
-	function __construct($scannerinfo) {
+	public function __construct($scannerinfo) {
 		$this->_scannerinfo = $scannerinfo;
 		$this->_mailboxsettings = $scannerinfo->getAsMap();
 
@@ -60,7 +60,7 @@ class Vtiger_MailBox {
 	/**
 	 * Connect to mail box folder.
 	 */
-	function connect($folder='INBOX') {
+	public function connect($folder='INBOX') {
 		$imap = false;
 		$mailboxsettings = $this->_mailboxsettings;
 
@@ -114,7 +114,7 @@ class Vtiger_MailBox {
 	 * @param $reopen set to true for re-opening folder if open (default=false)
 	 * @return true if connected, false otherwise
 	 */
-	function open($folder, $reopen=false) {
+	public function open($folder, $reopen=false) {
 		/** Avoid re-opening of the box if not requested. */
 		if(!$reopen && ($folder == $this->_imapfolder)) return true;
 
@@ -144,7 +144,7 @@ class Vtiger_MailBox {
 	 * @param $searchQuery IMAP query, (default false: fetches mails newer from lastscan)
 	 * @return imap_search records or false
 	 */
-	function search($folder, $searchQuery=false) {
+	public function search($folder, $searchQuery=false) {
 		if(!$searchQuery) {
 			$lastscanOn = $this->_scannerinfo->getLastscan($folder);
 			$searchfor = $this->_scannerinfo->searchfor;
@@ -169,7 +169,7 @@ class Vtiger_MailBox {
 	/**
 	 * Get folder names (as list) for the given mailbox connection
 	 */
-	function getFolders() {
+	public function getFolders() {
 		$folders = false;
 		if($this->_imap) {
 			$imapfolders = imap_list($this->_imap, $this->_imapurl, '*');
@@ -187,14 +187,14 @@ class Vtiger_MailBox {
 	 * @param $messageid messageid of the email
 	 * @param $fetchbody set to false to defer fetching the body, (default: true)
 	 */
-	function getMessage($messageid, $fetchbody=true) {
+	public function getMessage($messageid, $fetchbody=true) {
 		return new Vtiger_MailRecord($this->_imap, $messageid, $fetchbody);
 	}
 
 	/**
 	 * Mark the message in the mailbox.
 	 */
-	function markMessage($messageid,$flags = null) {
+	public function markMessage($messageid, $flags = null) {
 		$markas = $this->_scannerinfo->markas;
 		if($this->_imap){
 			if($markas) {
@@ -215,7 +215,7 @@ class Vtiger_MailBox {
 	/**
 	 * Close the open IMAP connection.
 	 */
-	function close() {
+	public function close() {
 		if($this->_needExpunge) {
 			imap_expunge($this->_imap);
 		}

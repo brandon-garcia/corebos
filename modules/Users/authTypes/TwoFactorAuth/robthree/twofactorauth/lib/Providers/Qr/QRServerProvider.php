@@ -12,7 +12,7 @@ class QRServerProvider extends BaseHTTPQRCodeProvider
     public $color;
     public $format;
 
-    function __construct($verifyssl = false, $errorcorrectionlevel = 'L', $margin = 4, $qzone = 1, $bgcolor = 'ffffff', $color = '000000', $format = 'png') 
+    public function __construct($verifyssl = false, $errorcorrectionlevel = 'L', $margin = 4, $qzone = 1, $bgcolor = 'ffffff', $color = '000000', $format = 'png')
     {
         if (!is_bool($verifyssl))
             throw new QRException('VerifySSL must be bool');

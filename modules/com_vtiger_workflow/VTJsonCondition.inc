@@ -10,11 +10,11 @@
 
 class VTJsonCondition {
 
-	function __construct() {
+	public function __construct() {
 
 	}
 
-	function evaluate($condition, $entityCache, $id) {
+	public function evaluate($condition, $entityCache, $id) {
 		global $logbg;
 		$logbg->debug("Entering evaluate($condition,$id) method ...");
 		$expr = json_decode($condition,true);
@@ -93,7 +93,7 @@ class VTJsonCondition {
 		return $finalResult;
 	}
 
-	function startsWith($str, $subStr) {
+	public function startsWith($str, $subStr) {
 		$sl = strlen($str);
 		$ssl = strlen($subStr);
 		if ($sl >= $ssl) {
@@ -103,7 +103,7 @@ class VTJsonCondition {
 		}
 	}
 
-	function endsWith($str, $subStr) {
+	public function endsWith($str, $subStr) {
 		$sl = strlen($str);
 		$ssl = strlen($subStr);
 		if ($sl >= $ssl) {
@@ -113,7 +113,7 @@ class VTJsonCondition {
 		}
 	}
 
-	function checkCondition($entityData, $cond, $referredEntityData=null) {
+	public function checkCondition($entityData, $cond, $referredEntityData=null) {
 		$data = $entityData->getData();
 
 		$condition = $cond['operation'];

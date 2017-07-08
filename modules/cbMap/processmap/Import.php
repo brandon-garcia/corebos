@@ -62,7 +62,7 @@ class Import extends processcbMap {
 	private $input = array();
 	private $output = array();
 
-	function processMap($arguments) {
+	public function processMap($arguments) {
 		$this->convertMap2Array();
 		$contentok = processcbMap::isXML(htmlspecialchars_decode($this->Map->column_fields['content']));
 		if ($contentok !== true) {

@@ -12,7 +12,7 @@
 	 * Functionality to save and retrieve Tasks from the database.
 	 */
 	class VTTaskManager{
-		function __construct($adb){
+		public function __construct($adb){
 			$this->adb = $adb;
 		}
 
@@ -120,13 +120,13 @@
 			return unserialize($str);
 		}
 
-		function getTasks(){
+		public function getTasks(){
 			$adb = $this->adb;
 			$result = $adb->query("select task from com_vtiger_workflowtasks");
 			return $this->getTasksForResult($result);
 		}
 
-		function getTaskTypes($moduleName=''){
+		public function getTaskTypes($moduleName=''){
 			return VTTaskType::getAll($moduleName);
 		}
 
@@ -198,7 +198,7 @@
 			return str_pad(($h%12), 2, 0, STR_PAD_LEFT).':'.$mn.$AM_PM[($h/12)%2];
 		}
 
-		function evaluate($entityCache, $id){
+		public function evaluate($entityCache, $id){
 			if($this->test==""){
 				return true;
 			}else{
@@ -230,7 +230,7 @@
 	}
 
 class VTTaskType {
-	var $data;
+	public $data;
 
 	public function get($key) {
 		return $this->data[$key];

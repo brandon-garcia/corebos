@@ -22,7 +22,7 @@ class Nexmo implements ISMSProvider {
 	const SERVICE_URI = 'https://rest.nexmo.com';
 	private static $REQUIRED_PARAMETERS = array('api_key', 'api_secret','from');
 
-	function __construct() {
+	public function __construct() {
 	}
 
 	/**

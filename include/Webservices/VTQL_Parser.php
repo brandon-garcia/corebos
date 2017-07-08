@@ -13,7 +13,7 @@ class VTQL_ParseryyToken implements ArrayAccess
     public $string = '';
     public $metadata = array();
 
-    function __construct($s, $m = array())
+    public function __construct($s, $m = array())
     {
         if ($s instanceof VTQL_ParseryyToken) {
             $this->string = $s->string;
@@ -28,22 +28,22 @@ class VTQL_ParseryyToken implements ArrayAccess
         }
     }
 
-    function __toString()
+    public function __toString()
     {
         return $this->_string;
     }
 
-    function offsetExists($offset)
+    public function offsetExists($offset)
     {
         return isset($this->metadata[$offset]);
     }
 
-    function offsetGet($offset)
+    public function offsetGet($offset)
     {
         return $this->metadata[$offset];
     }
 
-    function offsetSet($offset, $value)
+    public function offsetSet($offset, $value)
     {
         if ($offset === null) {
             if (isset($value[0])) {
@@ -66,7 +66,7 @@ class VTQL_ParseryyToken implements ArrayAccess
         }
     }
 
-    function offsetUnset($offset)
+    public function offsetUnset($offset)
     {
         unset($this->metadata[$offset]);
     }
@@ -153,7 +153,7 @@ Array (
 	private $error_msg;
 	private $syntax_error;
 	private $user;
-function __construct($user, $lex,$out){
+public function __construct($user, $lex, $out){
 	if(!is_array($out)){
 		$out = array();
 	}
@@ -166,10 +166,10 @@ function __construct($user, $lex,$out){
 	$this->user = $user;
 }
 
-function __toString(){
+public function __toString(){
 	return $this->value."";
 }
-function buildSelectStmt($sqlDump){
+public function buildSelectStmt($sqlDump){
 	$meta = $sqlDump['meta'];
 	$fieldcol = $meta->getFieldColumnMapping();
 	$columnTable = $meta->getColumnTableMapping();
@@ -322,7 +322,7 @@ function buildSelectStmt($sqlDump){
 	}
 	$this->query = $this->query.';';
 }
-function getTables($sqlDump,$columns){
+public function getTables($sqlDump, $columns){
 	$meta = $sqlDump['meta'];
 	$coltable = $meta->getColumnTableMapping();
 	$tables = array();
@@ -332,28 +332,28 @@ function getTables($sqlDump,$columns){
 	$tables = array_keys($tables);
 	return ($tables);
 }
-function getReferenceValue($whereValue){
+public function getReferenceValue($whereValue){
 	$whereValue = trim($whereValue,'\'"');
 	$whereValue = vtws_getIdComponents($whereValue);
 	$whereValue = $whereValue[1];
 	return $whereValue;	
 }
-function getOwner($whereValue){
+public function getOwner($whereValue){
 	$whereValue = trim($whereValue,'\'"');
 	$whereValue = vtws_getIdComponents($whereValue);
 	$whereValue = $whereValue[1];
 	return $whereValue;
 }
-function isSuccess(){
+public function isSuccess(){
 	return $this->success;
 }
-function getErrorMsg(){
+public function getErrorMsg(){
 	return $this->error_msg;
 }
-function getQuery(){
+public function getQuery(){
 	return $this->query;
 }
-function getObjectMetaData(){
+public function getObjectMetaData(){
 	return $this->out['meta'];
 }
 #line 359 "e:\workspace\nonadmin\pkg\vtiger\extensions\Webservices\VTQL_parser.php"
@@ -598,7 +598,7 @@ static public $yy_action = array(
      * @param resource
      * @param string
      */
-    static function Trace($TraceFILE, $zTracePrompt)
+    public static function Trace($TraceFILE, $zTracePrompt)
     {
         if (!$TraceFILE) {
             $zTracePrompt = 0;
@@ -612,7 +612,7 @@ static public $yy_action = array(
     /**
      * Output debug information to output (php://output stream)
      */
-    static function PrintTrace()
+    public static function PrintTrace()
     {
         self::$yyTraceFILE = fopen('php://output', 'w');
         self::$yyTracePrompt = '';
@@ -716,7 +716,7 @@ static public $yy_action = array(
      * @param int
      * @return string
      */
-    function tokenName($tokenType)
+    public function tokenName($tokenType)
     {
         if ($tokenType === 0) {
             return 'End of Input';
@@ -734,7 +734,7 @@ static public $yy_action = array(
      * @param int the symbol code
      * @param mixed the symbol's value
      */
-    static function yy_destructor($yymajor, $yypminor)
+    public static function yy_destructor($yymajor, $yypminor)
     {
         switch ($yymajor) {
         /* Here is inserted the actions which take place when a
@@ -761,7 +761,7 @@ static public $yy_action = array(
      * @param VTQL_ParseryyParser
      * @return int
      */
-    function yy_pop_parser_stack()
+    public function yy_pop_parser_stack()
     {
         if (!count($this->yystack)) {
             return;
@@ -782,7 +782,7 @@ static public $yy_action = array(
      * Deallocate and destroy a parser.  Destructors are all called for
      * all stack elements before shutting the parser down.
      */
-    function __destruct()
+    public function __destruct()
     {
         while ($this->yyidx >= 0) {
             $this->yy_pop_parser_stack();
@@ -798,7 +798,7 @@ static public $yy_action = array(
      * @param int
      * @return array
      */
-    function yy_get_expected_tokens($token)
+    public function yy_get_expected_tokens($token)
     {
         $state = $this->yystack[$this->yyidx]->stateno;
         $expected = self::$yyExpectedTokens[$state];
@@ -873,7 +873,7 @@ static public $yy_action = array(
      * @param int
      * @return bool
      */
-    function yy_is_expected_token($token)
+    public function yy_is_expected_token($token)
     {
         if ($token === 0) {
             return true; // 0 is not part of this
@@ -951,7 +951,7 @@ static public $yy_action = array(
      * return YY_NO_ACTION.
      * @param int The look-ahead token
      */
-    function yy_find_shift_action($iLookAhead)
+    public function yy_find_shift_action($iLookAhead)
     {
         $stateno = $this->yystack[$this->yyidx]->stateno;
      
@@ -995,7 +995,7 @@ static public $yy_action = array(
      * @param int Current state number
      * @param int The look-ahead token
      */
-    function yy_find_reduce_action($stateno, $iLookAhead)
+    public function yy_find_reduce_action($stateno, $iLookAhead)
     {
         /* $stateno = $this->yystack[$this->yyidx]->stateno; */
 
@@ -1024,7 +1024,7 @@ static public $yy_action = array(
      * @param int The major token to shift in
      * @param mixed the minor token to shift in
      */
-    function yy_shift($yyNewState, $yyMajor, $yypMinor)
+    public function yy_shift($yyNewState, $yyMajor, $yypMinor)
     {
         $this->yyidx++;
         if ($this->yyidx >= self::YYSTACKDEPTH) {
@@ -1156,7 +1156,7 @@ static public $yy_action = array(
     **  #line <lineno> <thisfile>
     */
 #line 5 "e:\workspace\nonadmin\pkg\vtiger\extensions\Webservices\VTQL_parser.y"
-    function yy_r1() {
+    public function yy_r1() {
 if($this->yystack[$this->yyidx + -7]->minor){
 $this->out['select'] = $this->yystack[$this->yyidx + -7]->minor;
 }
@@ -1172,22 +1172,22 @@ $this->buildSelectStmt($this->out);
     }
 #line 1176 "e:\workspace\nonadmin\pkg\vtiger\extensions\Webservices\VTQL_parser.php"
 #line 19 "e:\workspace\nonadmin\pkg\vtiger\extensions\Webservices\VTQL_parser.y"
-    function yy_r2(){ 
+    public function yy_r2(){
 $this->out['column_list'][] = $this->yystack[$this->yyidx + 0]->minor;
     }
 #line 1181 "e:\workspace\nonadmin\pkg\vtiger\extensions\Webservices\VTQL_parser.php"
 #line 22 "e:\workspace\nonadmin\pkg\vtiger\extensions\Webservices\VTQL_parser.y"
-    function yy_r3(){
+    public function yy_r3(){
 $this->out['column_list'][] = $this->yystack[$this->yyidx + 0]->minor;
     }
 #line 1186 "e:\workspace\nonadmin\pkg\vtiger\extensions\Webservices\VTQL_parser.php"
 #line 25 "e:\workspace\nonadmin\pkg\vtiger\extensions\Webservices\VTQL_parser.y"
-    function yy_r4(){
+    public function yy_r4(){
 $this->out['column_list'][] = 'count(*)';
     }
 #line 1191 "e:\workspace\nonadmin\pkg\vtiger\extensions\Webservices\VTQL_parser.php"
 #line 30 "e:\workspace\nonadmin\pkg\vtiger\extensions\Webservices\VTQL_parser.y"
-    function yy_r7(){
+    public function yy_r7(){
 if(!in_array("*", $this->out["column_list"]) && !in_array("count(*)", array_map('strtolower', $this->out["column_list"]))){
 if(!in_array("id",$this->out["column_list"])){
 	$this->out["column_list"][] = "id";
@@ -1206,12 +1206,12 @@ $this->out['tableName'] = implode(',',$objectMeta->getEntityTableList());
     }
 #line 1210 "e:\workspace\nonadmin\pkg\vtiger\extensions\Webservices\VTQL_parser.php"
 #line 50 "e:\workspace\nonadmin\pkg\vtiger\extensions\Webservices\VTQL_parser.y"
-    function yy_r11(){
+    public function yy_r11(){
 $this->out['where_condition']['operators'][] = $this->yystack[$this->yyidx + 0]->minor;
     }
 #line 1215 "e:\workspace\nonadmin\pkg\vtiger\extensions\Webservices\VTQL_parser.php"
 #line 57 "e:\workspace\nonadmin\pkg\vtiger\extensions\Webservices\VTQL_parser.y"
-    function yy_r14(){
+    public function yy_r14(){
 $this->out['columnDone']=true;
 $this->out['where_condition']['column_names'][] = $this->yystack[$this->yyidx + -2]->minor;
 if(strcmp($this->yystack[$this->yyidx + -2]->minor, 'id')===0){
@@ -1236,7 +1236,7 @@ $this->out['where_condition']['column_values'][sizeof($this->out['where_conditio
     }
 #line 1240 "e:\workspace\nonadmin\pkg\vtiger\extensions\Webservices\VTQL_parser.php"
 #line 82 "e:\workspace\nonadmin\pkg\vtiger\extensions\Webservices\VTQL_parser.y"
-    function yy_r17(){
+    public function yy_r17(){
 $length = (isset($this->out['where_condition']) && isset($this->out['where_condition']['column_values'])) ? sizeof($this->out['where_condition']['column_values']) : 0;
 $pos = $length - 1;
 if($pos < 0){
@@ -1257,73 +1257,73 @@ $this->out['where_condition']['column_values'][] = $this->yystack[$this->yyidx +
     }
 #line 1261 "e:\workspace\nonadmin\pkg\vtiger\extensions\Webservices\VTQL_parser.php"
 #line 103 "e:\workspace\nonadmin\pkg\vtiger\extensions\Webservices\VTQL_parser.y"
-    function yy_r20(){
+    public function yy_r20(){
 $this->out['where_condition']['column_operators'][] = '=';
     }
 #line 1266 "e:\workspace\nonadmin\pkg\vtiger\extensions\Webservices\VTQL_parser.php"
 #line 106 "e:\workspace\nonadmin\pkg\vtiger\extensions\Webservices\VTQL_parser.y"
-    function yy_r21(){
+    public function yy_r21(){
 $this->out['where_condition']['column_operators'][] = '<';
     }
 #line 1271 "e:\workspace\nonadmin\pkg\vtiger\extensions\Webservices\VTQL_parser.php"
 #line 109 "e:\workspace\nonadmin\pkg\vtiger\extensions\Webservices\VTQL_parser.y"
-    function yy_r22(){
+    public function yy_r22(){
 $this->out['where_condition']['column_operators'][] = '>';
     }
 #line 1276 "e:\workspace\nonadmin\pkg\vtiger\extensions\Webservices\VTQL_parser.php"
 #line 112 "e:\workspace\nonadmin\pkg\vtiger\extensions\Webservices\VTQL_parser.y"
-    function yy_r23(){
+    public function yy_r23(){
 $this->out['where_condition']['column_operators'][] = '<=';
     }
 #line 1281 "e:\workspace\nonadmin\pkg\vtiger\extensions\Webservices\VTQL_parser.php"
 #line 115 "e:\workspace\nonadmin\pkg\vtiger\extensions\Webservices\VTQL_parser.y"
-    function yy_r24(){
+    public function yy_r24(){
 $this->out['where_condition']['column_operators'][] = '>=';
     }
 #line 1286 "e:\workspace\nonadmin\pkg\vtiger\extensions\Webservices\VTQL_parser.php"
 #line 118 "e:\workspace\nonadmin\pkg\vtiger\extensions\Webservices\VTQL_parser.y"
-    function yy_r25(){
+    public function yy_r25(){
 $this->out['where_condition']['column_operators'][] = '!=';
     }
 #line 1291 "e:\workspace\nonadmin\pkg\vtiger\extensions\Webservices\VTQL_parser.php"
 #line 121 "e:\workspace\nonadmin\pkg\vtiger\extensions\Webservices\VTQL_parser.y"
-    function yy_r26(){
+    public function yy_r26(){
 $this->out['where_condition']['column_operators'][] = 'IN';
     }
 #line 1296 "e:\workspace\nonadmin\pkg\vtiger\extensions\Webservices\VTQL_parser.php"
 #line 124 "e:\workspace\nonadmin\pkg\vtiger\extensions\Webservices\VTQL_parser.y"
-    function yy_r27(){
+    public function yy_r27(){
 $this->out['where_condition']['column_operators'][] = 'LIKE';
     }
 #line 1301 "e:\workspace\nonadmin\pkg\vtiger\extensions\Webservices\VTQL_parser.php"
 #line 130 "e:\workspace\nonadmin\pkg\vtiger\extensions\Webservices\VTQL_parser.y"
-    function yy_r31(){
+    public function yy_r31(){
 $this->out['orderby'][] = $this->yystack[$this->yyidx + 0]->minor;
     }
 #line 1306 "e:\workspace\nonadmin\pkg\vtiger\extensions\Webservices\VTQL_parser.php"
 #line 135 "e:\workspace\nonadmin\pkg\vtiger\extensions\Webservices\VTQL_parser.y"
-    function yy_r34(){
+    public function yy_r34(){
 $this->out['sortOrder'] = 'ASC';
     }
 #line 1311 "e:\workspace\nonadmin\pkg\vtiger\extensions\Webservices\VTQL_parser.php"
 #line 138 "e:\workspace\nonadmin\pkg\vtiger\extensions\Webservices\VTQL_parser.y"
-    function yy_r35(){
+    public function yy_r35(){
 $this->out['sortOrder'] = 'DESC';
     }
 #line 1316 "e:\workspace\nonadmin\pkg\vtiger\extensions\Webservices\VTQL_parser.php"
 #line 144 "e:\workspace\nonadmin\pkg\vtiger\extensions\Webservices\VTQL_parser.y"
-    function yy_r39(){
+    public function yy_r39(){
 $this->out['limit'][] = $this->yystack[$this->yyidx + 0]->minor;
     }
 #line 1321 "e:\workspace\nonadmin\pkg\vtiger\extensions\Webservices\VTQL_parser.php"
 #line 147 "e:\workspace\nonadmin\pkg\vtiger\extensions\Webservices\VTQL_parser.y"
-    function yy_r40(){
+    public function yy_r40(){
 $this->out['limit'][] = $this->yystack[$this->yyidx + -2]->minor;
 $this->out['limit'][] = $this->yystack[$this->yyidx + 0]->minor;
     }
 #line 1327 "e:\workspace\nonadmin\pkg\vtiger\extensions\Webservices\VTQL_parser.php"
 #line 151 "e:\workspace\nonadmin\pkg\vtiger\extensions\Webservices\VTQL_parser.y"
-    function yy_r41(){
+    public function yy_r41(){
 global $adb;
 if (empty($this->out['meta'])) {
 $module = $this->out['moduleName'];
@@ -1410,7 +1410,7 @@ if($firstTable!=$table){
      * file)
      * @param int Number of the rule by which to reduce
      */
-    function yy_reduce($yyruleno)
+    public function yy_reduce($yyruleno)
     {
         //int $yygoto;                     /* The next state */
         //int $yyact;                      /* The next action */
@@ -1465,7 +1465,7 @@ if($firstTable!=$table){
      * 
      * Code from %parse_fail is inserted here
      */
-    function yy_parse_failed()
+    public function yy_parse_failed()
     {
         if (self::$yyTraceFILE) {
             fprintf(self::$yyTraceFILE, "%sFail!\n", self::$yyTracePrompt);
@@ -1490,7 +1490,7 @@ if($firstTable!=$table){
      * @param int The major type of the error token
      * @param mixed The minor type of the error token
      */
-    function yy_syntax_error($yymajor, $TOKEN)
+    public function yy_syntax_error($yymajor, $TOKEN)
     {
 #line 466 "e:\workspace\nonadmin\pkg\vtiger\extensions\Webservices\VTQL_parser.y"
 
@@ -1511,7 +1511,7 @@ if($firstTable!=$table){
      * 
      * %parse_accept code is inserted here
      */
-    function yy_accept()
+    public function yy_accept()
     {
         if (self::$yyTraceFILE) {
             fprintf(self::$yyTraceFILE, "%sAccept!\n", self::$yyTracePrompt);
@@ -1537,7 +1537,7 @@ if($firstTable!=$table){
      * @param mixed the token value
      * @param mixed any extra arguments that should be passed to handlers
      */
-    function doParse($yymajor, $yytokenvalue)
+    public function doParse($yymajor, $yytokenvalue)
     {
 //        $yyact;            /* The parser action. */
 //        $yyendofinput;     /* True if we are at the end of input */

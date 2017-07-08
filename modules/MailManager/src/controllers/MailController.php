@@ -25,7 +25,7 @@ class MailManager_MailController extends MailManager_Controller {
 	* @param MailManager_Request $request
 	* @return MailManager_Response
 	*/
-	function process(MailManager_Request $request) {
+	public function process(MailManager_Request $request) {
 		global $adb, $current_user;
 
 		$response = new MailManager_Response();

@@ -353,35 +353,35 @@ $server->register(
 class Vtiger_Soap_CustomerPortal {
 
 	/** Preference value caching */
-	static $_prefs_cache = array();
-	static function lookupPrefValue($key) {
+	public static $_prefs_cache = array();
+	public static function lookupPrefValue($key) {
 		if(self::$_prefs_cache[$key]) {
 			return self::$_prefs_cache[$key];
 		}
 		return false;
 	}
-	static function updatePrefValue($key, $value) {
+	public static function updatePrefValue($key, $value) {
 		self::$_prefs_cache[$key] = $value;
 	}
 
 	/** Sessionid caching for re-use */
-	static $_sessionid = array();
-	static function lookupSessionId($key) {
+	public static $_sessionid = array();
+	public static function lookupSessionId($key) {
 		if(isset(self::$_sessionid[$key])) {
 			return self::$_sessionid[$key];
 		}
 		return false;
 	}
-	static function updateSessionId($key, $value) {
+	public static function updateSessionId($key, $value) {
 		self::$_sessionid[$key] = $value;
 	}
 
 	/** Store available module information */
-	static $_modules = false;
-	static function lookupAllowedModules() {
+	public static $_modules = false;
+	public static function lookupAllowedModules() {
 		return self::$_modules;
 	}
-	static function updateAllowedModules($modules) {
+	public static function updateAllowedModules($modules) {
 		self::$_modules = $modules;
 	}
 

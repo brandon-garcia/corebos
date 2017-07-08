@@ -14,14 +14,14 @@ require_once('include/utils/GetParentGroups.php');
 
 class GetUserGroups {
 
-	var $user_groups=Array();
+	public $user_groups=Array();
 	//var $userRole='';
 
 	/** to get all the parent vtiger_groups of the specified group
 	 * @params $groupId --> Group Id :: Type Integer
 	 * @returns updates the parent group in the varibale $parent_groups of the class
 	 */
-	function getAllUserGroups($userid) {
+	public function getAllUserGroups($userid) {
 		global $adb,$log;
 		$log->debug("Entering getAllUserGroups(".$userid.") method...");
 		//Retreiving from the user2grouptable

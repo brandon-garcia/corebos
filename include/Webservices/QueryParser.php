@@ -19,14 +19,14 @@ class Parser{
 	private $error;
 	private $user;
 
-	function __construct($user, $q){
+	public function __construct($user, $q){
 		$this->query = $q;
 		$this->out = array();
 		$this->hasError = false;
 		$this->user = $user;
 	}
 
-	function parse(){
+	public function parse(){
 		$lex = new VTQL_Lexer($this->query);
 		$parser = new VTQL_Parser($this->user, $lex,$this->out);
 		while ($lex->yylex()) {
@@ -46,15 +46,15 @@ class Parser{
 		return $this->hasError;
 	}
 
-	function getSql() {
+	public function getSql() {
 		return $this->query;
 	}
 
-	function getObjectMetaData() {
+	public function getObjectMetaData() {
 		return $this->meta;
 	}
 
-	function getError() {
+	public function getError() {
 		return $this->error;
 	}
 }

@@ -6,7 +6,7 @@ class OpenSSLRNGProvider implements IRNGProvider
 {
     private $requirestrong;
     
-    function __construct($requirestrong = true) {
+    public function __construct($requirestrong = true) {
         $this->requirestrong = $requirestrong;
     }
     

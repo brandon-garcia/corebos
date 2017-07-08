@@ -8,7 +8,7 @@
  * All Rights Reserved.
  ******************************************************************************/
 class VTToken{
-	function __construct($label){
+	public function __construct($label){
 		$this->label = $label;
 	}
 }
@@ -22,7 +22,7 @@ function _processtoken_symbol($token){
 }
 
 class VTTokenizer{
-	function __construct($expr){
+	public function __construct($expr){
 		$tokenTypes = array(
 				"SPACE" => array('\s+', '_processtoken_id'),
 				"SYMBOL" => array('[a-zA-Z][\w]*', '_processtoken_symbol'),
@@ -54,7 +54,7 @@ class VTTokenizer{
 		$this->matches = $matches;
 		$this->idx = 0;
 	}
-	function nextToken(){
+	public function nextToken(){
 		$matches = $this->matches;
 		$idx = $this->idx;
 		if($idx == sizeof($matches)){
@@ -75,11 +75,11 @@ class VTTokenizer{
 }
 
 class SpaceFilter{
-	function __construct($tokens){
+	public function __construct($tokens){
 		$this->tokens = $tokens;
 	}
 
-	function nextToken(){
+	public function nextToken(){
 		do{
 			$token = $this->tokens->nextToken();
 		}while($token->label == "SPACE");

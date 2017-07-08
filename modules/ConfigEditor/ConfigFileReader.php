@@ -28,7 +28,7 @@ class ConfigFileReader {
 	 * Constructor
 	 * You can restrict variable display for viewing and editing
 	 */
-	function __construct($path, $viewables=array(), $editables=array()) {
+	public function __construct($path, $viewables=array(), $editables=array()) {
 		$this->filepath = $path;
 		$this->viewables = $viewables;
 		$this->editables = $editables;
@@ -58,7 +58,7 @@ class ConfigFileReader {
 	/**
 	 * Save the rows back to configuration.
 	 */
-	function save() {
+	public function save() {
 		$fileContent = trim(file_get_contents($this->filepath));
 		if ($this->rows) {
 			$fp = fopen($this->filepath, 'w');
@@ -78,12 +78,12 @@ class ConfigFileReader {
 		}
 	}
 	
-	function editables($key = false) {
+	public function editables($key = false) {
 		if ($key === false) return array_keys($this->editables);
 		return $this->editables[$key];
 	}
 	
-	function viewables($key = false) {
+	public function viewables($key = false) {
 		if ($key === false) return array_keys($this->viewables);
 		return $this->viewables[$key];
 	}
@@ -91,7 +91,7 @@ class ConfigFileReader {
 	/**
 	 * Set new value to the desired variable.
 	 */
-	function setVariableValue($name, $value) {
+	public function setVariableValue($name, $value) {
 		if ($this->rows) {
 			foreach($this->rows as $row) {
 				if ($row->matchesVariableName($name)) {
@@ -108,14 +108,14 @@ class ConfigFileReader {
 	/**
 	 * Get all the rows
 	 */
-	function getAll() {
+	public function getAll() {
 		return $this->rows;
 	}
 	
 	/**
 	 * Has next row to read?
 	 */
-	function next() {
+	public function next() {
 		if ($this->rowIndex++ < count($this->rows)) {
 			return true;
 		}
@@ -124,14 +124,14 @@ class ConfigFileReader {
 	/**
 	 * Get the current row during iteration (please call next() before this)
 	 */
-	function get() {
+	public function get() {
 		return $this->rows[$this->rowIndex];
 	}
 	
 	/**
 	 * Rewind the iteration
 	 */
-	function rewind() {
+	public function rewind() {
 		$this->rowIndex = 0;
 	}
 }
@@ -162,13 +162,13 @@ class ConfigFileRow {
 	protected $isValueEditable = false;
 	
 	// Regex to detect variable name and its safe value
-	static $variableRegex = '/^[ \t]*\\$([^=]+)=([^;]+)/';
+	public static $variableRegex = '/^[ \t]*\\$([^=]+)=([^;]+)/';
 	//Regex to detect support name,it doesnt allow any single quote,and special characters,it does allow only alpha numeric,utf8,.com,@
-	static $variableUnSafeValueRegex = "/[\x{4e00}-\x{9fa5}[:print:]]+.*\-/u";
+	public static $variableUnSafeValueRegex = "/[\x{4e00}-\x{9fa5}[:print:]]+.*\-/u";
 	/**
 	 * Constructor
 	 */
-	function __construct($content, $parent) {
+	public function __construct($content, $parent) {
 		$this->lineContent = $content;
 		$this->parent = $parent;
 		$this->parse();
@@ -197,14 +197,14 @@ class ConfigFileRow {
 	/**
 	 * Does the row represent variable?
 	 */
-	function isVariable() {
+	public function isVariable() {
 		return ($this->parsedVarName !== false);
 	}
 	
 	/**
 	 * Is the variable viewable?
 	 */
-	function isViewable() {
+	public function isViewable() {
 		if ($this->isVariable()) {
 			$editables = $this->parent->editables();
 			if (!empty($editables)) {
@@ -219,7 +219,7 @@ class ConfigFileRow {
 	/** 
 	 * Is the variable editable?
 	 */
-	function isEditable() {
+	public function isEditable() {
 		if ($this->isVariable()) {
 			$editables = $this->parent->editables();
 			if (empty($editables)) {
@@ -233,14 +233,14 @@ class ConfigFileRow {
 	/**
 	 * Get variable name
 	 */
-	function variableName() {
+	public function variableName() {
 		return $this->parsedVarName;
 	}
 	
 	/**
 	 * Check if the variable name matches with input
 	 */
-	function matchesVariableName($input) {
+	public function matchesVariableName($input) {
 		$input = ltrim($input, '$');
 		return ($input == $this->parsedVarName);
 	}
@@ -248,21 +248,21 @@ class ConfigFileRow {
 	/**
 	 * Get variable value
 	 */
-	function variableValue() {
+	public function variableValue() {
 		return $this->parsedVarValue;
 	}
 	
 	/**
 	 * Is the variable value string type?
 	 */
-	function isValueString() {
+	public function isValueString() {
 		return $this->isValueString;
 	}
 	
 	/**
 	 * Set the variable value
 	 */
-	function setVariableValue($value) {
+	public function setVariableValue($value) {
 		// TODO Avoid any PHP String concate hacks
 		if (preg_match(self::$variableUnSafeValueRegex, $value, $m)) {
 			return false;
@@ -282,7 +282,7 @@ class ConfigFileRow {
 	/**
 	 * Get the meta information
 	 */
-	function meta() {
+	public function meta() {
 		if ($this->isEditable()) return $this->parent->editables($this->parsedVarName);
 		if ($this->isViewable()) return $this->parent->viewables($this->parsedVarName);
 		return false;
@@ -291,7 +291,7 @@ class ConfigFileRow {
 	/**
 	 * String representation of the instance
 	 */
-	function toString() {
+	public function toString() {
 		if ($this->isVariable()) {
 			$encloseWith = "";
 			if ($this->isValueString()) {

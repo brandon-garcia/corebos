@@ -16,16 +16,16 @@ require_once('modules/Settings/MailScanner/core/MailAttachmentMIME.php');
  */
 class Vtiger_MailScanner {
 	// MailScanner information instance
-	var $_scannerinfo = false;
+	public $_scannerinfo = false;
 	// Reference mailbox to use
-	var $_mailbox = false;
+	public $_mailbox = false;
 
 	// Ignore scanning the folders always
-	var $_generalIgnoreFolders = Array( "INBOX.Trash", "INBOX.Drafts", "[Gmail]/Spam", "[Gmail]/Trash", "[Gmail]/Drafts" );
+	public $_generalIgnoreFolders = Array( "INBOX.Trash", "INBOX.Drafts", "[Gmail]/Spam", "[Gmail]/Trash", "[Gmail]/Drafts" );
 
 	/** DEBUG functionality. */
-	var $debug = false;
-	function log($message) {
+	public $debug = false;
+	public function log($message) {
 		global $log;
 		if($log && $this->debug) { $log->debug($message); }
 		else if($this->debug) echo "$message\n";
@@ -34,14 +34,14 @@ class Vtiger_MailScanner {
 	/**
 	 * Constructor.
 	 */
-	function __construct($scannerinfo) {
+	public function __construct($scannerinfo) {
 		$this->_scannerinfo = $scannerinfo;
 	}
 
 	/**
 	 * Get mailbox instance configured for the scan
 	 */
-	function getMailBox() {
+	public function getMailBox() {
 		if(!$this->_mailbox) {
 			$this->_mailbox = new Vtiger_MailBox($this->_scannerinfo);
 			$this->_mailbox->debug = $this->debug;
@@ -52,7 +52,7 @@ class Vtiger_MailScanner {
 	/**
 	 * Start Scanning.
 	 */
-	function performScanNow() {
+	public function performScanNow() {
 		// Check if rules exists to proceed
 		$rules = $this->_scannerinfo->rules;
 
@@ -138,7 +138,7 @@ class Vtiger_MailScanner {
 	/**
 	 * Apply all the rules configured for a mailbox on the mailrecord.
 	 */
-	function applyRule($mailscannerrule, $mailrecord, $mailbox, $messageid) {
+	public function applyRule($mailscannerrule, $mailrecord, $mailbox, $messageid) {
 		// If no actions are set, don't proceed
 		if(empty($mailscannerrule->actions)) return false;
 
@@ -166,7 +166,7 @@ class Vtiger_MailScanner {
 	/**
 	 * Mark the email as scanned.
 	 */
-	function markMessageScanned($mailrecord, $crmid=false) {
+	public function markMessageScanned($mailrecord, $crmid=false) {
 		global $adb;
 		if($crmid === false) $crmid = null;
 		// TODO Make sure we have unique entry
@@ -177,7 +177,7 @@ class Vtiger_MailScanner {
 	/**
 	 * Check if email was scanned.
 	 */
-	function isMessageScanned($mailrecord, $lookAtFolder) {
+	public function isMessageScanned($mailrecord, $lookAtFolder) {
 		global $adb;
 		$messages = $adb->pquery("SELECT * FROM vtiger_mailscanner_ids WHERE scannerid=? AND messageid=?",
 			Array($this->_scannerinfo->scannerid, $mailrecord->_uniqueid));
@@ -203,7 +203,7 @@ class Vtiger_MailScanner {
 	/**
 	 * Update last scan on the folder.
 	 */
-	function updateLastscan($folder) {
+	public function updateLastscan($folder) {
 		$this->_scannerinfo->updateLastscan($folder);
 	}
 
@@ -212,7 +212,7 @@ class Vtiger_MailScanner {
 	 * @param $strvalue
 	 * @returns false if given contain non-digits, else integer value
 	 */
-	function __toInteger($strvalue) {
+	public function __toInteger($strvalue) {
 		$ival = intval($strvalue);
 		$intvalstr = "$ival";
 		if(strlen($strvalue) == strlen($intvalstr)) {
@@ -222,22 +222,22 @@ class Vtiger_MailScanner {
 	}
 
 	/** Lookup functionality. */
-	var $_cachedContactIds = Array();
-	var $_cachedAccountIds = Array();
-	var $_cachedUserIds = Array();
-	var $_cachedEmployeeIds = Array();
-	var $_cachedTicketIds = Array();
-	var $_cachedProjectIds = Array();
+	public $_cachedContactIds = Array();
+	public $_cachedAccountIds = Array();
+	public $_cachedUserIds = Array();
+	public $_cachedEmployeeIds = Array();
+	public $_cachedTicketIds = Array();
+	public $_cachedProjectIds = Array();
 
-	var $_cachedAccounts = Array();
-	var $_cachedContacts = Array();
-	var $_cachedTickets  = Array();
-	var $_cachedProjects = Array();
+	public $_cachedAccounts = Array();
+	public $_cachedContacts = Array();
+	public $_cachedTickets  = Array();
+	public $_cachedProjects = Array();
 
-	var $linkedid;
-	var $linkedtype;
+	public $linkedid;
+	public $linkedtype;
 
-	function getUserList($crmobj){
+	public function getUserList($crmobj){
 		global $adb;
 		$module = get_class($crmobj);
 		$tickettab = getTabid($module);
@@ -252,7 +252,7 @@ class Vtiger_MailScanner {
 		return $retusr;
 	}
 
-	function getEmployeeList($crmobj){
+	public function getEmployeeList($crmobj){
 		global $adb;
 		$retemp = array();
 		if (vtlib_isModuleActive("cbEmployee")) {
@@ -278,7 +278,7 @@ class Vtiger_MailScanner {
 	/**
 	 * Lookup User record based on the email given.
 	 */
-	function LookupUser($email, $checkWithId=false) {
+	public function LookupUser($email, $checkWithId=false) {
 		global $adb;
 		if($this->_cachedUserIds[$email]) {
 			$this->log("Reusing Cached User Id for email: $email");
@@ -313,7 +313,7 @@ class Vtiger_MailScanner {
 	/**
 	 * Lookup Employee record based on the email given.
 	 */
-	function LookupEmployee($email, $checkWithId=false) {
+	public function LookupEmployee($email, $checkWithId=false) {
 		global $adb;
 		$empid = false;
 		if (vtlib_isModuleActive("cbEmployee")) {
@@ -351,7 +351,7 @@ class Vtiger_MailScanner {
 	/**
 	 * Lookup Contact record based on the email given.
 	 */
-	function LookupContact($email) {
+	public function LookupContact($email) {
 		global $adb;
 		if($this->_cachedContactIds[$email]) {
 			$this->log("Reusing Cached Contact Id for email: $email");
@@ -380,7 +380,7 @@ class Vtiger_MailScanner {
 	/**
 	 * Lookup Account record based on the email given.
 	 */
-	function LookupAccount($email) {
+	public function LookupAccount($email) {
 		global $adb;
 		if($this->_cachedAccountIds[$email]) {
 			$this->log("Reusing Cached Account Id for email: $email");
@@ -409,7 +409,7 @@ class Vtiger_MailScanner {
 	/**
 	 * Lookup Ticket record based on the subject or id given.
 	 */
-	function LookupTicket($subjectOrId) {
+	public function LookupTicket($subjectOrId) {
 		global $adb;
 
 		$checkTicketId = $this->__toInteger($subjectOrId);
@@ -451,7 +451,7 @@ class Vtiger_MailScanner {
 	/**
 	 * Lookup Ticket record based on the subject or id given.
 	 */
-	function LookupProject($subjectOrId) {
+	public function LookupProject($subjectOrId) {
 		global $adb;
 		$checkProjectId = $this->__toInteger($subjectOrId);
 		if(!$checkProjectId) {
@@ -492,7 +492,7 @@ class Vtiger_MailScanner {
 	/**
 	 * Get Account record information based on email.
 	 */
-	function GetAccountRecord($email) {
+	public function GetAccountRecord($email) {
 		require_once('modules/Accounts/Accounts.php');
 		$accountid = $this->LookupAccount($email);
 		$account_focus = false;
@@ -514,7 +514,7 @@ class Vtiger_MailScanner {
 	/**
 	 * Get Contact record information based on email.
 	 */
-	function GetContactRecord($email) {
+	public function GetContactRecord($email) {
 		require_once('modules/Contacts/Contacts.php');
 		$contactid = $this->LookupContact($email);
 		$contact_focus = false;
@@ -536,7 +536,7 @@ class Vtiger_MailScanner {
 	/**
 	 * Lookup Contact or Account based on from email and with respect to given CRMID
 	 */
-	function LookupContactOrAccount($fromemail, $checkWithId=false) {
+	public function LookupContactOrAccount($fromemail, $checkWithId=false) {
 		$recordid = $this->LookupContact($fromemail);
 		if($checkWithId && $recordid != $checkWithId) {
 			$recordid = $this->LookupAccount($fromemail);
@@ -548,7 +548,7 @@ class Vtiger_MailScanner {
 	/**
 	 * Get Ticket record information based on subject or id.
 	 */
-	function GetTicketRecord($subjectOrId, $fromemail=false) {
+	public function GetTicketRecord($subjectOrId, $fromemail=false) {
 		require_once('modules/HelpDesk/HelpDesk.php');
 		$ticketid = $this->LookupTicket($subjectOrId);
 		$ticket_focus = false;
@@ -590,7 +590,7 @@ class Vtiger_MailScanner {
 	/**
 	 * Get Project record information based on subject or id.
 	 */
-	function GetProjectRecord($subjectOrId, $fromemail=false) {
+	public function GetProjectRecord($subjectOrId, $fromemail=false) {
 		$projectid = $this->LookupProject($subjectOrId);
 		$project_focus = false;
 		if($projectid) {

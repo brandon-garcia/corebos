@@ -15,24 +15,24 @@ require_once('modules/Leads/Leads.php');
 require('user_privileges/default_module_view.php');
 
 class Campaigns extends CRMEntity {
-	var $db, $log; // Used in class functions of CRMEntity
+	public public $db, $log; // Used in class functions of CRMEntity
 
-	var $table_name = "vtiger_campaign";
-	var $table_index= 'campaignid';
-	var $column_fields = Array();
+	public $table_name = "vtiger_campaign";
+	public $table_index= 'campaignid';
+	public $column_fields = Array();
 
 	/** Indicator if this is a custom module or standard module */
-	var $IsCustomModule = false;
-	var $HasDirectImageField = false;
+	public $IsCustomModule = false;
+	public $HasDirectImageField = false;
 	/**
 	 * Mandatory table for supporting custom fields.
 	 */
-	var $customFieldTable = Array('vtiger_campaignscf', 'campaignid');
+	public $customFieldTable = Array('vtiger_campaignscf', 'campaignid');
 
-	var $tab_name = Array('vtiger_crmentity','vtiger_campaign','vtiger_campaignscf');
-	var $tab_name_index = Array('vtiger_crmentity'=>'crmid','vtiger_campaign'=>'campaignid','vtiger_campaignscf'=>'campaignid');
+	public $tab_name = Array('vtiger_crmentity','vtiger_campaign','vtiger_campaignscf');
+	public $tab_name_index = Array('vtiger_crmentity'=>'crmid','vtiger_campaign'=>'campaignid','vtiger_campaignscf'=>'campaignid');
 
-	var $list_fields = Array(
+	public $list_fields = Array(
 		'Campaign Name'=>Array('campaign'=>'campaignname'),
 		'Campaign Type'=>Array('campaign'=>'campaigntype'),
 		'Campaign Status'=>Array('campaign'=>'campaignstatus'),
@@ -41,7 +41,7 @@ class Campaigns extends CRMEntity {
 		'Assigned To' => Array('crmentity'=>'smownerid')
 	);
 
-	var $list_fields_name = Array(
+	public $list_fields_name = Array(
 		'Campaign Name'=>'campaignname',
 		'Campaign Type'=>'campaigntype',
 		'Campaign Status'=>'campaignstatus',
@@ -51,43 +51,43 @@ class Campaigns extends CRMEntity {
 	);
 
 	// Make the field link to detail view from list view (Fieldname)
-	var $list_link_field= 'campaignname';
+	public $list_link_field= 'campaignname';
 
-	var $search_fields = Array(
+	public $search_fields = Array(
 		'Campaign Name'=>Array('vtiger_campaign'=>'campaignname'),
 		'Campaign Type'=>Array('vtiger_campaign'=>'campaigntype'),
 	);
 
-	var $search_fields_name = Array(
+	public $search_fields_name = Array(
 		'Campaign Name'=>'campaignname',
 		'Campaign Type'=>'campaigntype',
 	);
 
 	// For Popup window record selection
-	var $popup_fields = Array('campaignname');
+	public $popup_fields = Array('campaignname');
 
 	// Placeholder for sort fields - All the fields will be initialized for Sorting through initSortFields
-	var $sortby_fields = Array('campaignname','smownerid','campaigntype','productname','expectedrevenue','closingdate','campaignstatus','expectedresponse','targetaudience','expectedcost');
+	public $sortby_fields = Array('campaignname','smownerid','campaigntype','productname','expectedrevenue','closingdate','campaignstatus','expectedresponse','targetaudience','expectedcost');
 
 	// For Alphabetical search
-	var $def_basicsearch_col = 'campaignname';
+	public $def_basicsearch_col = 'campaignname';
 
 	// Column value to use on detail view record text display
-	var $def_detailview_recname = 'campaignname';
+	public $def_detailview_recname = 'campaignname';
 
 	// Required Information for enabling Import feature
-	var $required_fields = Array('campaignname'=>1);
+	public $required_fields = Array('campaignname'=>1);
 
 	// Callback function list during Importing
-	var $special_functions = Array('set_import_assigned_user');
+	public $special_functions = Array('set_import_assigned_user');
 
-	var $default_order_by = 'crmid';
-	var $default_sort_order = 'DESC';
+	public $default_order_by = 'crmid';
+	public $default_sort_order = 'DESC';
 	// Used when enabling/disabling the mandatory fields for the module.
 	// Refers to vtiger_field.fieldname values.
-	var $mandatory_fields = Array('campaignname','createdtime' ,'modifiedtime','assigned_user_id');
+	public $mandatory_fields = Array('campaignname','createdtime' ,'modifiedtime','assigned_user_id');
 
-	function __construct() {
+	public function __construct() {
 		global $log;
 		$this_module = get_class($this);
 		$this->column_fields = getColumnFields($this_module);
@@ -101,7 +101,7 @@ class Campaigns extends CRMEntity {
 		}
 	}
 
-	function save_module($module) {
+	public function save_module($module) {
 		if ($this->HasDirectImageField) {
 			$this->insertIntoAttachment($this->id,$module);
 		}
@@ -112,7 +112,7 @@ class Campaigns extends CRMEntity {
 	 * @param  integer   $id      - campaignid
 	 * returns related Accounts record in array format
 	 */
-	function get_accounts($id, $cur_tab_id, $rel_tab_id, $actions = false) {
+	public function get_accounts($id, $cur_tab_id, $rel_tab_id, $actions = false) {
 		global $log, $singlepane_view,$currentModule;
 		$log->debug("Entering get_accounts(".$id.") method ...");
 		$this_module = $currentModule;
@@ -211,7 +211,7 @@ class Campaigns extends CRMEntity {
 	 * @param  integer   $id      - campaignid
 	 * returns related Contacts record in array format
 	 */
-	function get_contacts($id, $cur_tab_id, $rel_tab_id, $actions=false) {
+	public function get_contacts($id, $cur_tab_id, $rel_tab_id, $actions=false) {
 		global $log, $singlepane_view,$currentModule;
 		$log->debug("Entering get_contacts(".$id.") method ...");
 		$this_module = $currentModule;
@@ -311,7 +311,7 @@ class Campaigns extends CRMEntity {
 	 * @param  integer   $id      - campaignid
 	 * returns related Leads record in array format
 	 */
-	function get_leads($id, $cur_tab_id, $rel_tab_id, $actions=false) {
+	public function get_leads($id, $cur_tab_id, $rel_tab_id, $actions=false) {
 		global $log, $singlepane_view, $currentModule;
 		$log->debug("Entering get_leads(".$id.") method ...");
 		$this_module = $currentModule;
@@ -409,7 +409,7 @@ class Campaigns extends CRMEntity {
 	 * @param - $status_column index of the status column in the list.
 	 * returns true on success
 	 */
-	function add_status_popup($related_list, $status_column = 7, $related_module)
+	public function add_status_popup($related_list, $status_column = 7, $related_module)
 	{
 		global $adb;
 		if (empty($this->campaignrelstatus)) {
@@ -445,7 +445,7 @@ class Campaigns extends CRMEntity {
 	 * @param - $secmodule secondary module name
 	 * returns the query string formed on fetching the related data for report for secondary module
 	 */
-	function generateReportsSecQuery($module,$secmodule){
+	public function generateReportsSecQuery($module, $secmodule){
 		$query = $this->getRelationQuery($module,$secmodule,"vtiger_campaign","campaignid");
 		$query .=" left join vtiger_crmentity as vtiger_crmentityCampaigns on vtiger_crmentityCampaigns.crmid=vtiger_campaign.campaignid and vtiger_crmentityCampaigns.deleted=0
 				left join vtiger_products as vtiger_productsCampaigns on vtiger_campaign.product_id = vtiger_productsCampaigns.productid
@@ -461,7 +461,7 @@ class Campaigns extends CRMEntity {
 	 * @param - $secmodule secondary module name
 	 * returns the array with table names and fieldnames storing relations between module and this module
 	 */
-	function setRelationTables($secmodule){
+	public function setRelationTables($secmodule){
 		$rel_tables = array (
 			"Contacts" => array("vtiger_campaigncontrel"=>array("campaignid","contactid"),"vtiger_campaign"=>"campaignid"),
 			"Leads" => array("vtiger_campaignleadrel"=>array("campaignid","leadid"),"vtiger_campaign"=>"campaignid"),
@@ -474,7 +474,7 @@ class Campaigns extends CRMEntity {
 	}
 
 	// Function to unlink an entity with given Id from another entity
-	function unlinkRelationship($id, $return_module, $return_id) {
+	public function unlinkRelationship($id, $return_module, $return_id) {
 		global $log;
 		if(empty($return_module) || empty($return_id)) return;
 
@@ -496,7 +496,7 @@ class Campaigns extends CRMEntity {
 		}
 	}
 
-	function save_related_module($module, $crmid, $with_module, $with_crmids) {
+	public function save_related_module($module, $crmid, $with_module, $with_crmids) {
 		$adb = PearDatabase::getInstance();
 
 		if(!is_array($with_crmids)) $with_crmids = Array($with_crmids);
@@ -595,7 +595,7 @@ class Campaigns extends CRMEntity {
 	 * @param Array List of Entity Id's from which related records need to be transfered
 	 * @param Integer Id of the the Record to which the related records are to be moved
 	 */
-	function transferRelatedRecords($module, $transferEntityIds, $entityId) {
+	public function transferRelatedRecords($module, $transferEntityIds, $entityId) {
 		global $adb,$log;
 		$log->debug("Entering function transferRelatedRecords ($module, $transferEntityIds, $entityId)");
 

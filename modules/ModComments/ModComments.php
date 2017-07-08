@@ -19,7 +19,7 @@ class ModComments extends ModCommentsCore {
 	 * @param String Module name
 	 * @param String Event Type (module.postinstall, module.disabled, module.enabled, module.preuninstall)
 	 */
-	function vtlib_handler($modulename, $event_type) {
+	public function vtlib_handler($modulename, $event_type) {
 		parent::vtlib_handler($modulename, $event_type);
 		if ($event_type == 'module.postinstall') {
 			self::addWidgetTo(array('Leads', 'Contacts', 'Accounts', 'Potentials', 'Project', 'ProjectTask'));
@@ -37,7 +37,7 @@ class ModComments extends ModCommentsCore {
 	 * @param CRMID Source parent record id
 	 * @param CRMID Target parent record id
 	 */
-	static function transferRecords($currentParentId, $targetParentId) {
+	public static function transferRecords($currentParentId, $targetParentId) {
 		global $adb;
 		$adb->pquery("UPDATE vtiger_modcomments SET related_to=? WHERE related_to=?", array($targetParentId, $currentParentId));
 	}
@@ -45,7 +45,7 @@ class ModComments extends ModCommentsCore {
 	/**
 	 * Get widget instance by name
 	 */
-	static function getWidget($name) {
+	public static function getWidget($name) {
 		if ($name == 'DetailViewBlockCommentWidget' &&
 				isPermitted('ModComments', 'DetailView') == 'yes') {
 			require_once dirname(__FILE__) . '/widgets/DetailViewBlockComment.php';
@@ -59,7 +59,7 @@ class ModComments extends ModCommentsCore {
 	 * @param unknown_type $moduleNames
 	 * @return unknown_type
 	 */
-	static function addWidgetTo($moduleNames, $widgetType='DETAILVIEWWIDGET', $widgetName='DetailViewBlockCommentWidget') {
+	public static function addWidgetTo($moduleNames, $widgetType='DETAILVIEWWIDGET', $widgetName='DetailViewBlockCommentWidget') {
 		if (empty($moduleNames)) return;
 
 		include_once 'vtlib/Vtiger/Module.php';
@@ -89,7 +89,7 @@ class ModComments extends ModCommentsCore {
 	 * @param unknown_type $widgetName
 	 * @return unknown_type
 	 */
-	static function removeWidgetFrom($moduleNames, $widgetType='DETAILVIEWWIDGET', $widgetName='DetailViewBlockCommentWidget') {
+	public static function removeWidgetFrom($moduleNames, $widgetType='DETAILVIEWWIDGET', $widgetName='DetailViewBlockCommentWidget') {
 		if (empty($moduleNames)) return;
 
 		include_once 'vtlib/Vtiger/Module.php';
@@ -114,7 +114,7 @@ class ModComments extends ModCommentsCore {
 	/**
 	 * Wrap this instance as a model
 	 */
-	function getAsCommentModel() {
+	public function getAsCommentModel() {
 		return new ModComments_CommentsModel($this->column_fields);
 	}
 

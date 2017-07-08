@@ -11,31 +11,31 @@ require_once('data/CRMEntity.php');
 require_once('data/Tracker.php');
 
 class Vendors extends CRMEntity {
-	var $db, $log; // Used in class functions of CRMEntity
+	public public $db, $log; // Used in class functions of CRMEntity
 
-	var $table_name = 'vtiger_vendor';
-	var $table_index= 'vendorid';
-	var $column_fields = Array();
+	public $table_name = 'vtiger_vendor';
+	public $table_index= 'vendorid';
+	public $column_fields = Array();
 
 	/** Indicator if this is a custom module or standard module */
-	var $IsCustomModule = true;
-	var $HasDirectImageField = false;
+	public $IsCustomModule = true;
+	public $HasDirectImageField = false;
 	/**
 	 * Mandatory table for supporting custom fields.
 	 */
-	var $customFieldTable = Array('vtiger_vendorcf', 'vendorid');
+	public $customFieldTable = Array('vtiger_vendorcf', 'vendorid');
 	// Uncomment the line below to support custom field columns on related lists
 	// var $related_tables = Array('vtiger_vendorcf'=>array('vendorid','vtiger_vendor', 'vendorid'));
 
 	/**
 	 * Mandatory for Saving, Include tables related to this module.
 	 */
-	var $tab_name = Array('vtiger_crmentity','vtiger_vendor','vtiger_vendorcf');
+	public $tab_name = Array('vtiger_crmentity','vtiger_vendor','vtiger_vendorcf');
 
 	/**
 	 * Mandatory for Saving, Include tablename and tablekey columnname here.
 	 */
-	var $tab_name_index = Array(
+	public $tab_name_index = Array(
 		'vtiger_crmentity'=>'crmid',
 		'vtiger_vendor'=>'vendorid',
 		'vtiger_vendorcf'=>'vendorid');
@@ -43,7 +43,7 @@ class Vendors extends CRMEntity {
 	/**
 	 * Mandatory for Listing (Related listview)
 	 */
-	var $list_fields = Array (
+	public $list_fields = Array (
 		/* Format: Field Label => Array(tablename => columnname) */
 		// tablename should not have prefix 'vtiger_'
 		'Vendor Name'=>Array('vendor'=>'vendorname'),
@@ -51,7 +51,7 @@ class Vendors extends CRMEntity {
 		'Email'=>Array('vendor'=>'email'),
 		'Category'=>Array('vendor'=>'category')
 	);
-	var $list_fields_name = Array(
+	public $list_fields_name = Array(
 		'Vendor Name'=>'vendorname',
 		'Phone'=>'phone',
 		'Email'=>'email',
@@ -59,41 +59,41 @@ class Vendors extends CRMEntity {
 	);
 
 	// Make the field link to detail view from list view (Fieldname)
-	var $list_link_field = 'vendorname';
+	public $list_link_field = 'vendorname';
 
 	// For Popup listview and UI type support
-	var $search_fields = Array(
+	public $search_fields = Array(
 		'Vendor Name'=>Array('vendor'=>'vendorname'),
 		'Phone'=>Array('vendor'=>'phone')
 	);
-	var $search_fields_name = Array(
+	public $search_fields_name = Array(
 		/* Format: Field Label => fieldname */
 		'Vendor Name'=>'vendorname',
 		'Phone'=>'phone'
 	);
 
 	// For Popup window record selection
-	var $popup_fields = Array('vendorname');
+	public $popup_fields = Array('vendorname');
 
 	// Placeholder for sort fields - All the fields will be initialized for Sorting through initSortFields
-	var $sortby_fields = Array('vendorname','category');
+	public $sortby_fields = Array('vendorname','category');
 
 	// For Alphabetical search
-	var $def_basicsearch_col = 'vendorname';
+	public $def_basicsearch_col = 'vendorname';
 
 	// Column value to use on detail view record text display
-	var $def_detailview_recname = 'vendorname';
+	public $def_detailview_recname = 'vendorname';
 
 	// Required Information for enabling Import feature
-	var $required_fields = Array();
+	public $required_fields = Array();
 
-	var $default_order_by = 'vendorname';
-	var $default_sort_order='ASC';
+	public $default_order_by = 'vendorname';
+	public $default_sort_order='ASC';
 	// Used when enabling/disabling the mandatory fields for the module.
 	// Refers to vtiger_field.fieldname values.
-	var $mandatory_fields = Array('createdtime', 'modifiedtime', 'vendorname');
+	public $mandatory_fields = Array('createdtime', 'modifiedtime', 'vendorname');
 
-	function save_module($module) {
+	public function save_module($module) {
 		if ($this->HasDirectImageField) {
 			$this->insertIntoAttachment($this->id,$module);
 		}
@@ -103,7 +103,7 @@ class Vendors extends CRMEntity {
 	 *	@param int $id - vendor id
 	 *	@return array - array which will be returned from the function GetRelatedList
 	 */
-	function get_products($id, $cur_tab_id, $rel_tab_id, $actions=false) {
+	public function get_products($id, $cur_tab_id, $rel_tab_id, $actions=false) {
 		global $log, $singlepane_view,$currentModule,$current_user;
 		$log->debug("Entering get_products(".$id.") method ...");
 		$this_module = $currentModule;
@@ -158,7 +158,7 @@ class Vendors extends CRMEntity {
 	 *	@param int $id - vendor id
 	 *	@return array - array which will be returned from the function GetRelatedList
 	 */
-	function get_purchase_orders($id, $cur_tab_id, $rel_tab_id, $actions=false) {
+	public function get_purchase_orders($id, $cur_tab_id, $rel_tab_id, $actions=false) {
 		global $log, $singlepane_view,$currentModule,$current_user;
 		$log->debug("Entering get_purchase_orders(".$id.") method ...");
 		$this_module = $currentModule;
@@ -207,7 +207,7 @@ class Vendors extends CRMEntity {
 	 *	@param int $id - vendor id
 	 *	@return array - array which will be returned from the function GetRelatedList
 	 */
-	function get_contacts($id, $cur_tab_id, $rel_tab_id, $actions=false) {
+	public function get_contacts($id, $cur_tab_id, $rel_tab_id, $actions=false) {
 		global $log, $singlepane_view,$currentModule,$current_user;
 		$log->debug("Entering get_contacts(".$id.") method ...");
 		$this_module = $currentModule;
@@ -258,7 +258,7 @@ class Vendors extends CRMEntity {
 	 * @param Array List of Entity Id's from which related records need to be transfered
 	 * @param Integer Id of the the Record to which the related records are to be moved
 	 */
-	function transferRelatedRecords($module, $transferEntityIds, $entityId) {
+	public function transferRelatedRecords($module, $transferEntityIds, $entityId) {
 		global $adb,$log;
 		$log->debug("Entering function transferRelatedRecords ($module, $transferEntityIds, $entityId)");
 
@@ -295,7 +295,7 @@ class Vendors extends CRMEntity {
 	 * @param - $secmodule secondary module name
 	 * returns the query string formed on fetching the related data for report for secondary module
 	 */
-	function generateReportsSecQuery($module,$secmodule){
+	public function generateReportsSecQuery($module, $secmodule){
 		$query = $this->getRelationQuery($module,$secmodule,"vtiger_vendor","vendorid");
 		$query .=" left join vtiger_crmentity as vtiger_crmentityVendors on vtiger_crmentityVendors.crmid=vtiger_vendor.vendorid and vtiger_crmentityVendors.deleted=0
 			left join vtiger_vendorcf on vtiger_vendorcf.vendorid = vtiger_crmentityVendors.crmid
@@ -309,7 +309,7 @@ class Vendors extends CRMEntity {
 	 * @param - $secmodule secondary module name
 	 * returns the array with table names and fieldnames storing relations between module and this module
 	 */
-	function setRelationTables($secmodule){
+	public function setRelationTables($secmodule){
 		$rel_tables = array (
 			"Products" =>array("vtiger_products"=>array("vendor_id","productid"),"vtiger_vendor"=>"vendorid"),
 			"PurchaseOrder" =>array("vtiger_purchaseorder"=>array("vendorid","purchaseorderid"),"vtiger_vendor"=>"vendorid"),
@@ -319,7 +319,7 @@ class Vendors extends CRMEntity {
 	}
 
 	// Function to unlink all the dependent entities of the given Entity by Id
-	function unlinkDependencies($module, $id) {
+	public function unlinkDependencies($module, $id) {
 		global $log;
 		//Deleting Vendor related PO.
 		$po_q = 'SELECT vtiger_crmentity.crmid FROM vtiger_crmentity
@@ -374,7 +374,7 @@ class Vendors extends CRMEntity {
 	}
 
 	// Function to unlink an entity with given Id from another entity
-	function unlinkRelationship($id, $return_module, $return_id) {
+	public function unlinkRelationship($id, $return_module, $return_id) {
 		global $log;
 		if(empty($return_module) || empty($return_id)) return;
 
@@ -386,7 +386,7 @@ class Vendors extends CRMEntity {
 		}
 	}
 
-	function delete_related_module($module, $crmid, $with_module, $with_crmid) {
+	public function delete_related_module($module, $crmid, $with_module, $with_crmid) {
 		global $log, $adb;
 		if($with_module == 'Contacts') {
 			if (!is_array($with_crmid))
@@ -406,7 +406,7 @@ class Vendors extends CRMEntity {
 		}
 	}
 
-	function save_related_module($module, $crmid, $with_module, $with_crmids) {
+	public function save_related_module($module, $crmid, $with_module, $with_crmids) {
 		$adb = PearDatabase::getInstance();
 
 		if(!is_array($with_crmids)) $with_crmids = Array($with_crmids);

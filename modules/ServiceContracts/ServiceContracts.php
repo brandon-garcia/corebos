@@ -11,31 +11,31 @@ require_once('data/CRMEntity.php');
 require_once('data/Tracker.php');
 
 class ServiceContracts extends CRMEntity {
-	var $db, $log; // Used in class functions of CRMEntity
+	public public $db, $log; // Used in class functions of CRMEntity
 
-	var $table_name = 'vtiger_servicecontracts';
-	var $table_index= 'servicecontractsid';
-	var $column_fields = Array();
+	public $table_name = 'vtiger_servicecontracts';
+	public $table_index= 'servicecontractsid';
+	public $column_fields = Array();
 
 	/** Indicator if this is a custom module or standard module */
-	var $IsCustomModule = true;
-	var $HasDirectImageField = false;
+	public $IsCustomModule = true;
+	public $HasDirectImageField = false;
 	/**
 	 * Mandatory table for supporting custom fields.
 	 */
-	var $customFieldTable = Array('vtiger_servicecontractscf', 'servicecontractsid');
+	public $customFieldTable = Array('vtiger_servicecontractscf', 'servicecontractsid');
 	// Uncomment the line below to support custom field columns on related lists
-	var $related_tables = Array('vtiger_servicecontractscf'=>array('servicecontractsid','vtiger_servicecontracts', 'servicecontractsid'));
+	public $related_tables = Array('vtiger_servicecontractscf'=>array('servicecontractsid','vtiger_servicecontracts', 'servicecontractsid'));
 
 	/**
 	 * Mandatory for Saving, Include tables related to this module.
 	 */
-	var $tab_name = Array('vtiger_crmentity', 'vtiger_servicecontracts', 'vtiger_servicecontractscf');
+	public $tab_name = Array('vtiger_crmentity', 'vtiger_servicecontracts', 'vtiger_servicecontractscf');
 
 	/**
 	 * Mandatory for Saving, Include tablename and tablekey columnname here.
 	 */
-	var $tab_name_index = Array(
+	public $tab_name_index = Array(
 		'vtiger_crmentity' => 'crmid',
 		'vtiger_servicecontracts' => 'servicecontractsid',
 		'vtiger_servicecontractscf'=>'servicecontractsid');
@@ -43,7 +43,7 @@ class ServiceContracts extends CRMEntity {
 	/**
 	 * Mandatory for Listing (Related listview)
 	 */
-	var $list_fields = Array (
+	public $list_fields = Array (
 		/* Format: Field Label => Array(tablename => columnname) */
 		// tablename should not have prefix 'vtiger_'
 		'Subject' => Array('servicecontracts' => 'subject'),
@@ -52,7 +52,7 @@ class ServiceContracts extends CRMEntity {
 		'Used Units' => Array('servicecontracts' => 'used_units'),
 		'Total Units' => Array('servicecontracts' => 'total_units')
 	);
-	var $list_fields_name = Array(
+	public $list_fields_name = Array(
 		/* Format: Field Label => fieldname */
 		'Subject' => 'subject',
 		'Assigned To' => 'assigned_user_id',
@@ -62,10 +62,10 @@ class ServiceContracts extends CRMEntity {
 	);
 
 	// Make the field link to detail view from list view (Fieldname)
-	var $list_link_field = 'subject';
+	public $list_link_field = 'subject';
 
 	// For Popup listview and UI type support
-	var $search_fields = Array(
+	public $search_fields = Array(
 		/* Format: Field Label => Array(tablename => columnname) */
 		// tablename should not have prefix 'vtiger_'
 		'Subject' => Array('servicecontracts' => 'subject'),
@@ -74,7 +74,7 @@ class ServiceContracts extends CRMEntity {
 		'Used Units' => Array('servicecontracts' => 'used_units'),
 		'Total Units' => Array('servicecontracts' => 'total_units')
 	);
-	var $search_fields_name = Array(
+	public $search_fields_name = Array(
 		/* Format: Field Label => fieldname */
 		'Subject' => 'subject',
 		'Contract No' => 'contract_no',
@@ -84,30 +84,30 @@ class ServiceContracts extends CRMEntity {
 	);
 
 	// For Popup window record selection
-	var $popup_fields = Array('subject');
+	public $popup_fields = Array('subject');
 
 	// Placeholder for sort fields - All the fields will be initialized for Sorting through initSortFields
-	var $sortby_fields = Array();
+	public $sortby_fields = Array();
 
 	// For Alphabetical search
-	var $def_basicsearch_col = 'subject';
+	public $def_basicsearch_col = 'subject';
 
 	// Column value to use on detail view record text display
-	var $def_detailview_recname = 'subject';
+	public $def_detailview_recname = 'subject';
 
 	// Required Information for enabling Import feature
-	var $required_fields = Array('assigned_user_id'=>1);
+	public $required_fields = Array('assigned_user_id'=>1);
 
 	// Callback function list during Importing
-	var $special_functions = Array('set_import_assigned_user');
+	public $special_functions = Array('set_import_assigned_user');
 
-	var $default_order_by = 'subject';
-	var $default_sort_order='ASC';
+	public $default_order_by = 'subject';
+	public $default_sort_order='ASC';
 	// Used when enabling/disabling the mandatory fields for the module.
 	// Refers to vtiger_field.fieldname values.
-	var $mandatory_fields = Array('subject','assigned_user_id');
+	public $mandatory_fields = Array('subject','assigned_user_id');
 
-	function save_module($module) {
+	public function save_module($module) {
 		if ($this->HasDirectImageField) {
 			$this->insertIntoAttachment($this->id,$module);
 		}
@@ -127,7 +127,7 @@ class ServiceContracts extends CRMEntity {
 	 * @param String Module name
 	 * @param String Event Type (module.postinstall, module.disabled, module.enabled, module.preuninstall)
 	 */
-	function vtlib_handler($moduleName, $eventType) {
+	public function vtlib_handler($moduleName, $eventType) {
 		require_once('include/utils/utils.php');
 		global $adb;
 
@@ -176,7 +176,7 @@ class ServiceContracts extends CRMEntity {
 	 * NOTE: This function has been added to CRMEntity (base class).
 	 * You can override the behavior by re-defining it here.
 	 */
-	function save_related_module($module, $crmid, $with_module, $with_crmids) {
+	public function save_related_module($module, $crmid, $with_module, $with_crmids) {
 
 		if(!is_array($with_crmids)) $with_crmids = Array($with_crmids);
 		foreach($with_crmids as $with_crmid) {
@@ -189,7 +189,7 @@ class ServiceContracts extends CRMEntity {
 	 }
 
 	 // Function to Update the parent_id of HelpDesk with sc_related_to of ServiceContracts if the parent_id is not set.
-	 function updateHelpDeskRelatedTo($focusId, $entityIds) {
+	 public function updateHelpDeskRelatedTo($focusId, $entityIds) {
 		global $log;
 		$log->debug("Entering into function updateHelpDeskRelatedTo(".$entityIds.").");
 
@@ -209,7 +209,7 @@ class ServiceContracts extends CRMEntity {
 	}
 
 	// Function to Compute and Update the Used Units and Progress of the Service Contract based on all the related Trouble tickets.
-	function updateServiceContractState($focusId) {
+	public function updateServiceContractState($focusId) {
 		$this->id = $focusId;
 		$this->retrieve_entity_info($focusId,'ServiceContracts');
 
@@ -241,7 +241,7 @@ class ServiceContracts extends CRMEntity {
 	}
 
 	// Function to Upate the Used Units of the Service Contract based on the given Ticket id.
-	function computeUsedUnits($ticketData, $operator='+') {
+	public function computeUsedUnits($ticketData, $operator='+') {
 		$trackingUnit = strtolower($this->column_fields['tracking_unit']);
 		$workingHoursPerDay = 24;
 
@@ -265,14 +265,14 @@ class ServiceContracts extends CRMEntity {
 	}
 
 	// Function to Upate the Used Units of the Service Contract.
-	function updateUsedUnits($usedUnits) {
+	public function updateUsedUnits($usedUnits) {
 		$this->column_fields['used_units'] = $usedUnits;
 		$updateQuery = "UPDATE vtiger_servicecontracts SET used_units = $usedUnits WHERE servicecontractsid = ?";
 		$this->db->pquery($updateQuery, array($this->id));
 	}
 
 	// Function to Calculate the End Date, Planned Duration, Actual Duration and Progress of a Service Contract
-	function calculateProgress() {
+	public function calculateProgress() {
 		$updateCols = array();
 		$updateParams = array();
 
@@ -336,7 +336,7 @@ class ServiceContracts extends CRMEntity {
 	 * NOTE: This function has been added to CRMEntity (base class).
 	 * You can override the behavior by re-defining it here.
 	 */
-	function delete_related_module($module, $crmid, $with_module, $with_crmid) {
+	public function delete_related_module($module, $crmid, $with_module, $with_crmid) {
 	 	parent::delete_related_module($module, $crmid, $with_module, $with_crmid);
 	 	if ($with_module == 'HelpDesk') {
 	 		$this->updateServiceContractState($crmid);

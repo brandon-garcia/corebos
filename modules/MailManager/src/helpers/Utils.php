@@ -9,7 +9,7 @@
  ************************************************************************************/
 
 class MailManager_Utils {
-	static function safe_html_string($string) {
+	public static function safe_html_string($string) {
 		global $root_directory;
 		include_once ('include/htmlpurifier/library/HTMLPurifier.auto.php');
 		$config = HTMLPurifier_Config::createDefault();
@@ -20,7 +20,7 @@ class MailManager_Utils {
 		return $htmlSafe;
 	}
 
-	static function allowedFileExtension($filename) {
+	public static function allowedFileExtension($filename) {
 		global $upload_badext;
 		$parts = explode('.', $filename);
 		if (count($parts) > 1) {
@@ -30,7 +30,7 @@ class MailManager_Utils {
 		return false;
 	}
 
-	static function emitJSON($object) {
+	public static function emitJSON($object) {
 		echo json_encode($object);
 	}
 }

@@ -24,7 +24,7 @@ class evvtMenu {
 	* @param String Module name
 	* @param String Event Type
 	*/
-	function vtlib_handler($moduleName, $eventType) {
+	public function vtlib_handler($moduleName, $eventType) {
 		global $adb;
  		if($eventType == 'module.postinstall') {
  			$menus = $adb->query('SELECT vtiger_parenttab.parenttabid,vtiger_parenttab.parenttab_label,visible,vtiger_parenttabrel.tabid,vtiger_tab.name 

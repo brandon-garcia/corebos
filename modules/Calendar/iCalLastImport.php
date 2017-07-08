@@ -11,21 +11,21 @@ require_once 'vtlib/Vtiger/Utils.php';
 
 class iCalLastImport {
 
-	var $tableName = 'vtiger_ical_import';
-	var $fields = array('id', 'userid', 'entitytype', 'crmid');
-	var $fieldData = array();
+	public $tableName = 'vtiger_ical_import';
+	public $fields = array('id', 'userid', 'entitytype', 'crmid');
+	public $fieldData = array();
 	
-	function  __construct() {
+	public function  __construct() {
 	}
 
-	function clearRecords($userId) {
+	public function clearRecords($userId) {
 		$adb = PearDatabase::getInstance();
 		if(Vtiger_Utils::CheckTable($this->tableName)) {
 			$adb->pquery('DELETE FROM '.$this->tableName .' WHERE userid = ?', array($userId));
 		}
 	}
 
-	function setFields($data) {
+	public function setFields($data) {
 		if(!empty($data)) {
 			foreach($data as $name => $value) {
 				$this->fieldData[$name] = $value;
@@ -33,7 +33,7 @@ class iCalLastImport {
 		}
 	}
 
-	function save() {
+	public function save() {
 		$adb = PearDatabase::getInstance();
 
 		if(count($this->fieldData) == 0) return;
@@ -54,7 +54,7 @@ class iCalLastImport {
 				array($fieldValues));
 	}
 
-	function undo($moduleName, $userId) {
+	public function undo($moduleName, $userId) {
 		$adb = PearDatabase::getInstance();
 		if(Vtiger_Utils::CheckTable($this->tableName)) {
 			$result = $adb->pquery('UPDATE vtiger_crmentity SET deleted=1 WHERE crmid IN

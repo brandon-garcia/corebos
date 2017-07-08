@@ -13,7 +13,7 @@ include_once dirname(__FILE__) . '/QueryWithGrouping.php';
 
 class crmtogo_WS_RelatedRecords extends crmtogo_WS_QueryWithGrouping {
 
-	function process(crmtogo_API_Request $request) {
+	public function process(crmtogo_API_Request $request) {
 		global $current_user, $adb, $currentModule;
 		$current_user = $this->getActiveUser();
 

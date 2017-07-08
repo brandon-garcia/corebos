@@ -31,90 +31,90 @@ class BURAK_Gantt {
 	/**
 	* @var resource Image object
 	*/
-	var $im;
+	public $im;
 	/**
 	* @var integer Font type
 	*/
-	var $font;
+	public $font;
 	/**
 	* @var array Stores component color information
 	*/
-	var $colors = array();
+	public $colors = array();
 	/**
 	* @var integer Sequence increment
 	*/
-	var $inc_y;
+	public $inc_y;
 	/**
 	* @var integer Daily increment
 	*/
-	var $inc_x;
+	public $inc_x;
 	/**
 	* @var integer Total number of elements
 	*/
-	var $n;
+	public $n;
 	
 	/**
 	* @var array Stores gantt element information
 	*/
-	var $data_gantt = array();
+	public $data_gantt = array();
 	/**
 	* @var array Stores group information
 	*/
-	var $data_tree = array();
+	public $data_tree = array();
 	/**
 	* @var array Stores element count based on type
 	*/
-	var $data_count = array();
+	public $data_count = array();
 	/**
 	* @var array Stores holidays
 	*/
-	var $data_holiday = array();
+	public $data_holiday = array();
 	/**
 	* @var array Stores weekends. Defaults to Saturday and Sunday
 	*/
-	var $data_weekend = array();
+	public $data_weekend = array();
 	/**
 	* @var array Stores gantt element relation information
 	*/
-	var $data_rel = array();
+	public $data_rel = array();
 	/**
 	* @var array Stores gantt element start order
 	*/
-	var $data_start = array();
+	public $data_start = array();
 	
 	/**
 	* @var integer Stores gantt start date
 	*/
-	var $gantt_start;
+	public $gantt_start;
 	/**
 	* @var integer Stores gantt end date
 	*/
-	var $gantt_end;
+	public $gantt_end;
 	/**
 	* @var integer Stores min date based on start dates of gantt elements
 	*/
-	var $date_min;
+	public $date_min;
 	/**
 	* @var integer Stores max based on end dates of gantt elements
 	*/
-	var $date_max;
+	public $date_max;
 	/**
 	* @var integer Stores gantt width
 	*/
-	var $gantt_width;
+	public $gantt_width;
 	/**
 	* @var integer Stores gantt height
 	*/
-	var $gantt_height;
+	public $gantt_height;
 	/**
 	* @var array Stores component height information
 	*/
-	var $heights = array();
+	public $heights = array();
 
 	/**
 	* Class constructor
 	*/
-	function __construct(){
+	public function __construct(){
 		if(!in_array("gd",get_loaded_extensions())){
 			die("BURAK_Gantt requires the GD library.");
 		}
@@ -152,7 +152,7 @@ class BURAK_Gantt {
 	* @param integer $label Group label
 	* @param mixed $gid Group id
 	*/
-	function addGroup($id,$label,$gid=null){
+	public function addGroup($id, $label, $gid=null){
 		$this->data_count["G"]++;
 		$this->data_gantt[$id] = array();
 		$this->data_gantt[$id]["type"] = "G";
@@ -178,7 +178,7 @@ class BURAK_Gantt {
 	* @param integer $label Task label
 	* @param mixed $gid Group id
 	*/
-	function addTask($id,$start,$end,$progress,$label,$gid=null){
+	public function addTask($id, $start, $end, $progress, $label, $gid=null){
 		$s = BURAK_Gantt::getTimestamp($start);
 		$e = BURAK_Gantt::getTimestamp($end)+86400;
 		if($s >= $e){
@@ -206,7 +206,7 @@ class BURAK_Gantt {
 	* @param integer $label Task label
 	* @param mixed $gid Group id
 	*/
-	function addMilestone($id,$start,$label,$gid=null){
+	public function addMilestone($id, $start, $label, $gid=null){
 		$this->data_count["M"]++;
 		$s = BURAK_Gantt::getTimestamp($start);
 		$this->data_gantt[$id] = array();
@@ -226,7 +226,7 @@ class BURAK_Gantt {
 	* @param mixed $child Child element id
 	* @param string $type ES for end-to-start, EE for end-to-end, SS for start-to-start
 	*/
-	function addRelation($parent,$child,$type){
+	public function addRelation($parent, $child, $type){
 		if(!array_key_exists($parent,$this->data_tree)){
 			die("{$parent} is not a valid identifier");
 		}else{
@@ -249,7 +249,7 @@ class BURAK_Gantt {
 	*
 	* @param string $date
 	*/
-	function addHoliday($date){
+	public function addHoliday($date){
 		BURAK_Gantt::validateDate($date);
 		$this->data_holiday[] = $date;
 	}
@@ -260,7 +260,7 @@ class BURAK_Gantt {
 	* @param string $name Component name
 	* @param string $color Color in hexadecimal format.. ie FFFFFF
 	*/
-	function setColor($name,$color){
+	public function setColor($name, $color){
 		if(!preg_match("/^[0-9A-F]{6}$/i",$color)){
 			die("{$color} is not an acceptable color format!");
 		}
@@ -277,7 +277,7 @@ class BURAK_Gantt {
 	*
 	* @param array $days
 	*/
-	function setWeekend($days){
+	public function setWeekend($days){
 		if(!is_array($days)){
 			die("Weekend days should definbed as an array");
 		}
@@ -289,7 +289,7 @@ class BURAK_Gantt {
 	*
 	* @param integer $type 1 for daily, 2 for weekly, 3 for monthly
 	*/
-	function setGrid($type){
+	public function setGrid($type){
 		switch($type){
 			case 1:
 			case 2:
@@ -310,7 +310,7 @@ class BURAK_Gantt {
 	* @param string $file File name
 	* @param integer $quality Image quality 0-100
 	*/
-	function outputGantt($file=null,$quality=90){
+	public function outputGantt($file=null, $quality=90){
 		$this->drawGantt();
 		if(!empty($file)){
 			imagejpeg($this->im,$file,$quality);
@@ -336,7 +336,7 @@ class BURAK_Gantt {
 	* @param string $id
 	* @param string $gid Group id
 	*/
-	function addID($id,$gid=null){
+	public function addID($id, $gid=null){
 		if(array_key_exists($id,$this->data_tree)){
 			die("{$id} already exists");
 		}
@@ -359,7 +359,7 @@ class BURAK_Gantt {
 	* @param string $gid Group id
 	* @param boolean $pm Populate members array?
 	*/
-	function addChild($id,$gid,$pm=TRUE){
+	public function addChild($id, $gid, $pm=TRUE){
 		if(!array_key_exists($gid,$this->data_tree)){
 			die("{$gid} is not a valid group identifier");
 		}else{
@@ -392,7 +392,7 @@ class BURAK_Gantt {
 	* Creates canvas
 	*
 	*/
-	function createCanvas(){
+	public function createCanvas(){
 		$this->n = $this->data_count["T"] + $this->data_count["M"] + ($this->data_count["G"]*2);
 		$this->calGroupRange();
 		$this->calRange();
@@ -417,7 +417,7 @@ class BURAK_Gantt {
 	* This function also extends the gantt chart depending on the grid type.
 	* The extra space is needed to allow for long labels.
 	*/
-	function calRange(){
+	public function calRange(){
 		// calculate min and max dates 
 		foreach($this->data_gantt as $k=>$v){
 			switch($v["type"]){
@@ -471,7 +471,7 @@ class BURAK_Gantt {
 	* Loops through all group members (including members of sub-groups)
 	* and compares start and end dates.
 	*/
-	function calGroupRange(){
+	public function calGroupRange(){
 		// calculate start and end dates for groups
 		foreach($this->data_gantt as $k=>$v){
 			// if element is a group
@@ -511,7 +511,7 @@ class BURAK_Gantt {
 	* @param integer $id Group id
 	* @return boolean
 	*/
-	function isValidGroup($id){
+	public function isValidGroup($id){
 		if($this->data_gantt[$id]["valid"]){
 			return TRUE;
 		}else{
@@ -528,7 +528,7 @@ class BURAK_Gantt {
 	* earlier start dates appear on top-left corner while ones with later dates appear 
 	* on the bottom-right corner.
 	*/
-	function createStartOrder(){
+	public function createStartOrder(){
 		// milestones should be placed first if they start on the same date as a task or group
 		$type = array();
 		foreach($this->data_gantt as $k=>$v){
@@ -548,7 +548,7 @@ class BURAK_Gantt {
 	* @param array $elements
 	* @return array
 	*/
-	function getStartOrder($elements){
+	public function getStartOrder($elements){
 		$seq = array();
 		foreach($this->data_start as $k=>$v){
 			if(in_array($k,$elements)){
@@ -564,7 +564,7 @@ class BURAK_Gantt {
 	* Sequnce in this class refers to the order in which
 	* gantt elements appear from top to bottom
 	*/
-	function createSequence(){
+	public function createSequence(){
 		$i = 0;
 		$seq = $this->getStartOrder($this->data_tree[0]);
 		foreach($seq as $k=>$v){
@@ -589,7 +589,7 @@ class BURAK_Gantt {
 	* Group sequnce refers to the order in which
 	* gantt elements appear from top to bottom
 	*/
-	function createGroupSequence($id,&$i){
+	public function createGroupSequence($id, &$i){
 		$i++;
 		$members = $this->getStartOrder($this->data_gantt[$id]["members"]);
 		$this->data_gantt[$id]["seq"] = $i;
@@ -610,7 +610,7 @@ class BURAK_Gantt {
 		$i++;
 	}
 	
-	function drawGantt(){
+	public function drawGantt(){
 		$this->createCanvas();
 		$this->createStartOrder();
 		$this->createSequence();
@@ -637,7 +637,7 @@ class BURAK_Gantt {
 		$this->drawConstraints();
 	}
 	
-	function drawConstraints(){
+	public function drawConstraints(){
 		foreach($this->data_rel as $v){
 			// get start point
 			switch($this->data_gantt[$v["parent"]]["type"]){
@@ -689,7 +689,7 @@ class BURAK_Gantt {
 		}
 	}
 	
-	function drawGrid(){
+	public function drawGrid(){
 		$i = 0;
 		$s = $this->gantt_start;
 		while($s <= ($this->gantt_end+1)){
@@ -790,7 +790,7 @@ class BURAK_Gantt {
 		}
 	}
 	
-	function drawConstraint($x1,$y1,$x2,$y2){
+	public function drawConstraint($x1, $y1, $x2, $y2){
 		if($x1 != $x2){
 			if($x1 < $x2){
 				imageline($this->im,$x1,$y1,$x2,$y1,$this->colors["line"]);
@@ -833,7 +833,7 @@ class BURAK_Gantt {
 	}
 	
 	
-	function posGroup($id){
+	public function posGroup($id){
 		$w = (floor(($this->data_gantt[$id]["end"] - $this->data_gantt[$id]["start"])/86400)) * $this->inc_x;
 		$x1 = $this->calX($this->data_gantt[$id]["start"]);
 		$y1 = $this->calY($this->data_gantt[$id]["seq"]);
@@ -842,7 +842,7 @@ class BURAK_Gantt {
 		$this->data_gantt[$id]["pos"] = array("x1"=>$x1,"y1"=>$y1,"x2"=>$x2,"y2"=>$y2);
 	}
 
-	function posTask($id){
+	public function posTask($id){
 		$w = (floor(($this->data_gantt[$id]["end"] - $this->data_gantt[$id]["start"])/86400)) * $this->inc_x;
 		$x1 = $this->calX($this->data_gantt[$id]["start"]);
 		$y1 = $this->calY($this->data_gantt[$id]["seq"]);
@@ -851,7 +851,7 @@ class BURAK_Gantt {
 		$this->data_gantt[$id]["pos"] = array("x1"=>$x1,"y1"=>$y1,"x2"=>$x2,"y2"=>$y2);
 	}
 	
-	function posMilestone($id){
+	public function posMilestone($id){
 		$x = $this->calX($this->data_gantt[$id]["start"]);
 		$y = $this->calY($this->data_gantt[$id]["seq"]);
 		$w = 8;
@@ -867,7 +867,7 @@ class BURAK_Gantt {
 		$this->data_gantt[$id]["pos"] = array("x1"=>$x1,"y1"=>$y1,"x2"=>$x2,"y2"=>$y2,"x3"=>$x3,"y3"=>$y3,"x4"=>$x4,"y4"=>$y4);
 	}
 	
-	function drawGroup($id){
+	public function drawGroup($id){
 		$pos = $this->data_gantt[$id]["pos"];
 		imagefilledrectangle($this->im,$pos["x1"],$pos["y1"],$pos["x2"],$pos["y2"],$this->colors["group"]);
 		$d = $this->data_gantt[$id]["label"];
@@ -893,7 +893,7 @@ class BURAK_Gantt {
 		imagefilledpolygon($this->im,$vertices,3,$this->colors["group"]);
 	}
 	
-	function drawTask($id){
+	public function drawTask($id){
 		$pos = $this->data_gantt[$id]["pos"];
 		imagefilledrectangle($this->im,$pos["x1"],$pos["y1"],$pos["x2"],$pos["y2"], $this->colors["task"]);
 		$d = $this->data_gantt[$id]["label"];
@@ -911,7 +911,7 @@ class BURAK_Gantt {
 		}
 	}
 	
-	function drawMilestone($id){
+	public function drawMilestone($id){
 		$pos = $this->data_gantt[$id]["pos"];
 		$vertices = array(
 			$pos["x1"],
@@ -933,7 +933,7 @@ class BURAK_Gantt {
 	 * @param integer $start
 	 * @return integer
 	*/
-	function calX($start){
+	public function calX($start){
 		return floor(($start - $this->gantt_start)/86400) * $this->inc_x;
 	}
 	
@@ -943,7 +943,7 @@ class BURAK_Gantt {
 	 * @param integer $i Element sequence
 	 * @return integer
 	*/
-	function calY($i){
+	public function calY($i){
 		return ($i * $this->inc_y) + $this->heights["month"] + $this->heights["day"];
 	}
 	
@@ -956,7 +956,7 @@ class BURAK_Gantt {
 	 * @param string $date
 	 * @return integer
 	*/
-	function getTimestamp($date){
+	public function getTimestamp($date){
 		BURAK_Gantt::validateDate($date);
 		list($y,$m,$d) = sscanf($date,"%4d-%2d-%2d");
 		return gmmktime(0,0,0,$m,$d,$y);
@@ -968,7 +968,7 @@ class BURAK_Gantt {
 	 * @static
 	 * @param string $date
 	*/
-	function validateDate($date){
+	public function validateDate($date){
 		if(!preg_match("/^[0-9]{4}\-[0-9]{2}\-[0-9]{2}$/i",$date)){
 			die("{$date} is not an acceptable date format!");
 		}
@@ -983,7 +983,7 @@ class BURAK_Gantt {
 	 * @param integer $new
 	 * @param string $op  > or <
 	*/
-	function compareDate(&$ref,$new,$op){
+	public function compareDate(&$ref, $new, $op){
 		if(empty($ref)){
 			$ref = $new;
 		}else{

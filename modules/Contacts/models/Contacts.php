@@ -27,7 +27,7 @@ class Google_Contacts_Model extends WSAPP_SyncRecordModel {
         return $this->vtigerFormat($this->data['entity']['updated']['$t']);
     }
 
-	function getNamePrefix() {
+	public function getNamePrefix() {
 		if (isset($this->data['entity']) and isset($this->data['entity']['gd$name']) and isset($this->data['entity']['gd$name']['gd$namePrefix']) and isset($this->data['entity']['gd$name']['gd$namePrefix']['$t'])) {
 			$namePrefix = $this->data['entity']['gd$name']['gd$namePrefix']['$t'];
 		} else {
@@ -40,7 +40,7 @@ class Google_Contacts_Model extends WSAPP_SyncRecordModel {
      * return first name of Google Record
      * @return <string> $first name
      */
-    function getFirstName() {
+    public function getFirstName() {
         $fname='';
         if(isset($this->data['entity']) && isset($this->data['entity']['gd$name']) && isset($this->data['entity']['gd$name']['gd$givenName']) && isset($this->data['entity']['gd$name']['gd$givenName']['$t']))
         $fname = $this->data['entity']['gd$name']['gd$givenName']['$t'];
@@ -51,7 +51,7 @@ class Google_Contacts_Model extends WSAPP_SyncRecordModel {
      * return Lastname of Google Record
      * @return <string> Last name
      */
-    function getLastName() {
+    public function getLastName() {
         $lname='';
         if(isset($this->data['entity']) && isset($this->data['entity']['gd$name']) && isset($this->data['entity']['gd$name']['gd$familyName']) && isset($this->data['entity']['gd$name']['gd$familyName']['$t']))
             $lname = $this->data['entity']['gd$name']['gd$familyName']['$t'];
@@ -62,7 +62,7 @@ class Google_Contacts_Model extends WSAPP_SyncRecordModel {
      * return Emails of Google Record
      * @return <array> emails
      */
-    function getEmails() {
+    public function getEmails() {
         $arr=array();
         if(isset($this->data['entity']) && isset($this->data['entity']['gd$email']))
             $arr = $this->data['entity']['gd$email'];
@@ -83,7 +83,7 @@ class Google_Contacts_Model extends WSAPP_SyncRecordModel {
      * return Phone number of Google Record
      * @return <array> phone numbers
      */
-    function getPhones() {
+    public function getPhones() {
 
         $arr=array();
         if(isset($this->data['entity']) && isset($this->data['entity']['gd$phoneNumber']))
@@ -106,7 +106,7 @@ class Google_Contacts_Model extends WSAPP_SyncRecordModel {
      * return Addresss of Google Record
      * @return <array> Addresses
      */
-    function getAddresses() {
+    public function getAddresses() {
         $arr=array();
         if(isset($this->data['entity']) && isset($this->data['entity']['gd$structuredPostalAddress']))
         $arr = $this->data['entity']['gd$structuredPostalAddress'];
@@ -132,7 +132,7 @@ class Google_Contacts_Model extends WSAPP_SyncRecordModel {
         return $addresses;
     }
 
-    function getUserDefineFieldsValues() {
+    public function getUserDefineFieldsValues() {
         $fieldValues = array();
         $userDefinedFields=array();
         if(isset($this->data['entity']) && isset($this->data['entity']['gContact$userDefinedField']))
@@ -146,7 +146,7 @@ class Google_Contacts_Model extends WSAPP_SyncRecordModel {
         return $fieldValues;
     }
 
-    function getUrlFields() {
+    public function getUrlFields() {
         $websiteFields=array();
         if(isset($this->data['entity']) && isset($this->data['entity']['gContact$website']))
             $websiteFields = $this->data['entity']['gContact$website'];
@@ -164,28 +164,28 @@ class Google_Contacts_Model extends WSAPP_SyncRecordModel {
         return $urls;
     }
 
-    function getBirthday() {
+    public function getBirthday() {
         $birth='';
         if(isset($this->data['entity']) && isset($this->data['entity']['gContact$birthday']) && isset($this->data['entity']['gContact$birthday']['when']))
             $birth=$this->data['entity']['gContact$birthday']['when'];
         return $birth;
     }
 
-    function getTitle() {
+    public function getTitle() {
         $title='';
         if(isset($this->data['entity']) && isset($this->data['entity']['gd$organization']) && isset($this->data['entity']['gd$organization'][0]) && isset($this->data['entity']['gd$organization'][0]['gd$orgTitle']) && isset($this->data['entity']['gd$organization'][0]['gd$orgTitle']['$t']))
             $title=$this->data['entity']['gd$organization'][0]['gd$orgTitle']['$t'];
         return $title;
     }
 
-    function getAccountName() {
+    public function getAccountName() {
         $orgName='';
         if(isset($this->data['entity']) && isset($this->data['entity']['gd$organization']) && isset($this->data['entity']['gd$organization'][0]) && isset($this->data['entity']['gd$organization'][0]['gd$orgName']) && isset($this->data['entity']['gd$organization'][0]['gd$orgName']['$t']))
             $orgName = $this->data['entity']['gd$organization'][0]['gd$orgName']['$t'];
         return $orgName;
     }
 
-    function getDescription() {
+    public function getDescription() {
         $desc='';
         if(isset($this->data['entity']) && isset($this->data['entity']['content']) && isset($this->data['entity']['content']['$t']))
             $desc=$this->data['entity']['content']['$t'];

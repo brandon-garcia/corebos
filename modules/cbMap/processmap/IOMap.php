@@ -47,7 +47,7 @@ class IOMap extends processcbMap {
 	private $input = array();
 	private $output = array();
 
-	function processMap($arguments) {
+	public function processMap($arguments) {
 		$this->convertMap2Array();
 		return $this;
 	}

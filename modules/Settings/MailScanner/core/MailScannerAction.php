@@ -17,24 +17,24 @@ require_once('modules/Documents/Documents.php');
  */
 class Vtiger_MailScannerAction {
 	// actionid for this instance
-	var $actionid  = false;
+	public $actionid  = false;
 	// scanner to which this action is associated
-	var $scannerid = false;
+	public $scannerid = false;
 	// type of mailscanner action
-	var $actiontype= false;
+	public $actiontype= false;
 	// text representation of action
-	var $actiontext= false;
+	public $actiontext= false;
 	// target module for action
-	var $module    = false;
+	public $module    = false;
 	// lookup information while taking action
-	var $lookup    = false;
+	public $lookup    = false;
 
 	// Storage folder to use
-	var $STORAGE_FOLDER = 'storage/mailscanner/';
+	public $STORAGE_FOLDER = 'storage/mailscanner/';
 
 	/** DEBUG functionality */
-	var $debug     = false;
-	function log($message) {
+	public $debug     = false;
+	public function log($message) {
 		global $log;
 		if($log && $this->debug) { $log->debug($message); }
 		else if($this->debug) echo "$message\n";
@@ -43,14 +43,14 @@ class Vtiger_MailScannerAction {
 	/**
 	 * Constructor.
 	 */
-	function __construct($foractionid) {
+	public function __construct($foractionid) {
 		$this->initialize($foractionid);
 	}
 
 	/**
 	 * Initialize this instance.
 	 */
-	function initialize($foractionid) {
+	public function initialize($foractionid) {
 		global $adb;
 		$result = $adb->pquery("SELECT * FROM vtiger_mailscanner_actions WHERE actionid=? ORDER BY sequence", Array($foractionid));
 
@@ -67,7 +67,7 @@ class Vtiger_MailScannerAction {
 	/**
 	 * Create/Update the information of Action into database.
 	 */
-	function update($ruleid, $actiontext) {
+	public function update($ruleid, $actiontext) {
 		global $adb;
 
 		$inputparts = explode(',', $actiontext);
@@ -97,7 +97,7 @@ class Vtiger_MailScannerAction {
 	/**
 	 * Delete the actions from tables.
 	 */
-	function delete() {
+	public function delete() {
 		global $adb;
 		if($this->actionid) {
 			$adb->pquery("DELETE FROM vtiger_mailscanner_actions WHERE actionid=?", Array($this->actionid));
@@ -108,7 +108,7 @@ class Vtiger_MailScannerAction {
 	/**
 	 * Get next sequence of Action to use.
 	 */
-	function __nextsequence() {
+	public function __nextsequence() {
 		global $adb;
 		$seqres = $adb->pquery("SELECT max(sequence) AS max_sequence FROM vtiger_mailscanner_actions", Array());
 		$maxsequence = 0;
@@ -122,7 +122,7 @@ class Vtiger_MailScannerAction {
 	/**
 	 * Apply the action on the mail record.
 	 */
-	function apply($mailscanner, $mailrecord, $mailscannerrule, $matchresult) {
+	public function apply($mailscanner, $mailrecord, $mailscannerrule, $matchresult) {
 		$returnid = false;
 		if($this->actiontype == 'CREATE') {
 			if($this->module == 'HelpDesk') {
@@ -146,7 +146,7 @@ class Vtiger_MailScannerAction {
 	/**
 	 * Update ticket action.
 	 */
-	function __UpdateTicket($mailscanner, $mailrecord, $regexMatchInfo) {
+	public function __UpdateTicket($mailscanner, $mailrecord, $regexMatchInfo) {
 		global $adb;
 		$returnid = false;
 
@@ -187,7 +187,7 @@ class Vtiger_MailScannerAction {
 	/**
 	 * Update Project action.
 	 */
-	function __UpdateProject($mailscanner, $mailrecord, $regexMatchInfo) {
+	public function __UpdateProject($mailscanner, $mailrecord, $regexMatchInfo) {
 		global $adb;
 		$returnid = false;
 		$usesubject = false;
@@ -224,7 +224,7 @@ class Vtiger_MailScannerAction {
 	/**
 	 * Create ticket action.
 	 */
-	function __CreateTicket($mailscanner, $mailrecord) {
+	public function __CreateTicket($mailscanner, $mailrecord) {
                 global $adb;
 		// Prepare data to create trouble ticket
 		$usetitle = $mailrecord->_subject;
@@ -269,7 +269,7 @@ class Vtiger_MailScannerAction {
 	/**
 	 * Add email to CRM record like Contacts/Accounts
 	 */
-	function __LinkToRecord($mailscanner, $mailrecord) {
+	public function __LinkToRecord($mailscanner, $mailrecord) {
 		$linkfocus = false;
 
 		$useemail = false;
@@ -298,7 +298,7 @@ class Vtiger_MailScannerAction {
 	/**
 	 * Create new Email record (and link to given record) including attachements
 	 */
-	function __CreateNewEmail($mailrecord, $module, $linkfocus) {
+	public function __CreateNewEmail($mailrecord, $module, $linkfocus) {
 		global $current_user, $adb;
 		if(!$current_user) {
 			$current_user = Users::getActiveAdminUser();
@@ -339,7 +339,7 @@ class Vtiger_MailScannerAction {
 	/**
 	 * Save attachments from the email and add it to the module record.
 	 */
-	function __SaveAttachements($mailrecord, $basemodule, $basefocus) {
+	public function __SaveAttachements($mailrecord, $basemodule, $basefocus) {
 		global $adb;
 
 		// If there is no attachments return
@@ -395,7 +395,7 @@ class Vtiger_MailScannerAction {
 	/**
 	 * Save the attachment to the file
 	 */
-	function __SaveAttachmentFile($attachid, $filename, $filecontent) {
+	public function __SaveAttachmentFile($attachid, $filename, $filecontent) {
 		global $adb;
 
 		$dirname = $this->STORAGE_FOLDER;

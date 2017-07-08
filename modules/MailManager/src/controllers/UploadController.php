@@ -17,7 +17,7 @@ class MailManager_UploadFile {
 	/**
 	 * Function used to Create Document and Attachments
 	 */
-	function process() {
+	public function process() {
 		return $this->createDocument();
 	}
 
@@ -27,7 +27,7 @@ class MailManager_UploadFile {
 	 * @global PearDataBase $adb
 	 * @global String $currentModule
 	 */
-	function createDocument() {
+	public function createDocument() {
 		global $current_user, $adb, $currentModule;
 
 		if(!MailManager::checkModuleWriteAccessForCurrentUser('Documents'))  {
@@ -60,7 +60,7 @@ class MailManager_UploadFile {
 		return false;
 	}
 
-	function getAttachmentsFolder() {
+	public function getAttachmentsFolder() {
 		global $adb;
 		$attfolder = GlobalVariable::getVariable('Email_Attachments_Folder','Default','Emails');
 		$rs = $adb->pquery('select folderid from vtiger_attachmentsfolder where foldername=?',array($attfolder));
@@ -84,7 +84,7 @@ class MailManager_UploadFile {
 	 * @global Users $current_user
 	 * @return attachmentid or false
 	 */
-	function saveAttachment() {
+	public function saveAttachment() {
 		global $adb, $upload_badext, $current_user;
 		$uploadPath = decideFilePath();
 		$fileName = $this->getName();
@@ -127,7 +127,7 @@ class MailManager_UploadFileXHR extends MailManager_UploadFile {
 	 * Save the file to the specified path
 	 * @return boolean TRUE on success
 	 */
-	function save($path) {
+	public function save($path) {
 		$input = fopen("php://input", "r");
 		$temp = tmpfile();
 		$realSize = stream_copy_to_stream($input, $temp);
@@ -144,11 +144,11 @@ class MailManager_UploadFileXHR extends MailManager_UploadFile {
 		return true;
 	}
 
-	function getName() {
+	public function getName() {
 		return $_POST['qqfile'];
 	}
 
-	function getSize() {
+	public function getSize() {
 		if (isset($_SERVER["CONTENT_LENGTH"])){
 			return (int)$_SERVER["CONTENT_LENGTH"];
 		} else {
@@ -169,7 +169,7 @@ class MailManager_UploadFileForm extends MailManager_UploadFile {
 	 * @param String $path
 	 * @return Boolean
 	 */
-	function save($path) {
+	public function save($path) {
 		global $root_directory;
 		if(is_file($root_directory."/".$path)) {
 			return true;
@@ -179,11 +179,11 @@ class MailManager_UploadFileForm extends MailManager_UploadFile {
 		return false;
 	}
 
-	function getName() {
+	public function getName() {
 		return $_FILES['qqfile']['name'];
 	}
 
-	function getSize() {
+	public function getSize() {
 		return $_FILES['qqfile']['size'];
 	}
 }
@@ -198,7 +198,7 @@ class MailManager_Uploader {
      * @param Array $allowedExtensions
      * @param Integer $sizeLimit
      */
-	function __construct($allowedExtensions, $sizeLimit) {
+	public function __construct($allowedExtensions, $sizeLimit) {
 
 		$this->setAllowedFileExtension($allowedExtensions);
 
@@ -219,7 +219,7 @@ class MailManager_Uploader {
      * @param Boolean $replaceOldFile
      * @return Array
      */
-	function handleUpload($uploadDirectory, $replaceOldFile = FALSE){
+	public function handleUpload($uploadDirectory, $replaceOldFile = FALSE){
 		if(!isPermitted('Documents', 'EditView')) {
 			return array('error' => "Permission not available");
 		}
@@ -258,28 +258,28 @@ class MailManager_Uploader {
 	/*
 	 * get the max file upload sizr
 	 */
-	function getMaxUploadSize() {
+	public function getMaxUploadSize() {
 		return $this->sizeLimit;
 	}
 
 	/*
 	 * Sets the max file upload size
 	 */
-	function setMaxUploadSize($value) {
+	public function setMaxUploadSize($value) {
 		$this->sizeLimit = $value;
 	}
 
 	/*
 	 * gets the allowed file extension
 	 */
-	function getAllowedFileExtension() {
+	public function getAllowedFileExtension() {
 		return $this->allowedExtensions;
 	}
 
 	/*
 	 * sets the allowed file extension
 	 */
-	function setAllowedFileExtension($values) {
+	public function setAllowedFileExtension($values) {
 		if(!empty($values)) {
 			$this->allowedExtensions = $values;
 		}

@@ -11,7 +11,7 @@
 include_once 'include/InventoryPDFController.php';
 
 class Vtiger_QuotePDFController extends Vtiger_InventoryPDFController{
-	function buildHeaderModelTitle() {
+	public function buildHeaderModelTitle() {
 		$singularModuleNameKey = 'SINGLE_'.$this->moduleName;
 		$translatedSingularModuleLabel = getTranslatedString($singularModuleNameKey, $this->moduleName);
 		if($translatedSingularModuleLabel == $singularModuleNameKey) {
@@ -20,11 +20,11 @@ class Vtiger_QuotePDFController extends Vtiger_InventoryPDFController{
 		return sprintf("%s: %s", $translatedSingularModuleLabel, $this->focusColumnValue('quote_no'));
 	}
 
-	function getWatermarkContent() {
+	public function getWatermarkContent() {
 		return $this->focusColumnValue('quotestatus');
 	}
 
-	function buildHeaderModelColumnRight() {
+	public function buildHeaderModelColumnRight() {
 		$issueDateLabel = getTranslatedString('Issued Date', $this->moduleName);
 		$validDateLabel = getTranslatedString('Valid Date', $this->moduleName);
 		$billingAddressLabel = getTranslatedString('Billing Address', $this->moduleName);

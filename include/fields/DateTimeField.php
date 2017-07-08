@@ -32,7 +32,7 @@ class DateTimeField {
 	 * @param $user -- value :: Type Users
 	 * @returns $insert_date -- insert_date :: Type string
 	 */
-	function getDBInsertDateValue($user = null) {
+	public function getDBInsertDateValue($user = null) {
 		global $log;
 		$log->debug("Entering getDBInsertDateValue(" . $this->datetime . ") method ...");
 		$value = explode(' ', $this->datetime);
@@ -244,7 +244,7 @@ class DateTimeField {
 	 * @param $user -- value :: Type Users
 	 * @returns $insert_date -- insert_date :: Type string
 	 */
-	function getDBInsertTimeValue($user = null) {
+	public function getDBInsertTimeValue($user = null) {
 		global $log;
 		$log->debug("Entering getDBInsertTimeValue(" . $this->datetime . ") method ...");
 		$date = self::convertToDBTimeZone($this->datetime, $user);
@@ -258,7 +258,7 @@ class DateTimeField {
 	 * @global Users $current_user
 	 * @return string
 	 */
-	function getDisplayDate( $user = null ) {
+	public function getDisplayDate($user = null ) {
 		global $log;
 		$log->debug("Entering getDisplayDate(" . $this->datetime . ") method ...");
 
@@ -273,7 +273,7 @@ class DateTimeField {
 		return $display_date;
 	}
 
-	function getDisplayTime( $user = null ) {
+	public function getDisplayTime($user = null ) {
 		global $log;
 		$log->debug("Entering getDisplayTime(" . $this->datetime . ") method ...");
 		$date = self::convertToUserTimeZone($this->datetime, $user);
@@ -282,7 +282,7 @@ class DateTimeField {
 		return $time;
 	}
 
-	static function getDBTimeZone() {
+	public static function getDBTimeZone() {
 		if(empty(self::$databaseTimeZone)) {
 			$defaultTimeZone = date_default_timezone_get();
 			if(empty($defaultTimeZone)) {
@@ -293,7 +293,7 @@ class DateTimeField {
 		return self::$databaseTimeZone;
 	}
 
-	static function getPHPDateFormat( $user = null) {
+	public static function getPHPDateFormat($user = null) {
 		global $current_user;
 		if(empty($user)) {
 			$user = $current_user;

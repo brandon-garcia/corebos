@@ -276,7 +276,7 @@ Class Google_Contacts_Connector extends WSAPP_TargetConnector {
         return $response;
     }
 
-    function fetchContactsFeed($query) {
+    public function fetchContactsFeed($query) {
 		if (empty($this->apiConnection)) return false;
 		$query['alt'] = 'json';
 		if ($this->apiConnection->isTokenExpired()) $this->apiConnection->refreshToken();
@@ -289,7 +289,7 @@ Class Google_Contacts_Connector extends WSAPP_TargetConnector {
         return $response;
     }
 
-    function getContactListFeed($query) {
+    public function getContactListFeed($query) {
         $feed = $this->fetchContactsFeed($query);
         $ret=array();
         $decoded_feed = json_decode($feed,true);
@@ -298,7 +298,7 @@ Class Google_Contacts_Connector extends WSAPP_TargetConnector {
         return $ret;
     }
 
-    function googleFormat($date) {
+    public function googleFormat($date) {
         return str_replace(' ', 'T', $date);
     }
     /**

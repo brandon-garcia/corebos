@@ -12,7 +12,7 @@ class VtigerCRMActorMeta extends EntityMeta {
 	protected $pearDB;
 	protected static $fieldTypeMapping = array();
 
-	function __construct($tableName,$webserviceObject,$adb,$user) {
+	public function __construct($tableName, $webserviceObject, $adb, $user) {
 		parent::__construct($webserviceObject,$user);
 		$this->baseTable = $tableName;
 		$this->idColumn = null;
@@ -217,7 +217,7 @@ class VtigerCRMActorMeta extends EntityMeta {
 		return $this->webserviceObject->getEntityId();
 	}
 
-	function getObjectEntityName($webserviceId) {
+	public function getObjectEntityName($webserviceId) {
 		$idComponents = vtws_getIdComponents($webserviceId);
 		$id=$idComponents[1];
 
@@ -227,7 +227,7 @@ class VtigerCRMActorMeta extends EntityMeta {
 		return null;
 	}
 
-	function exists($recordId) {
+	public function exists($recordId) {
 		$exists = false;
 		$sql = 'select * from '.$this->baseTable.' where '.$this->getObectIndexColumn().'=?';
 		$result = $this->pearDB->pquery($sql , array($recordId));

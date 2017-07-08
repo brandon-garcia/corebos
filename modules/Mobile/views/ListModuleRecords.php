@@ -14,7 +14,7 @@ include_once dirname(__FILE__) . '/../views/models/SearchFilter.php';
 
 class crmtogo_UI_ListModuleRecords extends crmtogo_WS_ListModuleRecords {
 
-	function cachedModule($moduleName) {
+	public function cachedModule($moduleName) {
 		$modules = $this->sessionGet('_MODULES'); // Should be available post login
 		foreach($modules as $module) {
 			if ($module->name() == $moduleName) return $module;
@@ -23,12 +23,12 @@ class crmtogo_UI_ListModuleRecords extends crmtogo_WS_ListModuleRecords {
 	}
 	
 	/** For search capability */
-	function cachedSearchFields($module) {
+	public function cachedSearchFields($module) {
 		$cachekey = "_MODULE.{$module}.SEARCHFIELDS";
 		return $this->sessionGet($cachekey, false);
 	}
 	
-	function process(crmtogo_API_Request $request) {
+	public function process(crmtogo_API_Request $request) {
 		global $current_user;
 		$wsResponse = parent::process($request);
 		//delete?

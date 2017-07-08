@@ -11,12 +11,12 @@ require_once 'include/Webservices/Query.php';
 
 class MailManager {
 	
-	static function updateMailAssociation($mailuid, $emailid, $crmid) {
+	public static function updateMailAssociation($mailuid, $emailid, $crmid) {
 		global $adb;
 		$adb->pquery("INSERT INTO vtiger_mailmanager_mailrel (mailuid, emailid, crmid) VALUES (?,?,?)", array($mailuid, $emailid, $crmid));
 	}
 
-	static function lookupMailInVtiger($searchTerm, $user) {
+	public static function lookupMailInVtiger($searchTerm, $user) {
 		$handler = vtws_getModuleHandlerFromName('Emails', $user);
 		$meta = $handler->getMeta();
 		$moduleFields = $meta->getModuleFields();
@@ -56,7 +56,7 @@ class MailManager {
 		return $filteredResult;
 	}
 
-	static function lookupMailAssociation($mailuid) {
+	public static function lookupMailAssociation($mailuid) {
 		global $adb;
 		
 		// Mail could get associated with two-or-more records if they get deleted after linking.
@@ -71,7 +71,7 @@ class MailManager {
 		return false;
 	}
 
-	static function lookupVTEMailAssociation($emailId) {
+	public static function lookupVTEMailAssociation($emailId) {
 		global $adb;
 		$result = $adb->pquery(
 			"SELECT vtiger_mailmanager_mailrel.* FROM vtiger_mailmanager_mailrel INNER JOIN
@@ -84,7 +84,7 @@ class MailManager {
 		return false;
 	}
 
-	static function isEMailAssociatedWithCRMID($mailuid,$crmid) {
+	public static function isEMailAssociatedWithCRMID($mailuid, $crmid) {
 		global $adb;
 		$result = $adb->pquery(
 			"SELECT vtiger_mailmanager_mailrel.* FROM vtiger_mailmanager_mailrel INNER JOIN
@@ -94,7 +94,7 @@ class MailManager {
 		return ($adb->num_rows($result)>0);
 	}
 
-	static function checkModuleWriteAccessForCurrentUser($module) {
+	public static function checkModuleWriteAccessForCurrentUser($module) {
 		global $current_user;
 		if (isPermitted($module, 'EditView') == "yes" && vtlib_isModuleActive($module)) {
 			return true;
@@ -108,7 +108,7 @@ class MailManager {
 	 * @param String $module - Name of the module
 	 * @return Boolean
 	 */
-	static function checkModuleReadAccessForCurrentUser($module) {
+	public static function checkModuleReadAccessForCurrentUser($module) {
 		global $current_user;
 		if (isPermitted($module, 'DetailView') == "yes" && vtlib_isModuleActive($module)) {
             return true;
@@ -121,7 +121,7 @@ class MailManager {
 	 * @param String $modulename - Module name
 	 * @param String $event_type - Event Type (module.postinstall, module.disabled, module.enabled, module.preuninstall)
 	 */
-	function vtlib_handler($modulename, $event_type) {
+	public function vtlib_handler($modulename, $event_type) {
 		if($event_type == 'module.postinstall') {
 			// TODO Handle actions when this module is installed.
 		} else if($event_type == 'module.disabled') {

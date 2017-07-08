@@ -11,31 +11,31 @@ require_once('data/CRMEntity.php');
 require_once('data/Tracker.php');
 
 class Services extends CRMEntity {
-	var $db, $log; // Used in class functions of CRMEntity
+	public public $db, $log; // Used in class functions of CRMEntity
 
-	var $table_name = 'vtiger_service';
-	var $table_index= 'serviceid';
-	var $column_fields = Array();
+	public $table_name = 'vtiger_service';
+	public $table_index= 'serviceid';
+	public $column_fields = Array();
 
 	/** Indicator if this is a custom module or standard module */
-	var $IsCustomModule = true;
-	var $HasDirectImageField = false;
+	public $IsCustomModule = true;
+	public $HasDirectImageField = false;
 	/**
 	 * Mandatory table for supporting custom fields.
 	 */
-	var $customFieldTable = Array('vtiger_servicecf', 'serviceid');
+	public $customFieldTable = Array('vtiger_servicecf', 'serviceid');
 	// Uncomment the line below to support custom field columns on related lists
 	// var $related_tables = Array('vtiger_servicecf'=>array('serviceid','vtiger_service', 'serviceid'));
 
 	/**
 	 * Mandatory for Saving, Include tables related to this module.
 	 */
-	var $tab_name = Array('vtiger_crmentity','vtiger_service','vtiger_servicecf');
+	public $tab_name = Array('vtiger_crmentity','vtiger_service','vtiger_servicecf');
 
 	/**
 	 * Mandatory for Saving, Include tablename and tablekey columnname here.
 	 */
-	var $tab_name_index = Array(
+	public $tab_name_index = Array(
 		'vtiger_crmentity'=>'crmid',
 		'vtiger_service'=>'serviceid',
 		'vtiger_servicecf'=>'serviceid',
@@ -44,7 +44,7 @@ class Services extends CRMEntity {
 	/**
 	 * Mandatory for Listing (Related listview)
 	 */
-	var $list_fields = Array (
+	public $list_fields = Array (
 		/* Format: Field Label => Array(tablename => columnname) */
 		// tablename should not have prefix 'vtiger_'
 		'Service No'=>Array('service'=>'service_no'),
@@ -53,7 +53,7 @@ class Services extends CRMEntity {
 		'No of Units'=>Array('service'=>'qty_per_unit'),
 		'Price'=>Array('service'=>'unit_price')
 	);
-	var $list_fields_name = Array(
+	public $list_fields_name = Array(
 		/* Format: Field Label => fieldname */
 		'Service No'=>'service_no',
 		'Service Name'=>'servicename',
@@ -63,17 +63,17 @@ class Services extends CRMEntity {
 	);
 
 	// Make the field link to detail view from list view (Fieldname)
-	var $list_link_field= 'servicename';
+	public $list_link_field= 'servicename';
 
 	// For Popup listview and UI type support
-	var $search_fields = Array(
+	public $search_fields = Array(
 		/* Format: Field Label => Array(tablename => columnname) */
 		// tablename should not have prefix 'vtiger_'
 		'Service No'=>Array('service'=>'service_no'),
 		'Service Name'=>Array('service'=>'servicename'),
 		'Price'=>Array('service'=>'unit_price')
 	);
-	var $search_fields_name = Array(
+	public $search_fields_name = Array(
 		/* Format: Field Label => fieldname */
 		'Service No'=>'service_no',
 		'Service Name'=>'servicename',
@@ -81,29 +81,29 @@ class Services extends CRMEntity {
 	);
 
 	// For Popup window record selection
-	var $popup_fields = Array ('servicename','service_usageunit','unit_price');
+	public $popup_fields = Array ('servicename','service_usageunit','unit_price');
 
 	// Placeholder for sort fields - All the fields will be initialized for Sorting through initSortFields
-	var $sortby_fields = Array();
+	public $sortby_fields = Array();
 
 	// For Alphabetical search
-	var $def_basicsearch_col = 'servicename';
+	public $def_basicsearch_col = 'servicename';
 
 	// Column value to use on detail view record text display
-	var $def_detailview_recname = 'servicename';
+	public $def_detailview_recname = 'servicename';
 
 	// Required Information for enabling Import feature
-	var $required_fields = Array('servicename'=>1);
+	public $required_fields = Array('servicename'=>1);
 
-	var $default_order_by = 'servicename';
-	var $default_sort_order='ASC';
+	public $default_order_by = 'servicename';
+	public $default_sort_order='ASC';
 	// Used when enabling/disabling the mandatory fields for the module.
 	// Refers to vtiger_field.fieldname values.
-	var $mandatory_fields = Array('servicename', 'assigned_user_id');
+	public $mandatory_fields = Array('servicename', 'assigned_user_id');
 
-	var $unit_price;
+	public $unit_price;
 
-	function save_module($module) {
+	public function save_module($module) {
 		if ($this->HasDirectImageField) {
 			$this->insertIntoAttachment($this->id,$module);
 		}
@@ -123,7 +123,7 @@ class Services extends CRMEntity {
 	 *	@param string $module	 - current module name
 	 *	$return void
 	*/
-	function insertTaxInformation($tablename, $module)
+	public function insertTaxInformation($tablename, $module)
 	{
 		global $adb, $log;
 		$log->debug("Entering into insertTaxInformation($tablename, $module) method ...");
@@ -168,7 +168,7 @@ class Services extends CRMEntity {
 	 *	@param string $module	 - current module name
 	 *	$return void
 	*/
-	function insertPriceInformation($tablename, $module)
+	public function insertPriceInformation($tablename, $module)
 	{
 		global $adb, $log, $current_user;
 		$log->debug("Entering into insertPriceInformation($tablename, $module) method ...");
@@ -219,7 +219,7 @@ class Services extends CRMEntity {
 		$log->debug("Exiting from insertPriceInformation($tablename, $module) method ...");
 	}
 
-	function updateUnitPrice() {
+	public function updateUnitPrice() {
 		$prod_res = $this->db->pquery("select unit_price, currency_id from vtiger_service where serviceid=?", array($this->id));
 		$prod_unit_price = $this->db->query_result($prod_res, 0, 'unit_price');
 		$prod_base_currency = $this->db->query_result($prod_res, 0, 'currency_id');
@@ -254,7 +254,7 @@ class Services extends CRMEntity {
 	 *	@param int $id - service id
 	 *	@return array - array which will be returned from the function GetRelatedList
 	 */
-	function get_quotes($id, $cur_tab_id, $rel_tab_id, $actions=false) {
+	public function get_quotes($id, $cur_tab_id, $rel_tab_id, $actions=false) {
 		global $log, $singlepane_view,$currentModule,$current_user;
 		$log->debug("Entering get_quotes(".$id.") method ...");
 		$this_module = $currentModule;
@@ -321,7 +321,7 @@ class Services extends CRMEntity {
 	 *	@param int $id - service id
 	 *	@return array - array which will be returned from the function GetRelatedList
 	 */
-	function get_purchase_orders($id, $cur_tab_id, $rel_tab_id, $actions=false) {
+	public function get_purchase_orders($id, $cur_tab_id, $rel_tab_id, $actions=false) {
 		global $log, $singlepane_view,$currentModule,$current_user;
 		$log->debug("Entering get_purchase_orders(".$id.") method ...");
 		$this_module = $currentModule;
@@ -385,7 +385,7 @@ class Services extends CRMEntity {
 	 *	@param int $id - service id
 	 *	@return array - array which will be returned from the function GetRelatedList
 	 */
-	function get_salesorder($id, $cur_tab_id, $rel_tab_id, $actions=false) {
+	public function get_salesorder($id, $cur_tab_id, $rel_tab_id, $actions=false) {
 		global $log, $singlepane_view,$currentModule,$current_user;
 		$log->debug("Entering get_salesorder(".$id.") method ...");
 		$this_module = $currentModule;
@@ -449,7 +449,7 @@ class Services extends CRMEntity {
 	 *	@param int $id - service id
 	 *	@return array - array which will be returned from the function GetRelatedList
 	 */
-	function get_invoices($id, $cur_tab_id, $rel_tab_id, $actions=false) {
+	public function get_invoices($id, $cur_tab_id, $rel_tab_id, $actions=false) {
 		global $log, $singlepane_view,$currentModule,$current_user;
 		$log->debug("Entering get_invoices(".$id.") method ...");
 		$this_module = $currentModule;
@@ -509,7 +509,7 @@ class Services extends CRMEntity {
 	 *	@param int $id - service id
 	 *	@return array - array which will be returned from the function GetRelatedList
 	 */
-	function get_service_pricebooks($id, $cur_tab_id, $rel_tab_id, $actions=false) {
+	public function get_service_pricebooks($id, $cur_tab_id, $rel_tab_id, $actions=false) {
 		global $currentModule,$log,$singlepane_view,$mod_strings;
 		$log->debug("Entering get_service_pricebooks(".$id.") method ...");
 
@@ -562,7 +562,7 @@ class Services extends CRMEntity {
 	 *	@param string $returnset - return_module, return_action and return_id which are sequenced with & to pass to the URL which is optional
 	 *	return array $return_data which will be formed like array('header'=>$header,'entries'=>$entries_list) where as $header contains all the header columns and $entries_list will contain all the Service entries
 	 */
-	function getPriceBookRelatedServices($query,$focus,$returnset='')
+	public function getPriceBookRelatedServices($query, $focus, $returnset='')
 	{
 		global $log;
 		$log->debug("Entering getPriceBookRelatedServices(".$query.",".get_class($focus).",".$returnset.") method ...");
@@ -661,7 +661,7 @@ class Services extends CRMEntity {
 	 * @param Array List of Entity Id's from which related records need to be transfered
 	 * @param Integer Id of the the Record to which the related records are to be moved
 	 */
-	function transferRelatedRecords($module, $transferEntityIds, $entityId) {
+	public function transferRelatedRecords($module, $transferEntityIds, $entityId) {
 		global $adb,$log;
 		$log->debug("Entering function transferRelatedRecords ($module, $transferEntityIds, $entityId)");
 
@@ -700,7 +700,7 @@ class Services extends CRMEntity {
 	 * @param - $module primary module name
 	 * returns the query string formed on fetching the related data for report for secondary module
 	 */
-	function generateReportsQuery($module){
+	public function generateReportsQuery($module){
 		global $current_user;
 		$query = parent::generateReportsQuery($module);
 		$query.= " LEFT JOIN (
@@ -722,7 +722,7 @@ class Services extends CRMEntity {
 	 * @param - $secmodule secondary module name
 	 * returns the query string formed on fetching the related data for report for secondary module
 	 */
-	function generateReportsSecQuery($module,$secmodule){
+	public function generateReportsSecQuery($module, $secmodule){
 		global $current_user;
 		$query = $this->getRelationQuery($module,$secmodule,"vtiger_service","serviceid");
 		$query .= " LEFT JOIN (
@@ -749,7 +749,7 @@ class Services extends CRMEntity {
 	 * @param - $secmodule secondary module name
 	 * returns the array with table names and fieldnames storing relations between module and this module
 	 */
-	function setRelationTables($secmodule){
+	public function setRelationTables($secmodule){
 		$rel_tables = array (
 			"Quotes" => array("vtiger_inventoryproductrel"=>array("productid","id"),"vtiger_service"=>"serviceid"),
 			"PurchaseOrder" => array("vtiger_inventoryproductrel"=>array("productid","id"),"vtiger_service"=>"serviceid"),
@@ -763,7 +763,7 @@ class Services extends CRMEntity {
 	}
 
 	// Function to unlink all the dependent entities of the given Entity by Id
-	function unlinkDependencies($module, $id) {
+	public function unlinkDependencies($module, $id) {
 		global $log;
 		$this->db->pquery('DELETE from vtiger_seproductsrel WHERE productid=? or crmid=?',array($id,$id));
 
@@ -775,7 +775,7 @@ class Services extends CRMEntity {
 	* @param String Module name
 	* @param String Event Type
 	*/
-	function vtlib_handler($moduleName, $eventType) {
+	public function vtlib_handler($moduleName, $eventType) {
 
 		require_once('include/utils/utils.php');
 		global $adb;

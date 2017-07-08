@@ -15,11 +15,11 @@ require_once 'modules/WSAPP/SyncServer.php';
 
 class WSAPPAssignToTracker extends VTEventHandler{
 
-	function __construct() {
+	public function __construct() {
 
 	}
 
-	function handleEvent($eventName, $entityData) {
+	public function handleEvent($eventName, $entityData) {
 		global $current_user;
 		$db = PearDatabase::getInstance();
 		$moduleName = $entityData->getModuleName();
@@ -48,7 +48,7 @@ class WSAPPAssignToTracker extends VTEventHandler{
 		$syncServer->markRecordAsDeleteForAllCleints($recordWsValues);
 	}
 
-	function isAssignToChanged($moduleName,$recordId,$user){
+	public function isAssignToChanged($moduleName, $recordId, $user){
 		$wsModuleName = $this->getWsModuleName($moduleName);
 		$handler = vtws_getModuleHandlerFromName($wsModuleName, $user);
 		$meta = $handler->getMeta();
@@ -63,7 +63,7 @@ class WSAPPAssignToTracker extends VTEventHandler{
 		return $assignToChanged;
 	}
 
-	function getWsModuleName($workFlowModuleName){
+	public function getWsModuleName($workFlowModuleName){
 		//TODO: Handle getting the webservice modulename in a better way
 		$wsModuleName = $workFlowModuleName;
 		if($workFlowModuleName == "Activity")

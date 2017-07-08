@@ -11,31 +11,31 @@ require_once('data/CRMEntity.php');
 require_once('data/Tracker.php');
 
 class Assets extends CRMEntity {
-	var $db, $log; // Used in class functions of CRMEntity
+	public public $db, $log; // Used in class functions of CRMEntity
 
-	var $table_name = 'vtiger_assets';
-	var $table_index= 'assetsid';
-	var $column_fields = Array();
+	public $table_name = 'vtiger_assets';
+	public $table_index= 'assetsid';
+	public $column_fields = Array();
 
 	/** Indicator if this is a custom module or standard module */
-	var $IsCustomModule = true;
-	var $HasDirectImageField = false;
+	public $IsCustomModule = true;
+	public $HasDirectImageField = false;
 	/**
 	 * Mandatory table for supporting custom fields.
 	 */
-	var $customFieldTable = Array('vtiger_assetscf', 'assetsid');
+	public $customFieldTable = Array('vtiger_assetscf', 'assetsid');
 	// Uncomment the line below to support custom field columns on related lists
-	var $related_tables = Array('vtiger_assetscf'=>array('assetsid','vtiger_assets', 'assetsid'));
+	public $related_tables = Array('vtiger_assetscf'=>array('assetsid','vtiger_assets', 'assetsid'));
 
 	/**
 	 * Mandatory for Saving, Include tables related to this module.
 	 */
-	var $tab_name = Array('vtiger_crmentity','vtiger_assets','vtiger_assetscf');
+	public $tab_name = Array('vtiger_crmentity','vtiger_assets','vtiger_assetscf');
 
 	/**
 	 * Mandatory for Saving, Include tablename and tablekey columnname here.
 	 */
-	var $tab_name_index = Array(
+	public $tab_name_index = Array(
 		'vtiger_crmentity'=>'crmid',
 		'vtiger_assets'=>'assetsid',
 		'vtiger_assetscf'=>'assetsid');
@@ -43,7 +43,7 @@ class Assets extends CRMEntity {
 	/**
 	 * Mandatory for Listing (Related listview)
 	 */
-	var $list_fields = Array (
+	public $list_fields = Array (
 		/* Format: Field Label => Array(tablename => columnname) */
 		// tablename should not have prefix 'vtiger_'
 		'Asset No'=>Array('assets'=>'asset_no'),
@@ -51,7 +51,7 @@ class Assets extends CRMEntity {
 		'Customer Name'=>Array('account'=>'account'),
 		'Product Name'=>Array('products'=>'product'),
 	);
-	var $list_fields_name = Array(
+	public $list_fields_name = Array(
 		/* Format: Field Label => fieldname */
 		'Asset No'=>'asset_no',
 		'Asset Name'=>'assetname',
@@ -60,10 +60,10 @@ class Assets extends CRMEntity {
 	);
 
 	// Make the field link to detail view
-	var $list_link_field= 'assetname';
+	public $list_link_field= 'assetname';
 
 	// For Popup listview and UI type support
-	var $search_fields = Array(
+	public $search_fields = Array(
 		/* Format: Field Label => Array(tablename => columnname) */
 		// tablename should not have prefix 'vtiger_'
 		'Asset No'=>Array('assets'=>'asset_no'),
@@ -71,7 +71,7 @@ class Assets extends CRMEntity {
 		'Customer Name'=>Array('account'=>'account'),
 		'Product Name'=>Array('products'=>'product')
 	);
-	var $search_fields_name = Array(
+	public $search_fields_name = Array(
 		/* Format: Field Label => fieldname */
 		'Asset No'=>'asset_no',
 		'Asset Name'=>'assetname',
@@ -80,32 +80,32 @@ class Assets extends CRMEntity {
 	);
 
 	// For Popup window record selection
-	var $popup_fields = Array ('assetname','account','product');
+	public $popup_fields = Array ('assetname','account','product');
 
 	// Placeholder for sort fields - All the fields will be initialized for Sorting through initSortFields
-	var $sortby_fields = Array();
+	public $sortby_fields = Array();
 
 	// For Alphabetical search
-	var $def_basicsearch_col = 'assetname';
+	public $def_basicsearch_col = 'assetname';
 
 	// Column value to use on detail view record text display
-	var $def_detailview_recname = 'assetname';
+	public $def_detailview_recname = 'assetname';
 
 	// Required Information for enabling Import feature
-	var $required_fields = Array('assetname'=>1);
+	public $required_fields = Array('assetname'=>1);
 
 	// Callback function list during Importing
-	var $special_functions = Array('set_import_assigned_user');
+	public $special_functions = Array('set_import_assigned_user');
 
-	var $default_order_by = 'assetname';
-	var $default_sort_order='ASC';
+	public $default_order_by = 'assetname';
+	public $default_sort_order='ASC';
 	// Used when enabling/disabling the mandatory fields for the module.
 	// Refers to vtiger_field.fieldname values.
-	var $mandatory_fields = Array('assetname', 'product');
+	public $mandatory_fields = Array('assetname', 'product');
 
-	var $unit_price;
+	public $unit_price;
 
-	function save_module($module) {
+	public function save_module($module) {
 		if ($this->HasDirectImageField) {
 			$this->insertIntoAttachment($this->id,$module);
 		}
@@ -115,7 +115,7 @@ class Assets extends CRMEntity {
 	 * Return query to use based on given modulename, fieldname
 	 * Useful to handle specific case handling for Popup
 	 */
-	function getQueryByModuleField($module, $fieldname, $srcrecord, $query='') {
+	public function getQueryByModuleField($module, $fieldname, $srcrecord, $query='') {
 		// $srcrecord could be empty
 		global $adb,$log;
 		//$query_relation = ' INNER JOIN vtiger_crmentityrel ON (vtiger_crmentityrel.relcrmid = vtiger_crmentity.crmid OR vtiger_crmentityrel.crmid = vtiger_crmentity.crmid) ';
@@ -134,7 +134,7 @@ class Assets extends CRMEntity {
 	/**
 	 * Get list view query (send more WHERE clause condition if required)
 	 */
-	function getListQuery($module, $where='') {
+	public function getListQuery($module, $where='') {
 		$query = "SELECT vtiger_crmentity.*, $this->table_name.*";
 
 		// Select Custom Field Table Columns if present
@@ -210,7 +210,7 @@ class Assets extends CRMEntity {
 	// function generateReportsSecQuery($module,$secmodule){ }
 
 	// Function to unlink all the dependent entities of the given Entity by Id
-	function unlinkDependencies($module, $id) {
+	public function unlinkDependencies($module, $id) {
 		global $log;
 		parent::unlinkDependencies($module, $id);
 	}
@@ -220,7 +220,7 @@ class Assets extends CRMEntity {
 	* @param String Module name
 	* @param String Event Type
 	*/
-	function vtlib_handler($moduleName, $eventType) {
+	public function vtlib_handler($moduleName, $eventType) {
 		require_once('include/utils/utils.php');
 		global $adb;
 
@@ -265,7 +265,7 @@ class Assets extends CRMEntity {
 		}
  	}
 
-	function addModuleToCustomerPortal() {
+	public function addModuleToCustomerPortal() {
 		$adb = PearDatabase::getInstance();
 
 		$assetsResult = $adb->pquery('SELECT tabid FROM vtiger_tab WHERE name=?', array('Assets'));

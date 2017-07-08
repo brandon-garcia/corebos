@@ -14,7 +14,7 @@ include_once dirname(__FILE__) . '/../api/ws/Describe.php';
 
 class crmtogo_UI_EditView extends crmtogo_WS_FetchRecordDetails {
 
-	function cachedModuleLookupWithRecordId($recordId) {
+	public function cachedModuleLookupWithRecordId($recordId) {
 		$recordIdComponents = explode('x', $recordId);
     	$modules = $this->sessionGet('_MODULES'); // Should be available post login
 		foreach($modules as $module) {
@@ -22,7 +22,7 @@ class crmtogo_UI_EditView extends crmtogo_WS_FetchRecordDetails {
 		}
 		return false;
 	}
-	function cachedModuleLookup($currentmodule) {
+	public function cachedModuleLookup($currentmodule) {
     	$modules = $this->sessionGet('_MODULES'); // Should be available post login
 		foreach($modules as $module) {
 			if ($module->name() == $currentmodule) { return $module; };
@@ -30,7 +30,7 @@ class crmtogo_UI_EditView extends crmtogo_WS_FetchRecordDetails {
 		return false;
 	}
 	
-	function process(crmtogo_API_Request $request) {
+	public function process(crmtogo_API_Request $request) {
 		if($request->getOperation()!='create') {
 			$wsResponse = parent::process($request);
 		}

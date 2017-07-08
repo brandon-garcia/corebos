@@ -27,7 +27,7 @@ class SmsHosting implements ISMSProvider {
 	const SERVICE_URI = 'https://api.smshosting.it/rest/api';
 	private static $REQUIRED_PARAMETERS = array ( 'from', 'prefix' );
 
-	function __construct ( ) {
+	public function __construct ( ) {
 	}
 
 	/**
@@ -144,7 +144,7 @@ class SmsHosting implements ISMSProvider {
 		return $result;
 	}
 
-	function SmsHosting_SEND ( $from, $to, $text, $statusCallback, $unicode ) {
+	public function SmsHosting_SEND ($from, $to, $text, $statusCallback, $unicode ) {
 		
 		if ( $unicode === null ) {
 			$containsUnicode = max ( array_map ( 'ord', str_split ( $text ) ) ) > 127;
@@ -180,7 +180,7 @@ class SmsHosting implements ISMSProvider {
 		}
 	}
 
-	function do_POST ( $complete_uri, $data ) {
+	public function do_POST ($complete_uri, $data ) {
 		$post = "";
 		foreach ( $data as $k => $v ) {
 		$post .= "&$k=$v";

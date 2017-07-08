@@ -18,14 +18,14 @@ require_once 'vtlib/Vtiger/Module.php';
 require_once dirname(__FILE__) .'/ModTracker.php';
 class ModTrackerUtils
 {
-	static function modTrac_changeModuleVisibility($tabid,$status) {
+	public static function modTrac_changeModuleVisibility($tabid, $status) {
 		if($status == 'module_disable'){
 			ModTracker::disableTrackingForModule($tabid);
 		} else {
 			ModTracker::enableTrackingForModule($tabid);
 		}
 	}
-	static function modTrac_getModuleinfo(){
+	public static function modTrac_getModuleinfo(){
 		global $adb;
 		$query = $adb->pquery("SELECT vtiger_modtracker_tabs.visible,vtiger_tab.name,vtiger_tab.tabid
 								FROM vtiger_tab

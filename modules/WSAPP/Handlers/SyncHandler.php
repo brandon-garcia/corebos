@@ -15,11 +15,11 @@ abstract class SyncHandler{
     protected $syncServer;
     protected $syncModule;
 
-    abstract function get($module,$token,$user);
-    abstract function put($element,$user);
-    abstract function map($element,$user);
-    abstract function nativeToSyncFormat($element);
-    abstract function syncToNativeFormat($element);
+    public abstract function get($module, $token, $user);
+    public abstract function put($element, $user);
+    public abstract function map($element, $user);
+    public abstract function nativeToSyncFormat($element);
+    public abstract function syncToNativeFormat($element);
 
 }
 ?>

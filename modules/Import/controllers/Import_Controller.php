@@ -15,9 +15,9 @@ require_once 'modules/Import/ui/Viewer.php';
 
 class Import_Controller {
 
-	var $userInputObject;
-	var $user;
-	var $numberOfRecords;
+	public $userInputObject;
+	public $user;
+	public $numberOfRecords;
 
 	public function  __construct($userInputObject, $user) {
 		$this->userInputObject = $userInputObject;

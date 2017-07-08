@@ -393,7 +393,7 @@ class WebserviceField{
 		}
 	}
 	
-	function getPicklistDetails(){
+	public function getPicklistDetails(){
 		$hardCodedPickListNames = array("hdntaxtype","email_flag");
 		$hardCodedPickListValues = array(
 				"hdntaxtype"=>array(
@@ -425,7 +425,7 @@ class WebserviceField{
 		}
 	}
 
-	function getPickListOptions(){
+	public function getPickListOptions(){
 		global $app_strings, $mod_strings, $log, $current_language;
 		static $purified_plcache = array();
 		$fieldName = $this->getFieldName();
@@ -472,11 +472,11 @@ class WebserviceField{
 		return $options;
 	}
 
-	function getPresence() {
+	public function getPresence() {
 		return $this->presence;
 	}
 
-	function getPickListOptionsSpecialUitypes($uitype){
+	public function getPickListOptionsSpecialUitypes($uitype){
 		global $log, $current_language;
 		require_once 'modules/PickList/PickListUtils.php';
 		static $purified_plcache = array();

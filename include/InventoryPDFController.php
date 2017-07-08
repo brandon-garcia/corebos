@@ -23,11 +23,11 @@ class Vtiger_InventoryPDFController {
 	protected $module;
 	protected $focus = null;
 
-	function __construct($module) {
+	public function __construct($module) {
 		$this->moduleName = $module;
 	}
 
-	function loadRecord($id) {
+	public function loadRecord($id) {
 		global $current_user;
 		$this->focus = $focus = CRMEntity::getInstance($this->moduleName);
 		$focus->retrieve_entity_info($id,$this->moduleName);
@@ -36,11 +36,11 @@ class Vtiger_InventoryPDFController {
 		$this->associated_products = getAssociatedProducts($this->moduleName,$focus);
 	}
 
-	function getPDFGenerator() {
+	public function getPDFGenerator() {
 		return new Vtiger_PDF_Generator();
 	}
 
-	function getContentViewer() {
+	public function getContentViewer() {
 		if($this->focusColumnValue('hdnTaxType') == "individual") {
 			$contentViewer = new Vtiger_PDF_InventoryContentViewer();
 		} else {
@@ -53,13 +53,13 @@ class Vtiger_InventoryPDFController {
 		return $contentViewer;
 	}
 
-	function getHeaderViewer() {
+	public function getHeaderViewer() {
 		$headerViewer = new Vtiger_PDF_InventoryHeaderViewer();
 		$headerViewer->setModel($this->buildHeaderModel());
 		return $headerViewer;
 	}
 
-	function getFooterViewer() {
+	public function getFooterViewer() {
 		$footerViewer = new Vtiger_PDF_InventoryFooterViewer();
 		$footerViewer->setModel($this->buildFooterModel());
 		$footerViewer->setLabelModel($this->buildFooterLabelModel());
@@ -67,13 +67,13 @@ class Vtiger_InventoryPDFController {
 		return $footerViewer;
 	}
 
-	function getPagerViewer() {
+	public function getPagerViewer() {
 		$pagerViewer = new Vtiger_PDF_PagerViewer();
 		$pagerViewer->setModel($this->buildPagermodel());
 		return $pagerViewer;
 	}
 
-	function Output($filename, $type) {
+	public function Output($filename, $type) {
 		if(is_null($this->focus)) return;
 
 		$pdfgenerator = $this->getPDFGenerator();
@@ -89,7 +89,7 @@ class Vtiger_InventoryPDFController {
 
 	// Helper methods
 	
-	function buildContentModels() {
+	public function buildContentModels() {
 		$associated_products = $this->associated_products;
 		$contentModels = array();
 		$productLineItemIndex = 0;
@@ -152,7 +152,7 @@ class Vtiger_InventoryPDFController {
 		return $contentModels;
 	}
 
-	function buildContentLabelModel() {
+	public function buildContentLabelModel() {
 		$labelModel = new Vtiger_PDF_Model();
 		$labelModel->set('Code',	  getTranslatedString('Product Code',$this->moduleName));
 		$labelModel->set('Name',	  getTranslatedString('Product Name',$this->moduleName));
@@ -165,7 +165,7 @@ class Vtiger_InventoryPDFController {
 		return $labelModel;
 	}
 
-	function buildSummaryModel() {
+	public function buildSummaryModel() {
 		$associated_products = $this->associated_products;
 		$final_details = $associated_products[1]['final_details'];
 
@@ -219,7 +219,7 @@ class Vtiger_InventoryPDFController {
 		return $summaryModel;
 	}
 
-	function buildHeaderModel() {
+	public function buildHeaderModel() {
 		$headerModel = new Vtiger_PDF_Model();
 		$headerModel->set('title', $this->buildHeaderModelTitle());
 		$modelColumns = array($this->buildHeaderModelColumnLeft(), $this->buildHeaderModelColumnCenter(), $this->buildHeaderModelColumnRight());
@@ -228,11 +228,11 @@ class Vtiger_InventoryPDFController {
 		return $headerModel;
 	}
 
-	function buildHeaderModelTitle() {
+	public function buildHeaderModelTitle() {
 		return $this->moduleName;
 	}
 	
-	function buildHeaderModelColumnLeft() {
+	public function buildHeaderModelColumnLeft() {
 		global $adb;
 
 		// Company information
@@ -263,7 +263,7 @@ class Vtiger_InventoryPDFController {
 	}
 
 
-	function buildHeaderModelColumnCenter() {
+	public function buildHeaderModelColumnCenter() {
 		$customerName = $this->resolveReferenceLabel($this->focusColumnValue('account_id'), 'Accounts');
 		$contactName = $this->resolveReferenceLabel($this->focusColumnValue('contact_id'), 'Contacts');
 
@@ -276,7 +276,7 @@ class Vtiger_InventoryPDFController {
 		return $modelColumnCenter;
 	}
 
-	function buildHeaderModelColumnRight() {
+	public function buildHeaderModelColumnRight() {
 		$issueDateLabel = getTranslatedString('Issued Date', $this->moduleName);
 		$validDateLabel = getTranslatedString('Valid Date', $this->moduleName);
 		$billingAddressLabel = getTranslatedString('Billing Address', $this->moduleName);
@@ -293,37 +293,37 @@ class Vtiger_InventoryPDFController {
 		return $modelColumnRight;
 	}
 
-	function buildFooterModel() {
+	public function buildFooterModel() {
 		$footerModel = new Vtiger_PDF_Model();
 		$footerModel->set(Vtiger_PDF_InventoryFooterViewer::$DESCRIPTION_DATA_KEY, $this->focusColumnValue('description'));
 		$footerModel->set(Vtiger_PDF_InventoryFooterViewer::$TERMSANDCONDITION_DATA_KEY, $this->focusColumnValue('terms_conditions'));
 		return $footerModel;
 	}
 
-	function buildFooterLabelModel() {
+	public function buildFooterLabelModel() {
 		$labelModel = new Vtiger_PDF_Model();
 		$labelModel->set(Vtiger_PDF_InventoryFooterViewer::$DESCRIPTION_LABEL_KEY, getTranslatedString('Description',$this->moduleName));
 		$labelModel->set(Vtiger_PDF_InventoryFooterViewer::$TERMSANDCONDITION_LABEL_KEY, getTranslatedString('Terms & Conditions',$this->moduleName));
 		return $labelModel;
 	}
 	
-	function buildPagerModel() {
+	public function buildPagerModel() {
 		$footerModel = new Vtiger_PDF_Model();
 		$footerModel->set('format', '-%s-');
 		return $footerModel;
 	}
 	
-	function getWatermarkContent() {
+	public function getWatermarkContent() {
 		return '';
 	}
 
-	function buildWatermarkModel() {
+	public function buildWatermarkModel() {
 		$watermarkModel = new Vtiger_PDF_Model();
 		$watermarkModel->set('content', $this->getWatermarkContent());
 		return $watermarkModel;
 	}
 
-	function buildHeaderBillingAddress() {
+	public function buildHeaderBillingAddress() {
 		$billPoBox	= $this->focusColumnValues(array('bill_pobox'));
 		$billStreet = $this->focusColumnValues(array('bill_street'));
 		$billCity	= $this->focusColumnValues(array('bill_city'));
@@ -336,7 +336,7 @@ class Vtiger_InventoryPDFController {
 		return $address;
 	}
 
-	function buildHeaderShippingAddress() {
+	public function buildHeaderShippingAddress() {
 		$shipPoBox	= $this->focusColumnValues(array('ship_pobox'));
 		$shipStreet = $this->focusColumnValues(array('ship_street'));
 		$shipCity	= $this->focusColumnValues(array('ship_city'));
@@ -349,7 +349,7 @@ class Vtiger_InventoryPDFController {
 		return $address;
 	}
 
-	function buildCurrencySymbol() {
+	public function buildCurrencySymbol() {
 		global $adb;
 		$currencyId = $this->focus->column_fields['currency_id'];
 		if(!empty($currencyId)) {
@@ -358,7 +358,7 @@ class Vtiger_InventoryPDFController {
 		}
 		return false;
 	}
-	function focusColumnValues($names, $delimeter="\n") {
+	public function focusColumnValues($names, $delimeter="\n") {
 		if(!is_array($names)) {
 			$names = array($names);
 		}
@@ -372,7 +372,7 @@ class Vtiger_InventoryPDFController {
 		return $this->joinValues($values, $delimeter);
 	}
 
-	function focusColumnValue($key, $defvalue='') {
+	public function focusColumnValue($key, $defvalue='') {
 		$focus = $this->focus;
 		if(isset($focus->column_fields[$key])) {
 			return $focus->column_fields[$key];
@@ -380,7 +380,7 @@ class Vtiger_InventoryPDFController {
 		return $defvalue;
 	}
 
-	function resolveReferenceLabel($id, $module=false) {
+	public function resolveReferenceLabel($id, $module=false) {
 		if(empty($id)) {
 			return '';
 		}
@@ -391,7 +391,7 @@ class Vtiger_InventoryPDFController {
 		return decode_html($label[$id]);
 	}
 
-	function joinValues($values, $delimeter= "\n") {
+	public function joinValues($values, $delimeter= "\n") {
 		$valueString = '';
 		foreach($values as $value) {
 			if(empty($value)) continue;
@@ -400,16 +400,16 @@ class Vtiger_InventoryPDFController {
 		return rtrim($valueString, $delimeter);
 	}
 
-	function formatNumber($value) {
+	public function formatNumber($value) {
 		return number_format($value);
 	}
 
-	function formatPrice($value, $decimal=2) {
+	public function formatPrice($value, $decimal=2) {
 		$currencyField = new CurrencyField($value);
 		return $currencyField->getDisplayValue(null, true);
 	}
 
-	function formatDate($value) {
+	public function formatDate($value) {
 		return DateTimeField::convertToUserFormat($value);
 	}
 

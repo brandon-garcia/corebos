@@ -11,31 +11,31 @@ require_once('data/CRMEntity.php');
 require_once('data/Tracker.php');
 
 class cbTermConditions extends CRMEntity {
-	var $db, $log; // Used in class functions of CRMEntity
+	public public $db, $log; // Used in class functions of CRMEntity
 
-	var $table_name = 'vtiger_cbtandc';
-	var $table_index= 'cbtandcid';
-	var $column_fields = Array();
+	public $table_name = 'vtiger_cbtandc';
+	public $table_index= 'cbtandcid';
+	public $column_fields = Array();
 
 	/** Indicator if this is a custom module or standard module */
-	var $IsCustomModule = true;
-	var $HasDirectImageField = false;
+	public $IsCustomModule = true;
+	public $HasDirectImageField = false;
 	/**
 	 * Mandatory table for supporting custom fields.
 	 */
-	var $customFieldTable = Array('vtiger_cbtandccf', 'cbtandcid');
+	public $customFieldTable = Array('vtiger_cbtandccf', 'cbtandcid');
 	// Uncomment the line below to support custom field columns on related lists
 	// var $related_tables = Array('vtiger_cbtandccf'=>array('cbtandcid','vtiger_cbtandc', 'cbtandcid'));
 
 	/**
 	 * Mandatory for Saving, Include tables related to this module.
 	 */
-	var $tab_name = Array('vtiger_crmentity', 'vtiger_cbtandc', 'vtiger_cbtandccf');
+	public $tab_name = Array('vtiger_crmentity', 'vtiger_cbtandc', 'vtiger_cbtandccf');
 
 	/**
 	 * Mandatory for Saving, Include tablename and tablekey columnname here.
 	 */
-	var $tab_name_index = Array(
+	public $tab_name_index = Array(
 		'vtiger_crmentity' => 'crmid',
 		'vtiger_cbtandc'   => 'cbtandcid',
 		'vtiger_cbtandccf' => 'cbtandcid');
@@ -43,7 +43,7 @@ class cbTermConditions extends CRMEntity {
 	/**
 	 * Mandatory for Listing (Related listview)
 	 */
-	var $list_fields = Array (
+	public $list_fields = Array (
 		/* Format: Field Label => Array(tablename => columnname) */
 		// tablename should not have prefix 'vtiger_'
 		'TandC No'  => Array('cbtandc' => 'cbtandcno'),
@@ -51,7 +51,7 @@ class cbTermConditions extends CRMEntity {
 		'formodule' => Array('cbtandc' => 'formodule'),
 		'Is Default'=> Array('cbtandc' => 'isdefault')
 	);
-	var $list_fields_name = Array(
+	public $list_fields_name = Array(
 		/* Format: Field Label => fieldname */
 		'TandC No'  => 'cbtandcno',
 		'Reference' => 'reference',
@@ -60,10 +60,10 @@ class cbTermConditions extends CRMEntity {
 	);
 
 	// Make the field link to detail view from list view (Fieldname)
-	var $list_link_field = 'cbtandcno';
+	public $list_link_field = 'cbtandcno';
 
 	// For Popup listview and UI type support
-	var $search_fields = Array(
+	public $search_fields = Array(
 		/* Format: Field Label => Array(tablename => columnname) */
 		// tablename should not have prefix 'vtiger_'
 		'TandC No'  => Array('cbtandc' => 'cbtandcno'),
@@ -71,7 +71,7 @@ class cbTermConditions extends CRMEntity {
 		'formodule' => Array('cbtandc' => 'formodule'),
 		'Is Default'=> Array('cbtandc' => 'isdefault')
 	);
-	var $search_fields_name = Array(
+	public $search_fields_name = Array(
 		/* Format: Field Label => fieldname */
 		'TandC No'  => 'cbtandcno',
 		'Reference' => 'reference',
@@ -80,30 +80,30 @@ class cbTermConditions extends CRMEntity {
 	);
 
 	// For Popup window record selection
-	var $popup_fields = Array('cbtandcno');
+	public $popup_fields = Array('cbtandcno');
 
 	// Placeholder for sort fields - All the fields will be initialized for Sorting through initSortFields
-	var $sortby_fields = Array();
+	public $sortby_fields = Array();
 
 	// For Alphabetical search
-	var $def_basicsearch_col = 'cbtandcno';
+	public $def_basicsearch_col = 'cbtandcno';
 
 	// Column value to use on detail view record text display
-	var $def_detailview_recname = 'cbtandcno';
+	public $def_detailview_recname = 'cbtandcno';
 
 	// Required Information for enabling Import feature
-	var $required_fields = Array('cbtandcno'=>1);
+	public $required_fields = Array('cbtandcno'=>1);
 
 	// Callback function list during Importing
-	var $special_functions = Array('set_import_assigned_user');
+	public $special_functions = Array('set_import_assigned_user');
 
-	var $default_order_by = 'cbtandcno';
-	var $default_sort_order='ASC';
+	public $default_order_by = 'cbtandcno';
+	public $default_sort_order='ASC';
 	// Used when enabling/disabling the mandatory fields for the module.
 	// Refers to vtiger_field.fieldname values.
-	var $mandatory_fields = Array('createdtime', 'modifiedtime', 'cbtandcno');
+	public $mandatory_fields = Array('createdtime', 'modifiedtime', 'cbtandcno');
 
-	function save_module($module) {
+	public function save_module($module) {
 		if ($this->HasDirectImageField) {
 			$this->insertIntoAttachment($this->id,$module);
 		}
@@ -114,7 +114,7 @@ class cbTermConditions extends CRMEntity {
 	 * @param String Module name
 	 * @param String Event Type (module.postinstall, module.disabled, module.enabled, module.preuninstall)
 	 */
-	function vtlib_handler($modulename, $event_type) {
+	public function vtlib_handler($modulename, $event_type) {
 		if($event_type == 'module.postinstall') {
 			// TODO Handle post installation actions
 			$this->setModuleSeqNumber('configure', $modulename, $modulename.'-', '0000001');

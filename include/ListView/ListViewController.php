@@ -120,7 +120,7 @@ class ListViewController {
 	 * Param $oCv - vtiger_customview object
 	 * Returns an array type
 	 */
-	function getListViewEntries($focus, $module,$result,$navigationInfo,$skipActions=false) {
+	public function getListViewEntries($focus, $module, $result, $navigationInfo, $skipActions=false) {
 		global $theme, $default_charset, $current_user, $currentModule, $adb;
 		$is_admin = is_admin($current_user);
 		$listview_max_textlength = GlobalVariable::getVariable('Application_ListView_Max_Text_Length',40,$currentModule);

@@ -16,7 +16,7 @@ class Google_List_View  {
 
 	}
 
-    function process($request) {
+    public function process($request) {
         switch ($request['operation']) {
             case "signin" : return $this->signin($request);
                 break;
@@ -30,7 +30,7 @@ class Google_List_View  {
         }
     }
 
-    function renderWidgetUI(Vtiger_Request $request) {
+    public function renderWidgetUI(Vtiger_Request $request) {
         $sourceModule = $request->get('sourcemodule');
         $viewer = new vtigerCRM_Smarty();
         $oauth2 = new Google_Oauth2_Connector($sourceModule);
@@ -47,13 +47,13 @@ class Google_List_View  {
         $viewer->view('Contents.tpl', $request->getModule());
     }
 
-    function signin( $request) {
+    public function signin($request) {
         $viewer = new vtigerCRM_Smarty();
         $sourceModule = $request['sourcemodule'];
         $oauth2 = new Google_Oauth2_Connector($sourceModule);
         $oauth2->authorize();
     }
-    function renderSyncUI( $request) {
+    public function renderSyncUI($request) {
         global $theme;
         $viewer = new vtigerCRM_Smarty();
         $sourceModule = $request['sourcemodule'];
@@ -124,14 +124,14 @@ class Google_List_View  {
     /**
      * Removes Synchronization
      */
-    function removeSynchronization($request) {
+    public function removeSynchronization($request) {
         global $current_user;
         $user = $current_user;
         $sourceModule = $request['sourcemodule'];
         Google_Module_Model::removeSync($sourceModule, $user->id);
     }
 
-    function deleteSync($request) {
+    public function deleteSync($request) {
         global $current_user;
         $user = $current_user;
         $sourceModule = $request['sourcemodule'];

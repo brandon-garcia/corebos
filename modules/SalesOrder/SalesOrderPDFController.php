@@ -10,7 +10,7 @@
 include_once 'include/InventoryPDFController.php';
 include_once dirname(__FILE__). '/SalesOrderPDFHeaderViewer.php';
 class Vtiger_SalesOrderPDFController extends Vtiger_InventoryPDFController{
-	function buildHeaderModelTitle() {
+	public function buildHeaderModelTitle() {
 		$singularModuleNameKey = 'SINGLE_'.$this->moduleName;
 		$translatedSingularModuleLabel = getTranslatedString($singularModuleNameKey, $this->moduleName);
 		if($translatedSingularModuleLabel == $singularModuleNameKey) {
@@ -19,18 +19,18 @@ class Vtiger_SalesOrderPDFController extends Vtiger_InventoryPDFController{
 		return sprintf("%s: %s", $translatedSingularModuleLabel, $this->focusColumnValue('salesorder_no'));
 	}
 
-	function getHeaderViewer() {
+	public function getHeaderViewer() {
 		$headerViewer = new SalesOrderPDFHeaderViewer();
 		$headerViewer->setModel($this->buildHeaderModel());
 		return $headerViewer;
 	}
 	
-	function buildHeaderModelColumnLeft() {
+	public function buildHeaderModelColumnLeft() {
 		$modelColumnLeft = parent::buildHeaderModelColumnLeft();
 		return $modelColumnLeft;
 	}
 	
-	function buildHeaderModelColumnCenter() {
+	public function buildHeaderModelColumnCenter() {
 		$subject = $this->focusColumnValue('subject');
 		$customerName = $this->resolveReferenceLabel($this->focusColumnValue('account_id'), 'Accounts');
 		$contactName = $this->resolveReferenceLabel($this->focusColumnValue('contact_id'), 'Contacts');
@@ -53,7 +53,7 @@ class Vtiger_SalesOrderPDFController extends Vtiger_InventoryPDFController{
 		return $modelColumn1;
 	}
 
-	function buildHeaderModelColumnRight() {
+	public function buildHeaderModelColumnRight() {
 		$issueDateLabel = getTranslatedString('Issued Date', $this->moduleName);
 		$validDateLabel = getTranslatedString('Due Date', $this->moduleName);
 		$billingAddressLabel = getTranslatedString('Billing Address', $this->moduleName);
@@ -71,7 +71,7 @@ class Vtiger_SalesOrderPDFController extends Vtiger_InventoryPDFController{
 		return $modelColumn2;
 	}
 
-	function getWatermarkContent() {
+	public function getWatermarkContent() {
 		return $this->focusColumnValue('sostatus');
 	}
 }

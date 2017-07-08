@@ -24,14 +24,14 @@ abstract class MailManager_Controller {
     /**
      * Abstract function which process request
      */
-	abstract function process(MailManager_Request $request);
+	public abstract function process(MailManager_Request $request);
 
     /**
      * Function which gets the template handler
      * @global String $currentModule
      * @return MailManager_Viewer
      */
-	function getViewer() {
+	public function getViewer() {
 		global $currentModule;
 		$viewer = new MailManager_Viewer();
 		$viewer->assign('MAILBOX', $this->getMailboxModel());
@@ -45,7 +45,7 @@ abstract class MailManager_Controller {
      * @param String $filename
      * @return template file
      */
-	function getModuleTpl($filename) {
+	public function getModuleTpl($filename) {
 		global $currentModule;
 		return vtlib_getModuleTemplate($currentModule, $filename);
 	}
@@ -112,7 +112,7 @@ abstract class MailManager_Controller {
     /**
      * Function that closes connection to IMAP server
      */
-	function closeConnector() {
+	public function closeConnector() {
 		if ($this->mConnector) {
 			$this->mConnector->close();
 			$this->mConnector = false;

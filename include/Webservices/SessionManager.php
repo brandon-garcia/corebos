@@ -18,7 +18,7 @@ class SessionManager{
 	private $sessionVar = "__SessionExists";
 	private $error;
 
-	function __construct(){
+	public function __construct(){
 		$now = time();
 		$this->maxLife = $now + GlobalVariable::getVariable('WebService_Session_Life_Span',86400);
 		$this->idleLife = $now + GlobalVariable::getVariable('WebService_Session_Idle_Time',1800);
@@ -32,7 +32,7 @@ class SessionManager{
 		HTTP_Session2::setIdle($this->idleLife, true);
 	}
 
-	function isValid(){
+	public function isValid(){
 		$valid = true;
 		// expired
 		if (HTTP_Session2::isExpired()) {
@@ -57,7 +57,7 @@ class SessionManager{
 		return $valid;
 	}
 
-	function startSession($sid = null,$adoptSession=false,$sname=null){
+	public function startSession($sid = null, $adoptSession=false, $sname=null){
 		//if ($sid) {
 		//	HTTP_Session2::id($sid);
 		//}
@@ -88,24 +88,24 @@ class SessionManager{
 		return $sid;
 	}
 
-	function getSessionId() {
+	public function getSessionId() {
 		return HTTP_Session2::id();
 	}
 
-	function set($var_name, $var_value) {
+	public function set($var_name, $var_value) {
 		HTTP_Session2::set($var_name, $var_value);
 	}
 
-	function get($name) {
+	public function get($name) {
 		//echo "<br> getting for: ",$name," :value: ",HTTP_Session2::get($name);
 		return HTTP_Session2::get($name);
 	}
 
-	function getError() {
+	public function getError() {
 		return $this->error;
 	}
 
-	function destroy() {
+	public function destroy() {
 		HTTP_Session2::destroy();
 	}
 

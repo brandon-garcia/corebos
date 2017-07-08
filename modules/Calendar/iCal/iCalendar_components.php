@@ -2,17 +2,17 @@
 require_once('include/utils/utils.php');
 
 class iCalendar_component {
-    var $name             = NULL;
-    var $properties       = NULL;
-    var $components       = NULL;
-    var $valid_properties = NULL;
-    var $valid_components = NULL;
+    public $name             = NULL;
+    public $properties       = NULL;
+    public $components       = NULL;
+    public $valid_properties = NULL;
+    public $valid_components = NULL;
 
-    function __construct() {
+    public function __construct() {
         $this->construct();
     }
 
-    function construct() {
+    public function construct() {
         // Initialize the components array
         if(empty($this->components)) {
             $this->components = array();
@@ -22,11 +22,11 @@ class iCalendar_component {
         }
     }
 
-    function get_name() {
+    public function get_name() {
         return $this->name;
     }
 
-    function add_property($name, $value = NULL, $parameters = NULL) {
+    public function add_property($name, $value = NULL, $parameters = NULL) {
 
         // Uppercase first of all
         $name = strtoupper($name);
@@ -109,7 +109,7 @@ class iCalendar_component {
 
     }
 
-    function add_component($component) {
+    public function add_component($component) {
 
         // With the detailed interface, you can add only components with this function
         if(!is_object($component) || !is_subclass_of($component, 'iCalendar_component')) {
@@ -129,14 +129,14 @@ class iCalendar_component {
         return true;
     }
 
-    function get_property_list($name) {
+    public function get_property_list($name) {
     }
 
-    function invariant_holds() {
+    public function invariant_holds() {
         return true;
     }
 
-    function is_valid() {
+    public function is_valid() {
         // If we have any child components, check that they are all valid
         if(!empty($this->components)) {
             foreach($this->components as $component => $instances) {
@@ -163,7 +163,7 @@ class iCalendar_component {
         return true;
     }
 
-    function serialize() {
+    public function serialize() {
         // Check for validity of the object
         if(!$this->is_valid()) {
             return false;
@@ -202,7 +202,7 @@ class iCalendar_component {
         return $string;
     }
 
-    function assign_values($activity) {
+    public function assign_values($activity) {
     	foreach($this->mapping_arr as $key=>$components){
     		if(!is_array($components['component']) && empty($components['function'])){
     			$this->add_property($key,$activity[$components['component']]);
@@ -220,7 +220,7 @@ class iCalendar_component {
         return true;
     }
 
-	function generateArray($ical_activity){
+	public function generateArray($ical_activity){
 		global $current_user;
 		$activity = array();
 		$activitytype = $ical_activity['TYPE'];
@@ -292,7 +292,7 @@ class iCalendar_component {
 		return $activity;
 	}
 
-	function strtodatetime($date){
+	public function strtodatetime($date){
 		$date = preg_replace('/[A-Za-z_]*/', '', $date);
 		$year = substr($date,0,4);
 		$month = substr($date,4,2);
@@ -307,9 +307,9 @@ class iCalendar_component {
 }
 
 class iCalendar extends iCalendar_component {
-    var $name = 'VCALENDAR';
+    public $name = 'VCALENDAR';
 
-    function construct() {
+    public function construct() {
         $this->valid_properties = array(
             'CALSCALE'    => RFC2445_OPTIONAL | RFC2445_ONCE,
             'METHOD'      => RFC2445_OPTIONAL | RFC2445_ONCE,
@@ -330,9 +330,9 @@ class iCalendar extends iCalendar_component {
 
 class iCalendar_event extends iCalendar_component {
 
-    var $name       = 'VEVENT';
-    var $properties;
-    var $mapping_arr = array(
+    public $name       = 'VEVENT';
+    public $properties;
+    public $mapping_arr = array(
     	'CLASS'			=>	array('component'=>'visibility','type'=>'string'),
     	'DESCRIPTION'	=>	array('component'=>'description','type'=>'string'),
     	'DTSTART'		=>	array('component'=>array('date_start','time_start'),'function'=>'iCalendar_event_dtstart','type'=>'datetime'),
@@ -345,11 +345,11 @@ class iCalendar_event extends iCalendar_component {
     	'ATTENDEE'		=>	array('component'=>'activityid','function'=>'iCalendar_event_attendee','type'=>'user'),
     	'RESOURCES'		=>	array('component'=>array('location','eventstatus'),'type'=>'string'),
     );
-    var $field_mapping_arr = array(
+    public $field_mapping_arr = array(
     	'priority'=>'taskpriority'
     );
 
-    function construct() {
+    public function construct() {
 
         $this->valid_components = array('VALARM');
 
@@ -397,7 +397,7 @@ class iCalendar_event extends iCalendar_component {
         parent::construct();
     }
 
-    function invariant_holds() {
+    public function invariant_holds() {
         // DTEND and DURATION must not appear together
         if(isset($this->properties['DTEND']) && isset($this->properties['DURATION'])) {
             return false;
@@ -421,13 +421,13 @@ class iCalendar_event extends iCalendar_component {
         return true;
     }
 
-    function iCalendar_event_dtstamp($activity){
+    public function iCalendar_event_dtstamp($activity){
     	$components = gmdate('Ymd', strtotime($activity['date_start']." ".$activity['time_start']))."T".gmdate('His', strtotime($activity['date_start']." ".$activity['time_start']))."Z";
 		$this->add_property("DTSTAMP",$components);
     	return true;
     }
 
-   function iCalendar_event_dtstart($activity){
+   public function iCalendar_event_dtstart($activity){
    		$time = str_replace(':','',$activity['time_start']);
    		if(strlen($time)<6){
    			while((6-strlen($time)) > 0 ){
@@ -439,7 +439,7 @@ class iCalendar_event extends iCalendar_component {
     	return true;
     }
 
-   function iCalendar_event_dtend($activity){
+   public function iCalendar_event_dtend($activity){
    		$time = str_replace(':','',$activity['time_end']);
    		if(strlen($time)<6){
    			while((6-strlen($time)) > 0 ){
@@ -451,7 +451,7 @@ class iCalendar_event extends iCalendar_component {
     	return true;
     }
 
-	function iCalendar_event_attendee($activity){
+	public function iCalendar_event_attendee($activity){
 		global $adb;
 		$users_res = $adb->pquery("SELECT inviteeid FROM vtiger_invitees WHERE activityid=?", array($activity['id']));
 		if($adb->num_rows($users_res)>0){
@@ -469,9 +469,9 @@ class iCalendar_event extends iCalendar_component {
 }
 
 class iCalendar_todo extends iCalendar_component {
-    var $name       = 'VTODO';
-    var $properties;
-    var $mapping_arr = array(
+    public $name       = 'VTODO';
+    public $properties;
+    public $mapping_arr = array(
     	'DESCRIPTION'	=>	array('component'=>'description','type'=>'string'),
     	'DTSTAMP'		=>	array('component'=>array('date_start','time_start'),'function'=>'iCalendar_event_dtstamp','type'=>'datetime'),
     	'DTSTART'		=>	array('component'=>array('date_start','time_start'),'function'=>'iCalendar_event_dtstart','type'=>'datetime'),
@@ -481,12 +481,12 @@ class iCalendar_todo extends iCalendar_component {
     	'PRIORITY'		=>	array('component'=>'priority','type'=>'string'),
     	'RESOURCES'		=>	array('component'=>array('status'),'type'=>'string'),
     );
-    var $field_mapping_arr = array(
+    public $field_mapping_arr = array(
     	'status'=>'taskstatus',
     	'priority'=>'taskpriority'
     );
 
-    function construct() {
+    public function construct() {
 
         $this->valid_components = array();
         $this->valid_properties = array(
@@ -530,13 +530,13 @@ class iCalendar_todo extends iCalendar_component {
         // either 'due' or 'duration' may appear in  a 'eventprop', but 'due'
         // and 'duration' MUST NOT occur in the same 'eventprop'
     }
-    function iCalendar_event_dtstamp($activity){
+    public function iCalendar_event_dtstamp($activity){
     	$components = gmdate('Ymd', strtotime($activity['date_start']." ".$activity['time_start']))."T".gmdate('His', strtotime($activity['date_start']." ".$activity['time_start']))."Z";
 		$this->add_property("DTSTAMP",$components);
     	return true;
     }
 
-   function iCalendar_event_dtstart($activity){
+   public function iCalendar_event_dtstart($activity){
    		$time = str_replace(':','',$activity['time_start']);
    		if(strlen($time)<6){
    			while((6-strlen($time)) > 0 ){
@@ -548,7 +548,7 @@ class iCalendar_todo extends iCalendar_component {
     	return true;
     }
 
-   function iCalendar_event_dtend($activity){
+   public function iCalendar_event_dtend($activity){
     	$components = str_replace('-', '', $activity['due_date']).'T000000Z';
 		$this->add_property("DUE",$components);
     	return true;
@@ -564,13 +564,13 @@ class iCalendar_freebusy extends iCalendar_component {
 }
 
 class iCalendar_alarm extends iCalendar_component {
-    var $name='VALARM';
-    var $properties;
-    var $mapping_arr = array(
+    public $name='VALARM';
+    public $properties;
+    public $mapping_arr = array(
     	'TRIGGER'	=>	array('component'=>'reminder_time', 'function'=>'iCalendar_event_trigger'),
     );
 
-    function construct() {
+    public function construct() {
 
         $this->valid_components = array();
         $this->valid_properties = array(
@@ -584,7 +584,7 @@ class iCalendar_alarm extends iCalendar_component {
         parent::construct();
     }
 
-   function iCalendar_event_trigger($activity){
+   public function iCalendar_event_trigger($activity){
     	$reminder_time = $activity['reminder_time'];
     	if($reminder_time>60){
     		$reminder_time = round($reminder_time/60);
@@ -600,10 +600,10 @@ class iCalendar_alarm extends iCalendar_component {
 }
 
 class iCalendar_timezone extends iCalendar_component {
-    var $name       = 'VTIMEZONE';
-    var $properties;
+    public $name       = 'VTIMEZONE';
+    public $properties;
 
-    function construct() {
+    public function construct() {
         $this->valid_components = array();
         $this->valid_properties = array(
             'TZID'        => RFC2445_REQUIRED | RFC2445_ONCE,

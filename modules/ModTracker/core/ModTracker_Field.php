@@ -13,19 +13,19 @@ include_once('include/utils/CommonUtils.php');
 
 class ModTracker_Field {
 
-	var $parent;
-	var $moduleMeta = null;
-	var $fieldInfo = null;
+	public $parent;
+	public $moduleMeta = null;
+	public $fieldInfo = null;
 
-	function __construct($parent) {
+	public function __construct($parent) {
 		$this->parent = $parent;
 	}
 
-	function getFieldLabel() {
+	public function getFieldLabel() {
 		return $this->fieldInfo->getFieldLabelKey();
 	}
 
-	function getDisplayLabel($value) {
+	public function getDisplayLabel($value) {
 		$recordId = $this->parent->getRecordId();
 		$fieldInstance = $this->fieldInfo;
 		$moduleName = $this->parent->getModuleName();
@@ -33,7 +33,7 @@ class ModTracker_Field {
 		return $value;
 	}
 
-	function getFieldDisplayValue($moduleName, $recordId, $fieldInstance, $value) {
+	public function getFieldDisplayValue($moduleName, $recordId, $fieldInstance, $value) {
 		global $current_user;
 		$adb = PearDatabase::getInstance();
 
@@ -210,7 +210,7 @@ class ModTracker_Field {
 		return $value;
 	}
 
-	function initialize() {
+	public function initialize() {
 		global $adb, $current_user;
 		if ($this->moduleMeta === null) {
 			$moduleHandler = vtws_getModuleHandlerFromName($this->parent->getModuleName(), $current_user);

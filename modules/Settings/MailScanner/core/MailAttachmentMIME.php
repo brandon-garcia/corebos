@@ -7,7 +7,7 @@ if(!class_exists('MailAttachmentMIME')){
 		 * Detect the MIME type based on extension in the filename.
 		 * @return MIME type text.
 		 */
-		static function detect($filename) {
+		public static function detect($filename) {
 			$mime = new mimetype();
 			return $mime->getType($filename);
 		}
@@ -83,7 +83,7 @@ SUCH DAMAGE.
 **/
 
 class mimetype {
-   function getType($filename) {
+   public function getType($filename) {
       // get base name of the filename provided by user
       $filename = basename($filename);
 
@@ -97,7 +97,7 @@ class mimetype {
       return $this->privFindType($filename);
    }
 
-   function privFindType($ext) {
+   public function privFindType($ext) {
       // create mimetypes array
       $mimetypes = $this->privBuildMimeArray();
       
@@ -111,7 +111,7 @@ class mimetype {
          
    }
 
-   function privBuildMimeArray() {
+   public function privBuildMimeArray() {
       return array(
          "ez" => "application/andrew-inset",
          "hqx" => "application/mac-binhex40",

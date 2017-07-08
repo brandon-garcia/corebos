@@ -11,20 +11,20 @@ require_once('data/CRMEntity.php');
 require_once('data/Tracker.php');
 
 class cbCalendar extends CRMEntity {
-	var $db, $log; // Used in class functions of CRMEntity
+	public public $db, $log; // Used in class functions of CRMEntity
 
-	var $table_name = 'vtiger_activity';
-	var $table_index= 'activityid';
-	var $reminder_table = 'vtiger_activity_reminder';
-	var $column_fields = Array();
+	public $table_name = 'vtiger_activity';
+	public $table_index= 'activityid';
+	public $reminder_table = 'vtiger_activity_reminder';
+	public $column_fields = Array();
 
 	/** Indicator if this is a custom module or standard module */
-	var $IsCustomModule = true;
-	var $HasDirectImageField = false;
+	public $IsCustomModule = true;
+	public $HasDirectImageField = false;
 	/**
 	 * Mandatory table for supporting custom fields.
 	 */
-	var $customFieldTable = Array('vtiger_activitycf', 'activityid');
+	public $customFieldTable = Array('vtiger_activitycf', 'activityid');
 	// related_tables variable should define the association (relation) between dependent tables
 	// FORMAT: related_tablename => Array ( related_tablename_column[, base_tablename, base_tablename_column] )
 	// Here base_tablename_column should establish relation with related_tablename_column
@@ -35,12 +35,12 @@ class cbCalendar extends CRMEntity {
 	/**
 	 * Mandatory for Saving, Include tables related to this module.
 	 */
-	var $tab_name = Array('vtiger_crmentity', 'vtiger_activity', 'vtiger_activitycf');
+	public $tab_name = Array('vtiger_crmentity', 'vtiger_activity', 'vtiger_activitycf');
 
 	/**
 	 * Mandatory for Saving, Include tablename and tablekey columnname here.
 	 */
-	var $tab_name_index = Array(
+	public $tab_name_index = Array(
 		'vtiger_crmentity' => 'crmid',
 		'vtiger_activity'   => 'activityid',
 		'vtiger_activity_reminder'=>'activity_id',
@@ -51,7 +51,7 @@ class cbCalendar extends CRMEntity {
 	/**
 	 * Mandatory for Listing (Related listview)
 	 */
-	var $list_fields = Array (
+	public $list_fields = Array (
 		/* Format: Field Label => Array(tablename => columnname) */
 		// tablename should not have prefix 'vtiger_'
 		'Subject'=>Array('activity'=>'subject'),
@@ -64,7 +64,7 @@ class cbCalendar extends CRMEntity {
 		'Assigned To'=>Array('crmentity'=>'smownerid'),
 	);
 
-	var $list_fields_name = Array(
+	public $list_fields_name = Array(
 		/* Format: Field Label => fieldname */
 		'Subject'=>'subject',
 		'Type'=>'activitytype',
@@ -77,10 +77,10 @@ class cbCalendar extends CRMEntity {
 	);
 
 	// Make the field link to detail view from list view (Fieldname)
-	var $list_link_field = 'subject';
+	public $list_link_field = 'subject';
 
 	// For Popup listview and UI type support
-	var $search_fields = Array(
+	public $search_fields = Array(
 		/* Format: Field Label => Array(tablename => columnname) */
 		// tablename should not have prefix 'vtiger_'
 		'Subject'=>Array('activity'=>'subject'),
@@ -92,7 +92,7 @@ class cbCalendar extends CRMEntity {
 		'Contact Name'=>Array('contactdetails'=>'lastname'),
 		'Assigned To'=>Array('crmentity'=>'smownerid'),
 	);
-	var $search_fields_name = Array(
+	public $search_fields_name = Array(
 		/* Format: Field Label => fieldname */
 		'Subject'=>'subject',
 		'Type'=>'activitytype',
@@ -105,30 +105,30 @@ class cbCalendar extends CRMEntity {
 	);
 
 	// For Popup window record selection
-	var $popup_fields = Array('subject');
+	public $popup_fields = Array('subject');
 
 	// Placeholder for sort fields - All the fields will be initialized for Sorting through initSortFields
-	var $sortby_fields = Array();
+	public $sortby_fields = Array();
 
 	// For Alphabetical search
-	var $def_basicsearch_col = 'subject';
+	public $def_basicsearch_col = 'subject';
 
 	// Column value to use on detail view record text display
-	var $def_detailview_recname = 'subject';
+	public $def_detailview_recname = 'subject';
 
 	// Required Information for enabling Import feature
-	var $required_fields = Array('subject'=>1);
+	public $required_fields = Array('subject'=>1);
 
 	// Callback function list during Importing
-	var $special_functions = Array('set_import_assigned_user');
+	public $special_functions = Array('set_import_assigned_user');
 
-	var $default_order_by = 'subject';
-	var $default_sort_order='ASC';
+	public $default_order_by = 'subject';
+	public $default_sort_order='ASC';
 	// Used when enabling/disabling the mandatory fields for the module.
 	// Refers to vtiger_field.fieldname values.
-	var $mandatory_fields = Array('createdtime', 'modifiedtime', 'subject');
+	public $mandatory_fields = Array('createdtime', 'modifiedtime', 'subject');
 
-	function save_module($module) {
+	public function save_module($module) {
 		global $adb;
 		if ($this->HasDirectImageField) {
 			$this->insertIntoAttachment($this->id,$module);
@@ -192,7 +192,7 @@ class cbCalendar extends CRMEntity {
 		}
 	}
 
-	function trash($module, $id) {
+	public function trash($module, $id) {
 		parent::trash($module, $id);
 		$this->activity_reminder($id,'0',0,0,'delete');
 	}
@@ -200,7 +200,7 @@ class cbCalendar extends CRMEntity {
 	/** Function to insert values in vtiger_recurringevents table for the specified tablename,module
 	  * @param $recurObj -- Recurring Object:: Type varchar
 	 */
-	function insertIntoRecurringTable(& $recurObj)
+	public function insertIntoRecurringTable(& $recurObj)
 	{
 		global $log,$adb;
 		$log->info("in insertIntoRecurringTable  ");
@@ -278,7 +278,7 @@ class cbCalendar extends CRMEntity {
 	/** Function to insert values in activity_reminder_popup table for the specified module
 	  * @param $cbmodule -- module:: Type varchar
 	 */
-	function insertIntoActivityReminderPopup($cbmodule) {
+	public function insertIntoActivityReminderPopup($cbmodule) {
 		global $adb;
 
 		$cbrecord = $this->id;
@@ -313,7 +313,7 @@ class cbCalendar extends CRMEntity {
 	  * @param $table_name -- table name:: Type varchar
 	  * @param $module -- module:: Type varchar
 	 */
-	function insertIntoReminderTable($table_name,$recurid)
+	public function insertIntoReminderTable($table_name, $recurid)
 	{
 		global $log;
 		if (isset($_REQUEST['set_reminder']) and $_REQUEST['set_reminder'] == 'Yes') {
@@ -357,7 +357,7 @@ class cbCalendar extends CRMEntity {
 	 * @param  integer   $recurid         - recuring eventid
 	 * @param  string    $remindermode    - string like 'edit'
 	 */
-	function activity_reminder($activity_id,$reminder_time,$reminder_sent=0,$recurid,$remindermode='')
+	public function activity_reminder($activity_id, $reminder_time, $reminder_sent=0, $recurid, $remindermode='')
 	{
 		global $log;
 		$log->debug("Entering activity_reminder(".$activity_id.",".$reminder_time.",".$reminder_sent.",".$recurid.",".$remindermode.") method ...");
@@ -398,7 +398,7 @@ class cbCalendar extends CRMEntity {
 	  * @param $module -- module:: Type varchar
 	  * @param $invitees_array Array
 	 */
-	function insertIntoInviteeTable($module,$invitees_array)
+	public function insertIntoInviteeTable($module, $invitees_array)
 	{
 		global $log,$adb;
 		$log->debug("Entering insertIntoInviteeTable($module,".print_r($invitees_array,true).") method ...");
@@ -420,7 +420,7 @@ class cbCalendar extends CRMEntity {
 	/** Function to insert values in vtiger_salesmanactivityrel table for the specified module
 	  * @param $module -- module:: Type varchar
 	*/
-	function insertIntoSmActivityRel($module) {
+	public function insertIntoSmActivityRel($module) {
 		global $adb, $current_user;
 		if ($this->mode == 'edit') {
 			$sql = "delete from vtiger_salesmanactivityrel where activityid=?";
@@ -448,7 +448,7 @@ class cbCalendar extends CRMEntity {
 		}
 	}
 
-	function getRequestData($return_id) {
+	public function getRequestData($return_id) {
 		global $adb;
 		$cont_qry = "select * from vtiger_cntactivityrel where activityid=?";
 		$cont_res = $adb->pquery($cont_qry, array($return_id));
@@ -500,7 +500,7 @@ class cbCalendar extends CRMEntity {
 		return $mail_data;
 	}
 
-	function sendInvitation($inviteesid,$subject,$desc) {
+	public function sendInvitation($inviteesid, $subject, $desc) {
 		global $current_user;
 		require_once('modules/Emails/mail.php');
 		$invites = getTranslatedString('INVITATION','cbCalendar');
@@ -519,7 +519,7 @@ class cbCalendar extends CRMEntity {
 	/**
 	 * Apply security restriction (sharing privilege) query part for List view.
 	 */
-	function getListViewSecurityParameter($module) {
+	public function getListViewSecurityParameter($module) {
 		global $current_user;
 		require('user_privileges/user_privileges_'.$current_user->id.'.php');
 		require('user_privileges/sharing_privileges_'.$current_user->id.'.php');
@@ -565,7 +565,7 @@ class cbCalendar extends CRMEntity {
 	 * @param  integer   $id      - activityid
 	 * returns related Contacts record in array format
 	 */
-	function get_contacts($id, $cur_tab_id, $rel_tab_id, $actions=false) {
+	public function get_contacts($id, $cur_tab_id, $rel_tab_id, $actions=false) {
 		global $log, $singlepane_view, $currentModule, $current_user, $adb;
 		$log->debug("Entering get_contacts(".$id.") method ...");
 		$this_module = $currentModule;
@@ -645,7 +645,7 @@ class cbCalendar extends CRMEntity {
 	 * @param String Module name
 	 * @param String Event Type (module.postinstall, module.disabled, module.enabled, module.preuninstall)
 	 */
-	function vtlib_handler($modulename, $event_type) {
+	public function vtlib_handler($modulename, $event_type) {
 		if($event_type == 'module.postinstall') {
 			// TODO Handle post installation actions
 			//$this->setModuleSeqNumber('configure', $modulename, 'cbcal-', '0000001');
@@ -865,7 +865,7 @@ class cbCalendar extends CRMEntity {
 	 * NOTE: This function has been added to CRMEntity (base class).
 	 * You can override the behavior by re-defining it here.
 	 */
-	function save_related_module($module, $crmid, $with_module, $with_crmid) {
+	public function save_related_module($module, $crmid, $with_module, $with_crmid) {
 		global $adb;
 		if (!is_array($with_crmid))
 			$with_crmid = Array($with_crmid);
@@ -884,7 +884,7 @@ class cbCalendar extends CRMEntity {
 	 * NOTE: This function has been added to CRMEntity (base class).
 	 * You can override the behavior by re-defining it here.
 	 */
-	function delete_related_module($module, $crmid, $with_module, $with_crmid) {
+	public function delete_related_module($module, $crmid, $with_module, $with_crmid) {
 		global $adb;
 		if (!is_array($with_crmid))
 			$with_crmid = Array($with_crmid);

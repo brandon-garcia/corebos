@@ -11,7 +11,7 @@ require_once('Smarty_setup.php');
 
 class MailManager_Viewer extends vtigerCRM_Smarty {
 
-	function __construct() {
+	public function __construct() {
 		parent::__construct();
 		global $app_strings, $mod_strings, $currentModule, $theme;
 		$this->assign('CUSTOM_MODULE', true);

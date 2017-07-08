@@ -24,22 +24,22 @@ require_once 'vtlib/Vtiger/Mailer.php';
 
 class Import_Data_Controller {
 
-	var $id;
-	var $user;
-	var $module;
-	var $fieldMapping;
-	var $mergeType;
-	var $mergeFields;
-	var $defaultValues;
-	var $importedRecordInfo = array();
-	var $batchImport = true;
+	public $id;
+	public $user;
+	public $module;
+	public $fieldMapping;
+	public $mergeType;
+	public $mergeFields;
+	public $defaultValues;
+	public $importedRecordInfo = array();
+	public $batchImport = true;
 
-	static $IMPORT_RECORD_NONE = 0;
-	static $IMPORT_RECORD_CREATED = 1;
-	static $IMPORT_RECORD_SKIPPED = 2;
-	static $IMPORT_RECORD_UPDATED = 3;
-	static $IMPORT_RECORD_MERGED = 4;
-	static $IMPORT_RECORD_FAILED = 5;
+	public static $IMPORT_RECORD_NONE = 0;
+	public static $IMPORT_RECORD_CREATED = 1;
+	public static $IMPORT_RECORD_SKIPPED = 2;
+	public static $IMPORT_RECORD_UPDATED = 3;
+	public static $IMPORT_RECORD_MERGED = 4;
+	public static $IMPORT_RECORD_FAILED = 5;
 
 	public function __construct($importInfo, $user) {
 		$this->id = $importInfo['id'];

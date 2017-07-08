@@ -15,13 +15,13 @@ require_once('include/database/PearDatabase.php');
  * It is intended to be called by each module when rendering the detail form.
  */
 class Tracker {
-	var $log;
-	var $db;
-	var $table_name = 'vtiger_tracker';
-	var $history_max_viewed = 10;
+	public $log;
+	public $db;
+	public $table_name = 'vtiger_tracker';
+	public $history_max_viewed = 10;
 
 	// Tracker table
-	var $column_fields = Array(
+	public $column_fields = Array(
 		"id",
 		"user_id",
 		"module_name",
@@ -29,7 +29,7 @@ class Tracker {
 		"item_summary"
 	);
 
-function __construct() {
+public function __construct() {
 	$this->log = LoggerManager::getLogger('Tracker');
 	global $adb;
 	$this->db = $adb;
@@ -41,7 +41,7 @@ function __construct() {
  * then remove the oldest item. If there is more than one extra item, log an error.
  * If the new item is the same as the most recent item then do not change the list
  */
-function track_view($user_id, $current_module, $item_id, $item_summary) {
+public function track_view($user_id, $current_module, $item_id, $item_summary) {
 	global $adb, $log;
 	$log->info("in track view method ".$current_module);
 	$this->delete_history($user_id, $item_id);
@@ -84,7 +84,7 @@ function track_view($user_id, $current_module, $item_id, $item_summary) {
  * param $module_name - Filter the history to only return records from the specified module. If not specified all records are returned
  * return - return the array of result set rows from the query. All of the table fields are included
  */
-function get_recently_viewed($user_id, $module_name = "") {
+public function get_recently_viewed($user_id, $module_name = "") {
 	if (empty($user_id)) {
 		return;
 	}
@@ -121,7 +121,7 @@ function get_recently_viewed($user_id, $module_name = "") {
  * INTERNAL -- This method cleans out any entry for a record for a user.
  * It is used to remove old occurances of previously viewed items.
  */
-function delete_history( $user_id, $item_id) {
+public function delete_history($user_id, $item_id) {
 	$query = "DELETE from $this->table_name WHERE user_id=? and item_id=?";
 	$this->db->pquery($query, array($user_id, $item_id), true);
 }
@@ -129,7 +129,7 @@ function delete_history( $user_id, $item_id) {
 /**
  * INTERNAL -- This method cleans out any entry for a record.
  */
-function delete_item_history($item_id) {
+public function delete_item_history($item_id) {
 	$query = "DELETE from $this->table_name WHERE item_id=?";
 	$this->db->pquery($query, array($item_id), true);
 }
@@ -137,7 +137,7 @@ function delete_item_history($item_id) {
 /**
  * INTERNAL -- This function will clean out old history records for this user if necessary.
  */
-function prune_history($user_id) {
+public function prune_history($user_id) {
 	$this->log->debug("Enter prune_history($user_id)");
 	// Check to see if the number of items in the list is now greater than the config max.
 	$rs = $this->db->pquery("SELECT count(*) from {$this->table_name} WHERE user_id=?",array($user_id));

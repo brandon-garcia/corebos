@@ -19,7 +19,7 @@ class OutlookSyncServer extends SyncServer{
     private $update = "update";
     private $delete = "delete";
 
-    function getDestinationHandleDetails(){
+    public function getDestinationHandleDetails(){
         return array('handlerclass' => 'OutlookVtigerCRMHandler',
             'handlerpath' => 'modules/WSAPP/Handlers/OutlookVtigerCRMHandler.php');
 	}
@@ -27,7 +27,7 @@ class OutlookSyncServer extends SyncServer{
     /*
      * Function overrided to deal duplication handling
      */
-     function put($key, $element, $user) {
+     public function put($key, $element, $user) {
         global $log;
         $db = PearDatabase::getInstance();
         $appid = parent::appid_with_key($key);

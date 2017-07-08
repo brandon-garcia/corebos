@@ -12,11 +12,11 @@ include_once 'Smarty_setup.php';
 class crmtogo_UI_Viewer {
 	
 	private $parameters = array();
-	function assign($key, $value) {
+	public function assign($key, $value) {
 		$this->parameters[$key] = $value;
 	}
 	
-	function viewController() {
+	public function viewController() {
 		$smarty = new vtigerCRM_Smarty();
 		
 		foreach($this->parameters as $k => $v) {
@@ -28,7 +28,7 @@ class crmtogo_UI_Viewer {
 		return $smarty;
 	}
 	
-	function process($templateName) {
+	public function process($templateName) {
 		$smarty = $this->viewController();
 		$response = new crmtogo_API_Response();
 		$response->setResult($smarty->fetch(vtlib_getModuleTemplate('Mobile', $templateName)));

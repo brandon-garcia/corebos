@@ -15,13 +15,13 @@ require_once('include/database/PearDatabase.php');
 require_once('vtlib/Vtiger/Feed/Parser.php');
 
 class vtigerRSS extends CRMEntity {
-	var $rsscache_time = 1200;
+	public $rsscache_time = 1200;
 
 	/** Function to get the Rss Feeds from the Given URL
 	  * This Function accepts the url string as the argument
 	  * and assign the value for the class variables correspondingly
 	 */
-	function setRSSUrl($url)
+	public function setRSSUrl($url)
 	{
 		$feed = new Vtiger_Feed_Parser();
 		$success = $feed->vt_dofetch($url);
@@ -49,7 +49,7 @@ class vtigerRSS extends CRMEntity {
 	  * This Function accepts no arguments and returns the listview contents on Sucess
 	  * returns "Sorry: It's not possible to reach RSS URL" if fails
 	 */
-	function getListViewRSSHtml()
+	public function getListViewRSSHtml()
 	{
 		global $default_charset;
 		if(isset($this->rss_object))
@@ -77,7 +77,7 @@ class vtigerRSS extends CRMEntity {
 	  * This Function accepts maximum entries as arguments and returns the listview contents on Success
 	  * returns "Sorry: It's not possible to reach RSS URL" if fails
 	 */
-	function getListViewHomeRSSHtml($maxentries)
+	public function getListViewHomeRSSHtml($maxentries)
 	{
 		$return_value=Array();
 		$return_more=Array();
@@ -110,7 +110,7 @@ class vtigerRSS extends CRMEntity {
 	  * returns true on sucess
 	  * returns false if fails
 	 */
-	function saveRSSUrl($url,$makestarred=0)
+	public function saveRSSUrl($url, $makestarred=0)
 	{
 		global $adb;
 
@@ -135,7 +135,7 @@ class vtigerRSS extends CRMEntity {
 		}
 	}
 
-	function getCRMRssFeeds()
+	public function getCRMRssFeeds()
 	{
 		global $adb, $theme;
 
@@ -161,7 +161,7 @@ class vtigerRSS extends CRMEntity {
 		return $shtml;
 	}
 
-	function getAllRssFeeds()
+	public function getAllRssFeeds()
 	{
 		global $adb, $theme;
 
@@ -188,7 +188,7 @@ class vtigerRSS extends CRMEntity {
 	/** Function to get the rssurl for the given id
 	  * This Function accepts the rssid as argument and returns the rssurl for that id
 	 */
-	function getRssUrlfromId($rssid)
+	public function getRssUrlfromId($rssid)
 	{
 		global $adb;
 
@@ -206,7 +206,7 @@ class vtigerRSS extends CRMEntity {
 		return $rssurl;
 	}
 
-	function getRSSHeadings($rssid)
+	public function getRSSHeadings($rssid)
 	{
 		global $adb, $theme;
 
@@ -241,7 +241,7 @@ class vtigerRSS extends CRMEntity {
 	  * This Function accepts no argument and returns the rss feeds of
 	  * the starred Feeds as HTML strings
 	 */
-	function getTopStarredRSSFeeds()
+	public function getTopStarredRSSFeeds()
 	{
 		global $adb, $theme;
 
@@ -261,7 +261,7 @@ class vtigerRSS extends CRMEntity {
 	  * This Function accepts no argument and returns the rss feeds of
 	  * the starred Feeds as HTML strings
 	 */
-	function getStarredRssHTML()
+	public function getStarredRssHTML()
 	{
 		global $adb, $mod_strings;
 
@@ -307,7 +307,7 @@ class vtigerRSS extends CRMEntity {
 	/** Function to get the rssfeed lists for the given rssid
 	  * This Function accepts the rssid as argument and returns the rss feeds as HTML strings
 	 */
-	function getSelectedRssHTML($rssid)
+	public function getSelectedRssHTML($rssid)
 	{
 		global $adb, $mod_strings;
 
@@ -354,7 +354,7 @@ class vtigerRSS extends CRMEntity {
 	  * This Function accepts the RssCategory as argument
 	  * and returns the html string for the Rss feeds lists
 	 */
-	function getRSSCategoryHTML()
+	public function getRSSCategoryHTML()
 	{
 		global $adb;
 		$shtml = "<tr>
@@ -369,7 +369,7 @@ class vtigerRSS extends CRMEntity {
 	  * This Function accepts the RssCategory as argument
 	  * and returns the html string for the Rss feeds lists
 	 */
-	function getRssFeedsbyCategory()
+	public function getRssFeedsbyCategory()
 	{
 		global $adb, $theme;
 
@@ -395,7 +395,7 @@ class vtigerRSS extends CRMEntity {
 	}
 
 	// Function to delete an entity with given Id
-	function trash($module, $id) {
+	public function trash($module, $id) {
 		global $log, $adb;
 		$del_query = 'DELETE FROM vtiger_rss WHERE rssid=?';
 		$adb->pquery($del_query, array($id));

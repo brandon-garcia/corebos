@@ -11,12 +11,12 @@
 class VTExpressionException extends Exception{}
 
 class VTThunk{
-	function __construct($env, $expr){
+	public function __construct($env, $expr){
 		$this->expr = new VTExpressionEvaluater($expr);
 		$this->env = $env;
 	}
 
-	function get(){
+	public function get(){
 		if(!isset($this->val)){
 			$this->val = $this->expr->evaluate($this->env);
 		}
@@ -25,16 +25,16 @@ class VTThunk{
 }
 
 class VTExpressionEngineEnv implements VTEnv{
-	function __construct($data){
+	public function __construct($data){
 		$this->data = $data;
 		$this->vars = array();
 	}
 
-	function bind($name, $expr){
+	public function bind($name, $expr){
 		$this->vars[$name] = new VTThunk($this, $expr);
 	}
 
-	function get($var){
+	public function get($var){
 		if(array_key_exists($var, $this->vars)){
 			return $this->vars[$var]->get();
 		}else{
@@ -44,7 +44,7 @@ class VTExpressionEngineEnv implements VTEnv{
 }
 
 class VTExpressionEngine{
-	function __construct(){
+	public function __construct(){
 		$this->data = array();
 		$this->expressions = array();
 		$this->unparsedExpressions = array();
@@ -56,13 +56,13 @@ class VTExpressionEngine{
 	 * Load dynamic fields and their expressions
 	 *
 	 */
-	function loadExpressions($arr){
+	public function loadExpressions($arr){
 		$this->unparsedExpressions = array_merge($this->unparsedExpressions, $arr);
 		$this->expressions = array_merge($this->expressions, array_map(array($this, 'expression'), $arr));
 		$this->regenerate();
 	}
 
-	function removeExpression($fieldName){
+	public function removeExpression($fieldName){
 		unset($this->unparsedExpressions[$fieldName]);
 		unset($this->expressions[$fieldName]);
 		$this->regenerate();
@@ -100,7 +100,7 @@ class VTExpressionEngine{
 	 * @return An array containing the variables bound to the expressions
 	 *         and their values.
 	 */
-	function evaluate($data){
+	public function evaluate($data){
 		$env = new VTExpressionEngineEnv($data);
 		foreach($this->expressions as $var=>$expr){
 			$env->bind($var, $expr);

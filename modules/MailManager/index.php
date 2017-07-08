@@ -13,7 +13,7 @@ include_once dirname(__FILE__) . '/MailManager.php';
 
 class MailManager_IndexController extends MailManager_Controller {
 
-	static $controllers = array(
+	public static $controllers = array(
 		'mainui' => array( 'file' => 'src/controllers/MainUIController.php', 'class' => 'MailManager_MainUIController' ),
 		'folder' => array( 'file' => 'src/controllers/FolderController.php', 'class' => 'MailManager_FolderController' ),
 		'mail'   => array( 'file' => 'src/controllers/MailController.php',   'class' => 'MailManager_MailController'   ),
@@ -22,7 +22,7 @@ class MailManager_IndexController extends MailManager_Controller {
 		'search'  =>array( 'file' => 'src/controllers/SearchController.php','class'=> 'MailManager_SearchController'),
 	);
 
-	function process(MailManager_Request $request) {
+	public function process(MailManager_Request $request) {
 
 		if (!$request->has('_operation')) {
 			return $this->processRoot($request);
@@ -45,7 +45,7 @@ class MailManager_IndexController extends MailManager_Controller {
 		unset($response);
 	}
 
-	function processRoot(MailManager_Request $request) {
+	public function processRoot(MailManager_Request $request) {
 		global $currentModule;
 		$viewer = $this->getViewer();
 		$tool_buttons = array(

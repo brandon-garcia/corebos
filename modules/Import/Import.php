@@ -10,7 +10,7 @@
 
 class Import {
 	
-	function vtlib_handler($modulename, $event_type) {
+	public function vtlib_handler($modulename, $event_type) {
 		if($event_type == 'module.postinstall') {
 			// TODO Handle actions when this module is installed.
 		} else if($event_type == 'module.disabled') {

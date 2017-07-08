@@ -13,11 +13,11 @@ include_once 'Smarty_setup.php';
 class Import_UI_Viewer {
 	
 	private $parameters = array();
-	function assign($key, $value) {
+	public function assign($key, $value) {
 		$this->parameters[$key] = $value;
 	}
 	
-	function viewController() {
+	public function viewController() {
 		global $theme;
 		$themePath = "themes/".$theme."/";
 		$imagePath = $themePath."images/";
@@ -35,7 +35,7 @@ class Import_UI_Viewer {
 		return $smarty;
 	}
 	
-	function display($templateName, $moduleName='') {
+	public function display($templateName, $moduleName='') {
 		$smarty = $this->viewController();
 		if(empty($moduleName)) {
 			$moduleName = 'Import';
@@ -43,7 +43,7 @@ class Import_UI_Viewer {
 		$smarty->display(vtlib_getModuleTemplate($moduleName, $templateName));
 	}
 
-	function fetch($templateName, $moduleName='') {
+	public function fetch($templateName, $moduleName='') {
 		$smarty = $this->viewController();
 		if(empty($moduleName)) {
 			$moduleName = 'Import';

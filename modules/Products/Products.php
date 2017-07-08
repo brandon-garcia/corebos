@@ -13,34 +13,34 @@ require_once('include/RelatedListView.php');
 require('user_privileges/default_module_view.php');
 
 class Products extends CRMEntity {
-	var $db, $log; // Used in class functions of CRMEntity
+	public public $db, $log; // Used in class functions of CRMEntity
 
-	var $table_name = 'vtiger_products';
-	var $table_index= 'productid';
-	var $column_fields = Array();
+	public $table_name = 'vtiger_products';
+	public $table_index= 'productid';
+	public $column_fields = Array();
 
 	/** Indicator if this is a custom module or standard module */
-	var $IsCustomModule = false;
-	var $HasDirectImageField = true;
+	public $IsCustomModule = false;
+	public $HasDirectImageField = true;
 	/**
 	 * Mandatory table for supporting custom fields.
 	 */
-	var $customFieldTable = Array('vtiger_productcf','productid');
+	public $customFieldTable = Array('vtiger_productcf','productid');
 
 	/**
 	 * Mandatory for Saving, Include tables related to this module.
 	 */
-	var $tab_name = Array('vtiger_crmentity','vtiger_products','vtiger_productcf');
+	public $tab_name = Array('vtiger_crmentity','vtiger_products','vtiger_productcf');
 
 	/**
 	 * Mandatory for Saving, Include tablename and tablekey columnname here.
 	 */
-	var $tab_name_index = Array('vtiger_crmentity'=>'crmid','vtiger_products'=>'productid','vtiger_productcf'=>'productid','vtiger_seproductsrel'=>'productid','vtiger_producttaxrel'=>'productid');
+	public $tab_name_index = Array('vtiger_crmentity'=>'crmid','vtiger_products'=>'productid','vtiger_productcf'=>'productid','vtiger_seproductsrel'=>'productid','vtiger_producttaxrel'=>'productid');
 
 	/**
 	 * Mandatory for Listing (Related listview)
 	 */
-	var $list_fields = Array(
+	public $list_fields = Array(
 		'Product Name'=>Array('products'=>'productname'),
 		'Part Number'=>Array('products'=>'productcode'),
 		'Commission Rate'=>Array('products'=>'commissionrate'),
@@ -49,7 +49,7 @@ class Products extends CRMEntity {
 		'Qty/Unit'=>Array('products'=>'qty_per_unit'),
 		'Unit Price'=>Array('products'=>'unit_price')
 	);
-	var $list_fields_name = Array(
+	public $list_fields_name = Array(
 		'Product Name'=>'productname',
 		'Part Number'=>'productcode',
 		'Commission Rate'=>'commissionrate',
@@ -60,17 +60,17 @@ class Products extends CRMEntity {
 	);
 
 	// Make the field link to detail view from list view (Fieldname)
-	var $list_link_field= 'productname';
+	public $list_link_field= 'productname';
 
 	// For Popup listview and UI type support
-	var $search_fields = Array(
+	public $search_fields = Array(
 		'Product Name'=>Array('products'=>'productname'),
 		'Part Number'=>Array('products'=>'productcode'),
 		'Product Category'=>Array('products'=>'productcategory'),
 		'Vendor Name'=>Array('products'=>'vendor_id'),
 		'Unit Price'=>Array('products'=>'unit_price')
 	);
-	var $search_fields_name = Array(
+	public $search_fields_name = Array(
 		'Product Name'=>'productname',
 		'Part Number'=>'productcode',
 		'Product Category'=>'productcategory',
@@ -79,29 +79,29 @@ class Products extends CRMEntity {
 	);
 
 	// For Popup window record selection
-	var $popup_fields = Array('productname');
+	public $popup_fields = Array('productname');
 
 	// Placeholder for sort fields - All the fields will be initialized for Sorting through initSortFields
-	var $sortby_fields = Array();
+	public $sortby_fields = Array();
 
 	// For Alphabetical search
-	var $def_basicsearch_col = 'productname';
+	public $def_basicsearch_col = 'productname';
 
 	// Column value to use on detail view record text display
-	var $def_detailview_recname = 'productname';
+	public $def_detailview_recname = 'productname';
 
 	// Required Information for enabling Import feature
-	var $required_fields = Array('productname'=>1);
+	public $required_fields = Array('productname'=>1);
 
-	var $default_order_by = 'productname';
-	var $default_sort_order='ASC';
+	public $default_order_by = 'productname';
+	public $default_sort_order='ASC';
 	// Used when enabling/disabling the mandatory fields for the module.
 	// Refers to vtiger_field.fieldname values.
-	var $mandatory_fields = Array('createdtime', 'modifiedtime', 'productname', 'assigned_user_id');
+	public $mandatory_fields = Array('createdtime', 'modifiedtime', 'productname', 'assigned_user_id');
 	 // Josh added for importing and exporting -added in patch2
-	var $unit_price;
+	public $unit_price;
 
-	function __construct() {
+	public function __construct() {
 		global $log;
 		$this_module = get_class($this);
 		$this->column_fields = getColumnFields($this_module);
@@ -109,7 +109,7 @@ class Products extends CRMEntity {
 		$this->log = $log;
 	}
 
-	function save_module($module)
+	public function save_module($module)
 	{
 		//Inserting into product_taxrel table
 		if ((empty($_REQUEST['ajxaction']) || $_REQUEST['ajxaction'] != 'DETAILVIEW') && $_REQUEST['action'] != 'MassEditSave' && $_REQUEST['action'] != 'ProcessDuplicates')
@@ -140,7 +140,7 @@ class Products extends CRMEntity {
 	 *	@param string $module	 - current module name
 	 *	$return void
 	*/
-	function insertTaxInformation($tablename, $module)
+	public function insertTaxInformation($tablename, $module)
 	{
 		global $adb, $log;
 		$log->debug("Entering into insertTaxInformation($tablename, $module) method ...");
@@ -194,7 +194,7 @@ class Products extends CRMEntity {
 	 *	@param string $module	 - current module name
 	 *	$return void
 	*/
-	function insertPriceInformation($tablename, $module)
+	public function insertPriceInformation($tablename, $module)
 	{
 		global $adb, $log, $current_user;
 		$log->debug("Entering into insertPriceInformation($tablename, $module) method ...");
@@ -246,7 +246,7 @@ class Products extends CRMEntity {
 		$log->debug("Exiting from insertPriceInformation($tablename, $module) method ...");
 	}
 
-	function updateUnitPrice() {
+	public function updateUnitPrice() {
 		$prod_res = $this->db->pquery("select unit_price, currency_id from vtiger_products where productid=?", array($this->id));
 		$prod_unit_price = $this->db->query_result($prod_res, 0, 'unit_price');
 		$prod_base_currency = $this->db->query_result($prod_res, 0, 'currency_id');
@@ -256,7 +256,7 @@ class Products extends CRMEntity {
 		$this->db->pquery($query, $params);
 	}
 
-	function insertIntoAttachment($id,$module, $direct_import=false)
+	public function insertIntoAttachment($id, $module, $direct_import=false)
 	{
 		global $log, $adb;
 		$log->debug("Entering into insertIntoAttachment($id,$module) method.");
@@ -297,7 +297,7 @@ class Products extends CRMEntity {
 	 *	@param int $id - product id
 	 *	@return array - array which will be returned from the function GetRelatedList
 	 */
-	function get_leads($id, $cur_tab_id, $rel_tab_id, $actions=false) {
+	public function get_leads($id, $cur_tab_id, $rel_tab_id, $actions=false) {
 		global $log, $singlepane_view,$currentModule,$current_user;
 		$log->debug("Entering get_leads(".$id.") method ...");
 		$this_module = $currentModule;
@@ -353,7 +353,7 @@ class Products extends CRMEntity {
 	 *	@param int $id - product id
 	 *	@return array - array which will be returned from the function GetRelatedList
 	 */
-	function get_accounts($id, $cur_tab_id, $rel_tab_id, $actions=false) {
+	public function get_accounts($id, $cur_tab_id, $rel_tab_id, $actions=false) {
 		global $log, $singlepane_view,$currentModule,$current_user;
 		$log->debug("Entering get_accounts(".$id.") method ...");
 		$this_module = $currentModule;
@@ -408,7 +408,7 @@ class Products extends CRMEntity {
 	 *	@param int $id - product id
 	 *	@return array - array which will be returned from the function GetRelatedList
 	 */
-	function get_contacts($id, $cur_tab_id, $rel_tab_id, $actions=false) {
+	public function get_contacts($id, $cur_tab_id, $rel_tab_id, $actions=false) {
 		global $log, $singlepane_view,$currentModule,$current_user;
 		$log->debug("Entering get_contacts(".$id.") method ...");
 		$this_module = $currentModule;
@@ -467,7 +467,7 @@ class Products extends CRMEntity {
 	 *	@param int $id - product id
 	 *	@return array - array which will be returned from the function GetRelatedList
 	 */
-	function get_opportunities($id, $cur_tab_id, $rel_tab_id, $actions=false) {
+	public function get_opportunities($id, $cur_tab_id, $rel_tab_id, $actions=false) {
 		global $log, $singlepane_view,$currentModule,$current_user;
 		$log->debug("Entering get_opportunities(".$id.") method ...");
 		$this_module = $currentModule;
@@ -530,7 +530,7 @@ class Products extends CRMEntity {
 	 *	@param int $id - product id
 	 *	@return array - array which will be returned from the function GetRelatedList
 	 */
-	function get_tickets($id, $cur_tab_id, $rel_tab_id, $actions=false) {
+	public function get_tickets($id, $cur_tab_id, $rel_tab_id, $actions=false) {
 		global $log, $singlepane_view,$currentModule,$current_user;
 		$log->debug("Entering get_tickets(".$id.") method ...");
 		$this_module = $currentModule;
@@ -593,7 +593,7 @@ class Products extends CRMEntity {
 	 *	@param int $id - product id
 	 *	@return array - array which will be returned from the function GetRelatedList
 	 */
-	function get_quotes($id, $cur_tab_id, $rel_tab_id, $actions=false) {
+	public function get_quotes($id, $cur_tab_id, $rel_tab_id, $actions=false) {
 		global $log, $singlepane_view,$currentModule,$current_user;
 		$log->debug("Entering get_quotes(".$id.") method ...");
 		$this_module = $currentModule;
@@ -660,7 +660,7 @@ class Products extends CRMEntity {
 	 *	@param int $id - product id
 	 *	@return array - array which will be returned from the function GetRelatedList
 	 */
-	function get_purchase_orders($id, $cur_tab_id, $rel_tab_id, $actions=false) {
+	public function get_purchase_orders($id, $cur_tab_id, $rel_tab_id, $actions=false) {
 		global $log, $singlepane_view,$currentModule,$current_user;
 		$log->debug("Entering get_purchase_orders(".$id.") method ...");
 		$this_module = $currentModule;
@@ -726,7 +726,7 @@ class Products extends CRMEntity {
 	 *	@param int $id - product id
 	 *	@return array - array which will be returned from the function GetRelatedList
 	 */
-	function get_salesorder($id, $cur_tab_id, $rel_tab_id, $actions=false) {
+	public function get_salesorder($id, $cur_tab_id, $rel_tab_id, $actions=false) {
 		global $log, $singlepane_view,$currentModule,$current_user;
 		$log->debug("Entering get_salesorder(".$id.") method ...");
 		$this_module = $currentModule;
@@ -790,7 +790,7 @@ class Products extends CRMEntity {
 	 *	@param int $id - product id
 	 *	@return array - array which will be returned from the function GetRelatedList
 	 */
-	function get_invoices($id, $cur_tab_id, $rel_tab_id, $actions=false) {
+	public function get_invoices($id, $cur_tab_id, $rel_tab_id, $actions=false) {
 		global $log, $singlepane_view,$currentModule,$current_user;
 		$log->debug("Entering get_invoices(".$id.") method ...");
 		$this_module = $currentModule;
@@ -850,7 +850,7 @@ class Products extends CRMEntity {
 	 *	@param int $id - product id
 	 *	@return array - array which will be returned from the function GetRelatedList
 	 */
-	function get_product_pricebooks($id, $cur_tab_id, $rel_tab_id, $actions=false)
+	public function get_product_pricebooks($id, $cur_tab_id, $rel_tab_id, $actions=false)
 	{
 		global $log,$singlepane_view,$currentModule;
 		$log->debug("Entering get_product_pricebooks(".$id.") method ...");
@@ -902,7 +902,7 @@ class Products extends CRMEntity {
 	 *	@param int $id - product id
 	 *	@return int number of rows - return the number of products which do not have relationship with vendor
 	 */
-	function product_novendor()
+	public function product_novendor()
 	{
 		global $log;
 		$log->debug("Entering product_novendor() method ...");
@@ -922,7 +922,7 @@ class Products extends CRMEntity {
 	* @param  integer   $id      - productid
 	* returns related Products record in array format
 	*/
-	function get_products($id, $cur_tab_id, $rel_tab_id, $actions=false) {
+	public function get_products($id, $cur_tab_id, $rel_tab_id, $actions=false) {
 		global $log, $singlepane_view,$currentModule,$current_user;
 		$log->debug("Entering get_products(".$id.") method ...");
 		$this_module = $currentModule;
@@ -980,7 +980,7 @@ class Products extends CRMEntity {
 	* @param  integer   $id      - productid
 	* returns related Products record in array format
 	*/
-	function get_parent_products($id)
+	public function get_parent_products($id)
 	{
 		global $log, $singlepane_view, $app_strings;
 		$log->debug("Entering get_products(".$id.") method ...");
@@ -1014,7 +1014,7 @@ class Products extends CRMEntity {
 	 *	@param reference $where - reference of the where variable which will be added with the query
 	 *	@return string $query - return the query which will give the list of products to export
 	 */
-	function create_export_query($where)
+	public function create_export_query($where)
 	{
 		global $log, $current_user;
 		$log->debug("Entering create_export_query(".$where.") method ...");
@@ -1045,7 +1045,7 @@ class Products extends CRMEntity {
 
 	/** Function to check if the product is parent of any other product
 	*/
-	function isparent_check(){
+	public function isparent_check(){
 		global $adb;
 		$isparent_query = $adb->pquery(getListQuery("Products")." AND (vtiger_products.productid IN (SELECT productid from vtiger_seproductsrel WHERE vtiger_seproductsrel.productid = ? AND vtiger_seproductsrel.setype='Products'))",array($this->id));
 		$isparent = $adb->num_rows($isparent_query);
@@ -1054,7 +1054,7 @@ class Products extends CRMEntity {
 
 	/** Function to check if the product is member of other product
 	*/
-	function ismember_check(){
+	public function ismember_check(){
 		global $adb;
 		$SubProductBeParent = GlobalVariable::getVariable('Product_Permit_Subproduct_Be_Parent', 'no');
 		$ismember = 0;
@@ -1071,7 +1071,7 @@ class Products extends CRMEntity {
 	 * @param Array List of Entity Id's from which related records need to be transfered
 	 * @param Integer Id of the the Record to which the related records are to be moved
 	 */
-	function transferRelatedRecords($module, $transferEntityIds, $entityId) {
+	public function transferRelatedRecords($module, $transferEntityIds, $entityId) {
 		global $adb,$log;
 		$log->debug("Entering function transferRelatedRecords ($module, $transferEntityIds, $entityId)");
 
@@ -1116,7 +1116,7 @@ class Products extends CRMEntity {
 	 * @param - $secmodule secondary module name
 	 * returns the query string formed on fetching the related data for report for secondary module
 	 */
-	function generateReportsSecQuery($module,$secmodule){
+	public function generateReportsSecQuery($module, $secmodule){
 		global $current_user;
 		$query = $this->getRelationQuery($module,$secmodule,"vtiger_products","productid");
 		$query .= " LEFT JOIN (
@@ -1144,7 +1144,7 @@ class Products extends CRMEntity {
 	 * @param - $secmodule secondary module name
 	 * returns the array with table names and fieldnames storing relations between module and this module
 	 */
-	function setRelationTables($secmodule){
+	public function setRelationTables($secmodule){
 		$rel_tables = array (
 			"HelpDesk" => array("vtiger_troubletickets"=>array("product_id","ticketid"),"vtiger_products"=>"productid"),
 			"Quotes" => array("vtiger_inventoryproductrel"=>array("productid","id"),"vtiger_products"=>"productid"),
@@ -1162,7 +1162,7 @@ class Products extends CRMEntity {
 		return isset($rel_tables[$secmodule]) ? $rel_tables[$secmodule] : '';
 	}
 
-	function deleteProduct2ProductRelation($record,$return_id,$is_parent){
+	public function deleteProduct2ProductRelation($record, $return_id, $is_parent){
 		global $adb;
 		if($is_parent==0){
 			$sql = "delete from vtiger_seproductsrel WHERE crmid = ? AND productid = ?";
@@ -1174,7 +1174,7 @@ class Products extends CRMEntity {
 	}
 
 	// Function to unlink all the dependent entities of the given Entity by Id
-	function unlinkDependencies($module, $id) {
+	public function unlinkDependencies($module, $id) {
 		global $log;
 		//Backup Campaigns-Product Relation
 		$cmp_q = 'SELECT campaignid FROM vtiger_campaign WHERE product_id = ?';
@@ -1197,7 +1197,7 @@ class Products extends CRMEntity {
 	}
 
 	// Function to unlink an entity with given Id from another entity
-	function unlinkRelationship($id, $return_module, $return_id) {
+	public function unlinkRelationship($id, $return_module, $return_id) {
 		global $log;
 		if(empty($return_module) || empty($return_id)) return;
 
@@ -1217,7 +1217,7 @@ class Products extends CRMEntity {
 		}
 	}
 
-	function save_related_module($module, $crmid, $with_module, $with_crmids) {
+	public function save_related_module($module, $crmid, $with_module, $with_crmids) {
 		$adb = PearDatabase::getInstance();
 
 		if(!is_array($with_crmids)) $with_crmids = Array($with_crmids);

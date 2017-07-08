@@ -35,7 +35,7 @@ class MailManager_RelationController extends MailManager_Controller {
 	* List of modules used to match the Email address
 	* @var Array
 	*/
-	static $MODULES = array ( 'Contacts', 'Accounts', 'Leads', 'HelpDesk', 'Project', 'Potentials', 'ProjectTask');
+	public static $MODULES = array ( 'Contacts', 'Accounts', 'Leads', 'HelpDesk', 'Project', 'Potentials', 'ProjectTask');
 
 	/**
 	* Process the request to perform relationship operations
@@ -45,7 +45,7 @@ class MailManager_RelationController extends MailManager_Controller {
 	* @param MailManager_Request $request
 	* @return boolean
 	*/
-	function process(MailManager_Request $request) {
+	public function process(MailManager_Request $request) {
 		global $current_user, $adb;
 		$response = new MailManager_Response(true);
 		$viewer = $this->getViewer();
@@ -279,7 +279,7 @@ class MailManager_RelationController extends MailManager_Controller {
 	* @param MailManager_Model_Message $mail
 	* @return Array
 	*/
-	function processFormData($qcreate_array, $mail) {
+	public function processFormData($qcreate_array, $mail) {
 		$subject = $mail->subject();
 		$from = $mail->from();
 		if(!empty($from)) $mail_fromAddress = implode(',', $from);
@@ -346,7 +346,7 @@ class MailManager_RelationController extends MailManager_Controller {
 	 * Helper function to scan for relations
 	 */
 	protected $wsDescribeCache = array();
-	function ws_describe($module) {
+	public function ws_describe($module) {
 		global $current_user;
 		if (!isset($this->wsDescribeCache[$module])) {
 			$this->wsDescribeCache[$module] = vtws_describe( $module, $current_user );
@@ -361,7 +361,7 @@ class MailManager_RelationController extends MailManager_Controller {
 	* @param String $type - Tyoe of fields Phone, Email etc
 	* @return String
 	*/
-	function buildSearchQuery($module, $text, $type) {
+	public function buildSearchQuery($module, $text, $type) {
 		$describe = $this->ws_describe($module);
 		$labelFields = $describe['labelFields'];
 		switch($module) {
@@ -384,7 +384,7 @@ class MailManager_RelationController extends MailManager_Controller {
 	* @param Email Address $email
 	* @return Array
 	*/
-	function lookupModuleRecordsWithEmail($module, $email, $msguid) {
+	public function lookupModuleRecordsWithEmail($module, $email, $msguid) {
 		global $current_user;
 		$query = $this->buildSearchQuery($module, $email, 'EMAIL');
 		$qresults = vtws_query( $query, $current_user );

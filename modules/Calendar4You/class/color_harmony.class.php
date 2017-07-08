@@ -3,7 +3,7 @@
 // last updated: Sept 18, 2010
 class colorHarmony extends colorConverter {
 
-	function Monochromatic($HEX) { // Monochromatic
+	public function Monochromatic($HEX) { // Monochromatic
 		
 		$color1 = strtolower($HEX); // base color
 
@@ -39,7 +39,7 @@ class colorHarmony extends colorConverter {
 
 	}
 
-	function Analogous($HEX) { // Analogous
+	public function Analogous($HEX) { // Analogous
 		
 		$color1 = strtolower($HEX); // base color
 
@@ -68,7 +68,7 @@ class colorHarmony extends colorConverter {
 
 	}
 
-	function Complementary($HEX) { // Complementary
+	public function Complementary($HEX) { // Complementary
 		
 		$color1 = strtolower($HEX); // base color
 
@@ -112,7 +112,7 @@ class colorHarmony extends colorConverter {
 
 	}
 
-	function Triads($HEX) { // Triads
+	public function Triads($HEX) { // Triads
 		
 		$color1 = strtolower($HEX); // base color
 
@@ -141,7 +141,7 @@ class colorHarmony extends colorConverter {
 
 	}
 
-	function FixHue($Hue) {
+	public function FixHue($Hue) {
 
 		if($Hue<0) {
 			return $Hue+360;
@@ -153,7 +153,7 @@ class colorHarmony extends colorConverter {
 
 	}
 
-	function SecondC($c) {
+	public function SecondC($c) {
 
 		$RGB = $this->HEX2RGB($c);
 		$R = $RGB[0];
@@ -170,7 +170,7 @@ class colorHarmony extends colorConverter {
 
 	}
 
-	function MonoC($c,$n) {
+	public function MonoC($c, $n) {
 
 		$par1 = 128;
 		$par2 = 192;

@@ -18,37 +18,37 @@ require_once('include/utils/utils.php');
 require('user_privileges/default_module_view.php');
 
 class Accounts extends CRMEntity {
-	var $db, $log; // Used in class functions of CRMEntity
+	public public $db, $log; // Used in class functions of CRMEntity
 
-	var $table_name = 'vtiger_account';
-	var $table_index= 'accountid';
-	var $column_fields = Array();
+	public $table_name = 'vtiger_account';
+	public $table_index= 'accountid';
+	public $column_fields = Array();
 
 	/** Indicator if this is a custom module or standard module */
-	var $IsCustomModule = false;
-	var $HasDirectImageField = false;
+	public $IsCustomModule = false;
+	public $HasDirectImageField = false;
 
 	/**
 	 * Mandatory table for supporting custom fields.
 	 */
-	var $customFieldTable = Array('vtiger_accountscf', 'accountid');
-	var $related_tables = Array(
+	public $customFieldTable = Array('vtiger_accountscf', 'accountid');
+	public $related_tables = Array(
 		'vtiger_accountbillads' => Array ('accountaddressid', 'vtiger_account', 'accountid'),
 		'vtiger_accountshipads' => Array ('accountaddressid', 'vtiger_account', 'accountid'),
 	);
 
-	var $tab_name = Array('vtiger_crmentity','vtiger_account','vtiger_accountbillads','vtiger_accountshipads','vtiger_accountscf');
-	var $tab_name_index = Array('vtiger_crmentity'=>'crmid','vtiger_account'=>'accountid','vtiger_accountbillads'=>'accountaddressid','vtiger_accountshipads'=>'accountaddressid','vtiger_accountscf'=>'accountid');
+	public $tab_name = Array('vtiger_crmentity','vtiger_account','vtiger_accountbillads','vtiger_accountshipads','vtiger_accountscf');
+	public $tab_name_index = Array('vtiger_crmentity'=>'crmid','vtiger_account'=>'accountid','vtiger_accountbillads'=>'accountaddressid','vtiger_accountshipads'=>'accountaddressid','vtiger_accountscf'=>'accountid');
 
 	// This is the list of fields that are in the lists.
-	var $list_fields = Array(
+	public $list_fields = Array(
 		'Account Name' => Array('account'=>'accountname'),
 		'Billing City' => Array('accountbillads'=>'bill_city'),
 		'Website' => Array('account'=>'website'),
 		'Phone' => Array('account'=> 'phone'),
 		'Assigned To' => Array('crmentity'=>'smownerid')
 	);
-	var $list_fields_name = Array(
+	public $list_fields_name = Array(
 		'Account Name'=>'accountname',
 		'Billing City'=>'bill_city',
 		'Website'=>'website',
@@ -57,42 +57,42 @@ class Accounts extends CRMEntity {
 	);
 
 	// Make the field link to detail view from list view (Fieldname)
-	var $list_link_field = 'accountname';
+	public $list_link_field = 'accountname';
 
 	// For Popup listview and UI type support
-	var $search_fields = Array(
+	public $search_fields = Array(
 		'Account Name' => Array('account'=>'accountname'),
 		'Billing City' => Array('accountbillads'=>'bill_city'),
 		'Assigned To'  => Array('crmentity'=>'smownerid'),
 	);
-	var $search_fields_name = Array(
+	public $search_fields_name = Array(
 		'Account Name'=>'accountname',
 		'Billing City'=>'bill_city',
 		'Assigned To'=>'assigned_user_id',
 	);
 
 	// For Popup window record selection
-	var $popup_fields = Array('accountname');
+	public $popup_fields = Array('accountname');
 
 	// Placeholder for sort fields - All the fields will be initialized for Sorting through initSortFields
-	var $sortby_fields = Array('accountname','bill_city','website','phone','smownerid');
+	public $sortby_fields = Array('accountname','bill_city','website','phone','smownerid');
 
 	// For Alphabetical search
-	var $def_basicsearch_col = 'accountname';
+	public $def_basicsearch_col = 'accountname';
 
 	// Column value to use on detail view record text display
-	var $def_detailview_recname = 'accountname';
+	public $def_detailview_recname = 'accountname';
 
 	// Required Information for enabling Import feature
-	var $required_fields = array();
+	public $required_fields = array();
 
-	var $default_order_by = 'accountname';
-	var $default_sort_order='ASC';
+	public $default_order_by = 'accountname';
+	public $default_sort_order='ASC';
 	// Used when enabling/disabling the mandatory fields for the module.
 	// Refers to vtiger_field.fieldname values.
-	var $mandatory_fields = Array('assigned_user_id', 'createdtime', 'modifiedtime', 'accountname');
+	public $mandatory_fields = Array('assigned_user_id', 'createdtime', 'modifiedtime', 'accountname');
 
-	function __construct() {
+	public function __construct() {
 		global $log;
 		$this_module = get_class($this);
 		$this->column_fields = getColumnFields($this_module);
@@ -106,7 +106,7 @@ class Accounts extends CRMEntity {
 		}
 	}
 
-	function save_module($module) {
+	public function save_module($module) {
 		if ($this->HasDirectImageField) {
 			$this->insertIntoAttachment($this->id,$module);
 		}
@@ -116,7 +116,7 @@ class Accounts extends CRMEntity {
 	 * @param $id -- campaign id :: Type Integer
 	 * @returns list of campaigns in array format
 	 */
-	function get_campaigns($id, $cur_tab_id, $rel_tab_id, $actions=false) {
+	public function get_campaigns($id, $cur_tab_id, $rel_tab_id, $actions=false) {
 		global $log, $singlepane_view,$currentModule,$current_user;
 		$log->debug("Entering get_campaigns(".$id.") method ...");
 		$this_module = $currentModule;
@@ -166,7 +166,7 @@ class Accounts extends CRMEntity {
 	}
 
 	/** Returns a list of the associated contacts */
-	function get_contacts($id, $cur_tab_id, $rel_tab_id, $actions=false) {
+	public function get_contacts($id, $cur_tab_id, $rel_tab_id, $actions=false) {
 		global $log, $singlepane_view,$currentModule,$current_user;
 		$log->debug("Entering get_contacts(".$id.") method ...");
 		$this_module = $currentModule;
@@ -221,7 +221,7 @@ class Accounts extends CRMEntity {
 	}
 
 	/** Returns a list of the associated opportunities */
-	function get_opportunities($id, $cur_tab_id, $rel_tab_id, $actions=false) {
+	public function get_opportunities($id, $cur_tab_id, $rel_tab_id, $actions=false) {
 		global $log, $singlepane_view,$currentModule,$current_user;
 		$log->debug("Entering get_opportunities(".$id.") method ...");
 		$this_module = $currentModule;
@@ -281,7 +281,7 @@ class Accounts extends CRMEntity {
 	}
 
 	/** Returns a list of the associated emails */
-	function get_emails($id, $cur_tab_id, $rel_tab_id, $actions=false) {
+	public function get_emails($id, $cur_tab_id, $rel_tab_id, $actions=false) {
 		global $log, $singlepane_view,$currentModule,$current_user, $adb;
 		$log->debug("Entering get_emails(".$id.") method ...");
 		$this_module = $currentModule;
@@ -361,7 +361,7 @@ class Accounts extends CRMEntity {
 	* @param  integer   $id      - accountid
 	* returns related Quotes record in array format
 	*/
-	function get_quotes($id, $cur_tab_id, $rel_tab_id, $actions=false) {
+	public function get_quotes($id, $cur_tab_id, $rel_tab_id, $actions=false) {
 		global $log, $singlepane_view,$currentModule,$current_user;
 		$log->debug("Entering get_quotes(".$id.") method ...");
 		$this_module = $currentModule;
@@ -426,7 +426,7 @@ class Accounts extends CRMEntity {
 	* @param  integer   $id      - accountid
 	* returns related Invoices record in array format
 	*/
-	function get_invoices($id, $cur_tab_id, $rel_tab_id, $actions=false) {
+	public function get_invoices($id, $cur_tab_id, $rel_tab_id, $actions=false) {
 		global $log, $singlepane_view,$currentModule,$current_user;
 		$log->debug("Entering get_invoices(".$id.") method ...");
 		$this_module = $currentModule;
@@ -492,7 +492,7 @@ class Accounts extends CRMEntity {
 	* @param  integer   $id      - accountid
 	* returns related SalesOrder record in array format
 	*/
-	function get_salesorder($id, $cur_tab_id, $rel_tab_id, $actions=false) {
+	public function get_salesorder($id, $cur_tab_id, $rel_tab_id, $actions=false) {
 		global $log, $singlepane_view,$currentModule,$current_user;
 		$log->debug("Entering get_salesorder(".$id.") method ...");
 		$this_module = $currentModule;
@@ -557,7 +557,7 @@ class Accounts extends CRMEntity {
 	* @param  integer   $id      - accountid
 	* returns related Ticket record in array format
 	*/
-	function get_tickets($id, $cur_tab_id, $rel_tab_id, $actions=false) {
+	public function get_tickets($id, $cur_tab_id, $rel_tab_id, $actions=false) {
 		$return_value = parent::get_dependents_list($id, $cur_tab_id, $rel_tab_id, $actions);
 		return $return_value;
 	}
@@ -567,7 +567,7 @@ class Accounts extends CRMEntity {
 	* @param  integer   $id      - accountid
 	* returns related Products record in array format
 	*/
-	function get_products($id, $cur_tab_id, $rel_tab_id, $actions=false) {
+	public function get_products($id, $cur_tab_id, $rel_tab_id, $actions=false) {
 		global $log, $singlepane_view,$currentModule,$current_user;
 		$log->debug("Entering get_products(".$id.") method ...");
 		$this_module = $currentModule;
@@ -624,7 +624,7 @@ class Accounts extends CRMEntity {
 	* @param reference variable - where condition is passed when the query is executed
 	* Returns Export Accounts Query.
 	*/
-	function create_export_query($where)
+	public function create_export_query($where)
 	{
 		global $log, $current_user;
 		$log->debug("Entering create_export_query(".$where.") method ...");
@@ -663,7 +663,7 @@ class Accounts extends CRMEntity {
 	* Used By vtigerCRM Word Plugin
 	* Returns the Merge Fields for Word Plugin
 	*/
-	function getColumnNames_Acnt()
+	public function getColumnNames_Acnt()
 	{
 		global $log,$current_user;
 		$log->debug("Entering getColumnNames_Acnt() method ...");
@@ -702,7 +702,7 @@ class Accounts extends CRMEntity {
 	 * @param Array List of Entity Id's from which related records need to be transfered
 	 * @param Integer Id of the the Record to which the related records are to be moved
 	 */
-	function transferRelatedRecords($module, $transferEntityIds, $entityId) {
+	public function transferRelatedRecords($module, $transferEntityIds, $entityId) {
 		global $adb,$log;
 		$log->debug("Entering function transferRelatedRecords ($module, $transferEntityIds, $entityId)");
 
@@ -747,7 +747,7 @@ class Accounts extends CRMEntity {
 	 * @param - $secmodule secondary module name
 	 * returns the array with table names and fieldnames storing relations between module and this module
 	 */
-	function setRelationTables($secmodule){
+	public function setRelationTables($secmodule){
 		$rel_tables = array (
 			"Contacts" => array("vtiger_contactdetails"=>array("accountid","contactid"),"vtiger_account"=>"accountid"),
 			"Potentials" => array("vtiger_potential"=>array("related_to","potentialid"),"vtiger_account"=>"accountid"),
@@ -769,7 +769,7 @@ class Accounts extends CRMEntity {
 	 * @param - $secmodule secondary module name
 	 * returns the query string formed on fetching the related data for report for secondary module
 	 */
-	function generateReportsSecQuery($module,$secmodule){
+	public function generateReportsSecQuery($module, $secmodule){
 		$query = $this->getRelationQuery($module,$secmodule,"vtiger_account","accountid");
 		$query .= " left join vtiger_crmentity as vtiger_crmentityAccounts on vtiger_crmentityAccounts.crmid=vtiger_account.accountid and vtiger_crmentityAccounts.deleted=0
 			left join vtiger_accountbillads on vtiger_account.accountid=vtiger_accountbillads.accountaddressid
@@ -787,7 +787,7 @@ class Accounts extends CRMEntity {
 	* @param  integer   $id      - accountid
 	* returns Account hierarchy in array format
 	*/
-	function getAccountHierarchy($id) {
+	public function getAccountHierarchy($id) {
 		global $log, $adb, $current_user;
 		$log->debug("Entering getAccountHierarchy(".$id.") method ...");
 
@@ -855,7 +855,7 @@ class Accounts extends CRMEntity {
 	* @param  array   $parent_accounts   - Array of all the parent accounts
 	* returns All the parent accounts of the given accountid in array format
 	*/
-	function __getParentAccounts($id, &$parent_accounts, &$encountered_accounts) {
+	public function __getParentAccounts($id, &$parent_accounts, &$encountered_accounts) {
 		global $log, $adb;
 		$log->debug("Entering __getParentAccounts($id,".print_r($parent_accounts,true).') method ...');
 
@@ -918,7 +918,7 @@ class Accounts extends CRMEntity {
 	* @param  integer   $depth          - Depth at which the particular account has to be placed in the hierarchy
 	* returns All the child accounts of the given accountid in array format
 	*/
-	function __getChildAccounts($id, &$child_accounts, $depth) {
+	public function __getChildAccounts($id, &$child_accounts, $depth) {
 		global $log, $adb;
 		$log->debug("Entering __getChildAccounts($id,".print_r($child_accounts,true).",$depth) method ...");
 
@@ -966,7 +966,7 @@ class Accounts extends CRMEntity {
 	}
 
 	// Function to unlink the dependent records of the given record by id
-	function unlinkDependencies($module, $id) {
+	public function unlinkDependencies($module, $id) {
 		global $log;
 
 		//Deleting Account related Potentials.
@@ -1041,7 +1041,7 @@ class Accounts extends CRMEntity {
 	}
 
 	// Function to unlink an entity with given Id from another entity
-	function unlinkRelationship($id, $return_module, $return_id) {
+	public function unlinkRelationship($id, $return_module, $return_id) {
 		global $log;
 		if(empty($return_module) || empty($return_id)) return;
 
@@ -1058,7 +1058,7 @@ class Accounts extends CRMEntity {
 		}
 	}
 
-	function save_related_module($module, $crmid, $with_module, $with_crmids) {
+	public function save_related_module($module, $crmid, $with_module, $with_crmids) {
 		$adb = $this->db;
 
 		if(!is_array($with_crmids)) $with_crmids = Array($with_crmids);
@@ -1081,7 +1081,7 @@ class Accounts extends CRMEntity {
 		}
 	}
 
-	function getListButtons($app_strings) {
+	public function getListButtons($app_strings) {
 		$list_buttons = Array();
 
 		if(isPermitted('Accounts','Delete','') == 'yes') {
@@ -1102,7 +1102,7 @@ class Accounts extends CRMEntity {
 		return $list_buttons;
 	}
 	
-	function get_searchbyemailid($username,$emailaddress)
+	public function get_searchbyemailid($username, $emailaddress)
 	{
 		//crm-now added $adb to provide db access
 		global $log, $adb;
@@ -1151,7 +1151,7 @@ class Accounts extends CRMEntity {
 		return $this->plugin_process_list_query($query);
 	}
 	
-	function plugin_process_list_query($query)
+	public function plugin_process_list_query($query)
 	{
 		global $log,$adb,$current_user, $currentModule;
 		$log->debug("Entering process_list_query1(".$query.") method ...");
@@ -1201,7 +1201,7 @@ class Accounts extends CRMEntity {
 		$log->debug("Exiting process_list_query1 method ...");
 		return $response;
 	}
-	function getvtlib_open_popup_window_function($fieldname,$basemodule) {
+	public function getvtlib_open_popup_window_function($fieldname, $basemodule) {
 		if ($basemodule=='Issuecards') {
 			return 'set_return_shipbilladdress';
 		} else {

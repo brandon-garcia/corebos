@@ -14,7 +14,7 @@ class VtigerCRMObject{
 	private $moduleId;
 	private $instance;
 
-	function __construct($moduleCredential, $isId=false) {
+	public function __construct($moduleCredential, $isId=false) {
 		if ($isId) {
 			$this->moduleId = $moduleCredential;
 			$this->moduleName = $this->getObjectTypeName($this->moduleId);
@@ -172,7 +172,7 @@ class VtigerCRMObject{
 		return $this->instance->column_fields;
 	}
 
-	function exists($id) {
+	public function exists($id) {
 		global $adb;
 
 		$exists = false;
@@ -186,7 +186,7 @@ class VtigerCRMObject{
 		return $exists;
 	}
 
-	function getSEType($id) {
+	public function getSEType($id) {
 		global $adb;
 
 		$seType = null;

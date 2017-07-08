@@ -13,7 +13,7 @@ include_once dirname(__FILE__) . '/../api/ws/Utils.php';
 include_once dirname(__FILE__) . '/../api/ws/FetchRecordDetails.php';
 
 class crmtogo_UI_GetRelatedLists extends crmtogo_WS_RelatedRecords {
-	function process(crmtogo_API_Request $request) {
+	public function process(crmtogo_API_Request $request) {
 		$wsResponse = parent::process($request);
 		$response = false;
 		if($wsResponse->hasError()) {

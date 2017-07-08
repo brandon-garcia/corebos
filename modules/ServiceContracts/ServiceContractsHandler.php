@@ -10,7 +10,7 @@
 
 class ServiceContractsHandler extends VTEventHandler {
 
-	function handleEvent($eventName, $entityData) {
+	public function handleEvent($eventName, $entityData) {
 		global $log, $adb;
 
 		if($eventName == 'vtiger.entity.beforesave') {

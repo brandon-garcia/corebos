@@ -2,18 +2,18 @@
 
 class iCal {
 
-    var $folders;
+    public $folders;
 
-    function __construct() {
+    public function __construct() {
         $this->folders = 'cache/import/';
     }
     
-    function iCalReader($filename,$root_directory='') {
+    public function iCalReader($filename, $root_directory='') {
         $iCaltoArray = $this->iCalDecoder($filename,$root_directory);
         return $iCaltoArray;
     }
 
-    function iCalDecoder($file,$root_directory) {
+    public function iCalDecoder($file, $root_directory) {
         $ical = file_get_contents($root_directory.$this->folders.$file);
         preg_match_all('/BEGIN:VEVENT.*?END:VEVENT/si', $ical, $eventresult, PREG_PATTERN_ORDER);
         preg_match_all('/BEGIN:VTODO.*?END:VTODO/si', $ical, $todoresult, PREG_PATTERN_ORDER);

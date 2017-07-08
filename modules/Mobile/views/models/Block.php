@@ -14,22 +14,22 @@ class crmtogo_UI_BlockModel {
 	private $_label;
 	private $_fields = array();
 	
-	function initData($blockData) {
+	public function initData($blockData) {
 		$this->_label = $blockData['label'];
 		if (isset($blockData['fields'])) {
 			$this->_fields = crmtogo_UI_FieldModel::buildModelsFromResponse($blockData['fields']);
 		}
 	}
 	
-	function label() {
+	public function label() {
 		return $this->_label;
 	}
 	
-	function fields() {
+	public function fields() {
 		return $this->_fields;
 	}
 	
-	static function buildModelsFromResponse($blocks) {
+	public static function buildModelsFromResponse($blocks) {
 		$instances = array();
 		foreach($blocks as $blockData) {
 			$instance = new self();
@@ -38,14 +38,14 @@ class crmtogo_UI_BlockModel {
 		}
 		return $instances;
 	}
-	function initCreateData($blockData) {
+	public function initCreateData($blockData) {
 		$this->_label = $blockData['label'];
 		if (isset($blockData['fields'])) {
 			$this->_fields = crmtogo_UI_FieldModel::buildModelsFromResponse($blockData['fields']);
 		}
 	}
 
-	static function buildCreateModel($blocks) {
+	public static function buildCreateModel($blocks) {
 		$instances = array();
 		foreach($blocks as $blockData) {
 			$instance = new self();

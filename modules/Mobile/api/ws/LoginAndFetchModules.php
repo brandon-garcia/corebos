@@ -10,7 +10,7 @@
 include_once dirname(__FILE__) . '/Login.php';
 class crmtogo_WS_LoginAndFetchModules extends crmtogo_WS_Login {
 	
-	function postProcess(crmtogo_API_Response $response) {
+	public function postProcess(crmtogo_API_Response $response) {
 		$current_user = $this->getActiveUser();
 		
 		if ($current_user) {

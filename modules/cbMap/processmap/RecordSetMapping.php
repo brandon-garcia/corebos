@@ -41,7 +41,7 @@ class RecordSetMapping extends processcbMap {
 	private $actions = array('include','exclude','group');
 	private $default_action = 'exclude';
 
-	function processMap($arguments) {
+	public function processMap($arguments) {
 		$this->convertMap2Array();
 		return $this;
 	}

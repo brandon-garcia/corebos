@@ -56,48 +56,48 @@ class Reports extends CRMEntity{
 	 * required to generate, save, restore reports and also the required functions for the same
 	 */
 
-	var $srptfldridjs;
+	public $srptfldridjs;
 
-	var $column_fields = Array();
+	public $column_fields = Array();
 
-	var $sort_fields = Array();
-	var $sort_values = Array();
+	public $sort_fields = Array();
+	public $sort_values = Array();
 
-	var $id;
-	var $mode;
-	var $mcount;
+	public $id;
+	public $mode;
+	public $mcount;
 
-	var $startdate;
-	var $enddate;
+	public $startdate;
+	public $enddate;
 
-	var $ascdescorder;
+	public $ascdescorder;
 
-	var $stdselectedfilter;
-	var $stdselectedcolumn;
+	public $stdselectedfilter;
+	public $stdselectedcolumn;
 
-	var $primodule;
-	var $secmodule;
-	var $columnssummary;
-	var $is_editable;
-	var $reporttype;
-	var $reportname;
-	var $reportdescription;
-	var $folderid;
-	var $module_blocks;
+	public $primodule;
+	public $secmodule;
+	public $columnssummary;
+	public $is_editable;
+	public $reporttype;
+	public $reportname;
+	public $reportdescription;
+	public $folderid;
+	public $module_blocks;
 
-	var $pri_module_columnslist;
-	var $sec_module_columnslist;
+	public $pri_module_columnslist;
+	public $sec_module_columnslist;
 
-	var $advft_criteria;
-	var $adv_rel_fields = Array();
+	public $advft_criteria;
+	public $adv_rel_fields = Array();
 
-	var $module_list = Array();
+	public $module_list = Array();
 
 	/** Function to set primodule,secmodule,reporttype,reportname,reportdescription,folderid for given vtiger_reportid
 	 *  This function accepts the vtiger_reportid as argument
 	 *  It sets primodule,secmodule,reporttype,reportname,reportdescription,folderid for the given vtiger_reportid
 	 */
-	function __construct($reportid="") {
+	public function __construct($reportid="") {
 		global $adb,$current_user,$theme,$mod_strings,$app_strings;
 		$current_user_parent_role_seq='';
 		require('user_privileges/user_privileges_'.$current_user->id.'.php');
@@ -182,7 +182,7 @@ class Reports extends CRMEntity{
 	}
 
 	// Initializes the module list for listing columns for report creation.
-	function initListOfModules() {
+	public function initListOfModules() {
 		global $adb, $current_user, $old_related_modules;
 
 		$restricted_modules = array('Events','Webmails');
@@ -310,7 +310,7 @@ class Reports extends CRMEntity{
 	/** Get the information to generate the Listview of Reports per folder
 	 *  param $mode type of reports to return
 	 */
-	function sgetRptFldr($mode='') {
+	public function sgetRptFldr($mode='') {
 		global $adb,$log,$mod_strings;
 		$returndata = Array();
 		$sql = 'select * from vtiger_reportfolder order by folderid';
@@ -352,7 +352,7 @@ class Reports extends CRMEntity{
 	 *  param folderid if not given will return all folders
 	 *  returns only the reports the current user has access to
 	 */
-	function sgetRptsforFldr($rpt_fldr_id) {
+	public function sgetRptsforFldr($rpt_fldr_id) {
 		global $adb, $log, $mod_strings,$current_user;
 		$current_user_parent_role_seq='';
 		$returndata = Array();
@@ -441,7 +441,7 @@ class Reports extends CRMEntity{
 	 *  It accepts the Primary module as the argument and set the vtiger_fields of the module
 	 *  to the varialbe pri_module_columnslist and returns true if sucess
 	 */
-	function getPriModuleColumnsList($module)
+	public function getPriModuleColumnsList($module)
 	{
 		if (empty($module)) return;
 		foreach($this->module_list[$module] as $key=>$value)
@@ -473,7 +473,7 @@ class Reports extends CRMEntity{
 	 *  It accepts the module as the argument and set the vtiger_fields of the module
 	 *  to the varialbe sec_module_columnslist and returns true if sucess
 	 */
-	function getSecModuleColumnsList($module)
+	public function getSecModuleColumnsList($module)
 	{
 		if($module != "")
 		{
@@ -542,7 +542,7 @@ class Reports extends CRMEntity{
 	 *  returns the array column lists
 	 *  Array module_columnlist[ vtiger_fieldtablename:fieldcolname:module_fieldlabel1:fieldname:fieldtypeofdata]=fieldlabel
 	 */
-	function getColumnsListbyBlock($module,$block)
+	public function getColumnsListbyBlock($module, $block)
 	{
 		global $adb, $log, $current_user;
 
@@ -694,7 +694,7 @@ class Reports extends CRMEntity{
 	 *  and set the values to the corresponding variables
 	 *  It accepts the repordid as argument
 	 */
-	function getSelectedStandardCriteria($reportid) {
+	public function getSelectedStandardCriteria($reportid) {
 		global $adb;
 		$sSQL = "select vtiger_reportdatefilter.* from vtiger_reportdatefilter inner join vtiger_report on vtiger_report.reportid = vtiger_reportdatefilter.datefilterid where vtiger_report.reportid=?";
 		$result = $adb->pquery($sSQL, array($reportid));
@@ -719,7 +719,7 @@ class Reports extends CRMEntity{
 	 *  This function get the combo values for the standard filter for the given vtiger_report
 	 *  and return a HTML string
 	 */
-	function getSelectedStdFilterCriteria($selecteddatefilter = "")
+	public function getSelectedStdFilterCriteria($selecteddatefilter = "")
 	{
 		global $mod_strings;
 		$options = array();
@@ -751,7 +751,7 @@ class Reports extends CRMEntity{
 	 *  which is selected for vtiger_reports as an array
 	 *  Array stdcriteria_list[fieldtablename:fieldcolname:module_fieldlabel1]=fieldlabel
 	 */
-	function getStdCriteriaByModule($module)
+	public function getStdCriteriaByModule($module)
 	{
 		global $adb, $log, $current_user;
 		require('user_privileges/user_privileges_'.$current_user->id.'.php');
@@ -805,7 +805,7 @@ class Reports extends CRMEntity{
 	 *  This function is to form a javascript to determine
 	 *  the start date and End date from the value selected in the combo lists
 	 */
-	function getCriteriaJS()
+	public function getCriteriaJS()
 	{
 		$todayDateTime = new DateTimeField(date('Y-m-d H:i:s'));
 
@@ -1079,7 +1079,7 @@ class Reports extends CRMEntity{
 		return $sjsStr;
 	}
 
-function getEscapedColumns($selectedfields) {
+public function getEscapedColumns($selectedfields) {
 		$fieldname = $selectedfields[3];
 		if($fieldname == "parent_id")
 		{
@@ -1100,7 +1100,7 @@ function getEscapedColumns($selectedfields) {
 		return $querycolumn;
 	}
 
-	function getaccesfield($module)
+	public function getaccesfield($module)
 	{
 		global $current_user, $adb;
 		$access_fields = Array();
@@ -1143,7 +1143,7 @@ function getEscapedColumns($selectedfields) {
 	 *  returns the array array_list which has the column responsible for the grouping
 	 *  Array array_list[0]=columnname
 	 */
-	function getSelctedSortingColumns($reportid) {
+	public function getSelctedSortingColumns($reportid) {
 		global $adb, $log;
 
 		$sreportsortsql = "select vtiger_reportsortcol.* from vtiger_report";
@@ -1170,7 +1170,7 @@ function getEscapedColumns($selectedfields) {
 	 *  for the given vtiger_reportid and it forms a combo lists and returns
 	 *  HTML of the combo values
 	 */
-	function getSelectedColumnsList($reportid)
+	public function getSelectedColumnsList($reportid)
 	{
 		global $adb, $modules, $log,$current_user;
 
@@ -1231,7 +1231,7 @@ function getEscapedColumns($selectedfields) {
 		$log->info("ReportRun :: Successfully returned getQueryColumnsList".$reportid);
 		return $options;
 	}
-	function getAdvancedFilterList($reportid)
+	public function getAdvancedFilterList($reportid)
 	{
 		global $adb, $modules, $log, $current_user;
 
@@ -1319,7 +1319,7 @@ function getEscapedColumns($selectedfields) {
 	 *  This function gets the vtiger_report folders from database and form
 	 *  a combo values of the folders and return HTML of the combo values
 	 */
-	function sgetRptFldrSaveReport()
+	public function sgetRptFldrSaveReport()
 	{
 		global $adb, $log;
 
@@ -1341,7 +1341,7 @@ function getEscapedColumns($selectedfields) {
 	 *  and generated the html for that vtiger_fields
 	 *  It returns the HTML of the vtiger_fields along with the check boxes
 	 */
-	function sgetColumntoTotal($primarymodule,$secondarymodule)
+	public function sgetColumntoTotal($primarymodule, $secondarymodule)
 	{
 		$options = Array();
 		$options []= $this->sgetColumnstoTotalHTML($primarymodule,0);
@@ -1361,7 +1361,7 @@ function getEscapedColumns($selectedfields) {
 	 *  and generated the html for that vtiger_fields
 	 *  It returns the HTML of the vtiger_fields along with the check boxes
 	 */
-	function sgetColumntoTotalSelected($primarymodule,$secondarymodule,$reportid) {
+	public function sgetColumntoTotalSelected($primarymodule, $secondarymodule, $reportid) {
 		global $adb, $log;
 		$options = Array();
 		if($reportid != '') {
@@ -1392,7 +1392,7 @@ function getEscapedColumns($selectedfields) {
 	 *  vtiger_fields along with four checkboxes
 	 *  It returns the HTML of the vtiger_fields along with the check boxes
 	 */
-	function sgetColumnstoTotalHTML($module)
+	public function sgetColumnstoTotalHTML($module)
 	{
 		global $adb, $log, $current_user;
 		require('user_privileges/user_privileges_'.$current_user->id.'.php');

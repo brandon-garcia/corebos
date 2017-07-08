@@ -20,7 +20,7 @@
 
 class Mapping extends generatecbMap {
 
-	function generateMap($arguments) {
+	public function generateMap($arguments) {
 		global $adb, $current_user;
 		$mapping=$this->convertMap2Array();
 		$ofields = $arguments[0];
@@ -44,7 +44,7 @@ class Mapping extends generatecbMap {
 		var_dump($tfields);
 	}
 
-	function convertMap2Array() {
+	public function convertMap2Array() {
 		$xml = $this->getXMLContent();
 		$mapping=$target_fields=array();
 		$mapping['origin'] = (String)$xml->originmodule->originname;

@@ -11,29 +11,29 @@ require_once('data/CRMEntity.php');
 require_once('data/Tracker.php');
 
 class Faq extends CRMEntity {
-	var $db, $log; // Used in class functions of CRMEntity
+	public public $db, $log; // Used in class functions of CRMEntity
 
-	var $table_name = 'vtiger_faq';
-	var $table_index= 'id';
-	var $column_fields = Array();
+	public $table_name = 'vtiger_faq';
+	public $table_index= 'id';
+	public $column_fields = Array();
 
 	/** Indicator if this is a custom module or standard module */
-	var $IsCustomModule = false;
-	var $HasDirectImageField = false;
+	public $IsCustomModule = false;
+	public $HasDirectImageField = false;
 	/**
 	 * Mandatory table for supporting custom fields.
 	 */
-	var $customFieldTable = Array('vtiger_faqcf', 'faqid');
+	public $customFieldTable = Array('vtiger_faqcf', 'faqid');
 
 	/**
 	 * Mandatory for Saving, Include tables related to this module.
 	 */
-	var $tab_name = Array('vtiger_crmentity','vtiger_faq','vtiger_faqcf');
+	public $tab_name = Array('vtiger_crmentity','vtiger_faq','vtiger_faqcf');
 
 	/**
 	 * Mandatory for Saving, Include tablename and tablekey columnname here.
 	 */
-	var $tab_name_index = Array(
+	public $tab_name_index = Array(
 		'vtiger_crmentity' => 'crmid',
 		'vtiger_faq' => 'id',
 		'vtiger_faqcomments' => 'faqid',
@@ -42,7 +42,7 @@ class Faq extends CRMEntity {
 	/**
 	 * Mandatory for Listing (Related listview)
 	 */
-	var $list_fields = Array(
+	public $list_fields = Array(
 		'FAQ No'=>Array('faq'=>'faq_no'),
 		'Question'=>Array('faq'=>'question'),
 		'Category'=>Array('faq'=>'faqcategories'),
@@ -50,7 +50,7 @@ class Faq extends CRMEntity {
 		'Created Time'=>Array('crmentity'=>'createdtime'),
 		'Modified Time'=>Array('crmentity'=>'modifiedtime')
 	);
-	var $list_fields_name = Array(
+	public $list_fields_name = Array(
 		'FAQ No'=>'faq_no',
 		'Question'=>'question',
 		'Category'=>'faqcategories',
@@ -60,45 +60,45 @@ class Faq extends CRMEntity {
 	);
 
 	// Make the field link to detail view from list view (Fieldname)
-	var $list_link_field= 'question';
+	public $list_link_field= 'question';
 
 	// For Popup listview and UI type support
-	var $search_fields = Array(
+	public $search_fields = Array(
 		'Question'=>Array('faq'=>'question'),
 		'Category'=>Array('faq'=>'faqcategories'),
 		'Product Name'=>Array('faq'=>'product_id'),
 	);
-	var $search_fields_name = Array(
+	public $search_fields_name = Array(
 		'Question'=>'question',
 		'Category'=>'faqcategories',
 		'Product Name'=>'product_id',
 	);
 
 	// For Popup window record selection
-	var $popup_fields = Array('question');
+	public $popup_fields = Array('question');
 
 	// Placeholder for sort fields - All the fields will be initialized for Sorting through initSortFields
-	var $sortby_fields = Array();
+	public $sortby_fields = Array();
 
 	// For Alphabetical search
-	var $def_basicsearch_col = 'question';
+	public $def_basicsearch_col = 'question';
 
 	// Column value to use on detail view record text display
-	var $def_detailview_recname = 'question';
+	public $def_detailview_recname = 'question';
 
 	// Required Information for enabling Import feature
-	var $required_fields = Array('question'=>1);
+	public $required_fields = Array('question'=>1);
 
 	// Callback function list during Importing
-	var $special_functions = Array('set_import_assigned_user');
+	public $special_functions = Array('set_import_assigned_user');
 
-	var $default_order_by = 'id';
-	var $default_sort_order = 'DESC';
+	public $default_order_by = 'id';
+	public $default_sort_order = 'DESC';
 	// Used when enabling/disabling the mandatory fields for the module.
 	// Refers to vtiger_field.fieldname values.
-	var $mandatory_fields = Array('question','faq_answer','createdtime' ,'modifiedtime');
+	public $mandatory_fields = Array('question','faq_answer','createdtime' ,'modifiedtime');
 
-	function save_module($module) {
+	public function save_module($module) {
 		if ($this->HasDirectImageField) {
 			$this->insertIntoAttachment($this->id,$module);
 		}
@@ -111,7 +111,7 @@ class Faq extends CRMEntity {
 	 * @param $table_name -- table name:: Type varchar
 	 * @param $module -- module:: Type varchar
 	 */
-	function insertIntoFAQCommentTable($table_name, $module)
+	public function insertIntoFAQCommentTable($table_name, $module)
 	{
 		global $log, $adb;
 		$log->info("in insertIntoFAQCommentTable ".$table_name." module is ".$module);
@@ -135,7 +135,7 @@ class Faq extends CRMEntity {
 	 * @param  int  $faqid - FAQ id
 	 * @return list $list - return the list of comments and comment informations as a html output where as these comments and comments informations will be formed in div tag.
 	 **/
-	function getFAQComments($faqid)
+	public function getFAQComments($faqid)
 	{
 		global $log, $default_charset, $mod_strings;
 		$log->debug("Entering getFAQComments(".$faqid.") method ...");
@@ -179,7 +179,7 @@ class Faq extends CRMEntity {
 	 * @param - $module Primary module name
 	 * returns the query string formed on fetching the related data for report for primary module
 	 */
-	function generateReportsQuery($module){
+	public function generateReportsQuery($module){
 		$moduletable = $this->table_name;
 		$moduleindex = $this->table_index;
 		$query = "from $moduletable
@@ -198,14 +198,14 @@ class Faq extends CRMEntity {
 	 * @param - $secmodule secondary module name
 	 * returns the array with table names and fieldnames storing relations between module and this module
 	 */
-	function setRelationTables($secmodule){
+	public function setRelationTables($secmodule){
 		$rel_tables = array (
 			"Documents" => array("vtiger_senotesrel"=>array("crmid","notesid"),"vtiger_faq"=>"id"),
 		);
 		return $rel_tables[$secmodule];
 	}
 
-	function clearSingletonSaveFields() {
+	public function clearSingletonSaveFields() {
 		$this->column_fields['comments'] = '';
 	}
 

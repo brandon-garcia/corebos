@@ -32,7 +32,7 @@ class OperationManager{
 	private $operationId;
 	private $operationParams;
 
-	function __construct($adb,$operationName,$format, $sessionManager){
+	public function __construct($adb, $operationName, $format, $sessionManager){
 		$this->format = strtolower($format);
 		$this->sessionManager = $sessionManager;
 		$this->formatObjects = array();
@@ -52,7 +52,7 @@ class OperationManager{
 		$this->fillOperationDetails($operationName);
 	}
 
-	function isPreLoginOperation(){
+	public function isPreLoginOperation(){
 		return $this->preLogin == 1;
 	}
 
@@ -103,11 +103,11 @@ class OperationManager{
 		}
 	}
 
-	function sanitizeOperation($input){
+	public function sanitizeOperation($input){
 		return $this->sanitizeInputForType($input);
 	}
 
-	function sanitizeInputForType($input){
+	public function sanitizeInputForType($input){
 		$sanitizedInput = array();
 		foreach($this->operationParams as $ind=>$columnDetails){
 			foreach ($columnDetails as $columnName => $type) {
@@ -117,7 +117,7 @@ class OperationManager{
 		return $sanitizedInput;
 	}
 
-	function handleType($type,$value){
+	public function handleType($type, $value){
 		$result;
 		$value = stripslashes($value);
 		$type = strtolower($type);
@@ -129,7 +129,7 @@ class OperationManager{
 		return $result;
 	}
 
-	function runOperation($params,$user){
+	public function runOperation($params, $user){
 		global $API_VERSION;
 		try{
 			$operation = strtolower($this->operationName);
@@ -157,11 +157,11 @@ class OperationManager{
 		}
 	}
 
-	function encode($param){
+	public function encode($param){
 		return call_user_func($this->formatObjects[$this->format]["encode"],$param);
 	}
 
-	function getOperationIncludes(){
+	public function getOperationIncludes(){
 		$includes = array();
 		array_push($includes,$this->handlerPath);
 		return $includes;

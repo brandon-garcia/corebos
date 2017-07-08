@@ -39,7 +39,7 @@ include_once dirname(__FILE__) . '/views/models/Module.php'; // Required for aut
 
 class crmtogo_Index_Controller {
 
-	static $opControllers = array(
+	public static $opControllers = array(
 		'logout'                  => array('file' => '/views/Logout.php', 'class' => 'crmtogo_UI_Logout'),
 		'login'                   => array('file' => '/views/Login.php', 'class' => 'crmtogo_UI_Login'),
 		'loginAndFetchModules'    => array('file' => '/views/LoginAndFetchModules.php', 'class' => 'crmtogo_UI_LoginAndFetchModules'),
@@ -62,7 +62,7 @@ class crmtogo_Index_Controller {
 		'saveSignature'			  => array('file' => '/views/saveSignature.php', 'class' => 'UI_saveSignature'),
 	);
 
-	static function process(crmtogo_API_Request $request) {
+	public static function process(crmtogo_API_Request $request) {
 		$operation = $request->getOperation();
 		if (empty($operation)) $operation = 'login';
 

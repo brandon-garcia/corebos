@@ -12,29 +12,29 @@ require_once('data/Tracker.php');
 require('user_privileges/default_module_view.php');
 
 class HelpDesk extends CRMEntity {
-	var $db, $log; // Used in class functions of CRMEntity
+	public public $db, $log; // Used in class functions of CRMEntity
 
-	var $table_name = 'vtiger_troubletickets';
-	var $table_index= 'ticketid';
-	var $column_fields = Array();
+	public $table_name = 'vtiger_troubletickets';
+	public $table_index= 'ticketid';
+	public $column_fields = Array();
 
 	/** Indicator if this is a custom module or standard module */
-	var $IsCustomModule = false;
-	var $HasDirectImageField = false;
+	public $IsCustomModule = false;
+	public $HasDirectImageField = false;
 	/**
 	 * Mandatory table for supporting custom fields.
 	 */
-	var $customFieldTable = Array('vtiger_ticketcf', 'ticketid');
+	public $customFieldTable = Array('vtiger_ticketcf', 'ticketid');
 
 	/**
 	 * Mandatory for Saving, Include tables related to this module.
 	 */
-	var $tab_name = Array('vtiger_crmentity','vtiger_troubletickets','vtiger_ticketcf');
+	public $tab_name = Array('vtiger_crmentity','vtiger_troubletickets','vtiger_ticketcf');
 
 	/**
 	 * Mandatory for Saving, Include tablename and tablekey columnname here.
 	 */
-	var $tab_name_index = Array(
+	public $tab_name_index = Array(
 		'vtiger_crmentity'=>'crmid',
 		'vtiger_troubletickets'=>'ticketid',
 		'vtiger_ticketcf'=>'ticketid',
@@ -43,7 +43,7 @@ class HelpDesk extends CRMEntity {
 	/**
 	 * Mandatory for Listing (Related listview)
 	 */
-	var $list_fields = Array(
+	public $list_fields = Array(
 		/* Format: Field Label => Array(tablename => columnname) */
 		// tablename should not have prefix 'vtiger_'
 		'Ticket No'=>Array('troubletickets'=>'ticket_no'),
@@ -53,7 +53,7 @@ class HelpDesk extends CRMEntity {
 		'Priority'=>Array('troubletickets'=>'priority'),
 		'Assigned To'=>Array('crmentity' => 'smownerid')
 	);
-	var $list_fields_name = Array(
+	public $list_fields_name = Array(
 		/* Format: Field Label => fieldname */
 		'Ticket No'=>'ticket_no',
 		'Subject'=>'ticket_title',
@@ -64,43 +64,43 @@ class HelpDesk extends CRMEntity {
 	);
 
 	// Make the field link to detail view from list view (Fieldname)
-	var $list_link_field= 'ticket_title';
+	public $list_link_field= 'ticket_title';
 
 	// For Popup listview and UI type support
-	var $search_fields = Array(
+	public $search_fields = Array(
 		/* Format: Field Label => Array(tablename => columnname) */
 		// tablename should not have prefix 'vtiger_'
 		'Ticket No' =>Array('vtiger_troubletickets'=>'ticket_no'),
 		'Title' => Array('vtiger_troubletickets'=>'title')
 	);
-	var $search_fields_name = Array(
+	public $search_fields_name = Array(
 		/* Format: Field Label => fieldname */
 		'Ticket No' => 'ticket_no',
 		'Title'=>'ticket_title',
 	);
 
 	// For Popup window record selection
-	var $popup_fields = Array('ticket_title');
+	public $popup_fields = Array('ticket_title');
 
 	// Placeholder for sort fields - All the fields will be initialized for Sorting through initSortFields
-	var $sortby_fields = Array('title','status','priority','crmid','firstname','smownerid');
+	public $sortby_fields = Array('title','status','priority','crmid','firstname','smownerid');
 
 	// For Alphabetical search
-	var $def_basicsearch_col = 'ticket_title';
+	public $def_basicsearch_col = 'ticket_title';
 
 	// Column value to use on detail view record text display
-	var $def_detailview_recname = 'ticket_title';
+	public $def_detailview_recname = 'ticket_title';
 
 	// Required Information for enabling Import feature
-	var $required_fields = array();
+	public $required_fields = array();
 
-	var $default_order_by = 'title';
-	var $default_sort_order = 'DESC';
+	public $default_order_by = 'title';
+	public $default_sort_order = 'DESC';
 	// Used when enabling/disabling the mandatory fields for the module.
 	// Refers to vtiger_field.fieldname values.
-	var $mandatory_fields = Array('assigned_user_id', 'createdtime', 'modifiedtime', 'ticket_title', 'update_log');
+	public $mandatory_fields = Array('assigned_user_id', 'createdtime', 'modifiedtime', 'ticket_title', 'update_log');
 
-	function __construct() {
+	public function __construct() {
 		global $log;
 		$this_module = get_class($this);
 		$this->column_fields = getColumnFields($this_module);
@@ -114,7 +114,7 @@ class HelpDesk extends CRMEntity {
 		}
 	}
 
-	function save($module, $fileid = '') {
+	public function save($module, $fileid = '') {
 		global $adb;
 		if (!empty($this->id)) {
 			$adb->pquery("update vtiger_troubletickets set commentadded='0' where ticketid=?",array($this->id));
@@ -134,7 +134,7 @@ class HelpDesk extends CRMEntity {
 		$adb->pquery('update vtiger_troubletickets set update_log=? where ticketid=?', array($fldvalue,$this->id));
 	}
 
-	function save_module($module) {
+	public function save_module($module) {
 		if ($this->HasDirectImageField) {
 			$this->insertIntoAttachment($this->id,$module);
 		}
@@ -155,7 +155,7 @@ class HelpDesk extends CRMEntity {
 		}
 	}
 
-	function save_related_module($module, $crmid, $with_module, $with_crmid) {
+	public function save_related_module($module, $crmid, $with_module, $with_crmid) {
 		parent::save_related_module($module, $crmid, $with_module, $with_crmid);
 		if ($with_module == 'ServiceContracts') {
 			$serviceContract = CRMEntity::getInstance("ServiceContracts");
@@ -165,7 +165,7 @@ class HelpDesk extends CRMEntity {
 	}
 
 	// Function to insert values in ticketcomments
-	function insertIntoTicketCommentTable() {
+	public function insertIntoTicketCommentTable() {
 		global $log, $adb, $current_user;
 		$log->info('in insertIntoTicketCommentTable');
 
@@ -196,7 +196,7 @@ class HelpDesk extends CRMEntity {
 					entries=>array('0'=>'info1','1'=>'info2',etc.,)
 				)
 	 */
-	function get_ticket_history($ticketid)
+	public function get_ticket_history($ticketid)
 	{
 		global $log, $adb;
 		$log->debug("Entering into get_ticket_history($ticketid) method ...");
@@ -224,7 +224,7 @@ class HelpDesk extends CRMEntity {
 					)
 				where $i = 0,1,..n which are all made for the ticket
 	**/
-	function get_ticket_comments_list($ticketid)
+	public function get_ticket_comments_list($ticketid)
 	{
 		global $log;
 		$log->debug("Entering get_ticket_comments_list(".$ticketid.") method ...");
@@ -267,7 +267,7 @@ class HelpDesk extends CRMEntity {
 	/**	Function to get the HelpDesk field labels in caps letters without space
 	 *	@return array $mergeflds - array(	key => val	)    where   key=0,1,2..n & val = ASSIGNEDTO,RELATEDTO, .,etc
 	**/
-	function getColumnNames_Hd()
+	public function getColumnNames_Hd()
 	{
 		global $log,$current_user;
 		$log->debug("Entering getColumnNames_Hd() method ...");
@@ -304,7 +304,7 @@ class HelpDesk extends CRMEntity {
 	 * @param  int  $ticketid - Ticket id
 	 * @return list $list - return the list of comments and comment informations as a html output where as these comments and comments informations will be formed in div tag.
 	**/
-	function getCommentInformation($ticketid)
+	public function getCommentInformation($ticketid)
 	{
 		global $log, $adb, $mod_strings, $default_charset;
 		$log->debug("Entering getCommentInformation(".$ticketid.") method ...");
@@ -370,7 +370,7 @@ class HelpDesk extends CRMEntity {
 	 * @param  int    $id   - Ticket id
 	 * @return string $customername - The contact name
 	**/
-	function getCustomerName($id)
+	public function getCustomerName($id)
 	{
 		global $log, $adb;
 		$log->debug("Entering getCustomerName(".$id.") method ...");
@@ -385,7 +385,7 @@ class HelpDesk extends CRMEntity {
 	 * @param reference variable - where condition is passed when the query is executed
 	 * Returns Export Tickets Query.
 	 */
-	function create_export_query($where) {
+	public function create_export_query($where) {
 		global $log, $current_user;
 		$log->debug("Entering create_export_query(".$where.") method ...");
 
@@ -426,7 +426,7 @@ class HelpDesk extends CRMEntity {
 	/** Function to get the update ticket history for the specified ticketid
 	 * @param $id -- $ticketid:: Type Integer
 	 */
-	function constructUpdateLog($focus, $mode, $assigned_group_name, $assigntype) {
+	public function constructUpdateLog($focus, $mode, $assigned_group_name, $assigntype) {
 		global $adb, $current_user;
 		if($mode != 'edit') {
 			$updatelog = self::getUpdateLogCreateMessage($focus->column_fields, $assigned_group_name, $assigntype);
@@ -512,7 +512,7 @@ class HelpDesk extends CRMEntity {
 	 * @param Array List of Entity Id's from which related records need to be transfered
 	 * @param Integer Id of the the Record to which the related records are to be moved
 	 */
-	function transferRelatedRecords($module, $transferEntityIds, $entityId) {
+	public function transferRelatedRecords($module, $transferEntityIds, $entityId) {
 		global $adb,$log;
 		$log->debug("Entering function transferRelatedRecords ($module, $transferEntityIds, $entityId)");
 
@@ -549,7 +549,7 @@ class HelpDesk extends CRMEntity {
 	 * @param - $secmodule secondary module name
 	 * returns the query string formed on fetching the related data for report for secondary module
 	 */
-	function generateReportsSecQuery($module,$secmodule){
+	public function generateReportsSecQuery($module, $secmodule){
 		$query = $this->getRelationQuery($module,$secmodule,"vtiger_troubletickets","ticketid");
 		$query .=" left join vtiger_crmentity as vtiger_crmentityHelpDesk on vtiger_crmentityHelpDesk.crmid=vtiger_troubletickets.ticketid and vtiger_crmentityHelpDesk.deleted=0
 				left join vtiger_ticketcf on vtiger_ticketcf.ticketid = vtiger_troubletickets.ticketid
@@ -568,7 +568,7 @@ class HelpDesk extends CRMEntity {
 	 * @param - $secmodule secondary module name
 	 * returns the array with table names and fieldnames storing relations between module and this module
 	 */
-	function setRelationTables($secmodule){
+	public function setRelationTables($secmodule){
 		$rel_tables = array (
 			"Calendar" => array("vtiger_seactivityrel"=>array("crmid","activityid"),"vtiger_troubletickets"=>"ticketid"),
 			"Documents" => array("vtiger_senotesrel"=>array("crmid","notesid"),"vtiger_troubletickets"=>"ticketid"),
@@ -579,7 +579,7 @@ class HelpDesk extends CRMEntity {
 	}
 
 	// Function to unlink an entity with given Id from another entity
-	function unlinkRelationship($id, $return_module, $return_id) {
+	public function unlinkRelationship($id, $return_module, $return_id) {
 		global $log;
 		if(empty($return_module) || empty($return_id)) return;
 
@@ -670,7 +670,7 @@ class HelpDesk extends CRMEntity {
 		return $contents;
 	}
 
-	function clearSingletonSaveFields() {
+	public function clearSingletonSaveFields() {
 		$this->column_fields['comments'] = '';
 	}
 

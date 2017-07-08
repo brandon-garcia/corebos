@@ -10,11 +10,11 @@
 
 class Import_Queue_Controller {
 
-	static $IMPORT_STATUS_NONE = 0;
-	static $IMPORT_STATUS_SCHEDULED = 1;
-	static $IMPORT_STATUS_RUNNING = 2;
-	static $IMPORT_STATUS_HALTED = 3;
-	static $IMPORT_STATUS_COMPLETED = 4;
+	public static $IMPORT_STATUS_NONE = 0;
+	public static $IMPORT_STATUS_SCHEDULED = 1;
+	public static $IMPORT_STATUS_RUNNING = 2;
+	public static $IMPORT_STATUS_HALTED = 3;
+	public static $IMPORT_STATUS_COMPLETED = 4;
 
 	public function  __construct() {
 	}
@@ -131,7 +131,7 @@ class Import_Queue_Controller {
 		return $scheduledImports;
 	}
 
-	static function getImportInfoFromResult($rowData) {
+	public static function getImportInfoFromResult($rowData) {
 		return array(
 			'id' => $rowData['importid'],
 			'module' => getTabModuleName($rowData['tabid']),
@@ -144,7 +144,7 @@ class Import_Queue_Controller {
 		);
 	}
 
-	static function updateStatus($importId, $status) {
+	public static function updateStatus($importId, $status) {
 		$adb = PearDatabase::getInstance();
 		$adb->pquery('UPDATE vtiger_import_queue SET status=? WHERE importid=?', array($status, $importId));
 	}

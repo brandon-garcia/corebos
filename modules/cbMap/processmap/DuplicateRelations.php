@@ -45,7 +45,7 @@ class DuplicateRelations extends processcbMap {
 	private $modulename = '';
 	private $moduleid = 0;
 
-	function processMap($arguments) {
+	public function processMap($arguments) {
 		$this->convertMap2Array();
 		return $this;
 	}

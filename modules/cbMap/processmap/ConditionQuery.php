@@ -56,7 +56,7 @@ require_once('modules/com_vtiger_workflow/WorkFlowScheduler.php');
 
 class ConditionQuery extends processcbMap {
 
-	function processMap($arguments) {
+	public function processMap($arguments) {
 		$xml = $this->getXMLContent();
 		if (isset($xml->sql)) {
 			return $this->processSQL($xml,$arguments);

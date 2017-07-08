@@ -16,39 +16,39 @@ require_once('include/utils/CommonUtils.php');
 require_once('data/CRMEntity.php');
 
 class result {
-	var $text = "";
-	var $charset = "";
+	public $text = "";
+	public $charset = "";
 }
 
 class Webmails extends CRMEntity {
-	var $log;
-	var $db;
+	public $log;
+	public $db;
 
-	var $headers;
-	var $mailid;
-	var $to = array();
-	var $to_name = array();
-	var $from;
-	var $fromname;
-	var $fromaddr;
-	var $reply_to = array();
-	var $reply_to_name = array();
-	var $cc_list = array();
-	var $cc_list_name = array();
-	var $subject;
-	var $date;
-	var $body_type;
-	var $body;
-	var $attachments = array();
-	var $inline = array();
-	var $attachtab = array();
-	var $mbox;
-	var $email;
-	var $relationship = array();
-	var $replyToInformation = array();
-	var $has_attachments = false;
+	public $headers;
+	public $mailid;
+	public $to = array();
+	public $to_name = array();
+	public $from;
+	public $fromname;
+	public $fromaddr;
+	public $reply_to = array();
+	public $reply_to_name = array();
+	public $cc_list = array();
+	public $cc_list_name = array();
+	public $subject;
+	public $date;
+	public $body_type;
+	public $body;
+	public $attachments = array();
+	public $inline = array();
+	public $attachtab = array();
+	public $mbox;
+	public $email;
+	public $relationship = array();
+	public $replyToInformation = array();
+	public $has_attachments = false;
 
-	function __construct($mbox='',$mailid='') {
+	public function __construct($mbox='', $mailid='') {
 		$this->db = PearDatabase::getInstance();
 		$this->db->println("Entering Webmail($mbox,$mailid)");
 		$this->log = LoggerManager::getLogger('WEBMAILS');
@@ -89,48 +89,48 @@ class Webmails extends CRMEntity {
 		return $this->replyToInformation;
 	}
 
-	function delete() {
+	public function delete() {
 		imap_delete($this->mbox, $this->mailid);
 	}
 
-	function loadMail($attach_tab) {
+	public function loadMail($attach_tab) {
 		$this->email = $this->load_mail($attach_tab);
 		$this->body = $this->email["body"];
 		$this->attachtab = $this->email["attachtab"];
 		$this->att= $this->email["att"];
 	}
 
-	function replyBody() {
+	public function replyBody() {
 		$tmpvar = "<br><br><p style='font-weight:bold'>".$mod_strings['IN_REPLY_TO_THE_MESSAGE'].$this->reply_name." on ".$this->date."</p>";
 		$tmpvar .= "<blockquote style='border-left:1px solid blue;padding-left:5px'>".$this->body."</blockquote>";
 		return $tmpvar;
 	}
 
-	function unDeleteMsg() {
+	public function unDeleteMsg() {
 		imap_undelete($this->mbox, $this->mailid);
 	}
 
-	function setFlag() {
+	public function setFlag() {
 		$status=imap_setflag_full($this->mbox,$this->mailid,"\\Flagged");
 	}
 
-	function delFlag() {
+	public function delFlag() {
 		$status=imap_clearflag_full($this->mbox,$this->mailid,"\\Flagged");
 	}
 
-	function getBodyType() {
+	public function getBodyType() {
 		return $this->body_type;
 	}
 
-	function downloadInlineAttachments() {
+	public function downloadInlineAttachments() {
 		return $this->dl_inline();
 	}
 
-	function downloadAttachments() {
+	public function downloadAttachments() {
 		return $this->dl_attachments();
 	}
 
-	function load_headers() {
+	public function load_headers() {
 	// get the header info
 	$mailHeader=Array();
 	$theader = @imap_headerinfo($this->mbox, $this->mailid);
@@ -158,7 +158,7 @@ class Webmails extends CRMEntity {
 	return $ret = Array("theader"=>$mailHeader);
 	}
 
-	function get_attachments($id, $cur_tab_id, $rel_tab_id, $actions = false) {
+	public function get_attachments($id, $cur_tab_id, $rel_tab_id, $actions = false) {
        $struct = @imap_fetchstructure($this->mbox, $this->mailid);
        $parts = $struct->parts;
 
@@ -205,7 +205,7 @@ class Webmails extends CRMEntity {
         return false;
     }
 
-	function find_relationships() {
+	public function find_relationships() {
 	// leads search
 	$val_conv = ((isset($_COOKIE['LeadConv']) && $_COOKIE['LeadConv'] == 'true') ? 1 : 0);
 	$sql = "SELECT * from vtiger_leaddetails left join vtiger_crmentity on vtiger_crmentity.crmid=vtiger_leaddetails.leadid where vtiger_leaddetails.email = ? AND vtiger_crmentity.deleted='0' and converted=$val_conv";
@@ -263,7 +263,7 @@ class Webmails extends CRMEntity {
 		return null;
 	}
 
-	function findRelationshipsForReplyToSender() {
+	public function findRelationshipsForReplyToSender() {
 		$result = $this->searchModule('Contacts');
 		if(empty($result)) {
 			$result = $this->searchModule('Leads');
@@ -277,7 +277,7 @@ class Webmails extends CRMEntity {
 		return $result;
 	}
 
-	function dl_inline()
+	public function dl_inline()
 	{
 		$struct = @imap_fetchstructure($this->mbox, $this->mailid);
 		$parts = $struct->parts;
@@ -348,7 +348,7 @@ class Webmails extends CRMEntity {
 		return $inline;
 	}
 
-	function dl_attachments()
+	public function dl_attachments()
 	{
 		$struct = @imap_fetchstructure($this->mbox, $this->mailid);
 		$parts = $struct->parts;
@@ -408,7 +408,7 @@ class Webmails extends CRMEntity {
 		return $attachment;
 	}
 
-	function graphicalsmilies($body) {
+	public function graphicalsmilies($body) {
 		$user_prefs = $_SESSION['nocc_user_prefs'];
 		if (isset($user_prefs->graphical_smilies) && $user_prefs->graphical_smilies) {
 			$body = preg_replace("/\;-?\)/","<img src=\"themes/" . $_SESSION['nocc_theme'] . "/img/smilies/wink.png\" alt=\"wink\"/>", $body);
@@ -427,7 +427,7 @@ class Webmails extends CRMEntity {
 	}
 
 // based on a function from matt@bonneau.net
-function GetPart(&$attach_tab, &$this_part, $part_no, &$display_rfc822)
+public function GetPart(&$attach_tab, &$this_part, $part_no, &$display_rfc822)
 {
     $att_name = '[unknown]';
     if ($this_part->ifdescription == true)
@@ -563,7 +563,7 @@ function GetPart(&$attach_tab, &$this_part, $part_no, &$display_rfc822)
     }
 }
 
-function GetCodeScoreAll($Data,$beg_charset) {
+public function GetCodeScoreAll($Data, $beg_charset) {
 	global $cad_StatsTableWin, $cad_StatsTableKoi;
 	$PairSize = 2;
 
@@ -621,7 +621,7 @@ function GetCodeScoreAll($Data,$beg_charset) {
 }
 
 /* lxnt:  patched to return charset names that iconv() understands*/
-function detect_charset($Data,$dbg_fl = 0) {
+public function detect_charset($Data, $dbg_fl = 0) {
 	/* for many small pices of text -  list of sender/subject*/
 	$rc=preg_match("/(.*)([\x7F-\xFF]+)/xU",$Data,$tst_ar);
 	if($rc == 0) {
@@ -637,7 +637,7 @@ function detect_charset($Data,$dbg_fl = 0) {
 	return $MaxRatioKey;
 }
 
-function mime_header_decode(&$header)
+public function mime_header_decode(&$header)
 {
 	$output_charset = $GLOBALS['charset'];
 	$source = imap_mime_header_decode($header);
@@ -657,7 +657,7 @@ function mime_header_decode(&$header)
 	return $result;
 }
 
-function link_att(&$mail, $attach_tab, &$display_part_no,$ev)
+public function link_att(&$mail, $attach_tab, &$display_part_no, $ev)
 {
 	sort($attach_tab);
 	$link = '';
@@ -692,7 +692,7 @@ function link_att(&$mail, $attach_tab, &$display_part_no,$ev)
 }
 
 // Convert mail data (from, to, ...) to HTML
-function convertMailData2Html($maildata, $cutafter = 0) {
+public function convertMailData2Html($maildata, $cutafter = 0) {
 	if (($cutafter > 0) && (strlen($maildata) > $cutafter)) {
 		return htmlspecialchars(substr($maildata, 0, $cutafter)) . '&hellip;';
 	} else {
@@ -701,12 +701,12 @@ function convertMailData2Html($maildata, $cutafter = 0) {
 }
 
 	// Convert a language string to HTML
-	function convertLang2Html($langstring) {
+	public function convertLang2Html($langstring) {
 		global $charset;
 		return htmlentities($langstring, 2, $charset);
 	}
 
-	function load_mail($attach_tab)
+	public function load_mail($attach_tab)
 	{
 		// parse the message
 		global $default_charset, $conf;
@@ -882,7 +882,7 @@ function convertMailData2Html($maildata, $cutafter = 0) {
 
 	// get the body of a part of a message according to the
 	// string in $part
-	function mail_fetchpart($part)
+	public function mail_fetchpart($part)
 	{
 		$parts = $this->mail_fetchparts();
 
@@ -901,7 +901,7 @@ function convertMailData2Html($maildata, $cutafter = 0) {
 	// splits a message given in the body if it is
 	// a mulitpart mime message and returns the parts,
 	// if no parts are found, returns false
-	function mail_mimesplit($header, $body)
+	public function mail_mimesplit($header, $body)
 	{
 		$parts = array();
 
@@ -931,7 +931,7 @@ function convertMailData2Html($maildata, $cutafter = 0) {
 	// subparts of the given part
 	// if no subparts are found, return the body of
 	// the current part
-	function mail_mimesub($part)
+	public function mail_mimesub($part)
 	{
 		$i = 1;
 		$headDelimiter = "\r\n\r\n";
@@ -969,7 +969,7 @@ function convertMailData2Html($maildata, $cutafter = 0) {
 	// get an array with the bodies all parts of an email
 	// the structure of the array corresponds to the
 	// structure that is available with imap_fetchstructure
-	function mail_fetchparts()
+	public function mail_fetchparts()
 	{
 		$parts = array();
 		$header = imap_fetchheader($this->mbox, $this->mailid);

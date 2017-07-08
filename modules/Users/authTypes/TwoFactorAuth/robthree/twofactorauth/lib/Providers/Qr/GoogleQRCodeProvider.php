@@ -8,7 +8,7 @@ class GoogleQRCodeProvider extends BaseHTTPQRCodeProvider
     public $errorcorrectionlevel;
     public $margin;
 
-    function __construct($verifyssl = false, $errorcorrectionlevel = 'L', $margin = 1) 
+    public function __construct($verifyssl = false, $errorcorrectionlevel = 'L', $margin = 1)
     {
         if (!is_bool($verifyssl))
             throw new \QRException('VerifySSL must be bool');
