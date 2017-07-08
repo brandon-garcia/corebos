@@ -111,9 +111,9 @@ return $this->exec($params[2]);
                 $params = array();
                 foreach ($relto as $key => $value) {
                     if(is_object($value)){
-                        array_push($params,$this->env($value,true));
+                        $params[] = $this->env($value,true);
                     }else{
-                        array_push($params,$value);
+                        $params[] = $value;
                     }
                 }
             } else {
