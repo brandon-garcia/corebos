@@ -270,8 +270,7 @@ class adLDAPUsers {
         $info = $this->info($username, $fields, $isGUID);
         
         if ($info !== false) {
-            $collection = new adLDAPUserCollection($info, $this->adldap);
-            return $collection;
+            return new adLDAPUserCollection($info, $this->adldap);
         }
         return false;
     }
@@ -523,8 +522,7 @@ class adLDAPUsers {
         if ($user[0]["dn"] === NULL) { 
             return false; 
         }
-        $userDn = $user[0]["dn"];
-        return $userDn;
+        return $user[0]["dn"];
     }
     
     /**
@@ -577,9 +575,8 @@ class adLDAPUsers {
         $sr = @ldap_search($this->adldap->getLdapConnection(), $this->adldap->getBaseDn(), $filter, $fields); 
         if (ldap_count_entries($this->adldap->getLdapConnection(), $sr) > 0) { 
             $entry = @ldap_first_entry($this->adldap->getLdapConnection(), $sr); 
-            $guid = @ldap_get_values_len($this->adldap->getLdapConnection(), $entry, 'objectGUID'); 
-            $strGUID = $this->adldap->utilities()->binaryToText($guid[0]);          
-            return $strGUID; 
+            $guid = @ldap_get_values_len($this->adldap->getLdapConnection(), $entry, 'objectGUID');
+            return $this->adldap->utilities()->binaryToText($guid[0]);
         }
         return false; 
     }

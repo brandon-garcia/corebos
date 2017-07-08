@@ -66,8 +66,7 @@ class MailManager_Response {
 	}
 	
 	public function emitJSON() {
-		$response = json_encode($this->prepareResponse());
-		return $response;
+        return json_encode($this->prepareResponse());
 	}
 	
 	public function emitHTML() {

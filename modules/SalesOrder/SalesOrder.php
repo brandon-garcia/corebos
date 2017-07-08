@@ -374,22 +374,19 @@ class SalesOrder extends CRMEntity {
 	/*Function to create records in current module.
 	**This function called while importing records to this module*/
 	public function createRecords($obj) {
-		$createRecords = createRecords($obj);
-		return $createRecords;
+        return createRecords($obj);
 	}
 
 	/*Function returns the record information which means whether the record is imported or not
 	**This function called while importing records to this module*/
 	public function importRecord($obj, $inventoryFieldData, $lineItemDetails) {
-		$entityInfo = importRecord($obj, $inventoryFieldData, $lineItemDetails);
-		return $entityInfo;
+        return importRecord($obj, $inventoryFieldData, $lineItemDetails);
 	}
 
 	/*Function to return the status count of imported records in current module.
 	**This function called while importing records to this module*/
 	public function getImportStatusCount($obj) {
-		$statusCount = getImportStatusCount($obj);
-		return $statusCount;
+        return getImportStatusCount($obj);
 	}
 
 	public function undoLastImport($obj, $user) {

@@ -51,8 +51,7 @@ class Import_Lock_Controller {
 			$lockResult = $adb->pquery('SELECT * FROM vtiger_import_locks WHERE tabid=?',array(getTabid($module)));
 
 			if($lockResult && $adb->num_rows($lockResult) > 0) {
-				$lockInfo = $adb->query_result_rowdata($lockResult, 0);
-				return $lockInfo;
+                return $adb->query_result_rowdata($lockResult, 0);
 			}
 		}
 

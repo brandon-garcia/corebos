@@ -54,8 +54,7 @@ function vtlib_getModuleNameForSharing() {
 	global $adb;
 	$std_modules = array('Calendar','Leads','Accounts','Contacts','Potentials',
 			'HelpDesk','Campaigns','Quotes','PurchaseOrder','SalesOrder','Invoice','Events');
-	$modulesList = getSharingModuleList($std_modules);
-	return $modulesList;
+    return getSharingModuleList($std_modules);
 }
 
 /**

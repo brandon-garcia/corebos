@@ -1048,8 +1048,7 @@ class Products extends CRMEntity {
 	public function isparent_check(){
 		global $adb;
 		$isparent_query = $adb->pquery(getListQuery("Products")." AND (vtiger_products.productid IN (SELECT productid from vtiger_seproductsrel WHERE vtiger_seproductsrel.productid = ? AND vtiger_seproductsrel.setype='Products'))",array($this->id));
-		$isparent = $adb->num_rows($isparent_query);
-		return $isparent;
+        return $adb->num_rows($isparent_query);
 	}
 
 	/** Function to check if the product is member of other product

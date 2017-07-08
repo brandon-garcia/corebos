@@ -925,8 +925,7 @@ function addCustomField() {
 	$checkresult=$adb->pquery($checkquery,$params);
 
 	if($adb->num_rows($checkresult) > 0 ) {
-		$duplicate = 'yes';
-		return $duplicate ;
+        return 'yes';
 	}
 
     $max_fieldid = $adb->getUniqueID("vtiger_field");

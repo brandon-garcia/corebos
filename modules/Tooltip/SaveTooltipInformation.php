@@ -41,8 +41,7 @@ function SaveTooltipInformation($fieldid, $sequence, $view=1){
             $sequence++;
         }
     }
-    $data = getDetailViewForTooltip($fieldid, $checkedFields);
-    return $data;
+    return getDetailViewForTooltip($fieldid, $checkedFields);
 }
 
 /**
@@ -81,8 +80,7 @@ function getDetailViewForTooltip($fieldid, $checkedFields){
 	$smarty->assign("LABELS", $labels);
 	$smarty->assign("COUNT", count($labels));
 
-	$data = $smarty->fetch("modules/Tooltip/DetailQuickView.tpl");
-	return $data;
+    return $smarty->fetch("modules/Tooltip/DetailQuickView.tpl");
 }
 
 /**

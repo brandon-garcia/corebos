@@ -70,9 +70,7 @@ class adLDAPComputers {
             $fields = array("memberof","cn","displayname","dnshostname","distinguishedname","objectcategory","operatingsystem","operatingsystemservicepack","operatingsystemversion"); 
         }
         $sr = ldap_search($this->adldap->getLdapConnection(), $this->adldap->getBaseDn(), $filter, $fields);
-        $entries = ldap_get_entries($this->adldap->getLdapConnection(), $sr);
-        
-        return $entries;
+        return ldap_get_entries($this->adldap->getLdapConnection(), $sr);
     }
     
     /**
@@ -90,8 +88,7 @@ class adLDAPComputers {
         $info = $this->info($computerName, $fields);
         
         if ($info !== false) {
-            $collection = new adLDAPComputerCollection($info, $this->adldap);
-            return $collection;
+            return new adLDAPComputerCollection($info, $this->adldap);
         }
         return false;
     }

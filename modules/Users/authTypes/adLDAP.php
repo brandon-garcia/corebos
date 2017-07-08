@@ -748,8 +748,7 @@ class adLDAP {
         if (!$this->ldapBind){ return (false); }
         
         $sr = @ldap_read($this->ldapConnection, NULL, 'objectClass=*', $attributes);
-        $entries = @ldap_get_entries($this->ldapConnection, $sr);
-        return $entries;
+        return @ldap_get_entries($this->ldapConnection, $sr);
     }
 
     /**

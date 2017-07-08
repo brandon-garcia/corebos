@@ -206,9 +206,8 @@ class adLDAPUtils {
     public function decodeGuid($binaryGuid) 
     {
         if ($binaryGuid === null){ return "Missing compulsory field [binaryGuid]"; }
-        
-        $strGUID = $this->binaryToText($binaryGuid);          
-        return $strGUID; 
+
+        return $this->binaryToText($binaryGuid);
     }
     
     /**
@@ -256,8 +255,7 @@ class adLDAPUtils {
     * @return long $unixTime
     */
     public static function convertWindowsTimeToUnixTime($windowsTime) {
-      $unixTime = round($windowsTime / 10000000) - 11644477200; 
-      return $unixTime; 
+        return round($windowsTime / 10000000) - 11644477200;
     }
 }
 

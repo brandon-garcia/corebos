@@ -44,8 +44,7 @@ class Core_Lock_Shm extends Core_Lock_Lock
 	
 	public function check_environment(Array $errors = array())
 	{
-		$errors = array();
-		return $errors;
+        return array();
 	}
 	
 	public function set()

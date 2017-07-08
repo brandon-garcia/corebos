@@ -403,9 +403,7 @@ class adLDAPGroups {
             $fields = array("member","memberof","cn","description","distinguishedname","objectcategory","samaccountname"); 
         }
         $sr = ldap_search($this->adldap->getLdapConnection(), $this->adldap->getBaseDn(), $filter, $fields);
-        $entries = ldap_get_entries($this->adldap->getLdapConnection(), $sr);
-
-        return $entries;
+        return ldap_get_entries($this->adldap->getLdapConnection(), $sr);
     }
     
     /**
@@ -423,8 +421,7 @@ class adLDAPGroups {
         
         $info = $this->info($groupName, $fields);
         if ($info !== false) {
-            $collection = new adLDAPGroupCollection($info, $this->adldap);
-            return $collection;
+            return new adLDAPGroupCollection($info, $this->adldap);
         }
         return false;
     }
@@ -516,8 +513,7 @@ class adLDAPGroups {
     * @return array
     */
     public function all($includeDescription = false, $search = "*", $sorted = true){
-        $groupsArray = $this->search(null, $includeDescription, $search, $sorted);
-        return $groupsArray;
+        return $this->search(null, $includeDescription, $search, $sorted);
     }
     
     /**

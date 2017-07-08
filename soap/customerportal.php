@@ -415,8 +415,7 @@ function get_ticket_comments($input_array)
 	}
 
 	$seed_ticket = new HelpDesk();
-	$response = $seed_ticket->get_ticket_comments_list($ticketid);
-	return $response;
+    return $seed_ticket->get_ticket_comments_list($ticketid);
 }
 
 /**	function used to get the combo values ie., picklist values of the HelpDesk module and also the list of products
@@ -631,9 +630,7 @@ function save_faq_comment($input_array)
 	}
 
 	$params = Array('id'=>"$id", 'sessionid'=>"$sessionid");
-	$result = get_KBase_details($input_array);
-
-	return $result;
+    return get_KBase_details($input_array);
 }
 
 /** function to get a list of tickets and to search tickets
@@ -3310,8 +3307,7 @@ function getCurrencySymbol($result,$i,$column){
 	global $adb;
 	$currencyid = $adb->query_result($result,$i,$column);
 	$curr = getCurrencySymbolandCRate($currencyid);
-	$value = "(".$curr['symbol'].")";
-	return $value;
+    return "(".$curr['symbol'].")";
 
 }
 

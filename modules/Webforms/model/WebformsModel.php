@@ -156,8 +156,7 @@ class Webforms_Model {
 
 	public function generatePublicId($name) {
 		global $adb, $log;
-		$uid = md5(microtime(true) + $name);
-		return $uid;
+        return md5(microtime(true) + $name);
 	}
 
 	public function retrieveFields() {

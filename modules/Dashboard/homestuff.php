@@ -19,8 +19,7 @@ function dashboardDisplayCall($type,$Chart_Type,$from_page)
 		$_REQUEST['type'] = $type;
 		$_REQUEST['Chart_Type'] = $Chart_Type;
 		$_REQUEST['from_page'] = 'HomePage';
-		$dashval=dashBoardDisplayChart();
-		return $dashval;
+        return dashBoardDisplayChart();
 	}
 	return '';
 }

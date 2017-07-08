@@ -91,8 +91,7 @@ function _vt_time_diff($arr) {
  */
 function _vt_time_diffdays($arr) {
 	$timediff  = _vt_time_diff($arr);
-	$days_diff = floor($timediff / (60 * 60 * 24));
-	return $days_diff;
+    return floor($timediff / (60 * 60 * 24));
 }
 
 class VTExpressionEvaluater{

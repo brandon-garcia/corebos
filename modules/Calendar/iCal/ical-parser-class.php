@@ -9,8 +9,7 @@ class iCal {
     }
     
     public function iCalReader($filename, $root_directory='') {
-        $iCaltoArray = $this->iCalDecoder($filename,$root_directory);
-        return $iCaltoArray;
+        return $this->iCalDecoder($filename,$root_directory);
     }
 
     public function iCalDecoder($file, $root_directory) {

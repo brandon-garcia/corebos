@@ -138,8 +138,7 @@ function getEmailFieldId($meta, $entityId) {
 	$result = $adb->pquery($query, array($meta->getTabId()));
 
 	//pick up the first field.
-	$fieldId = $adb->query_result($result,0,'fieldid');
-	return $fieldId;
+    return $adb->query_result($result,0,'fieldid');
 }
 
 function vtws_getParameter($parameterArray, $paramName,$default=null) {
@@ -487,8 +486,7 @@ function vtws_getModuleHandlerFromName($name,$user) {
 
 	require_once $handlerPath;
 
-	$handler = new $handlerClass($webserviceObject,$user,$adb,$log);
-	return $handler;
+    return new $handlerClass($webserviceObject,$user,$adb,$log);
 }
 
 function vtws_getModuleHandlerFromId($id,$user) {
@@ -499,8 +497,7 @@ function vtws_getModuleHandlerFromId($id,$user) {
 
 	require_once $handlerPath;
 
-	$handler = new $handlerClass($webserviceObject,$user,$adb,$log);
-	return $handler;
+    return new $handlerClass($webserviceObject,$user,$adb,$log);
 }
 
 function vtws_CreateCompanyLogoFile($fieldname) {

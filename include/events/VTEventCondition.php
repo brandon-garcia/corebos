@@ -32,8 +32,7 @@
 			$ass = new ANTLRStringStream($expr);
 			$lex = new VTEventConditionParserLexer($ass);
 			$cts = new CommonTokenStream($lex);
-			$tap = new VTEventConditionParserParser($cts);
-			return $tap;
+            return new VTEventConditionParserParser($cts);
 		}
 		
 		

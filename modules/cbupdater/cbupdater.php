@@ -117,8 +117,7 @@ class cbupdater extends CRMEntity {
 	 */
 	public function getListButtons($app_strings) {
 		global $currentModule;
-		$list_buttons = Array();
-		return $list_buttons;
+        return Array();
 	}
 
 	public static function exists($cbinfo) {

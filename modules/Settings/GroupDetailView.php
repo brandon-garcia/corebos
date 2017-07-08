@@ -141,8 +141,7 @@ function getStdOutput($groupInfoArr,$groupId, $mod_strings)
 		if(sizeof($memberinfo) >0)
 			$information[$memberDisplayType] = $memberinfo;
 	}
-	$returndata=array($groupfields,$information);
-	return $returndata;
+    return array($groupfields,$information);
 }
 
 $smarty->assign("MOD", return_module_language($current_language,'Settings'));

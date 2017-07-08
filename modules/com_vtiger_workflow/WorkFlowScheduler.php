@@ -44,8 +44,7 @@ class WorkFlowScheduler {
 			}
 		}
 
-		$query = $queryGenerator->getQuery();
-		return $query;
+        return $queryGenerator->getQuery();
 	}
 
 	public function getEligibleWorkflowRecords($workflow) {

@@ -232,8 +232,7 @@
 			$workflowClass = $workflowTypeConfig['class'];
 
 			require_once $workflowClassPath;
-			$workflow = new $workflowClass();
-			return $workflow;
+            return new $workflowClass();
 		}
 
 		/**

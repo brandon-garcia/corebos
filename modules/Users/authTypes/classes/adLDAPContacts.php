@@ -165,8 +165,7 @@ class adLDAPContacts {
         $info = $this->info($distinguishedName, $fields);
         
         if ($info !== false) {
-            $collection = new adLDAPContactCollection($info, $this->adldap);
-            return $collection;
+            return new adLDAPContactCollection($info, $this->adldap);
         }
         return false;
     }

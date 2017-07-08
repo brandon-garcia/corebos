@@ -61,8 +61,7 @@
 class FieldInfo extends processcbMap {
 
 	public function processMap($arguments) {
-		$mapping=$this->convertMap2Array();
-		return $mapping;
+        return $this->convertMap2Array();
 	}
 
 	public function convertMap2Array() {

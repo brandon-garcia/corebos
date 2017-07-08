@@ -134,7 +134,6 @@ function getRelatedColumns($selected=""){
 
 function getRelatedFieldColumns($selected=""){
 	global $ogReport;
-	$rel_fields = $ogReport->adv_rel_fields;
-	return $rel_fields;
+    return $ogReport->adv_rel_fields;
 }
 

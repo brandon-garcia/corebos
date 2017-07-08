@@ -312,8 +312,7 @@ class adLDAPExchange {
         
         $configurationNamingContext = $this->adldap->getRootDse(array('configurationnamingcontext'));
         $sr = @ldap_search($this->adldap->getLdapConnection(), $configurationNamingContext[0]['configurationnamingcontext'][0],'(&(objectCategory=msExchExchangeServer))', $attributes);
-        $entries = @ldap_get_entries($this->adldap->getLdapConnection(), $sr);
-        return $entries;
+        return @ldap_get_entries($this->adldap->getLdapConnection(), $sr);
     }
     
     /**
@@ -356,7 +355,6 @@ class adLDAPExchange {
         
         $filter = '(&(objectCategory=msExchPrivateMDB))';
         $sr = @ldap_search($this->adldap->getLdapConnection(), $storageGroup, $filter, $attributes);
-        $entries = @ldap_get_entries($this->adldap->getLdapConnection(), $sr);
-        return $entries;
+        return @ldap_get_entries($this->adldap->getLdapConnection(), $sr);
     }
 }

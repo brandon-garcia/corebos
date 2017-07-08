@@ -645,8 +645,7 @@ function get_to_emailids($module) {
 		}
 	}
 
-	$return_data = array('idlists' => $idlists, 'mailds' => $mailids);
-	return $return_data;
+    return array('idlists' => $idlists, 'mailds' => $mailids);
 }
 
 // attach the generated pdf with the email

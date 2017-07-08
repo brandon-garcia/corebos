@@ -67,8 +67,7 @@ class Webforms_Field_Model {
 	}
 
 	public function getNeutralizedField() {
-		$neutralizedfield = str_replace(" ", "_", $this->data['neutralizedfield']);
-		return $neutralizedfield;
+        return str_replace(" ", "_", $this->data['neutralizedfield']);
 	}
 
 	public function getEnabled() {
@@ -76,8 +75,7 @@ class Webforms_Field_Model {
 	}
 
 	public function getDefaultValue() {
-		$data=$this->data["defaultvalue"];
-		return $data;
+        return $this->data["defaultvalue"];
 	}
 
 	public function getRequired() {

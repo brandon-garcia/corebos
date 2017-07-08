@@ -69,8 +69,7 @@ class Import_Map {
 			$key = str_replace('&', '/amp/', $key);
 			$keyValueStrings[] = $key.'='.$value;
 		}
-		$stringifiedContent = implode('&', $keyValueStrings);
-		return $stringifiedContent;
+        return implode('&', $keyValueStrings);
 	}
 
 	public function save() {

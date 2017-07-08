@@ -26,8 +26,7 @@ class Vtiger_SalesOrderPDFController extends Vtiger_InventoryPDFController{
 	}
 	
 	public function buildHeaderModelColumnLeft() {
-		$modelColumnLeft = parent::buildHeaderModelColumnLeft();
-		return $modelColumnLeft;
+        return parent::buildHeaderModelColumnLeft();
 	}
 	
 	public function buildHeaderModelColumnCenter() {

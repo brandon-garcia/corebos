@@ -528,8 +528,7 @@ class crmtogo_WS_Utils {
 			$imgpath = $imagePath.$imageId."_".$imageName;
 			$type = pathinfo($imgpath, PATHINFO_EXTENSION);
 			$data = file_get_contents($imgpath);
-			$str = "data:image/".$type.";base64,".base64_encode($data);
-			return $str ;
+            return "data:image/".$type.";base64,".base64_encode($data);
 		}
 
         return '';
@@ -550,8 +549,7 @@ class crmtogo_WS_Utils {
 			$imgpath = $imagePath.$imageId."_".$imageName;
 			$type = pathinfo($imgpath, PATHINFO_EXTENSION);
 			$data = file_get_contents($imgpath);
-			$str = "data:image/".$type.";base64,".base64_encode($data);
-			return $str ;
+            return "data:image/".$type.";base64,".base64_encode($data);
 		}
 
         return '';
@@ -564,8 +562,7 @@ class crmtogo_WS_Utils {
 		$result = $db->pquery($sql, array($productid[1]));
 		$noofrows = $db->num_rows($result);
 		if ($noofrows >0) {
-			$taxpercentage = $db->query_result($result, 0, 'taxpercentage');
-			return $taxpercentage ;
+            return $db->query_result($result, 0, 'taxpercentage');
 		}
 
         return '';
@@ -698,8 +695,7 @@ class crmtogo_WS_Utils {
 	}
 
 	public static function getUsersLanguage($lang) {
-		$user_lang = return_module_language($lang, 'Mobile');
-		return $user_lang;
+        return return_module_language($lang, 'Mobile');
 	}
 
 	public static function updateRecord($id, $fields, $targetModule, $user) {

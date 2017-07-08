@@ -11,8 +11,7 @@ require_once("Smarty_setup.php");
 require_once("include/utils/utils.php");
 
 function vtGetModules($adb) {
-	$modules = com_vtGetModules($adb);
-	return $modules;
+    return com_vtGetModules($adb);
 }
 
 function vtEditExpressions($adb, $appStrings, $current_language, $theme, $formodule='') {

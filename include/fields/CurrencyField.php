@@ -163,8 +163,7 @@ class CurrencyField {
 			$value = self::convertFromDollar($value,$this->conversionRate);
 		}
 
-		$number = $this->_formatCurrencyValue($value);
-		return $number;
+        return $this->_formatCurrencyValue($value);
 	}
 
 	/**

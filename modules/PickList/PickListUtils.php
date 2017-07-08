@@ -240,8 +240,7 @@ function getAllowedPicklistModules($allowNonEntities=0) {
 	while($result && $row = $adb->fetch_array($result)){
 		$allEntities[] = $row['name'];
 	}
-	$allowedEntities=array_intersect($allAllowedModules, $allEntities);
-	return $allowedEntities;
+    return array_intersect($allAllowedModules, $allEntities);
 }
 
 function getPicklistValuesSpecialUitypes($uitype,$fieldname,$value,$action='EditView'){

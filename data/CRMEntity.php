@@ -71,8 +71,7 @@ class CRMEntity {
 			checkFileAccessForInclusion("modules/$module/$modName.php");
 			require_once("modules/$module/$modName.php");
 		}
-		$focus = new $modName();
-		return $focus;
+        return new $modName();
 	}
 
 	public function saveentity($module, $fileid = '') {

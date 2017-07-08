@@ -71,8 +71,7 @@ class VTWorkflowEntity{
 			global $current_user;
 			$ct = new VTSimpleTemplate($fieldName);
 			$entityCache = new VTEntityCache($current_user);
-			$info = $ct->render($entityCache, $this->getId());
-			return $info;
+            return $ct->render($entityCache, $this->getId());
 		}
 		return (isset($this->data[$fieldName]) ? $this->data[$fieldName] : null);
 	}

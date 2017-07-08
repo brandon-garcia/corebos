@@ -34,8 +34,7 @@ class MailManager_Model_DraftEmail {
 			$where = $type ." LIKE '%". $q ."%'" ;
 		}
 		$where = " AND ".$where;
-		$draftMails = $this->getDrafts($page, $limit, $folder, $where);
-		return $draftMails;
+        return $this->getDrafts($page, $limit, $folder, $where);
 	}
 
 	public function constructAllClause($query) {
