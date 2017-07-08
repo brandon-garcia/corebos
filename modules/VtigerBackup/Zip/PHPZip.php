@@ -27,7 +27,7 @@ class Vtiger_PHPZip extends Vtiger_BackupZip {
 		if(empty($parentDirectory)) {
 			$this->addTrailingSlash($parentDirectory);
 		}
-		$filedata = implode("", file($filePath));
+		$filedata = file_get_contents($filePath);
 		$this->createZip->addFile($filedata,$parentDirectory.'database.sql');
 	}
 
