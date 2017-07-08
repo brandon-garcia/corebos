@@ -21,7 +21,7 @@ class crmtogo_UI_GetRelatedLists extends crmtogo_WS_RelatedRecords {
 		} 
 		else {
 			$wsResponseResult = $wsResponse->getResult();
-			$current_language = $this->sessionGet('language') ;
+			$current_language = static::sessionGet('language') ;
 			$relatedlistsmodule = array_keys($wsResponseResult);
 			$relatedresponse = new crmtogo_API_Response();
 			foreach ($relatedlistsmodule as $module) {
@@ -45,7 +45,7 @@ class crmtogo_UI_GetRelatedLists extends crmtogo_WS_RelatedRecords {
 			}
 			$relatedresponse -> setResult($detailresponse_record);
 			$response = new crmtogo_API_Response();
-			$config = $this->getUserConfigSettings();
+			$config = static::getUserConfigSettings();
 			$viewer = new crmtogo_UI_Viewer();
 			$viewer->assign('RECORDID',$request->get('record'));
 			$viewer->assign('MOD', $this->getUsersLanguage());
@@ -55,7 +55,7 @@ class crmtogo_UI_GetRelatedLists extends crmtogo_WS_RelatedRecords {
 			$viewer->assign('_PARENT_MODULE', $request->get('module'));
 			$viewer->assign('_RECORDS', $relatedresponse);
 			//Get PanelMenu data
-			$modules = $this->sessionGet('_MODULES');
+			$modules = static::sessionGet('_MODULES');
 			$viewer->assign('_MODULES', $modules);
 			$response = $viewer->process('RelatedListView.tpl');
 		}

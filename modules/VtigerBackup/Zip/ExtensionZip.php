@@ -39,7 +39,7 @@ class Vtiger_ExtensionZip extends Vtiger_BackupZip {
 		foreach ($iterator as $file) {
 			$file = realpath($file);
 			if (is_dir($file) === true) {
-				$file = $this->addTrailingSlash($file);
+				$file = static::addTrailingSlash($file);
 				$this->zip->addEmptyDir($zipPath.str_replace($directoryPath, '', $file));
 			}else if (is_file($file) === true) {
 				$this->zip->addFromString($zipPath.str_replace($directoryPath, '', $file), file_get_contents($file));
@@ -49,7 +49,7 @@ class Vtiger_ExtensionZip extends Vtiger_BackupZip {
 
 	public function addFile($filePath, $parentDirectory) {
 		if(empty($parentDirectory)) {
-			$this->addTrailingSlash($parentDirectory);
+			static::addTrailingSlash($parentDirectory);
 		}
 		
 		$sucess = $this->zip->addFromString($parentDirectory.'database.sql',

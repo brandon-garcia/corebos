@@ -16,14 +16,14 @@ class crmtogo_UI_EditView extends crmtogo_WS_FetchRecordDetails {
 
 	public function cachedModuleLookupWithRecordId($recordId) {
 		$recordIdComponents = explode('x', $recordId);
-    	$modules = $this->sessionGet('_MODULES'); // Should be available post login
+    	$modules = static::sessionGet('_MODULES'); // Should be available post login
 		foreach($modules as $module) {
 			if ($module->id() == $recordIdComponents[0]) { return $module; };
 		}
 		return false;
 	}
 	public function cachedModuleLookup($currentmodule) {
-    	$modules = $this->sessionGet('_MODULES'); // Should be available post login
+    	$modules = static::sessionGet('_MODULES'); // Should be available post login
 		foreach($modules as $module) {
 			if ($module->name() == $currentmodule) { return $module; };
 		}
@@ -65,7 +65,7 @@ class crmtogo_UI_EditView extends crmtogo_WS_FetchRecordDetails {
 			}
 			$current_user = $this->getActiveUser();
 			//for compatibility to CRM versions 5.2.1 and 5.3.0 ff.
-			$current_language = $this->sessionGet('language') ;
+			$current_language = static::sessionGet('language') ;
 			//generate dateformat for Smarty
 			$target_date_format = $current_user->date_format;
 			$target_date_format= str_replace("yyyy", "%Y", $target_date_format);
@@ -89,7 +89,7 @@ class crmtogo_UI_EditView extends crmtogo_WS_FetchRecordDetails {
 					$invited_users[$userid]=$username;
 				}
 			}
-			$config = $this->getUserConfigSettings();
+			$config = static::getUserConfigSettings();
 			$viewer = new crmtogo_UI_Viewer();
 			$viewer->assign('MOD', $this->getUsersLanguage());
 			$viewer->assign('COLOR_HEADER_FOOTER', $config['theme']);
@@ -107,7 +107,7 @@ class crmtogo_UI_EditView extends crmtogo_WS_FetchRecordDetails {
 			$viewer->assign('LANGUAGE', $current_language);
 			$viewer->assign('ORIGMODULE', $origmodule);
 			//Get PanelMenu data
-			$modules = $this->sessionGet('_MODULES');
+			$modules = static::sessionGet('_MODULES');
 			$viewer->assign('_MODULES', $modules);
 			if(isset($_REQUEST['quickcreate']) && $_REQUEST['quickcreate'] == 1)
 				$response = $viewer->process('QuickCreateView.tpl');

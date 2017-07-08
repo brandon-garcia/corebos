@@ -15,7 +15,7 @@ include_once __DIR__ . '/../views/models/SearchFilter.php';
 class crmtogo_UI_ListModuleRecords extends crmtogo_WS_ListModuleRecords {
 
 	public function cachedModule($moduleName) {
-		$modules = $this->sessionGet('_MODULES'); // Should be available post login
+		$modules = static::sessionGet('_MODULES'); // Should be available post login
 		foreach($modules as $module) {
 			if ($module->name() == $moduleName) return $module;
 		}
@@ -25,7 +25,7 @@ class crmtogo_UI_ListModuleRecords extends crmtogo_WS_ListModuleRecords {
 	/** For search capability */
 	public function cachedSearchFields($module) {
 		$cachekey = "_MODULE.{$module}.SEARCHFIELDS";
-		return $this->sessionGet($cachekey, false);
+		return static::sessionGet($cachekey, false);
 	}
 	
 	public function process(crmtogo_API_Request $request) {
@@ -40,7 +40,7 @@ class crmtogo_UI_ListModuleRecords extends crmtogo_WS_ListModuleRecords {
 			}
 		}
 		$current_user = $this->getActiveUser();
-		$current_language = $this->sessionGet('language') ;
+		$current_language = static::sessionGet('language') ;
 		$current_module_strings = return_module_language($current_language, 'Mobile');
 
 		$response = false;
@@ -138,7 +138,7 @@ class crmtogo_UI_ListModuleRecords extends crmtogo_WS_ListModuleRecords {
 			global $current_user;
 			
 			$current_user = $this->getActiveUser();
-			$config = $this->getUserConfigSettings();
+			$config = static::getUserConfigSettings();
 			$viewer->assign('MOD', $this->getUsersLanguage());
 			$viewer->assign('COLOR_HEADER_FOOTER', $config['theme']);
 			$viewer->assign('PAGELIMIT', $config['NavigationLimit']);
@@ -152,7 +152,7 @@ class crmtogo_UI_ListModuleRecords extends crmtogo_WS_ListModuleRecords {
 			$viewer->assign('CALSTARTDAY', $startday_code);
 			$viewer->assign('CALENDARSELECT', $config['compactcalendar']);
 			//Get PanelMenu data
-			$modules = $this->sessionGet('_MODULES');
+			$modules = static::sessionGet('_MODULES');
 			$viewer->assign('_MODULES', $modules);
 
 			$response = $viewer->process('ListView.tpl');

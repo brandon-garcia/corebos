@@ -253,8 +253,8 @@ abstract class Core_Daemon
 
         // We have to set any installation instructions before we call getopt()
         $this->install_instructions[] = "Add to Supervisor or Monit, or add a Crontab Entry:\n   * * * * * " . $this->command();
-        $this->set('filename',    $argv[0]);
-        $this->set('start_time',  time());
+        static::set('filename',    $argv[0]);
+        static::set('start_time',  time());
         $this->pid(getmypid());
         $this->getopt();
     }
@@ -338,7 +338,7 @@ abstract class Core_Daemon
         $this->on(self::ON_IDLE, array($this, 'stats_trim'), (empty($this->loop_interval)) ? null : ($this->loop_interval * 50)); // Throttle to about once every 50 iterations
 
         $this->setup();
-        if (!$this->is('daemonized'))
+        if (!static::is('daemonized'))
             $this->log('Note: The daemonize (-d) option was not set: This process is running inside your shell. Auto-Restart feature is disabled.');
 
         $this->log('Application Startup Complete. Starting Event Loop.');
@@ -352,7 +352,7 @@ abstract class Core_Daemon
     {
         try
         {
-            $this->set('shutdown', true);
+            static::set('shutdown', true);
             $this->dispatch(array(self::ON_SHUTDOWN));
             foreach(array_merge($this->workers, $this->plugins) as $object) {
                 $this->{$object}->teardown();
@@ -367,10 +367,10 @@ abstract class Core_Daemon
 
         $this->callbacks = array();
 
-        if ($this->is('parent') && $this->get('pid_file') && file_exists($this->get('pid_file')) && file_get_contents($this->get('pid_file')) == $this->pid)
-            unlink($this->get('pid_file'));
+        if (static::is('parent') && static::get('pid_file') && file_exists(static::get('pid_file')) && file_get_contents(static::get('pid_file')) == $this->pid)
+            unlink(static::get('pid_file'));
 
-        if ($this->is('parent') && $this->is('stdout'))
+        if (static::is('parent') && static::is('stdout'))
             echo PHP_EOL;
     }
 
@@ -415,7 +415,7 @@ abstract class Core_Daemon
     {
         try
         {
-            while ($this->is('parent') && !$this->is('shutdown'))
+            while (static::is('parent') && !static::is('shutdown'))
             {
                 $this->timer(true);
                 $this->auto_restart();
@@ -550,7 +550,7 @@ abstract class Core_Daemon
      */
     public function task($task)
     {
-        if ($this->is('shutdown')) {
+        if (static::is('shutdown')) {
             $this->log("Daemon is shutting down: Cannot run task()");
             return false;
         }
@@ -584,9 +584,9 @@ abstract class Core_Daemon
         if ($proc === true) {
 
             // Child Process
-            $this->set('start_time', time());
-            $this->set('parent',     false);
-            $this->set('parent_pid', $this->pid);
+            static::set('start_time', time());
+            static::set('parent',     false);
+            static::set('parent_pid', $this->pid);
             $this->pid(getmypid());
 
             // Remove unused worker objects. They can be memory hogs.
@@ -644,9 +644,9 @@ abstract class Core_Daemon
 
         if (self::$log_handle === false) {
             if (strlen($log_file) > 0 && self::$log_handle = @fopen($log_file, 'a+')) {
-                if ($this->is('parent')) {
+                if (static::is('parent')) {
                     fwrite(self::$log_handle, $header);
-                    if ($this->is('stdout'))
+                    if (static::is('stdout'))
                         echo $header;
                 }
             } elseif (!$log_file_error) {
@@ -663,13 +663,13 @@ abstract class Core_Daemon
         if (self::$log_handle)
             fwrite(self::$log_handle, $message);
 
-        if ($this->is('stdout'))
+        if (static::is('stdout'))
             echo $message;
     }
 
     public function debug($message, $label = '')
     {
-        if (!$this->is('verbose'))
+        if (!static::is('verbose'))
             return;
 
         $this->log($message, $label);
@@ -699,11 +699,11 @@ abstract class Core_Daemon
     {
         $this->error($message, $label);
 
-        if ($this->is('parent')) {
+        if (static::is('parent')) {
             $this->log(get_class($this) . ' is Shutting Down...');
 
             $delay = 2;
-            if ($this->is('daemonized') && ($this->runtime() + $delay) > self::MIN_RESTART_SECONDS) {
+            if (static::is('daemonized') && ($this->runtime() + $delay) > self::MIN_RESTART_SECONDS) {
                 sleep($delay);
                 $this->restart();
             }
@@ -733,10 +733,10 @@ abstract class Core_Daemon
                 break;
             case SIGINT:
             case SIGTERM:
-                if ($this->is('parent'))
+                if (static::is('parent'))
                     $this->log("Shutdown Signal Received\n");
 
-                $this->set('shutdown', true);
+                static::set('shutdown', true);
                 break;
         }
 
@@ -750,14 +750,14 @@ abstract class Core_Daemon
      */
     private function command($options = false)
     {
-        $command = 'php ' . $this->get('filename');
+        $command = 'php ' . static::get('filename');
 
         if ($options === false) {
             $command .= ' -d';
-            if ($this->get('pid_file'))
-                $command .= ' -p ' . $this->get('pid_file');
+            if (static::get('pid_file'))
+                $command .= ' -p ' . static::get('pid_file');
 
-            if ($this->get('debug_workers'))
+            if (static::get('debug_workers'))
                 $command .= ' --debugworkers';
         }
         else {
@@ -818,16 +818,16 @@ abstract class Core_Daemon
         $out[] = "---------------------------------------------------------------------------------------------------";
         $out[] = "Application Runtime Statistics";
         $out[] = "---------------------------------------------------------------------------------------------------";
-        $out[] = "Command:              " . ($this->is('parent') ? $this->get('filename') : 'Forked Process from pid ' . $this->get('parent_pid'));
+        $out[] = "Command:              " . (static::is('parent') ? static::get('filename') : 'Forked Process from pid ' . static::get('parent_pid'));
         $out[] = "Loop Interval:        " . $this->loop_interval;
         $out[] = "Idle Probability      " . $this->idle_probability;
         $out[] = "Restart Interval:     " . $this->auto_restart_interval;
-        $out[] = sprintf("Start Time:           %s (%s)", $this->get('start_time'), date('Y-m-d H:i:s', $this->get('start_time')));
+        $out[] = sprintf("Start Time:           %s (%s)", static::get('start_time'), date('Y-m-d H:i:s', static::get('start_time')));
         $out[] = sprintf("Duration:             %s (%s)", $this->runtime(), $pretty_duration($this->runtime()));
         $out[] = "Log File:             " . $this->log_file();
-        $out[] = "Daemon Mode:          " . $pretty_bool($this->is('daemonized'));
-        $out[] = "Shutdown Signal:      " . $pretty_bool($this->is('shutdown'));
-        $out[] = "Process Type:         " . ($this->is('parent') ? 'Application Process' : 'Background Process');
+        $out[] = "Daemon Mode:          " . $pretty_bool(static::is('daemonized'));
+        $out[] = "Shutdown Signal:      " . $pretty_bool(static::is('shutdown'));
+        $out[] = "Process Type:         " . (static::is('parent') ? 'Application Process' : 'Background Process');
         $out[] = "Plugins:              " . implode(', ', $this->plugins);
         $out[] = "Workers:              " . $workers;
         $out[] = sprintf("Memory:               %s (%s)", memory_get_usage(true), $pretty_memory(memory_get_usage(true)));
@@ -907,7 +907,7 @@ abstract class Core_Daemon
      */
     private function auto_restart()
     {
-        if (!$this->is('parent') || !$this->is('daemonized'))
+        if (!static::is('parent') || !static::is('daemonized'))
             return;
 
         if ($this->runtime() < $this->auto_restart_interval || $this->auto_restart_interval < self::MIN_RESTART_SECONDS)
@@ -923,10 +923,10 @@ abstract class Core_Daemon
      */
     public function restart()
     {
-        if (!$this->is('parent') || !$this->is('daemonized'))
+        if (!static::is('parent') || !static::is('daemonized'))
             return;
 
-        $this->set('shutdown', true);
+        static::set('shutdown', true);
         $this->log('Restart Happening Now...');
 
         // We want to shutdown workers, release any lock files, and swap out the pid file (as applicable)
@@ -1003,7 +1003,7 @@ abstract class Core_Daemon
             if (class_exists($class, true)) {
                 $interfaces = class_implements($class, true);
                 if (is_array($interfaces) && isset($interfaces['Core_IPlugin'])) {
-                    $instance = new $class($this->getInstance());
+                    $instance = new $class(static::getInstance());
                 }
             }
         }
@@ -1029,7 +1029,7 @@ abstract class Core_Daemon
      */
     protected function worker($alias, $worker, Core_IWorkerVia $via = null)
     {
-        if (!$this->is('parent'))
+        if (!static::is('parent'))
             // While in theory there is nothing preventing you from creating workers in child processes, supporting it
             // would require changing a lot of error handling and process management code and I don't really see the value in it.
             throw new Exception(__METHOD__ . ' Failed. You cannot create workers in a background processes.');
@@ -1106,11 +1106,11 @@ abstract class Core_Daemon
             $this->pid(getmypid()); // We have a new pid now
         }
 
-        $this->set('daemonized',        isset($opts['d']));
-        $this->set('recover_workers',   isset($opts['recoverworkers']));
-        $this->set('debug_workers',     isset($opts['debugworkers']));
-        $this->set('stdout',            !$this->is('daemonized') && !$this->get('debug_workers'));
-        $this->set('verbose',           $this->is('stdout') && isset($opts['verbose']));
+        static::set('daemonized',        isset($opts['d']));
+        static::set('recover_workers',   isset($opts['recoverworkers']));
+        static::set('debug_workers',     isset($opts['debugworkers']));
+        static::set('stdout',            !static::is('daemonized') && !static::get('debug_workers'));
+        static::set('verbose',           static::is('stdout') && isset($opts['verbose']));
 
         if (isset($opts['p'])) {
             $handle = @fopen($opts['p'], 'w');
@@ -1120,7 +1120,7 @@ abstract class Core_Daemon
             fwrite($handle, $this->pid);
             fclose($handle);
 
-            $this->set('pid_file', $opts['p']);
+            static::set('pid_file', $opts['p']);
         }
     }
 
@@ -1141,7 +1141,7 @@ abstract class Core_Daemon
 
         echo get_class($this);
         $out[] =  'USAGE:';
-        $out[] =  ' $ ' . basename($this->get('filename')) . ' -H | -i | -I TEMPLATE_NAME [--install] | [-d] [-p PID_FILE] [--verbose] [--debugworkers]';
+        $out[] =  ' $ ' . basename(static::get('filename')) . ' -H | -i | -I TEMPLATE_NAME [--install] | [-d] [-p PID_FILE] [--verbose] [--debugworkers]';
         $out[] =  '';
         $out[] =  'OPTIONS:';
         $out[] =  ' -H Shows this help';
@@ -1240,7 +1240,7 @@ abstract class Core_Daemon
      */
     public function runtime()
     {
-        return time() - $this->get('start_time');
+        return time() - static::get('start_time');
     }
 
     /**
@@ -1341,8 +1341,8 @@ abstract class Core_Daemon
             throw new Exception(__METHOD__ . ' Failed. Could not set pid. Integer Expected. Given: ' . $set_value);
 
         $this->pid = $set_value;
-        if ($this->is('parent'))
-            $this->set('parent_pid', $set_value);
+        if (static::is('parent'))
+            static::set('parent_pid', $set_value);
 
         $this->dispatch(array(self::ON_PIDCHANGE), array($set_value));
     }

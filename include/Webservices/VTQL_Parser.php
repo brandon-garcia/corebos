@@ -1623,7 +1623,7 @@ if($firstTable!=$table){
                             fprintf(self::$yyTraceFILE, "%sDiscard input token %s\n",
                                 self::$yyTracePrompt, self::$yyTokenName[$yymajor]);
                         }
-                        $this->yy_destructor($yymajor, $yytokenvalue);
+                        static::yy_destructor($yymajor, $yytokenvalue);
                         $yymajor = self::YYNOCODE;
                     } else {
                         while ($this->yyidx >= 0 &&
@@ -1633,7 +1633,7 @@ if($firstTable!=$table){
                             $this->yy_pop_parser_stack();
                         }
                         if ($this->yyidx < 0 || $yymajor==0) {
-                            $this->yy_destructor($yymajor, $yytokenvalue);
+                            static::yy_destructor($yymajor, $yytokenvalue);
                             $this->yy_parse_failed();
                             $yymajor = self::YYNOCODE;
                         } elseif ($yymx != self::YYERRORSYMBOL) {
@@ -1658,7 +1658,7 @@ if($firstTable!=$table){
                         $this->yy_syntax_error($yymajor, $yytokenvalue);
                     }
                     $this->yyerrcnt = 3;
-                    $this->yy_destructor($yymajor, $yytokenvalue);
+                    static::yy_destructor($yymajor, $yytokenvalue);
                     if ($yyendofinput) {
                         $this->yy_parse_failed();
                     }

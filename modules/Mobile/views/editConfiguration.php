@@ -18,7 +18,7 @@ class crmtogo_UI_Configuration extends crmtogo_WS_Configuration {
 		$response = new crmtogo_API_Response();
 		$wsResponseResult = $wsResponse->getResult();
 		$modules = crmtogo_UI_ModuleModel::buildModelsFromResponse($wsResponseResult);
-		$config = $this->getUserConfigSettings();
+		$config = static::getUserConfigSettings();
 		$viewer = new crmtogo_UI_Viewer();
 		$viewer->assign('COLOR_HEADER_FOOTER', $config['theme']);
 		$viewer->assign('_MODULES', $modules);

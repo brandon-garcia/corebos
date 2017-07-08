@@ -14,7 +14,7 @@ include_once __DIR__ . '/models/SearchFilter.php';
 class crmtogo_UI_GlobalSearch extends crmtogo_WS_ListModuleRecords {
 	
 	public function cachedModule($moduleName) {
-		$modules = $this->sessionGet('_MODULES'); // Should be available post login
+		$modules = static::sessionGet('_MODULES'); // Should be available post login
 		foreach($modules as $module) {
 			if ($module->name() == $moduleName) return $module;
 		}
@@ -24,7 +24,7 @@ class crmtogo_UI_GlobalSearch extends crmtogo_WS_ListModuleRecords {
 	/** For search capability */
 	public function cachedSearchFields($module) {
 		$cachekey = "_MODULE.{$module}.SEARCHFIELDS";
-		return $this->sessionGet($cachekey, false);
+		return static::sessionGet($cachekey, false);
 	}
 	
 	public function getSearchFilterModel($module, $search) {
@@ -174,15 +174,15 @@ class crmtogo_UI_GlobalSearch extends crmtogo_WS_ListModuleRecords {
 			}
 
 			//end search
-			$config = $this->getUserConfigSettings();
+			$config = static::getUserConfigSettings();
 			$viewer = new crmtogo_UI_Viewer();
 			$viewer->assign('MOD', $this->getUsersLanguage());
 			$viewer->assign('COLOR_HEADER_FOOTER', $config['theme']);
-			$viewer->assign('LANGUAGE', $this->sessionGet('language'));
+			$viewer->assign('LANGUAGE', static::sessionGet('language'));
 			$viewer->assign('LISTENTITY', $lstcontent);
 			$viewer->assign('MODLABEL', $modullabel);
 			//Get PanelMenu data
-			$modules = $this->sessionGet('_MODULES');
+			$modules = static::sessionGet('_MODULES');
 			$viewer->assign('_MODULES', $modules);
 			$response = $viewer->process('GlobalSearch.tpl');
 		}

@@ -13,7 +13,7 @@ include_once __DIR__ . '/../api/ws/FetchRecordDetails.php';
 class crmtogo_UI_DetailView extends crmtogo_WS_FetchRecordDetails {
 	public function cachedModuleLookupWithRecordId($recordId) {
 		$recordIdComponents = explode('x', $recordId);
-		$modules = $this->sessionGet('_MODULES');
+		$modules = static::sessionGet('_MODULES');
 		foreach($modules as $module) {
 			if ($module->id() == $recordIdComponents[0]) {
 				return $module; 
@@ -27,7 +27,7 @@ class crmtogo_UI_DetailView extends crmtogo_WS_FetchRecordDetails {
 		$wsResponse = parent::process($request);
 		$modules_with_comments = $this->getConfigSettingsComments();
 		$current_user = $this->getActiveUser();
-		$current_language = $this->sessionGet('language') ;
+		$current_language = static::sessionGet('language') ;
 		//generate dateformat for Smarty
 		$target_date_format = $current_user->date_format;
 		$target_date_format= str_replace("yyyy", "%Y", $target_date_format);
@@ -60,7 +60,7 @@ class crmtogo_UI_DetailView extends crmtogo_WS_FetchRecordDetails {
 			$record = crmtogo_UI_ModuleRecordModel::buildModelFromResponse($wsResponseResult['record']);
 			$record->setId($wsResponseResult['record']['id']);
 			
-			$config = $this->getUserConfigSettings();
+			$config = static::getUserConfigSettings();
 			//display comments? $modules_with_comments come from ini file
 			if (in_array($moduleObj->name(), $modules_with_comments)) {
 				$viewer->assign('COMMENTDISPLAY', true);
@@ -102,7 +102,7 @@ class crmtogo_UI_DetailView extends crmtogo_WS_FetchRecordDetails {
 				}
 			}
 			//Get PanelMenu data
-			$modules = $this->sessionGet('_MODULES');
+			$modules = static::sessionGet('_MODULES');
 			$viewer->assign('_MODULES', $modules);
 			$response = $viewer->process('DetailView.tpl');
 		}

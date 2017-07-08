@@ -156,7 +156,7 @@ class CobroPago extends CRMEntity {
 			Invoice::updateAmountDue($relatedId);
 		}
 		// Calculate related module balance
-		$this->calculateRelatedTotals($this->column_fields['parent_id']);
+		static::calculateRelatedTotals($this->column_fields['parent_id']);
 	}
 
 	public static function calculateRelatedTotals($pid) {

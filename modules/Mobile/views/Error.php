@@ -17,7 +17,7 @@ class crmtogo_UI_Error  extends crmtogo_WS_Controller {
 	
 	public function process(crmtogo_API_Request $request) {
 		$viewer = new crmtogo_UI_Viewer();
-		$config = $this->getUserConfigSettings();
+		$config = static::getUserConfigSettings();
 		$viewer->assign('COLOR_HEADER_FOOTER', $config['theme']);
 		$viewer->assign('errorcode', $this->error['code']);
 		$viewer->assign('errormsg', $this->error['message']);

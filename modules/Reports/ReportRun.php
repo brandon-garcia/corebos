@@ -1953,7 +1953,7 @@ class ReportRun extends CRMEntity {
 		preg_match('/&amp;/', $reportquery, $matches);
 		if(!empty($matches)){
 			$report=str_replace('&amp;', '&', $reportquery);
-			$reportquery = $this->replaceSpecialChar($report);
+			$reportquery = static::replaceSpecialChar($report);
 		}
 		if ($type == 'HTMLPAGED' and !$allColumnsRestricted) {
 			$rowsperpage = GlobalVariable::getVariable('Report_ListView_PageSize',40);

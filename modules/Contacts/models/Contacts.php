@@ -24,7 +24,7 @@ class Google_Contacts_Model extends WSAPP_SyncRecordModel {
      * @return <date> modified time
      */
     public function getModifiedTime() {
-        return $this->vtigerFormat($this->data['entity']['updated']['$t']);
+        return static::vtigerFormat($this->data['entity']['updated']['$t']);
     }
 
 	public function getNamePrefix() {

@@ -30,7 +30,7 @@ class crmtogo_WS_Controller  {
 	protected function getActiveUser() {
 		global $current_user;
 		if($this->activeUser === false) {
-			$userid = $this->sessionGet('_authenticated_user_id');
+			$userid = static::sessionGet('_authenticated_user_id');
 			if(!empty($userid)) {
 				$this->activeUser = CRMEntity::getInstance('Users');
 				$this->activeUser->retrieveCurrentUserInfoFromFile($userid);
