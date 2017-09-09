@@ -55,11 +55,6 @@ class VtigerCRMObject{
 		$this->instance->id = $id;
 	}
 
-	private function titleCase($str) {
-		$first = substr($str, 0, 1);
-		return strtoupper($first).substr($str,1);
-	}
-
 	private function getObjectTypeId($objectName) {
 		// Use getTabid API
 		$tid = getTabid($objectName);
