@@ -86,7 +86,6 @@ class Webforms_Field_Model {
 		global $adb;
 		$sql = "SELECT neutralizedfield FROM vtiger_webforms_field WHERE webformid=? and fieldname=?";
 		$result = $adb->pquery($sql, array($webformid, $fieldname));
-		$model = false;
 		if ($adb->num_rows($result)) {
 			$neutralizedfield = $adb->query_result($result, 0, "neutralizedfield");
 		}

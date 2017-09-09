@@ -121,7 +121,7 @@ class Validations extends processcbMap {
 	 * $arguments[1] crmid of the record being validated
 	 */
 	function processMap($arguments) {
-		global $adb, $current_user;
+		global $adb;
 		$mapping=$this->convertMap2Array();
 		$tabid = getTabid($mapping['origin']);
 		$screen_values = $arguments[0];

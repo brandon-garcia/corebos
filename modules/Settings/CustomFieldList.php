@@ -85,10 +85,8 @@ else
  * return array  $cflist - customfield entries
  */
 function getCFLeadMapping($module) {
-	global $adb, $app_strings, $theme, $smarty, $log;
+	global $adb, $theme;
 	$tabid = getTabid($module);
-	$theme_path = "themes/" . $theme . "/";
-	$image_path = "themes/images/";
 	$dbQuery = "SELECT fieldid,columnname,fieldlabel,uitype,displaytype,block,vtiger_convertleadmapping.cfmid,vtiger_convertleadmapping.editable,tabid FROM vtiger_convertleadmapping LEFT JOIN vtiger_field
 				ON  vtiger_field.fieldid=vtiger_convertleadmapping.leadfid 
 				WHERE tabid IN (" . generateQuestionMarks($tabid) . ")
@@ -107,7 +105,6 @@ function getCFLeadMapping($module) {
 			$cf_element['map']['label'] = getTranslatedString($row["fieldlabel"], $module);
 			$fld_type_name = getCustomFieldTypeName($row["uitype"]);
 			$cf_element['map']['type'] = $fld_type_name;
-			$cf_tab_id = $row["tabid"];
 			$cf_element['cfmid'] = $row["cfmid"];
 			$cf_element['editable']=$row["editable"];
 			if ($module == 'Leads') {
@@ -134,11 +131,9 @@ function getListLeadMapping($cfid) {
 	$result = $adb->pquery($sql, array($cfid));
 	$noofrows = $adb->num_rows($result);
 	for ($i = 0; $i < $noofrows; $i++) {
-		$leadid = $adb->query_result($result, $i, 'leadfid');
 		$accountid = $adb->query_result($result, $i, 'accountfid');
 		$contactid = $adb->query_result($result, $i, 'contactfid');
 		$potentialid = $adb->query_result($result, $i, 'potentialfid');
-		$cfmid = $adb->query_result($result, $i, 'cfmid');
 
 		$sql2 = "select fieldlabel from vtiger_field where fieldid =?";
 		$result2 = $adb->pquery($sql2, array($accountid));

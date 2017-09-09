@@ -19,7 +19,6 @@ function startCall(){
 	require_once 'modules/PBXManager/utils/AsteriskClass.php';
 	require_once('modules/PBXManager/AsteriskUtils.php');
 
-	$id = $current_user->id;
 	$number = vtlib_purify($_REQUEST['number']);
 	$record = vtlib_purify($_REQUEST['recordid']);
 	$result = $adb->query("select * from vtiger_asteriskextensions where userid=".$current_user->id);
@@ -30,7 +29,6 @@ function startCall(){
 		$port = $data['port'];
 		$username = $data['username'];
 		$password = $data['password'];
-		$version = $data['version'];
 		$errno = $errstr = NULL;
 		$sock = fsockopen($server, $port, $errno, $errstr, 1);
 		stream_set_blocking($sock, false);

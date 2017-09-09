@@ -130,7 +130,7 @@ class CobroPago extends CRMEntity {
 	}
 
 	function save_module($module) {
-		global $current_user,$log,$adb;
+		global $current_user,$adb;
 		if ($this->HasDirectImageField) {
 			$this->insertIntoAttachment($this->id,$module);
 		}
@@ -360,7 +360,6 @@ class CobroPago extends CRMEntity {
 
 		$query = 'select vtiger_potstagehistory.*, vtiger_cobropago.reference from vtiger_potstagehistory inner join vtiger_cobropago on vtiger_cobropago.cobropagoid = vtiger_potstagehistory.cobropagoid inner join vtiger_crmentity on vtiger_crmentity.crmid = vtiger_cobropago.cobropagoid where vtiger_crmentity.deleted = 0 and vtiger_cobropago.cobropagoid = ?';
 		$result=$adb->pquery($query, array($id));
-		$noofrows = $adb->num_rows($result);
 
 		$header[] = $app_strings['LBL_AMOUNT'];
 		$header[] = $app_strings['LBL_SALES_STAGE'];

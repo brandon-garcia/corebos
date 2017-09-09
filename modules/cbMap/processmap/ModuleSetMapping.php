@@ -34,7 +34,6 @@ class ModuleSetMapping extends processcbMap {
 	}
 
 	private function convertMap2Array() {
-		global $adb, $current_user;
 		$module_set = array();
 
 		$xml = $this->getXMLContent();

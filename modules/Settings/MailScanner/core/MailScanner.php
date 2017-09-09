@@ -602,7 +602,6 @@ class Vtiger_MailScanner {
 				if($fromemail && !$this->LookupContactOrAccount($fromemail, $project_focus->column_fields['linktoaccountscontacts']) &&
 					!$this->LookupUser($fromemail,$usrlist) &&
 					!$this->LookupEmployee($fromemail, $employeelist)) {
-					$ticket_focus = false;
 				}
 				if($project_focus) {
 					$this->log("Reusing Cached Project [" . $project_focus->column_fields['project_name'] ."]");

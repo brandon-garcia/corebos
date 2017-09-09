@@ -109,8 +109,6 @@ class VTEventTrigger {
 	}
 
 	function trigger($data) {
-		$adb = $this->adb;
-
 		$eventInfos = self::lookupCache($this->name);
 		if ($eventInfos === false) {
 			$eventInfos = self::getActiveEventInfos($this->adb, $this->name);

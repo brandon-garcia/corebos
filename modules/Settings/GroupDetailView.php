@@ -89,8 +89,7 @@ $smarty->assign("GROUP_NAME",$groupInfoArr[0]);
  */
 function getStdOutput($groupInfoArr,$groupId, $mod_strings)
 {
-	global $adb;
-	$groupfields['groupname'] = $groupInfoArr[0];    
+	$groupfields['groupname'] = $groupInfoArr[0];
 	$groupfields['description'] = $groupInfoArr[1];
 
 	$row=1;

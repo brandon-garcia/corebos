@@ -106,11 +106,9 @@ class corebos_gcontacts {
 	}
 
 	public function activateFields() {
-		global $adb;
 	}
 
 	public function deactivateFields() {
-		global $adb;
 	}
 
 	public function getIntegrationAuthorizationURL($scope='contacts automation') {

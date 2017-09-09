@@ -83,7 +83,6 @@ function indent($hrarray,$roleout,$role_det)
 {
 	global $theme,$mod_strings,$app_strings;
 	$theme_path="themes/".$theme."/";
-	$image_path=$theme_path."images/";
 	foreach($hrarray as $roleid => $value)
 	{
 		//retreiving the vtiger_role details

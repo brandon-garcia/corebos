@@ -39,7 +39,7 @@ class VtigerEmailOperation extends VtigerModuleOperation {
 	 * 
 	 */
 	public function create($elementType,$element){
-		global $adb,$log;
+		global $adb;
 		$crmObject = new VtigerCRMObject($elementType, false);
 
 		$attachments = array();
@@ -132,7 +132,6 @@ class VtigerEmailOperation extends VtigerModuleOperation {
 			$element['filetype']=$element['filename']['type'];
 			$element['filename']=$filename = str_replace(' ', '_',$element['filename']['name']);
 		}
-		$relations=$element['relations'];
 		unset($element['relations']);
 
 		$element = DataTransform::sanitizeForInsert($element,$this->meta);
@@ -156,19 +155,12 @@ class VtigerEmailOperation extends VtigerModuleOperation {
 			$adb->pquery("DELETE from vtiger_seattachmentsrel where crmid=?",Array($id));
 			$adb->pquery("INSERT INTO vtiger_seattachmentsrel(crmid, attachmentsid) VALUES(?,?)",Array($id, $attachid));
 		}
-		// Establish relations
-		//$adb->pquery("DELETE from vtiger_senotesrel where crmid=?",Array($id));
-		//foreach ($relations as $rel) {
-		//	$ids = vtws_getIdComponents($rel);
-		//	$relid = $ids[1];
-		//	$adb->pquery("INSERT INTO vtiger_senotesrel(crmid, notesid) VALUES(?,?)",Array($relid, $id));
-		//}
 
 		return DataTransform::filterAndSanitize($crmObject->getFields(),$this->meta);
 	}
 
 	private function vtyiicpng_getWSEntityId($entityName) {
-		global $adb,$log;
+		global $adb;
 		$wsrs=$adb->pquery('select id from vtiger_ws_entity where name=?',array($entityName));
 		if ($wsrs and $adb->num_rows($wsrs)==1) {
 			$wsid = $adb->query_result($wsrs,0,0);

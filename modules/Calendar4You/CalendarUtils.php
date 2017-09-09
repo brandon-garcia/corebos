@@ -42,8 +42,7 @@ function getaddITSEventPopupTime($starttime,$endtime,$format) {
  * @param array   $cal    - collection of objects and strings
  */
 function get_its_mini_calendar(& $cal) {
-	global $current_user,$adb,$mod_strings,$theme;
-	$category = getParentTab();
+	global $mod_strings,$theme;
 	$count = 0;
 	//To decide number of rows(weeks) in a month
 	if ($cal['calendar']->month_array[$cal['calendar']->slices[35]]->start_time->month != $cal['calendar']->date_time->month) {
@@ -59,7 +58,6 @@ function get_its_mini_calendar(& $cal) {
 			<td class='calHdr'>&nbsp;</td>
 			<td style='padding:5px' colspan='6' class='calHdr' align='center'>".get_previous_its_cal($cal)."&nbsp;";
 			$minical .= "<a style='text-decoration: none;' href='javascript:changeCalendarMonthDate(\"".$cal['calendar']->date_time->year.'","'.$mt.'","'.$dy."\");'><b>".display_date($cal['view'],$cal['calendar']->date_time).'</b></a>&nbsp;'.get_next_its_cal($cal).'</td>';
-			//$minical .= "<a style='text-decoration: none;' href='index.php?module=Calendar&action=index&view=".$cal['view']."".$cal['calendar']->date_time->get_date_str()."&parenttab=".$category."'><b>".display_date($cal['view'],$cal['calendar']->date_time)."</b></a>&nbsp;".get_next_its_cal($cal)."</td>";
 			$minical .= "<td class='calHdr' align='right'><a href='javascript:ghide(\"miniCal\");'><img src='". vtiger_imageurl('close.gif', $theme). "' align='right' border='0'></a>
 		</td></tr>";
 	$minical .= "<tr class='hdrNameBg'>";
@@ -412,7 +410,7 @@ function getCalendar4YouNonAdminModuleAccessQuery($module, $userid) {
 }
 
 function transferForAddIntoTitle($type, $row, $CD) {
-	global $log, $current_user, $adb;
+	global $current_user, $adb;
 	list($CD['fieldname'],$void) = explode(':', $CD['fieldname']);
 	$Col_Field = array();
 	if ($CD['uitype'] == '66' and !empty($row['parent_id'])) {

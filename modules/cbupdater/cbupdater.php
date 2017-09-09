@@ -116,12 +116,11 @@ class cbupdater extends CRMEntity {
 	 * return array  $list_buttons - for module (eg: 'Accounts')
 	 */
 	function getListButtons($app_strings) {
-		global $currentModule;
 		return Array();
 	}
 
 	public static function exists($cbinfo) {
-		global $adb,$log;
+		global $adb;
 		if (empty($cbinfo['filename']) or empty($cbinfo['classname']))
 			return false;
 		$sql = 'select count(*) from vtiger_cbupdater
@@ -132,7 +131,7 @@ class cbupdater extends CRMEntity {
 	}
 
 	public static function getMaxExecutionOrder() {
-		global $adb,$log;
+		global $adb;
 		$sql = 'select coalesce(max(execorder),0) from vtiger_cbupdater';
 		$rs = $adb->pquery($sql,array());
 		return $adb->query_result($rs,0,0);

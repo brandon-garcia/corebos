@@ -121,7 +121,7 @@ function vtws_getId($objId, $elemId) {
 }
 
 function vtws_getEntityId($entityName) {
-	global $adb,$log;
+	global $adb;
 	$wsrs=$adb->pquery('select id from vtiger_ws_entity where name=?',array($entityName));
 	if ($wsrs and $adb->num_rows($wsrs)==1) {
 		$wsid = $adb->query_result($wsrs,0,0);
@@ -292,7 +292,6 @@ function vtws_getWebserviceEntityId($entityName, $id) {
 }
 
 function vtws_addDefaultModuleTypeEntity($moduleName) {
-	global $adb;
 	$isModule = 1;
 	$moduleHandler = array('file'=>'include/Webservices/VtigerModuleOperation.php', 'class'=>'VtigerModuleOperation');
 	return vtws_addModuleTypeWebserviceEntity($moduleName,$moduleHandler['file'],$moduleHandler['class'],$isModule);
@@ -599,7 +598,7 @@ function vtws_getConvertLeadFieldMapping() {
  *	@param integer $relatedId -  related entity id (accountid / contactid)
  */
 function vtws_getRelatedNotesAttachments($id,$relatedId) {
-	global $adb,$log;
+	global $adb;
 
 	$sql = "select * from vtiger_senotesrel where crmid=?";
 	$result = $adb->pquery($sql, array($id));

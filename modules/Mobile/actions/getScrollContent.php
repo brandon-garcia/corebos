@@ -18,18 +18,12 @@ class crmtogo_UI_GetScrollRecords extends crmtogo_WS_getScrollContent{
 		//get scroll parameter
 		$wsResponse = parent::process($request);
 
-		if (is_numeric($request->get('offset'))){
-			$offset = $request->get('offset');
+		if (!is_numeric($request->get('offset'))){
+            //do nothing
+            echo '';
+            return $wsResponse;
 		}
-		else {
-			//do nothing
-			echo '';
-			return $wsResponse;
-		}
-		if (is_numeric($request->get('number'))){
-			$postnumbers = $request->get('number');
-		}
-		else {
+		if (!is_numeric($request->get('number'))){
 			//do nothing
 			echo '';
 			return $wsResponse;

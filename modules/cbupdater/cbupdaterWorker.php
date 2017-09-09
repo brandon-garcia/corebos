@@ -68,7 +68,7 @@ class cbupdaterWorker {
 	var $failure_query_array=array();
 
 	function __construct() {
-		global $adb,$log,$current_user;
+		global $adb;
 		echo "<table width=80% align=center border=1>";
 		$reflector = new ReflectionClass(get_class($this));
 		$fname = basename($reflector->getFileName(),'.php');
@@ -145,7 +145,7 @@ class cbupdaterWorker {
 	function markApplied($stoponerror=true) {
 		if ($this->isBlocked()) return true;
 		if ($this->hasError() and $stoponerror) $this->sendError();
-		global $adb,$log;
+		global $adb;
 		if ($this->isContinuous()) {
 			$adb->pquery('update vtiger_cbupdater set execdate=CURDATE() where cbupdaterid=?', array($this->cbupdid));
 		} else {
@@ -157,7 +157,7 @@ class cbupdaterWorker {
 	function markUndone($stoponerror=true) {
 		if ($this->isBlocked() or $this->isContinuous()) return true;
 		if ($this->hasError() and $stoponerror) $this->sendError();
-		global $adb,$log;
+		global $adb;
 		$adb->pquery('update vtiger_cbupdater set execstate=?,execdate=NULL where cbupdaterid=?', array('Pending',$this->cbupdid));
 		$this->execstate = 'Pending';
 	}

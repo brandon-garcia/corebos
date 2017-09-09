@@ -96,8 +96,6 @@ class LoggerConfigurationAdapterINI implements LoggerConfigurationAdapter {
 			$this->parseLogger($properties[self::ROOT_LOGGER_PREFIX], self::ROOT_LOGGER_NAME);
 		}
 		
-		$appenders = array();
-		
 		foreach($properties as $key => $value) {
 			// Parse loggers
 			if ($this->beginsWith($key, self::LOGGER_PREFIX)) {

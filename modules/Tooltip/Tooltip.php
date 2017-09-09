@@ -18,7 +18,7 @@ class Tooltip {
 	function vtlib_handler($moduleName, $eventType) {
 		require_once('include/utils/utils.php');
 		require_once('vtlib/Vtiger/Module.php');
-		global $adb,$mod_strings;
+		global $adb;
 
 		if($eventType == 'module.postinstall') {
 			// Mark the module as Standard module

@@ -86,8 +86,7 @@ class Documents extends CRMEntity {
 		if ($this->HasDirectImageField) {
 			$this->insertIntoAttachment($this->id,$module);
 		}
-		global $log,$adb,$upload_badext;
-		$insertion_mode = $this->mode;
+		global $adb,$upload_badext;
 		$filetype_fieldname = $this->getFileTypeFieldName();
 		$filename_fieldname = $this->getFile_FieldName();
 		if($this->column_fields[$filetype_fieldname] == 'I' ){
@@ -183,7 +182,6 @@ class Documents extends CRMEntity {
 	 *                 all values introduced by the user will be preloaded
 	 */
 	function preSaveCheck($request) {
-		global $adb,$log;
 		if (isset($_REQUEST['parentid']) && $_REQUEST['parentid'] != '') {
 			$this->parentid = vtlib_purify($_REQUEST['parentid']);
 		}
@@ -212,10 +210,8 @@ class Documents extends CRMEntity {
 	 * @param string $module  - the current module name
 	*/
 	function insertIntoAttachment($id,$module, $direct_import=false) {
-		global $log, $adb;
+		global $log;
 		$log->debug("Entering into insertIntoAttachment($id,$module) method.");
-
-		$file_saved = false;
 
 		if (isset($_FILES))
 		foreach ($_FILES as $fileindex => $files) {
@@ -279,7 +275,6 @@ class Documents extends CRMEntity {
 		if (GlobalVariable::getVariable('Application_ListView_Default_Sorting', 0, $currentModule)) {
 			$use_default_order_by = $this->default_order_by;
 		}
-		$orderby = $use_default_order_by;
 		if (isset($_REQUEST['order_by']))
 			$order_by = $this->db->sql_escape_string($_REQUEST['order_by']);
 		else if (isset($_SESSION[$currentModule.'_Order_By']))
@@ -456,13 +451,11 @@ class Documents extends CRMEntity {
 	 * returns the array with table names and fieldnames storing relations between module and this module
 	 */
 	function setRelationTables($secmodule){
-		$rel_tables = array();
 		return '';
 	}
 
 	// Function to unlink all the dependent entities of the given Entity by Id
 	function unlinkDependencies($module, $id) {
-		global $log;
 		/*//Backup Documents Related Records
 		$se_q = 'SELECT crmid FROM vtiger_senotesrel WHERE notesid = ?';
 		$se_res = $this->db->pquery($se_q, array($id));
@@ -482,7 +475,6 @@ class Documents extends CRMEntity {
 
 	// Function to unlink an entity with given Id from another entity
 	function unlinkRelationship($id, $return_module, $return_id) {
-		global $log;
 		if(empty($return_module) || empty($return_id)) return;
 
 		$sql = 'DELETE FROM vtiger_senotesrel WHERE notesid = ? AND crmid = ?';
@@ -497,7 +489,7 @@ class Documents extends CRMEntity {
 // Function to get fieldname for uitype 27 assuming that documents have only one file type field
 
 	function getFileTypeFieldName(){
-		global $adb,$log;
+		global $adb;
 		$query = 'SELECT fieldname from vtiger_field where tabid = ? and uitype = ?';
 		$tabid = getTabid('Documents');
 		$filetype_uitype = 27;
@@ -515,7 +507,7 @@ class Documents extends CRMEntity {
 
 	//	Function to get fieldname for uitype 28 assuming that doc has only one file upload type
 	function getFile_FieldName(){
-		global $adb,$log;
+		global $adb;
 		$query = 'SELECT fieldname from vtiger_field where tabid = ? and uitype = ?';
 		$tabid = getTabid('Documents');
 		$filename_uitype = 28;
@@ -558,10 +550,9 @@ class Documents extends CRMEntity {
 	}
 
 	function getEntities($id, $cur_tab_id, $rel_tab_id, $actions=false) {
-		global $log, $theme, $adb, $mod_strings, $app_strings;
+		global $log, $theme, $adb, $app_strings;
 		$log->debug("Entering getEntities($id, $cur_tab_id, $rel_tab_id, $actions) method ...");
 		$theme_path="themes/".$theme."/";
-		$image_path=$theme_path."images/";
 
 		//Form the header columns
 		$header[] = $app_strings['LBL_ENTITY_NAME'];

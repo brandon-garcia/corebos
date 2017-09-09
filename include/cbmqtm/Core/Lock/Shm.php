@@ -59,11 +59,10 @@ class Core_Lock_Shm extends Core_Lock_Lock implements Core_IPlugin
 	
 	protected function get()
 	{
-		$lock = array();
-        if (shm_has_var($this->shm, self::ADDRESS))
-            $lock = shm_get_var($this->shm, self::ADDRESS);
-        else
+        if (!shm_has_var($this->shm, self::ADDRESS))
             return false;
+
+        $lock = shm_get_var($this->shm, self::ADDRESS);
 
 		// Ensure we're not seeing our own lock
 		if ($lock['pid'] == $this->pid)

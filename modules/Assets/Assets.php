@@ -117,7 +117,6 @@ class Assets extends CRMEntity {
 	 */
 	function getQueryByModuleField($module, $fieldname, $srcrecord, $query='') {
 		// $srcrecord could be empty
-		global $adb,$log;
 		//$query_relation = ' INNER JOIN vtiger_crmentityrel ON (vtiger_crmentityrel.relcrmid = vtiger_crmentity.crmid OR vtiger_crmentityrel.crmid = vtiger_crmentity.crmid) ';
 		$query_relation = '';
 		$wherepos = stripos($query, 'where'); // there is always a where
@@ -154,7 +153,6 @@ class Assets extends CRMEntity {
 
 	// Function to unlink all the dependent entities of the given Entity by Id
 	function unlinkDependencies($module, $id) {
-		global $log;
 		parent::unlinkDependencies($module, $id);
 	}
 
@@ -169,7 +167,6 @@ class Assets extends CRMEntity {
 
  		if($eventType == 'module.postinstall') {
 			//Add Assets Module to Customer Portal
-			global $adb;
 			$this->setModuleSeqNumber('configure', $modulename, 'ast-', '0000001');
 			$this->addModuleToCustomerPortal();
 

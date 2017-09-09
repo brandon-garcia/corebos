@@ -80,7 +80,6 @@ function __FQNExtendedQueryGetQuery($q, $user) {
 	$queryColumns[] = 'id';  // add ID column to follow REST interface behaviour
 	$queryGenerator->setFields($queryColumns);
 	// take apart conditionals
-	$queryConditions = trim($m[2],' ;');
 	$moduleRegex = "/[fF][rR][Oo][Mm]\s+([^\s;]+)(.*)/";
 	preg_match($moduleRegex, $q, $m);
 	$queryConditions = trim($m[2],' ;');

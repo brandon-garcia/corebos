@@ -162,7 +162,6 @@ class Webmails extends CRMEntity {
        $struct = @imap_fetchstructure($this->mbox, $this->mailid);
        $parts = $struct->parts;
 
-        $done="false";
         $i = 0;
         if (!$parts)
                 return false; // simple message
@@ -775,7 +774,6 @@ function convertMailData2Html($maildata, $cutafter = 0) {
 			$attach_tab[] = $tmpvar;
 		}
 		$link_att = '';
-		$att_links = '';//variable added to display the attachments in full email view
 		$conf->display_part_no = true;
 		if ($struct_msg->subtype != 'ALTERNATIVE' || $struct_msg->subtype != 'RELATED')
 		{

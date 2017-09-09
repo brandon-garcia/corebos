@@ -74,7 +74,6 @@ class crmtogo_Index_Controller {
 			include_once __DIR__ . $operationFile;
 			$operationController = new $operationClass;
 
-			$operationSession = false;
 			if($operationController->requireLogin()) {
 				$operationSession = coreBOS_Session::init();
 				if($operationController->hasActiveUser() === false) {

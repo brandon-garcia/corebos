@@ -22,7 +22,7 @@ class WS_saveSignature extends crmtogo_WS_Controller {
 		$parentid = $request->get('recordid');
 		$parentrecordid = vtws_getIdComponents($parentid);
 		$parentrecordid = $parentrecordid[1];
-		global $adb,$log;
+		global $adb;
 
 		if (isset($signature) && !empty($signature)) {
 			$parentmodule = crmtogo_WS_Utils::detectModulenameFromRecordId($parentid);

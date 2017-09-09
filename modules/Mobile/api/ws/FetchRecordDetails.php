@@ -80,8 +80,7 @@ class crmtogo_WS_FetchRecordDetails extends crmtogo_WS_FetchRecord {
 	protected function transformRecordWithGrouping($resultRecord, $module, $operation='') {
 		$current_user = $this->getActiveUser();
 		$moduleFieldGroups = crmtogo_WS_Utils::gatherModuleFieldGroupInfo($module);
-		$modifiedResult = array();
-		$blocks = array(); 
+		$blocks = array();
 		$labelFields = false;
 
 		if($module == 'Events' || $module == 'Calendar' || $module == 'Timecontrol') {
@@ -201,7 +200,6 @@ class crmtogo_WS_FetchRecordDetails extends crmtogo_WS_FetchRecord {
 						//assigned user
 						$output = array_chunk($value, 1);
 						$recordarray=explode('x', $output[0][0]);
-						$recordprefix=$recordarray[0];
 						$value = $output[0][0];
 		                if($value != '' && $value != 0) {
 			                    $assigned_user_id = $value;
@@ -220,7 +218,6 @@ class crmtogo_WS_FetchRecordDetails extends crmtogo_WS_FetchRecord {
 						//picklists
 						$fieldvalue = Array();
 						$options = array();
-						$chk_val="";
 						$picklistValues = vtlib_getPicklistValues($fieldname);
 						foreach($picklistValues as $pickkey => $pickvalue) {
 							$picklistValues[$pickkey] = decode_html($pickvalue);

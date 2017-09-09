@@ -209,7 +209,6 @@ function getAdminevvtMenu() {
 }
 
 function checkevvtMenuInstalled() {
-	global $log;
 	if(vtlib_isModuleActive('cbupdater')) {
 		// first we make sure we have Global Variable
 		if(!vtlib_isModuleActive('GlobalVariable')) {

@@ -76,7 +76,6 @@ function vtws_revise($element,$user){
 		if (isset($element[$fieldName]) && strlen($element[$fieldName]) > 0) {
 			$ids = vtws_getIdComponents($element[$fieldName]);
 			$elemTypeId = $ids[0];
-			$elemId = $ids[1];
 			$referenceObject = VtigerWebserviceObject::fromId($adb,$elemTypeId);
 			if (!in_array($referenceObject->getEntityName(),$details)) {
 				throw new WebServiceException(WebServiceErrorCode::$REFERENCEINVALID, "Invalid reference specified for $fieldName");

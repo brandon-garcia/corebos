@@ -281,7 +281,6 @@ class VTEventConditionParserLexer extends AntlrLexer {
 		try {
 			$_type = VTEventConditionParserLexer::$SYMBOL;
 			$_channel = VTEventConditionParserLexer::$DEFAULT_TOKEN_CHANNEL;
-			$alt5=2;
 			$LA5_0 = $this->input->LA(1);
 
 			if ( (($LA5_0>=$this->getToken('65') && $LA5_0<=$this->getToken('90')) || ($LA5_0>=$this->getToken('97') && $LA5_0<=$this->getToken('122'))) ) {
@@ -461,7 +460,6 @@ class VTEventConditionParserLexer extends AntlrLexer {
 	function mWHITESPACE() {
 		try {
 			$_type = VTEventConditionParserLexer::$WHITESPACE;
-			$_channel = VTEventConditionParserLexer::$DEFAULT_TOKEN_CHANNEL;
 			$cnt8=0;
 			//loop8:
 			do {
@@ -499,7 +497,6 @@ class VTEventConditionParserLexer extends AntlrLexer {
 	// $ANTLR end "WHITESPACE"
 
 	function mTokens() {
-		$alt9=11;
 		$alt9 = $this->dfa9->predict($this->input);
 		switch ($alt9) {
 			case 1 :

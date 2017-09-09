@@ -155,7 +155,6 @@ class Webforms_Model {
 	}
 
 	function generatePublicId($name) {
-		global $adb, $log;
 		return md5(microtime(true) + $name);
 	}
 
@@ -169,7 +168,7 @@ class Webforms_Model {
 	}
 
 	function save() {
-		global $adb, $log;
+		global $adb;
 
 		$isNew = !$this->hasId();
 
@@ -204,7 +203,7 @@ class Webforms_Model {
 	}
 
 	function delete() {
-		global $adb, $log;
+		global $adb;
 
 		$adb->pquery("DELETE from vtiger_webforms_field where webformid=?", array($this->getId()));
 		$adb->pquery("DELETE from vtiger_webforms where id=?", array($this->getId()));
@@ -212,7 +211,7 @@ class Webforms_Model {
 	}
 
 	static function retrieveWithPublicId($publicid) {
-		global $adb, $log;
+		global $adb;
 
 		$model = false;
 		// Retrieve model and populate information
@@ -225,7 +224,7 @@ class Webforms_Model {
 	}
 
 	static function retrieveWithId($data) {
-		global $adb, $log;
+		global $adb;
 
 		$id = $data;
 		$model = false;
@@ -239,7 +238,7 @@ class Webforms_Model {
 	}
 
 	static function listAll() {
-		global $adb, $log;
+		global $adb;
 		$webforms = array();
 
 		$sql = "SELECT * FROM vtiger_webforms";
@@ -254,7 +253,7 @@ class Webforms_Model {
 	}
 
 	static function isWebformField($webformid, $fieldname) {
-		global $adb, $log;
+		global $adb;
 
 		$checkSQL = "SELECT 1 from vtiger_webforms_field where webformid=? AND fieldname=?";
 		$result = $adb->pquery($checkSQL, array($webformid, $fieldname));
@@ -278,8 +277,7 @@ class Webforms_Model {
 
 	static function retrieveDefaultValue($webformid, $fieldname) {
 		require_once 'include/fields/DateTimeField.php';
-		global $adb,$current_user,$current_;
-		$dateformat=$current_user->date_format;
+		global $adb;
 		$sql = "SELECT defaultvalue FROM vtiger_webforms_field WHERE webformid=? and fieldname=?";
 		$result = $adb->pquery($sql, array($webformid, $fieldname));
 		$defaultvalue = false;

@@ -26,8 +26,6 @@ class VtigerWebserviceObject{
 	private static $_fromNameCache = array();
 
 	static function fromName($adb,$entityName){
-		$rowData = false;
-
 		// If the information not available in cache?
 		if (!isset(self::$_fromNameCache[$entityName])) {
 			$result = $adb->pquery("select * from vtiger_ws_entity where name=?",array($entityName));
@@ -52,7 +50,6 @@ class VtigerWebserviceObject{
 	private static $_fromIdCache = array();
 
 	static function fromId($adb,$entityId) {
-		$rowData = false;
 		if (strpos($entityId, 'x')>0) list($entityId,$void) = explode('x', $entityId);
 		// If the information not available in cache?
 		if (!isset(self::$_fromIdCache[$entityId])) {

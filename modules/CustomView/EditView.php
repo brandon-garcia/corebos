@@ -160,8 +160,7 @@ function generateSelectColumnsHTML($columnsList, $module) {
 }
 
 function getByModule_ColumnsList($mod,$columnslist,$selected="") {
-	global $oCustomView, $current_language, $theme;
-	$advfilter = array();
+	global $oCustomView, $current_language;
 	$check_dup = Array();
 	foreach($oCustomView->module_list as $module=>$blks) {
 	  $modname = getTranslatedString($module,$module);

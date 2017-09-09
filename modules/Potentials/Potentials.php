@@ -348,12 +348,11 @@ class Potentials extends CRMEntity {
 	 *	return $return_data - array with header and the entries in format Array('header'=>$header,'entries'=>$entries_list) where as $header and $entries_list are array which contains all the column values of an row
 	 */
 	function get_stage_history($id) {
-		global $log, $adb, $mod_strings, $app_strings, $current_user;
+		global $log, $adb, $app_strings, $current_user;
 		$log->debug("Entering get_stage_history(".$id.") method ...");
 
 		$query = 'select vtiger_potstagehistory.*, vtiger_potential.potentialname from vtiger_potstagehistory inner join vtiger_potential on vtiger_potential.potentialid = vtiger_potstagehistory.potentialid inner join vtiger_crmentity on vtiger_crmentity.crmid = vtiger_potential.potentialid where vtiger_crmentity.deleted = 0 and vtiger_potential.potentialid = ?';
 		$result=$adb->pquery($query, array($id));
-		$noofrows = $adb->num_rows($result);
 
 		$header[] = $app_strings['LBL_AMOUNT'];
 		$header[] = $app_strings['LBL_SALES_STAGE'];
@@ -617,7 +616,6 @@ class Potentials extends CRMEntity {
 
 	// Function to unlink all the dependent entities of the given Entity by Id
 	function unlinkDependencies($module, $id) {
-		global $log;
 		/*//Backup Activity-Potentials Relation
 		$act_q = "select activityid from vtiger_seactivityrel where crmid = ?";
 		$act_res = $this->db->pquery($act_q, array($id));
@@ -637,7 +635,6 @@ class Potentials extends CRMEntity {
 
 	// Function to unlink an entity with given Id from another entity
 	function unlinkRelationship($id, $return_module, $return_id) {
-		global $log;
 		if(empty($return_module) || empty($return_id)) return;
 
 		if($return_module == 'Accounts') {

@@ -26,7 +26,6 @@ class Vtiger_InventoryPDFController {
 	}
 
 	function loadRecord($id) {
-		global $current_user;
 		$this->focus = $focus = CRMEntity::getInstance($this->moduleName);
 		$focus->retrieve_entity_info($id,$this->moduleName);
 		$focus->apply_field_security();
@@ -94,19 +93,14 @@ class Vtiger_InventoryPDFController {
 
 			$contentModel = new Vtiger_PDF_Model();
 
-			$discountPercentage = 0.00;
 			$total_tax_percent = 0.00;
 			$producttotal_taxes = 0.00;
-			$quantity = ''; $listPrice = ''; $discount = ''; $taxable_total = '';
-			$tax_amount = ''; $producttotal = '';
-
 
 			$quantity	= $productLineItem["qty{$productLineItemIndex}"];
 			$listPrice	= $productLineItem["listPrice{$productLineItemIndex}"];
 			$discount	= $productLineItem["discountTotal{$productLineItemIndex}"];
 			$taxable_total = $quantity * $listPrice - $discount;
 			$taxable_total = number_format($taxable_total, 2,'.',''); //Convert to 2 decimals
-			$producttotal = $taxable_total;
 			if($this->focus->column_fields["hdnTaxType"] == "individual") {
 				foreach ($productLineItem['taxes'] as $taxItem) {
 					$tax_percent = $taxItem['percentage'];
@@ -166,7 +160,6 @@ class Vtiger_InventoryPDFController {
 		$summaryModel = new Vtiger_PDF_Model();
 
 		$netTotal = $discount = $handlingCharges = $handlingTaxes = 0;
-		$adjustment = $grandTotal = 0;
 
 		$productLineItemIndex = 0;
 		$sh_tax_percent = 0;

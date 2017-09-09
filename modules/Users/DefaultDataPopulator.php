@@ -22,8 +22,6 @@ class DefaultDataPopulator extends CRMEntity {
 	/** Function to populate the default required data during installation
 	 */
 	function create_tables() {
-		global $app_strings;
-
 		$this->db->query("INSERT INTO vtiger_tab(tabid,name,presence,tabsequence,tablabel,customized,ownedby,isentitytype,parent) VALUES (3,'Home',0,1,'Home',0,1,0,null)");
 		$this->db->query("INSERT INTO vtiger_tab(tabid,name,presence,tabsequence,tablabel,customized,ownedby,isentitytype,parent) VALUES (7,'Leads',0,4,'Leads',0,0,1,'Sales')");
 		$this->db->query("INSERT INTO vtiger_tab(tabid,name,presence,tabsequence,tablabel,customized,ownedby,isentitytype,parent) VALUES (6,'Accounts',0,5,'Accounts',0,0,1,'Sales')");
@@ -2362,10 +2360,6 @@ Should any need arise,please do give us a call.';
 	}
 
 	function addInventoryRows($paramArray) {
-		global $adb;
-
-		$fieldCreateCount = 0;
-
 		for ($index = 0; $index < count($paramArray); ++$index) {
 			$criteria = $paramArray[$index];
 

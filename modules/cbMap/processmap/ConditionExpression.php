@@ -59,7 +59,7 @@ require_once 'include/Webservices/Retrieve.php';
 class ConditionExpression extends processcbMap {
 
 	function processMap($arguments) {
-		global $adb, $current_user;
+		global $current_user;
 		$xml = $this->getXMLContent();
 		$entityId = $arguments[0];
 		$holduser = $current_user;

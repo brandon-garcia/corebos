@@ -40,7 +40,7 @@ class VtigerDocumentOperation extends VtigerModuleOperation {
 	 * 
 	 */
 	public function create($elementType,$element){
-		global $adb,$log;
+		global $adb;
 		$crmObject = new VtigerCRMObject($elementType, false);
 
 		if ($element['filelocationtype']=='I' and !empty($element['filename'])) {

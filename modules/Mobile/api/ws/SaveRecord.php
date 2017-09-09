@@ -26,7 +26,6 @@ class crmtogo_WS_SaveRecord extends crmtogo_WS_FetchRecord {
 		//update if recordid exist
 		$recordid = $request->get('record');
 		$valueArray = crmtogo_API_Request::getvaluemap($request);
-		$values = '';
 		if(!empty($valueArray) && is_string($valueArray)) {
 			$values = json_decode($valueArray,true);
 		} else {

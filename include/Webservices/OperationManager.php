@@ -131,7 +131,6 @@ class OperationManager{
 	function runOperation($params,$user){
 		global $API_VERSION;
 		try{
-			$operation = strtolower($this->operationName);
 			if(!$this->preLogin){
 				$params[] = $user;
 				return call_user_func_array($this->handlerMethod,$params);

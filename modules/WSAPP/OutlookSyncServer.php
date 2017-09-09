@@ -28,7 +28,6 @@ class OutlookSyncServer extends SyncServer{
      * Function overrided to deal duplication handling
      */
      function put($key, $element, $user) {
-        global $log;
         $db = PearDatabase::getInstance();
         $appid = parent::appid_with_key($key);
         if (empty($appid)) {
@@ -69,7 +68,6 @@ class OutlookSyncServer extends SyncServer{
                 if ($db->num_rows($lookupResult))
                     $lookupRecordId = $record['crmid'];
                 if (!(empty($lookupRecordId))) {
-                    $clientLastModifiedTime = $db->query_result($lookupResult, 0, 'modifiedtime');
                     $record['values']['id'] = $lookupRecordId;
                     $record['values']['duplicate'] = true;
                     $updateRecords[$clientRecordId] = $record['values'];

@@ -20,7 +20,6 @@
 include_once('vtlib/Vtiger/Module.php');
 
 function cbmqtm_logMemoryUsage() {
-	global $logbg;
 	$mem = sprintf("Time=%s; Memory: Usage=%s, Peak=%s, Growth=%s",
 		date('Y-m-d H:i:s'),
 		convert2kbytes(memory_get_usage(), 2),

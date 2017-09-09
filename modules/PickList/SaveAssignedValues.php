@@ -46,7 +46,7 @@ echo "SUCCESS";
 
 
 function assignValues($picklistid, $roleid, $values, $tableName){
-	global $adb,$default_charset;
+	global $adb;
 	$count = count($values);
 	//delete older values
 	$sql = 'DELETE FROM vtiger_role2picklist WHERE roleid=? AND picklistid=?';

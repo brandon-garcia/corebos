@@ -20,7 +20,6 @@ function vtiger_imageurl($imagename, $themename) {
 	if(isset($__cache_vtiger_imagepath[$imagename]) and $__cache_vtiger_imagepath[$imagename]) {
 	$imagepath = $__cache_vtiger_imagepath[$imagename];
 	} else {
-		$imagepath = false;
 		// Check in theme specific folder
 		if(file_exists("themes/$themename/images/$imagename")) {
 			$imagepath = "themes/$themename/images/$imagename";
@@ -51,7 +50,6 @@ function vtlib_getModuleNameById($tabid) {
  * NOTE: Ignore the standard modules which is already handled.
  */
 function vtlib_getModuleNameForSharing() {
-	global $adb;
 	$std_modules = array('Calendar','Leads','Accounts','Contacts','Potentials',
 		'HelpDesk','Campaigns','Quotes','PurchaseOrder','SalesOrder','Invoice','Events');
 	return getSharingModuleList($std_modules);
@@ -93,7 +91,7 @@ function vtlib_prefetchModuleActiveInfo($force = true) {
  * Check if module is set active (or enabled)
  */
 function vtlib_isModuleActive($module) {
-	global $adb, $__cache_module_activeinfo;
+	global $__cache_module_activeinfo;
 
 	if(in_array($module, vtlib_moduleAlwaysActive())){
 		return true;
@@ -363,7 +361,7 @@ function vtlib_isCustomModule($moduleName) {
  * Check for entity module by its name.
  */
 function vtlib_isEntityModule($moduleName) {
-	global $adb,$log;
+	global $adb;
 	$rsent = $adb->pquery('select isentitytype from vtiger_tab where name=?',array($moduleName));
 	if($rsent and $adb->num_rows($rsent)>0) {
 		if ($adb->query_result($rsent,0,0)=='1') {

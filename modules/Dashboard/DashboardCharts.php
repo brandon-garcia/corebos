@@ -235,7 +235,6 @@ class DashboardCharts {
 			'backgroundColor' => '#009933',
 			'data' => array(),
 		);
-		$lnkidx = 0;
 		foreach ($labels as $mes => $mes_translation) {
 			$m = $mes+1;
 			if (isset($closedWon[$m]['sum'])) {
@@ -255,7 +254,6 @@ class DashboardCharts {
 			'backgroundColor' => '#FF9900',
 			'data' => array(),
 		);
-		$lnkidx = 0;
 		foreach ($labels as $mes => $mes_translation) {
 			$m = $mes+1;
 			if (isset($closedLost[$m]['sum'])) {
@@ -275,7 +273,6 @@ class DashboardCharts {
 			'backgroundColor' => '#0066CC',
 			'data' => array(),
 		);
-		$lnkidx = 0;
 		foreach ($labels as $mes => $mes_translation) {
 			$m = $mes+1;
 			if (isset($notClosed[$m]['sum'])) {

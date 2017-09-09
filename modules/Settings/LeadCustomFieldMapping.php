@@ -76,7 +76,6 @@ function customFieldMappings() {
 
 function getModuleValues( $moduleid, $module) {
 	global $adb;
-	$potentialcf = Array();
 	switch($module){
 		case "Accounts":$sql="SELECT fieldid,fieldlabel,uitype,typeofdata,fieldname FROM vtiger_field,vtiger_tab WHERE vtiger_field.tabid=vtiger_tab.tabid
 						AND generatedtype IN (1,2)

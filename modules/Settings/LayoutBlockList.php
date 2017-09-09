@@ -174,7 +174,7 @@ function InStrCount($String,$Find,$CaseSensitive = false) {
  */
 function getFieldListEntries($module) {
 	$tabid = getTabid($module);
-	global $adb, $smarty,$log,$current_user;
+	global $adb, $smarty,$current_user;
 	global $theme;
 	$theme_path="themes/".$theme."/";
 	$image_path="themes/images/";
@@ -432,11 +432,9 @@ function getListLeadMapping($cfid) {
 	$result = $adb->pquery($sql, array($cfid));
 	$noofrows = $adb->num_rows($result);
 	for($i =0;$i <$noofrows;$i++) {
-		$leadid = $adb->query_result($result,$i,'leadfid');
 		$accountid = $adb->query_result($result,$i,'accountfid');
 		$contactid = $adb->query_result($result,$i,'contactfid');
 		$potentialid = $adb->query_result($result,$i,'potentialfid');
-		$cfmid = $adb->query_result($result,$i,'cfmid');
 
 		$sql2="select fieldlabel from vtiger_field where fieldid = ? and vtiger_field.presence in (0,2)";
 		$result2 = $adb->pquery($sql2, array($accountid));
@@ -482,7 +480,7 @@ function getModuleBlocks($module) {
  *
  */
 function changeFieldOrder() {
-	global $adb,$log,$smarty;
+	global $adb,$smarty;
 	if(!empty($_REQUEST['what_to_do'])) {
 		if($_REQUEST['what_to_do']=='block_down') {
 			$blockid = vtlib_purify($_REQUEST['blockid']);
@@ -603,8 +601,6 @@ function changeFieldOrder() {
  *
  */
 function getFieldInfo($fieldname,$typeofdata,$quickcreate,$massedit,$presence,$strictlyMandatory,$customfieldflag,$displaytype,$uitype) {
-	global $log;
-
 	$fieldtype =  explode("~",$typeofdata);
 
 	if($strictlyMandatory) {//fields without which the CRM Record will be inconsistent
@@ -632,7 +628,7 @@ function getFieldInfo($fieldname,$typeofdata,$quickcreate,$massedit,$presence,$s
 
 function updateFieldProperties() {
 
-	global $adb,$smarty,$log;
+	global $adb;
 	$fieldid = vtlib_purify($_REQUEST['fieldid']);
 	$req_sql = "select * from vtiger_field where fieldid = ? and fieldname not in('salutationtype') and vtiger_field.presence in (0,2)";
 	$req_result = $adb->pquery($req_sql, array($fieldid));
@@ -641,9 +637,6 @@ function updateFieldProperties() {
 	$tabid = $adb->query_result($req_result,0,'tabid');
 	$fieldname = $adb->query_result($req_result,0,'fieldname');
 	$uitype = $adb->query_result($req_result,0,'uitype');
-	$oldfieldlabel = $adb->query_result($req_result,0,'fieldlabel');
-	$tablename = $adb->query_result($req_result,0,'tablename');
-	$columnname = $adb->query_result($req_result,0,'columnname');
 	$oldquickcreate = $adb->query_result($req_result,0,'quickcreate');
 	$oldmassedit = $adb->query_result($req_result,0,'masseditable');
 	$oldpresence = $adb->query_result($req_result,0,'presence');
@@ -826,9 +819,8 @@ function deleteCustomField() {
 }
 
 function addblock() {
-	global $mod_strings,$log,$adb;
+	global $adb;
 	$fldmodule = vtlib_purify($_REQUEST['fld_module']);
-	$mode= vtlib_purify($_REQUEST['mode']);
 
 	$newblocklabel = trim(vtlib_purify($_REQUEST['blocklabel']));
 	$after_block = vtlib_purify($_REQUEST['after_blockid']);
@@ -898,12 +890,11 @@ function deleteBlock() {
 }
 
 function addCustomField() {
-	global $current_user,$log,$adb;
+	global $current_user,$adb;
 
 	$fldmodule = vtlib_purify($_REQUEST['fld_module']);
 	$fldlabel = vtlib_purify(trim($_REQUEST['fldLabel']));
 	$fldType = vtlib_purify($_REQUEST['fieldType']);
-	$parenttab = isset($_REQUEST['parenttab']) ? vtlib_purify($_REQUEST['parenttab']) : '';
 	$mode = isset($_REQUEST['mode']) ? vtlib_purify($_REQUEST['mode']) : '';
 	$blockid = vtlib_purify($_REQUEST['blockid']);
 
@@ -1097,11 +1088,9 @@ function addCustomField() {
 					$roleid=$current_user->roleid;
 					$rs = $adb->pquery('select picklistid from vtiger_picklist where name=?', array($columnName));
 					$picklistid = $adb->query_result($rs, 0,'picklistid');
-					$pickArray = Array();
 					$fldPickList = vtlib_purify($_REQUEST['fldPickList']);
 					$pickArray = explode("\n",$fldPickList);
 					$count = count($pickArray);
-					global $default_charset;
 					for ($i = 0; $i < $count; $i++) {
 						$pickArray[$i] = trim($pickArray[$i]);
 						if ($pickArray[$i] != '') {
@@ -1136,10 +1125,9 @@ function addCustomField() {
 }
 
 function show_move_hiddenfields($submode) {
-	global $adb,$log;
+	global $adb;
 	$selected_fields = vtlib_purify($_REQUEST['selected']);
 	$selected = trim($selected_fields,":");
-	$sel_arr = array();
 	$sel_arr = explode(":",$selected);
 	$sequence = $adb->pquery('select max(sequence) as maxseq from vtiger_field where block = ?  and tabid = ?',array(vtlib_purify($_REQUEST['blockid']), vtlib_purify($_REQUEST['tabid'])));
 	$max = $adb->query_result($sequence,0,'maxseq');
@@ -1181,7 +1169,7 @@ function getRelatedListInfo($module) {
 }
 
 function deleteRelatedList() {
-	global $adb,$log;
+	global $adb;
 	$tabid = vtlib_purify($_REQUEST['tabid']);
 	$sequence = vtlib_purify($_REQUEST['sequence']);
 	$relationid = vtlib_purify($_REQUEST['id']);
@@ -1190,7 +1178,6 @@ function deleteRelatedList() {
 }
 
 function createRelatedList() {
-	global $adb,$log;
 	$module = vtlib_purify($_REQUEST['fld_module']);
 	$tabmod = Vtiger_Module::getInstance($module);
 	$rmodule = vtlib_purify($_REQUEST['relwithmod']);
@@ -1211,9 +1198,8 @@ function createRelatedList() {
 }
 
 function changeRelatedListOrder() {
-	global $adb,$log;
+	global $adb;
 	$tabid = vtlib_purify($_REQUEST['tabid']);
-	$what_todo = vtlib_purify($_REQUEST['what_to_do']);
 	if(!empty($_REQUEST['what_to_do'])) {
 		if($_REQUEST['what_to_do'] == 'move_up') {
 			$currentsequence = vtlib_purify($_REQUEST['sequence']);

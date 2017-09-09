@@ -16,9 +16,6 @@
 function inbox(&$pop, $skip = 0, &$ev)
 {
     global $conf;
-    global $charset;
-
-    $user_prefs = $_SESSION['nocc_user_prefs'];
 
     $msg_list = array();
 
@@ -216,8 +213,6 @@ function GetSinglePart(&$attach_tab, &$this_part, &$header, &$body)
 function remove_stuff(&$body, &$mime)
 {
     $PHP_SELF = $_SERVER['PHP_SELF'];
-
-    $lang = $_SESSION['nocc_lang'];
 
     if (preg_match("/html/i", $mime))
     {
@@ -526,7 +521,6 @@ function display_address(&$address)
 
     // Return up to the first '<', or end of string if not found
     //return substr($address, 0, $bracketpos - 1);
-    $formatted_address = '';
     while (!($bracketpos === false)) {
       $formatted_address = substr($address, 0, $bracketpos - 1);
       $formatted_address .= substr($address, strpos($address, ">")+1);

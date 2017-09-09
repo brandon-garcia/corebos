@@ -56,7 +56,6 @@ class VTEntityType {
 	}
 
 	function getFieldTypes() {
-		$adb = $this->adb;
 		$fieldNames = $this->getFieldNames();
 		$fieldTypes = array();
 		foreach ($fieldNames as $fieldName) {

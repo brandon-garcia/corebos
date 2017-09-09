@@ -135,8 +135,6 @@ function getUserFromExtension($extension, $adb){
  * 							on failure - string failure
  */
 function asterisk_addToActivityHistory($callerName, $callerNumber, $callerType, $adb, $userid, $relcrmid, $callerInfo=false){
-	global $log, $current_user;
-
 	// Reset date format for a while
 	$date = new DateTimeField(null);
 	$currentDate = $date->getDisplayDate();
@@ -184,8 +182,6 @@ function asterisk_addToActivityHistory($callerName, $callerNumber, $callerType, 
  * 		object $adb - the peardatabase object
  */
 function addOutgoingcallHistory($current_user,$extension, $record ,$adb){
-	global $log;
-
 	$date = new DateTimeField(null);
 	$currentDate = $date->getDisplayDate();
 	$currentTime = $date->getDisplayTime();

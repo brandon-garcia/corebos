@@ -426,7 +426,6 @@ class Import_Data_Controller {
 				}
 
 			} elseif ($fieldInstance->getFieldDataType() == 'picklist') {
-				global $default_charset;
 				if (empty($fieldValue) && isset($defaultFieldValues[$fieldName])) {
 					$fieldData[$fieldName] = $fieldValue = $defaultFieldValues[$fieldName];
 				}

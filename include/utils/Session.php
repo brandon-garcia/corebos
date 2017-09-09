@@ -68,7 +68,6 @@ class coreBOS_Session {
 	 */
 	static function getSessionName($URL='',$force=false) {
 		global $site_URL;
-		static $session_name = '';
 		if (self::$session_name!='' and !$force) return self::$session_name;
 		if (empty($site_URL)) {
 			if (file_exists('config.inc.php')) {

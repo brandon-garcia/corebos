@@ -25,7 +25,6 @@ class Vtiger_DependencyPicklist {
 
 		$dependentPicklists = array();
 		if($noofrows > 0) {
-			$fieldlist = array();
 			for($i=0; $i<$noofrows; ++$i) {
 				$fieldTabId = $adb->query_result($result,$i,'tabid');
 				$sourceField = $adb->query_result($result,$i,'sourcefield');
@@ -50,7 +49,7 @@ class Vtiger_DependencyPicklist {
 	}
 
 	static function getAvailablePicklists($module) {
-		global $adb, $log;
+		global $adb;
 		$tabId = getTabid($module);
 
 		$query="select vtiger_field.fieldlabel,vtiger_field.fieldname" .
@@ -132,7 +131,6 @@ class Vtiger_DependencyPicklist {
 		$noOfMapping = $adb->num_rows($result);
 
 		$valueMapping = array();
-		$mappedSourceValues = array();
 		for($i=0; $i<$noOfMapping; ++$i) {
 			$sourceValue = $adb->query_result($result, $i, 'sourcevalue');
 			$targetValues = $adb->query_result($result, $i, 'targetvalues');

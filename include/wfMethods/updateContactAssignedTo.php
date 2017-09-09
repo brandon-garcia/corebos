@@ -17,7 +17,7 @@
 *************************************************************************************************/
 
 function updateContactAssignedTo($entity) {
-    global $adb,$default_charset,$log;
+    global $adb;
 
     list($acc,$acc_id) = explode('x',$entity->data['id']);  // separate webservice ID
     if (getSalesEntityType($acc_id)=='Accounts') {

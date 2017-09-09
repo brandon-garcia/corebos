@@ -391,14 +391,11 @@ function getUserModuleSharingObjects($module,$userid,$def_org_share,$current_use
 	$mod_share_write_permission['GROUP']=Array();
 
 	$share_id_members=Array();
-	$share_id_groupmembers=Array();
 	//If Sharing of leads is Private
 	if(isset($def_org_share[$mod_tabid]) and ($def_org_share[$mod_tabid] == 3 || $def_org_share[$mod_tabid] == 0))
 	{
 		$role_read_per=Array();
 		$role_write_per=Array();
-		$rs_read_per=Array();
-		$rs_write_per=Array();
 		$grp_read_per=Array();
 		$grp_write_per=Array();
 		//Retreiving from vtiger_role to vtiger_role
@@ -494,7 +491,6 @@ function getUserModuleSharingObjects($module,$userid,$def_org_share,$current_use
 		}
 
 		//Get roles from Role2Grp
-		$grpIterator=false;
 		$groupList = $current_user_groups;
 		if (empty($groupList)) $groupList = array(0);
 
@@ -730,7 +726,6 @@ function getUserModuleSharingObjects($module,$userid,$def_org_share,$current_use
 						$focusGrpUsers = new GetGroupUsers();
 						$focusGrpUsers->getAllUsersInGroup($share_grpid);
 						$share_grp_users=$focusGrpUsers->group_users;
-						$share_grp_subgroups=$focusGrpUsers->group_subgroups;
 						$grp_read_per[$share_grpid]=$share_grp_users;
 						foreach($focusGrpUsers->group_subgroups as $subgrpid=>$subgrpusers)
 						{

@@ -33,16 +33,13 @@ class SessionManager{
 	}
 
 	function isValid(){
-		$valid = true;
 		// expired
 		if (HTTP_Session2::isExpired()) {
-			$valid = false;
 			HTTP_Session2::destroy();
 			throw new WebServiceException(WebServiceErrorCode::$SESSLIFEOVER,"Session has life span over please login again");
 		}
 		// idled
 		if (HTTP_Session2::isIdle()) {
-			$valid = false;
 			HTTP_Session2::destroy();
 			throw new WebServiceException(WebServiceErrorCode::$SESSIONIDLE,"Session has been invalidated to due lack activity");
 		}
@@ -50,11 +47,10 @@ class SessionManager{
 		//invalid sessionId provided.
 		//echo "<br>get: ",$this->get($this->sessionVar);
 		if (!$this->get($this->sessionVar) && !HTTP_Session2::isNew()) {
-			$valid = false;
 			HTTP_Session2::destroy();
 			throw new WebServiceException(WebServiceErrorCode::$SESSIONIDINVALID,"Session Identifier provided is Invalid");
 		}
-		return $valid;
+		return true;
 	}
 
 	function startSession($sid = null,$adoptSession=false,$sname=null){

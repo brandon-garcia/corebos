@@ -20,7 +20,6 @@ function getTopPotentials($maxval,$calCnt)
 	require_once('include/logging.php');
 	require_once('include/ListView/ListView.php');
 
-	global $app_strings;
 	global $adb;
 	global $current_language;
 	global $current_user;
@@ -36,7 +35,6 @@ function getTopPotentials($maxval,$calCnt)
 	//$header[]=$current_module_strings['LBL_LIST_ACCOUNT_NAME'];
 	$currencyid=fetchCurrency($current_user->id);
 	$rate_symbol = getCurrencySymbolandCRate($currencyid);
-	$rate = $rate_symbol['rate'];
 	$curr_symbol = $rate_symbol['symbol'];
 	$header[]=$current_module_strings['LBL_LIST_AMOUNT'].'('.$curr_symbol.')';
 	$list_query = "SELECT vtiger_crmentity.crmid, vtiger_potential.potentialname,

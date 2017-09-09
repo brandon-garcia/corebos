@@ -42,7 +42,7 @@ else
  * @returns $standCustFld -- field label/permission array :: Type varchar
 */
 function getStdOutput($fieldListResult, $noofrows, $module) {
-	global $adb, $image_path,$theme;
+	global $adb, $theme;
 	$standCustFld = Array();
 	for ($i=0; $i<$noofrows; $i++) {
 		$uitype = $adb->query_result($fieldListResult,$i,"uitype");

@@ -81,12 +81,10 @@ function getRequestedToData()
 	$mail_data['mode'] = $_REQUEST['task_mode'];
 	$startTime = $_REQUEST['task_time_start'];
 	$date = new DateTimeField($_REQUEST['task_date_start']." ".$startTime);
-	$endTime = $_REQUEST['task_time_end'];
 	$endDate = new DateTimeField($_REQUEST['task_due_date']." ".$startTime);
 	$startTime = $date->getDisplayTime();
 	$endTime = $endDate->getDisplayTime();
 	$value = getaddEventPopupTime($startTime, $endTime,'24');
-	$start_hour = $value['starthour'].':'.$value['startmin'].''.$value['startfmt'];
 	$mail_data['st_date_time'] = $date->getDisplayDateTimeValue();
 	$mail_data['end_date_time'] = $endDate->getDisplayDate();
 	return $mail_data;

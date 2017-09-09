@@ -40,7 +40,6 @@ function EnLetras($x) {
    $dec=($x-floor($x))*10;
    if (floor($dec)*10<>floor($dec*10)) /* hay dos decimales */ $dec=$dec*10;
    $dec=floor($dec);
-   $declen=strlen($dec);
    $ENLETRAS = $ENLETRAS." coma ".EnLetras($dec);
  endif;
  If (floor($x) == 0) $ENLETRAS = "CERO";

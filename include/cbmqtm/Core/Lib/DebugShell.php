@@ -498,9 +498,6 @@ class Core_Lib_DebugShell
                 $input = trim(fgets(STDIN));
                 $input = preg_replace('/\s+/', ' ', $input);
 
-                $matches = false;
-                $message = '';
-
                 // Use the familiar bash !! to re-run the last command
                 if (substr($input, -2) == '!!')
                     $input = $this->debug_state('last');

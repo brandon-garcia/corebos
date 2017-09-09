@@ -17,7 +17,7 @@ echo TraceIncomingCall();
  */
 function TraceIncomingCall(){
 	require_once('modules/PBXManager/AsteriskUtils.php');
-	global $adb, $current_user, $theme,$app_strings,$log;
+	global $adb, $current_user,$app_strings;
 
 	$asterisk_extension = false;
 	if(isset($current_user->column_fields)) {
@@ -91,7 +91,6 @@ function TraceIncomingCall(){
  * @param $createActivityInfo - info to create activity after new create
  */
 function getTraceIncomingCallerInfo($from,$fromname,$createActivityInfo) {
-	global $adb;
 	// Grab all possible caller informations (lookup for number as well stripped number)
 	$callerInfos = getCallerInfo($from);
 	$createActivityInfo = urlencode(serialize($createActivityInfo));

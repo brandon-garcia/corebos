@@ -21,7 +21,6 @@
 class Mapping extends generatecbMap {
 
 	function generateMap($arguments) {
-		global $adb, $current_user;
 		$mapping=$this->convertMap2Array();
 		$ofields = $arguments[0];
 		$tfields = $arguments[1];

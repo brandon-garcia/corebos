@@ -27,7 +27,6 @@ class vtigerCRMHandler extends SyncHandler {
     }
 
     public function get($module, $token, $user) {
-        $syncModule = $module;
         $this->user = $user;
         $syncModule = $module;
         $syncType = 'user';
@@ -260,7 +259,6 @@ class vtigerCRMHandler extends SyncHandler {
                 $meta = $handler->getMeta();
                 $modulesMetaCache[$recordDetails['module']] = $meta;
             }
-            $moduleMeta = $modulesMetaCache[$recordDetails['module']];
             $mandatoryFieldsList = $meta->getMandatoryFields();
             $moduleFields = $meta->getModuleFields();
             foreach ($mandatoryFieldsList as $fieldName) {

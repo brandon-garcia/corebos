@@ -13,7 +13,7 @@
 // draw a row for the listview entry
 function show_msg($mails,$start_message)
 {
-	global $MailBox,$displayed_msgs,$show_hidden,$new_msgs,$theme;
+	global $MailBox,$displayed_msgs,$show_hidden,$new_msgs;
 
 	$num = $mails[$start_message]->msgno;
 	$msg_ob = new Webmails($MailBox->mbox,$mails[$start_message]->msgno);
@@ -21,13 +21,9 @@ function show_msg($mails,$start_message)
 	// matching email address that will make a good
 	// candidate for record_id
 	// this module will also need to be able to associate to any entity type
-	$record_id='';
 
 	if($mails[$start_message]->subject=="")
 		$mails[$start_message]->subject="(No Subject)";
-
-	// Let's pre-build our URL parameters since it's too much of a pain not to
-	$detailParams = 'record='.$num.'&mailbox='.$mailbox.'&mailid='.$num.'&parenttab=My Home Page';
 
 	$displayed_msgs++;
 	if ($mails[$start_message]->deleted && !$show_hidden)

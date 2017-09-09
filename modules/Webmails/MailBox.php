@@ -102,7 +102,6 @@ class MailBox {
 
 	function searchMailList($searchstring,$page) {
 		$search="";
-		$searchlist = Array();
 
 		$searchlist = imap_search($this->mbox,$searchstring);
 		if ($searchlist==false) return $out;

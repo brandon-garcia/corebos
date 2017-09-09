@@ -743,7 +743,7 @@ function getDashboardQuery($query, $module) {
 */
 function picklist_check($module,$graph_by)
 {
-	global $current_user,$adb;
+	global $current_user;
 	$pick_query = '';
 	$roleid=$current_user->roleid;
 	$subrole = getRoleSubordinates($roleid);

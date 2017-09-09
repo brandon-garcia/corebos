@@ -129,7 +129,6 @@ class Vtiger_MailScannerInfo {
 	 */
 	function updateAllFolderRescan($rescanFlag=false) {
 		global $adb;
-		$useRescanFlag = $rescanFlag? 1 : 0;
 		$adb->pquery("UPDATE vtiger_mailscanner_folders set rescan=? WHERE scannerid=?",
 			Array($rescanFlag, $this->scannerid));
 		if($this->rescan) {

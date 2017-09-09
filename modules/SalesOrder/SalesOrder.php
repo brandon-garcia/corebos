@@ -235,7 +235,7 @@ class SalesOrder extends CRMEntity {
 	 *	@return $return_data - array with header and the entries in format Array('header'=>$header,'entries'=>$entries_list) where as $header and $entries_list are arrays which contains header values and all column values of all entries
 	 */
 	function get_sostatushistory($id) {
-		global $log, $adb, $mod_strings, $app_strings, $current_user;
+		global $log, $adb, $app_strings, $current_user;
 		$log->debug("Entering get_sostatushistory(".$id.") method ...");
 
 		$query = 'select vtiger_sostatushistory.*, vtiger_salesorder.salesorder_no from vtiger_sostatushistory inner join vtiger_salesorder on vtiger_salesorder.salesorderid = vtiger_sostatushistory.salesorderid inner join vtiger_crmentity on vtiger_crmentity.crmid = vtiger_salesorder.salesorderid where vtiger_crmentity.deleted = 0 and vtiger_salesorder.salesorderid = ?';
@@ -379,7 +379,6 @@ class SalesOrder extends CRMEntity {
 
 	// Function to unlink an entity with given Id from another entity
 	function unlinkRelationship($id, $return_module, $return_id) {
-		global $log;
 		if(empty($return_module) || empty($return_id)) return;
 
 		if($return_module == 'Accounts') {

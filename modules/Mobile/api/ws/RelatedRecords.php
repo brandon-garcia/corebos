@@ -14,13 +14,12 @@ include_once __DIR__ . '/QueryWithGrouping.php';
 class crmtogo_WS_RelatedRecords extends crmtogo_WS_QueryWithGrouping {
 
 	function process(crmtogo_API_Request $request) {
-		global $current_user, $adb, $currentModule;
+		global $current_user, $currentModule;
 		$current_user = $this->getActiveUser();
 
 		$response = new crmtogo_API_Response();
 
 		$record = $request->get('record');
-		$currentPage = $request->get('page', 0);
 
 		// Input validation
 		if (empty($record)) {

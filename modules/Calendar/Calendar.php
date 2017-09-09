@@ -61,7 +61,6 @@ class Calendar
 	*/
 	function constructLayout()
 	{
-		global $current_user;
 		switch($this->view)
 		{
 			case 'day':
@@ -202,7 +201,6 @@ class Calendar
                         $end_datetime = $this->date_time->getTodayDatetimebyIndex(23);
                 }
 		
-		$activities = Array();
 		$activities = Appointment::readAppointment($current_user->id,$start_datetime,$end_datetime,$this->view);
 		if(!empty($activities))
 		{
@@ -284,11 +282,9 @@ class Layout {
  * @return array $result - the array containing current months days information
  */
 function getCalendarDaysInMonth($date_time){
-	global $current_user;
 	$month_array = array();
 	$slices = array();
-	$monthview_days = $date_time->daysinmonth;
-	
+
 	$firstday_of_month = $date_time->getThisMonthsDayByIndex(0);
 	$fdom = $firstday_of_month;
 	

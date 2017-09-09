@@ -299,20 +299,11 @@ function buildSelectStmt($sqlDump){
 	}
 	if (!empty($sqlDump['limit'])) {
 		$i=0;
-		$offset =false;
-		if(sizeof($sqlDump['limit'])>1){
-			$offset = true;
-		}
 		$this->query = $this->query.' LIMIT ';
 		foreach($sqlDump['limit'] as $ind=>$field){
-			// get rid of 100 record limit on queries with specific limit
-// 			if(!$offset){
-// 				$field = ($field>100)? 100: $field;
-// 			}
 			if($i===0){
 				$this->query = $this->query.$field;
 				$i++;
-				$offset = false;
 			}else{
 				$this->query = $this->query.','.$field;
 			}
@@ -1198,7 +1189,6 @@ if(!$moduleName){
 	$this->syntax_error = true;
 	throw new WebServiceException(WebServiceErrorCode::$QUERYSYNTAX, "There is an syntax error in query");
 }
-global $adb;
 $handler = vtws_getModuleHandlerFromName($moduleName,$this->user);
 $objectMeta = $handler->getMeta();
 $this->out['moduleName'] = $moduleName;
@@ -1324,7 +1314,6 @@ $this->out['limit'][] = $this->yystack[$this->yyidx + 0]->minor;
 #line 1327 "e:\workspace\nonadmin\pkg\vtiger\extensions\Webservices\VTQL_parser.php"
 #line 151 "e:\workspace\nonadmin\pkg\vtiger\extensions\Webservices\VTQL_parser.y"
     function yy_r41(){
-global $adb;
 if (empty($this->out['meta'])) {
 $module = $this->out['moduleName'];
 $handler = vtws_getModuleHandlerFromName($module,$this->user);
@@ -1415,10 +1404,8 @@ if($firstTable!=$table){
         //int $yygoto;                     /* The next state */
         //int $yyact;                      /* The next action */
         //mixed $yygotominor;        /* The LHS of the rule reduced */
-        //VTQL_ParseryyStackEntry $yymsp;            /* The top of the parser's stack */
         //int $yysize;                     /* Amount to pop the stack */
-        $yymsp = $this->yystack[$this->yyidx];
-        if (self::$yyTraceFILE && $yyruleno >= 0 
+        if (self::$yyTraceFILE && $yyruleno >= 0
               && $yyruleno < count(self::$yyRuleName)) {
             fprintf(self::$yyTraceFILE, "%sReduce (%d) [%s].\n",
                 self::$yyTracePrompt, $yyruleno,
@@ -1517,7 +1504,7 @@ if($firstTable!=$table){
             fprintf(self::$yyTraceFILE, "%sAccept!\n", self::$yyTracePrompt);
         }
         while ($this->yyidx >= 0) {
-            $stack = $this->yy_pop_parser_stack();
+            $this->yy_pop_parser_stack();
         }
         /* Here code is inserted which will be executed whenever the
         ** parser accepts */

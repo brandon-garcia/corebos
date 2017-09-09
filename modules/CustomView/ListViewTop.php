@@ -40,10 +40,8 @@ function getKeyMetrics($maxval,$calCnt)
 	require_once('include/logging.php');
 	require_once('include/ListView/ListView.php');
 
-	global $app_strings, $adb, $log, $current_language;
-	$metricviewnames = "'Hot Leads'";
+	global $app_strings, $adb, $log;
 
-	$current_module_strings = return_module_language($current_language, "CustomView");
 	$log = LoggerManager::getLogger('metrics');
 
 	$metriclists = getMetricList();
@@ -96,7 +94,6 @@ function getKeyMetrics($maxval,$calCnt)
 	$entries=Array();
 	if(isset($metriclists))
 	{
-		$oddRow = true;
 		foreach($metriclists as $metriclist)
 		{
 			$value=array();

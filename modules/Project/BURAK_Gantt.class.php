@@ -747,8 +747,6 @@ class BURAK_Gantt {
 				if(gmdate("w",$s) == 1){ // mondays
 					$x1 = $i * $this->inc_x;
 					$y1 = $this->heights["month"];
-					$x2 = $x1;
-					$y2 = $y1 + $this->gantt_height;
 					imagestring($this->im,$this->font,($x1+3),($y1+3),gmdate("W",$s),$this->colors["font"]);
 					// bottom weekly ruler if the number of data elements is bigger than 5
 					if($this->n > 5){

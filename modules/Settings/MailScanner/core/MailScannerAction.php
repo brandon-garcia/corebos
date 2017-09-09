@@ -150,7 +150,6 @@ class Vtiger_MailScannerAction {
 		global $adb;
 		$returnid = false;
 
-		$usesubject = false;
 		if($this->lookup == 'SUBJECT') {
 			// If regex match was performed on subject use the matched group
 			// to lookup the ticket record
@@ -188,9 +187,7 @@ class Vtiger_MailScannerAction {
 	 * Update Project action.
 	 */
 	function __UpdateProject($mailscanner, $mailrecord, $regexMatchInfo) {
-		global $adb;
 		$returnid = false;
-		$usesubject = false;
 		if($this->lookup == 'SUBJECT') {
 			// If regex match was performed on subject use the matched group
 			// to lookup the ticket record
@@ -299,7 +296,7 @@ class Vtiger_MailScannerAction {
 	 * Create new Email record (and link to given record) including attachements
 	 */
 	function __CreateNewEmail($mailrecord, $module, $linkfocus) {
-		global $current_user, $adb;
+		global $current_user;
 		if(!$current_user) {
 			$current_user = Users::getActiveAdminUser();
 		}
@@ -319,7 +316,6 @@ class Vtiger_MailScannerAction {
 		$to = $mailrecord->_to[0];
 		$cc = (!empty($mailrecord->_cc))? implode(',', $mailrecord->_cc) : '';
 		$bcc= (!empty($mailrecord->_bcc))? implode(',', $mailrecord->_bcc) : '';
-		$flag=''; // 'SENT'/'SAVED'
 		//emails field were restructured and to,bcc and cc field are JSON arrays
 		$focus->column_fields['from_email'] = $from;
 		$focus->column_fields['saved_toid'] = $to;

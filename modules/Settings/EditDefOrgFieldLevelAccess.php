@@ -41,8 +41,6 @@ function getStdOutput($fieldListResult, $noofrows, $module)
 	global $adb;
 	$standCustFld = Array();
 	for ($i=0; $i<$noofrows; $i++) {
-		$fieldname = $adb->query_result($fieldListResult,$i,"fieldname");
-		$uitype = $adb->query_result($fieldListResult,$i,"uitype");
 		$displaytype = $adb->query_result($fieldListResult,$i,"displaytype");
 		$fieldlabel = $adb->query_result($fieldListResult,$i,"fieldlabel");
 		$typeofdata = $adb->query_result($fieldListResult,$i,"typeofdata");
