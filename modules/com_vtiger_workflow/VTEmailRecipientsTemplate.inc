@@ -11,10 +11,6 @@ require_once 'modules/com_vtiger_workflow/VTSimpleTemplate.inc';
 
 class VTEmailRecipientsTemplate extends VTSimpleTemplate {
 
-	public function __construct($templateString) {
-		parent::__construct($templateString);
-	}
-
 	protected function useValue($data, $fieldname) {
 		return (!empty($data[$fieldname]) && (!isset($data['emailoptout']) || $data['emailoptout'] == 0));
 	}

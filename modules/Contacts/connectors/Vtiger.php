@@ -16,25 +16,6 @@ include_once 'include/Webservices/Retrieve.php';
 class Google_Vtiger_Connector extends WSAPP_VtigerConnector {
 
 	/**
-	 * function to push data to vtiger
-	 * @param type $recordList
-	 * @param type $syncStateModel
-	 * @return type
-	 */
-	public function push($recordList, $syncStateModel) {
-		return parent::push($recordList, $syncStateModel);
-	}
-
-	/**
-	 * function to get data from vtiger
-	 * @param type $syncStateModel
-	 * @return type
-	 */
-	public function pull(WSAPP_SyncStateModel $syncStateModel) {
-		return parent::pull($syncStateModel);
-	}
-
-	/**
 	 * function that returns syncTrackerhandler name
 	 * @return string
 	 */

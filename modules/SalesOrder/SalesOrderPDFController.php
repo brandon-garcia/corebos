@@ -25,10 +25,6 @@ class Vtiger_SalesOrderPDFController extends Vtiger_InventoryPDFController{
 		return $headerViewer;
 	}
 
-	function buildHeaderModelColumnLeft() {
-		return parent::buildHeaderModelColumnLeft();
-	}
-
 	function buildHeaderModelColumnCenter() {
 		$subject = $this->focusColumnValue('subject');
 		$customerName = $this->resolveReferenceLabel($this->focusColumnValue('account_id'), 'Accounts');
