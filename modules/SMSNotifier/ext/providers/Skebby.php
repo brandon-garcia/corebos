@@ -40,8 +40,6 @@ class Skebby implements ISMSProvider {
 	public $helpURL = 'http://www.skebby.com/';
 	public $helpLink = 'Skebby';
 
-	private $_enableLogging = false;
-	
 	// Skebby gateway
 	const SERVICE_URI = 'http://gateway.skebby.it/'; 
 	private static $REQUIRED_PARAMETERS = array('Type','From','Prefix'); // parameters specific of Skebby

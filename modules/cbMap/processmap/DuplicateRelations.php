@@ -42,8 +42,6 @@ require_once('modules/cbMap/processmap/processMap.php');
 
 class DuplicateRelations extends processcbMap {
 	private $mapping = array();
-	private $modulename = '';
-	private $moduleid = 0;
 
 	function processMap($arguments) {
 		$this->convertMap2Array();

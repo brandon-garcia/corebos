@@ -19,7 +19,6 @@ class OperationManager{
 			"postCreate"=>''
 		)
 	);
-	private $operationMeta = null;
 	private $formatObjects ;
 	private $inParamProcess ;
 	private $sessionManager;

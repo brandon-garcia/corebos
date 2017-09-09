@@ -75,12 +75,6 @@ class Core_Lib_DebugShell
     private $parsers = array();
 
     /**
-     * Array of commands and their descriptions
-     * @var array
-     */
-    private $commands = array();
-
-    /**
      * Associative array of method names and a callable that will be called if that method is interrupted.
      * For example, it could be used to print a special message if a given method is interrupted, or clean up unused resources.
      * @var Closure[]

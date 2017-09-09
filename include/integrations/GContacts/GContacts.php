@@ -22,11 +22,6 @@ class corebos_gcontacts {
 	// Configuration Properties
 	private $clientId = '';
 	private $clientSecret = '';
-	private $API_URL = '';
-	private $accessCode = '';
-	private $updateTime = '';
-	private $accessToken = '';
-	private $refreshToken = '';
 
 	// Configuration Keys
 	const key_isActive = 'gcontacts_isactive';

@@ -70,8 +70,6 @@ require_once('modules/cbMap/processmap/processMap.php');
 
 class FieldDependency extends processcbMap {
 	private $mapping = array();
-	private $input = array();
-	private $output = array();
 
 	function processMap($arguments) {
 		$this->convertMap2Array();

@@ -14,7 +14,6 @@ abstract class Vtiger_BackupZip {
 	protected $fileName;
 	protected static $defaultPath;
 	private static $isUserPath;
-	private static $filePrefix = 'Vtiger-';
 	abstract public function addFile($filePath,$parentDirectory);
 	abstract public function addDirectory($directoryPath,$zipPath);
 	abstract public function close();

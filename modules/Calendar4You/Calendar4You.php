@@ -9,7 +9,6 @@
 class Calendar4You extends CRMEntity {
 
     private $basicModules;
-    private $pageFormats;
 
     private $profilesActions;
     private $profilesPermissions;
@@ -25,9 +24,7 @@ class Calendar4You extends CRMEntity {
     public $delete_all = false;
    
     public $View = array();
-    
-    private $modulename = "Calendar4You"; 
-    
+
     var $log;
     var $db;
 
