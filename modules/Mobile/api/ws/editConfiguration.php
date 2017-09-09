@@ -10,9 +10,6 @@
 
 class crmtogo_WS_Configuration extends crmtogo_WS_Controller {
 
-	function requireLogin() {
-		return true;
-	}
 	function process(crmtogo_API_Request $request) {
 		$config_settings = crmtogo_WS_Controller::getUserModule();
 		$response = new crmtogo_API_Response();

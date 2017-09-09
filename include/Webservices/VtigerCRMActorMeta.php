@@ -254,10 +254,6 @@ class VtigerCRMActorMeta extends EntityMeta {
 		return $nameList[$id];
 	}
 
-	public function getEntityAccessControlQuery() {
-		return '';
-	}
-
 	public function getEntityDeletedQuery() {
 		if ($this->getEntityName() == 'Currency') {
 			return 'vtiger_currency_info.deleted=0';

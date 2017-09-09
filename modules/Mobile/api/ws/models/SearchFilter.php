@@ -21,10 +21,6 @@ class crmtogo_WS_SearchFilterModel extends crmtogo_WS_FilterModel {
 		return false;
 	}
 	
-	function queryParameters() {
-		return false;
-	}
-	
 	function setCriterias($criterias) {
 		$this->criterias = $criterias;
 	}
